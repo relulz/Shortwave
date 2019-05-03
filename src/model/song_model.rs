@@ -3,8 +3,8 @@ use glib::prelude::*;
 
 use std::fs;
 
+use crate::audio::Song;
 use crate::model::ObjectWrapper;
-use crate::song::Song;
 
 #[derive(Clone)]
 pub struct SongModel {

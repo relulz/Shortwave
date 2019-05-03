@@ -6,11 +6,11 @@ use rustio::{Station, StationSearch};
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use crate::audio::{PlaybackState, Player};
 use crate::config;
+use crate::discover::Search;
 use crate::library::Library;
 use crate::model::{Order, Sorting};
-use crate::player::{PlaybackState, Player};
-use crate::search::Search;
 use crate::window::{View, Window};
 
 #[derive(Debug, Clone)]

@@ -6,9 +6,9 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 use crate::app::Action;
-use crate::player::Controller;
-use crate::player::PlaybackState;
-use crate::widgets::station_dialog::StationDialog;
+use crate::audio::Controller;
+use crate::audio::PlaybackState;
+use crate::widgets::StationDialog;
 
 pub struct GtkController {
     pub widget: gtk::Box,

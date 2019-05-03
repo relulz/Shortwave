@@ -6,8 +6,8 @@ use std::cell::Cell;
 use std::sync::Arc;
 
 use crate::app::Action;
-use crate::player::Controller;
-use crate::player::PlaybackState;
+use crate::audio::Controller;
+use crate::audio::PlaybackState;
 
 pub struct MprisController {
     sender: Sender<Action>,

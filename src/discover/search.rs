@@ -6,7 +6,7 @@ use std::cell::RefCell;
 
 use crate::app::Action;
 use crate::model::StationModel;
-use crate::widgets::station_flowbox::StationFlowBox;
+use crate::widgets::StationFlowBox;
 
 pub struct Search {
     pub widget: gtk::Box,

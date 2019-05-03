@@ -12,15 +12,14 @@ extern crate serde_derive;
 #[macro_use]
 extern crate matches;
 
+mod audio;
+mod discover;
 mod model;
-mod player;
 mod widgets;
 
 mod app;
 mod config;
 mod library;
-mod search;
-mod song;
 mod static_resource;
 mod window;
 

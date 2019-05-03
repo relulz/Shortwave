@@ -7,7 +7,7 @@ use open;
 use std::path::PathBuf;
 
 use crate::app::Action;
-use crate::song::Song;
+use crate::audio::Song;
 
 pub struct SongRow {
     pub widget: ActionRow,

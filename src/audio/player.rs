@@ -11,11 +11,12 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 
 use crate::app::Action;
+use crate::audio::controller::{Controller, GtkController, MprisController};
+use crate::audio::gstreamer_backend::{GstreamerBackend, GstreamerMessage};
+use crate::audio::{PlaybackState, Song};
 use crate::config;
-use crate::player::controller::{GtkController, MprisController};
-use crate::player::gstreamer_backend::GstreamerMessage;
-use crate::song::Song;
-use crate::widgets::song_listbox::SongListBox;
+use crate::model::SongModel;
+use crate::widgets::SongListBox;
 
 ////////////////////////////////////////////////////////////////////////////////////
 //                                                                                //
@@ -37,16 +38,6 @@ use crate::widgets::song_listbox::SongListBox;
 //                                    -----------                                 //
 //                                                                                //
 ////////////////////////////////////////////////////////////////////////////////////
-
-mod controller;
-pub mod gstreamer_backend;
-mod playback_state;
-
-pub use controller::Controller;
-pub use gstreamer_backend::GstreamerBackend;
-pub use playback_state::PlaybackState;
-
-use crate::model::SongModel;
 
 pub struct Player {
     pub widget: gtk::Box,

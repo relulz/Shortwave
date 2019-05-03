@@ -7,8 +7,8 @@ use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 use std::time::SystemTime;
 
-use crate::player::playback_state::PlaybackState;
-use crate::song::Song;
+use crate::audio::PlaybackState;
+use crate::audio::Song;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                      //

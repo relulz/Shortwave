@@ -4,7 +4,7 @@ mod mpris_controller;
 pub use gtk_controller::GtkController;
 pub use mpris_controller::MprisController;
 
-use crate::player::PlaybackState;
+use crate::audio::PlaybackState;
 use rustio::Station;
 
 pub trait Controller {
