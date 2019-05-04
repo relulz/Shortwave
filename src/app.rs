@@ -4,6 +4,7 @@ use gtk::prelude::*;
 use rustio::{Station, StationSearch};
 
 use std::cell::RefCell;
+use std::env;
 use std::rc::Rc;
 
 use crate::audio::{PlaybackState, Player};
@@ -95,7 +96,8 @@ impl App {
         let receiver = self.receiver.borrow_mut().take().unwrap();
         receiver.attach(None, move |action| a.process_action(action));
 
-        self.gtk_app.run(&[]);
+        let args: Vec<String> = env::args().collect();
+        self.gtk_app.run(&args);
         self.player.shutdown();
     }
 
@@ -188,7 +190,10 @@ impl App {
 
     fn setup_signals(&self) {
         let window = self.window.widget.clone();
-        self.gtk_app.connect_activate(move |app| app.add_window(&window));
+        self.gtk_app.connect_activate(move |app| {
+            app.add_window(&window);
+            window.present();
+        });
     }
 
     fn process_action(&self, action: Action) -> glib::Continue {
