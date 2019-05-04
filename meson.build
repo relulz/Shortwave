@@ -23,7 +23,7 @@ shortwave_icondir = join_paths(shortwave_datadir, 'icons')
 
 if get_option('profile') == 'development'
   profile = 'Devel'
-  name_prefix = '(Development) '
+  name_suffix = ' (Devel)'
   vcs_tag = run_command('git', 'rev-parse', '--short', 'HEAD').stdout().strip()
   if vcs_tag == ''
     version_suffix = '-devel'
@@ -32,7 +32,7 @@ if get_option('profile') == 'development'
   endif
 else
   profile = ''
-  name_prefix = ''
+  name_suffix = ''
   version_suffix = ''
 endif
 

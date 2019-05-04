@@ -78,7 +78,7 @@ impl App {
             storefront,
         });
 
-        glib::set_application_name(config::NAME);
+        glib::set_application_name(&format!("{}{}", config::NAME, config::NAME_SUFFIX));
         glib::set_prgname(Some("shortwave"));
         gtk::Window::set_default_icon_name(config::APP_ID);
 
@@ -88,7 +88,7 @@ impl App {
     }
 
     pub fn run(&self, app: Rc<Self>) {
-        info!("{}{} ({})", config::NAME_PREFIX, config::NAME, config::APP_ID);
+        info!("{}{} ({})", config::NAME, config::NAME_SUFFIX, config::APP_ID);
         info!("Version: {} ({})", config::VERSION, config::PROFILE);
         info!("Datadir: {}", config::PKGDATADIR);
 
@@ -225,7 +225,7 @@ impl App {
         dialog.set_comments("A web radio client");
         dialog.set_copyright("© 2019 Felix Häcker");
         dialog.set_license_type(gtk::License::Gpl30);
-        dialog.set_version(config::VERSION);
+        dialog.set_version(format!("{}{}", config::VERSION, config::NAME_SUFFIX).as_str());
         dialog.set_transient_for(&window);
         dialog.set_modal(true);
 

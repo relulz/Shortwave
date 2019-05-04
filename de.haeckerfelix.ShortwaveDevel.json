@@ -10,7 +10,7 @@
     "tags" : [
         "nightly"
     ],
-    "desktop-file-name-prefix" : "(Development) ",
+    "desktop-file-name-suffix" : " (Devel)",
     "finish-args" : [
         "--filesystem=xdg-run/dconf",
         "--filesystem=~/.config/dconf:ro",

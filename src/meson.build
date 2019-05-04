@@ -2,7 +2,7 @@ global_conf = configuration_data()
 global_conf.set_quoted('APP_ID', application_id)
 global_conf.set_quoted('PKGDATADIR', join_paths(shortwave_prefix, shortwave_pkgdatadir))
 global_conf.set_quoted('PROFILE', profile)
-global_conf.set_quoted('NAME_PREFIX', name_prefix)
+global_conf.set_quoted('NAME_SUFFIX', name_suffix)
 global_conf.set_quoted('NAME', application_name)
 global_conf.set_quoted('VERSION', shortwave_version + version_suffix)
 config = configure_file(
