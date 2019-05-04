@@ -131,7 +131,7 @@
                     <property name="can_focus">False</property>
                     <property name="transition_type">crossfade</property>
                     <child>
-                      <object class="GtkBox" id="search_box">
+                      <object class="GtkBox" id="storefront_box">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>

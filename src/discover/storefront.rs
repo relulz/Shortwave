@@ -8,7 +8,7 @@ use crate::app::Action;
 use crate::model::StationModel;
 use crate::widgets::StationFlowBox;
 
-pub struct Search {
+pub struct StoreFront {
     pub widget: gtk::Box,
     result_model: RefCell<StationModel>,
 
@@ -16,10 +16,10 @@ pub struct Search {
     sender: Sender<Action>,
 }
 
-impl Search {
+impl StoreFront {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/search.ui");
-        let widget: gtk::Box = builder.get_object("search").unwrap();
+        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/storefront.ui");
+        let widget: gtk::Box = builder.get_object("storefront").unwrap();
 
         let result_model = RefCell::new(StationModel::new());
         let results_box: gtk::Box = builder.get_object("results_box").unwrap();
@@ -27,15 +27,15 @@ impl Search {
         station_flowbox.bind_model(&result_model.borrow());
         results_box.add(&station_flowbox.widget);
 
-        let search = Self {
+        let storefront = Self {
             widget,
             result_model,
             builder,
             sender,
         };
 
-        search.setup_signals();
-        search
+        storefront.setup_signals();
+        storefront
     }
 
     pub fn search_for(&self, data: StationSearch) {

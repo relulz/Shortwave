@@ -8,7 +8,7 @@ use std::rc::Rc;
 
 use crate::audio::{PlaybackState, Player};
 use crate::config;
-use crate::discover::Search;
+use crate::discover::StoreFront;
 use crate::library::Library;
 use crate::model::{Order, Sorting};
 use crate::window::{View, Window};
@@ -39,7 +39,7 @@ pub struct App {
     window: Window,
     player: Player,
     library: Library,
-    search: Search,
+    storefront: StoreFront,
 }
 
 impl App {
@@ -56,11 +56,11 @@ impl App {
         let window = Window::new(sender.clone());
         let player = Player::new(sender.clone());
         let library = Library::new(sender.clone());
-        let search = Search::new(sender.clone());
+        let storefront = StoreFront::new(sender.clone());
 
         window.player_box.add(&player.widget);
         window.library_box.add(&library.widget);
-        window.search_box.add(&search.widget);
+        window.storefront_box.add(&storefront.widget);
 
         // Help overlay
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
@@ -74,7 +74,7 @@ impl App {
             window,
             player,
             library,
-            search,
+            storefront,
         });
 
         glib::set_application_name(config::NAME);
@@ -208,7 +208,7 @@ impl App {
             Action::LibraryExport => self.export_stations(),
             Action::LibraryAddStations(stations) => self.library.add_stations(stations),
             Action::LibraryRemoveStations(stations) => self.library.remove_stations(stations),
-            Action::SearchFor(data) => self.search.search_for(data),
+            Action::SearchFor(data) => self.storefront.search_for(data),
         }
         glib::Continue(true)
     }

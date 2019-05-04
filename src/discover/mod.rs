@@ -1,3 +1,3 @@
-mod search;
+mod storefront;
 
-pub use search::Search;
+pub use storefront::StoreFront;
