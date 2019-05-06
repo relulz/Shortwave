@@ -13,8 +13,8 @@ gio = { version="0.6.0", features=["v2_46"] }
 gdk = "0.10.0"
 gstreamer = "0.13.0"
 gstreamer-pbutils = "0.13.0"
-rustio = { git="https://gitlab.gnome.org/haecker-felix/Rustio.git" }
-mpris-player = { git="https://gitlab.gnome.org/World/Rust/mpris-player" }
+rustio = "0.0.2"
+mpris-player = "0.3.0"
 log = "0.4"
 pretty_env_logger = "0.3.0"
 rusqlite = "0.13"
