@@ -2,7 +2,7 @@
 <!-- Generated with glade 3.22.0 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <object class="GtkBox" id="station_row">
+  <object class="GtkFlowBoxChild" id="station_row">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <child>
@@ -138,14 +138,9 @@
           </object>
         </child>
       </object>
-      <packing>
-        <property name="expand">True</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
     </child>
     <style>
-      <class name="station-row"/>
+      <class name="tile"/>
     </style>
   </object>
 </interface>

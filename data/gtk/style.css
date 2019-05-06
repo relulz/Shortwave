@@ -6,22 +6,16 @@
   background-color: @theme_bg_color;
 }
 
-.station-row {
+.tile {
 	border-radius: 5px;
 	border: 1px solid @borders;
 	color: @theme_fg_color;
 	box-shadow: 0 1px 2px rgba(0,0,0,0.07);
-	margin-top: 4px;
-	margin-bottom: 4px;
 	background-color: @theme_base_color;
 }
 
-.station-row:hover {
+.tile:hover {
 	background: @theme_bg_color;
-}
-
-.small {
-  font-size: smaller;
 }
 
 .cover {
@@ -30,6 +24,7 @@
 	box-shadow: 0 4px 5px rgba(0,0,0,0.1);
 	background-color: @theme_base_color;
 }
+
 
 /* Original Author: Christopher Davis (https://gitlab.gnome.org/BrainBlasted/Trumpet/blob/a4c78543c970c7c998c4b3ef67d5df252048ce4c/res/stylesheet.css) */
 actionbar.bottombar > revealer > box {
@@ -51,15 +46,3 @@ actionbar.bottombar > revealer > box {
   border-radius: 0px;
   border-bottom-width: 0px;
 }
-
-.top-switcher > button {
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-left: 12px;
-  padding-right: 12px;
-  border-radius: 0;
-  border-top-style: none;
-  border-bottom-style: none;
-  min-height: 38px;
-}
-

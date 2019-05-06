@@ -6,7 +6,7 @@ use crate::app::Action;
 use crate::widgets::station_dialog::StationDialog;
 
 pub struct StationRow {
-    pub widget: gtk::Box,
+    pub widget: gtk::FlowBoxChild,
     station: Station,
     app: gtk::Application,
 
@@ -17,7 +17,7 @@ pub struct StationRow {
 impl StationRow {
     pub fn new(sender: Sender<Action>, station: Station) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_row.ui");
-        let row: gtk::Box = builder.get_object("station_row").unwrap();
+        let row: gtk::FlowBoxChild = builder.get_object("station_row").unwrap();
         let app = builder.get_application().unwrap();
 
         // Set row information

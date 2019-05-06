@@ -2,11 +2,12 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
-  <object class="GtkFlowBox" id="flowbox">
+  <object class="GtkFlowBox" id="station_flowbox">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="homogeneous">True</property>
-    <property name="column_spacing">6</property>
+    <property name="column_spacing">12</property>
+    <property name="row_spacing">12</property>
     <property name="min_children_per_line">1</property>
     <property name="max_children_per_line">1</property>
     <property name="selection_mode">none</property>
@@ -14,17 +15,5 @@
     <style>
       <class name="transparent"/>
     </style>
-  </object>
-  <object class="GtkBox" id="station_flowbox">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_start">6</property>
-    <property name="margin_end">6</property>
-    <property name="margin_top">6</property>
-    <property name="margin_bottom">6</property>
-    <property name="orientation">vertical</property>
-    <child>
-      <placeholder/>
-    </child>
   </object>
 </interface>

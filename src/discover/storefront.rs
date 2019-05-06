@@ -5,12 +5,14 @@ use rustio::{Client, StationSearch};
 use std::cell::RefCell;
 
 use crate::app::Action;
+use crate::discover::TagButton;
 use crate::model::StationModel;
 use crate::widgets::StationFlowBox;
 
 pub struct StoreFront {
     pub widget: gtk::Box,
     result_model: RefCell<StationModel>,
+    tags_flowbox: gtk::FlowBox,
 
     builder: gtk::Builder,
     sender: Sender<Action>,
@@ -20,6 +22,7 @@ impl StoreFront {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/storefront.ui");
         let widget: gtk::Box = builder.get_object("storefront").unwrap();
+        let tags_flowbox: gtk::FlowBox = builder.get_object("tags_flowbox").unwrap();
 
         let result_model = RefCell::new(StationModel::new());
         let results_box: gtk::Box = builder.get_object("results_box").unwrap();
@@ -30,12 +33,23 @@ impl StoreFront {
         let storefront = Self {
             widget,
             result_model,
+            tags_flowbox,
             builder,
             sender,
         };
 
+        storefront.add_popular_tag("Pop", "pop");
+        storefront.add_popular_tag("Rock", "rock");
+        storefront.add_popular_tag("Classic", "classic");
+        storefront.add_popular_tag("Jazz", "jazz");
+
         storefront.setup_signals();
         storefront
+    }
+
+    fn add_popular_tag(&self, title: &str, name: &str) {
+        let tagbutton = TagButton::new(self.sender.clone(), title, name);
+        self.tags_flowbox.add(&tagbutton.widget);
     }
 
     pub fn search_for(&self, data: StationSearch) {
