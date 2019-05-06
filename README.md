@@ -42,6 +42,25 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
     The old Gradio Vala source code is still available in the [gradio-old](https://gitlab.gnome.org/World/Shortwave/tree/gradio-old) branch. 
 
+## Development builds
+
+#### Flatpak (Official)
+With every commit a Flatpak Bundle gets created automatically. [Download the latest bundle](https://gitlab.gnome.org/World/Shortwave/-/jobs/artifacts/master/download?job=flatpak)
+
+You can install it with GNOME Software, or just run `flatpak install shortwave-dev.flatpak -y`.
+
+#### Ubuntu PPA
+You can add the [this PPA](https://code.launchpad.net/~shortwave-developers/+archive/ubuntu/shortwave-nightly). It gets automatically rebuild every day.
+
+```
+sudo add-apt-repository ppa:shortwave-developers/shortwave-nightly
+sudo apt update
+sudo apt install shortwave
+```
+
+#### Arch AUR
+You can get `shortwave-git` from [the AUR](https://aur.archlinux.org/packages/shortwave-git/).
+
 ## Building
 Shortwave can be built and run with [Gnome Builder](https://wiki.gnome.org/Apps/Builder) >= 3.28.
 Just clone the repo and hit the run button!
