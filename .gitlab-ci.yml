@@ -38,7 +38,7 @@ flatpak:
         paths:
             - $BUNDLE
             - $VENDOR_PATH
-        expire_in: 2 days
+        expire_in: 5 days
 
     cache:
         key: "flatpak"
