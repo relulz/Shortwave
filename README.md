@@ -44,12 +44,16 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
 ## Development builds
 
-#### Flatpak (Official)
-With every commit a Flatpak Bundle gets created automatically. [Download the latest bundle](https://gitlab.gnome.org/World/Shortwave/-/jobs/artifacts/master/download?job=flatpak)
+#### Flatpak (officially supported)
+This Flatpak bundle gets automatically generated with every Git commit. 
+[Download the latest bundle](https://gitlab.gnome.org/World/Shortwave/-/jobs/artifacts/master/download?job=flatpak)
 
 You can install it with GNOME Software, or just run `flatpak install shortwave-dev.flatpak -y`.
 
-#### Ubuntu PPA
+### Third party builds
+**These packages are not created and maintained by me. If issues with a package occur, please report them directly to the package maintainer, and NOT to me.**
+
+#### Ubuntu PPA (Requires 19.04+)
 You can add the [this PPA](https://code.launchpad.net/~shortwave-developers/+archive/ubuntu/shortwave-nightly). It gets automatically rebuild every day.
 
 ```
