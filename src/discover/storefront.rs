@@ -5,7 +5,7 @@ use rustio::{Client, StationSearch};
 use std::cell::RefCell;
 
 use crate::app::Action;
-use crate::discover::TagButton;
+use crate::discover::TileButton;
 use crate::model::StationModel;
 use crate::widgets::StationFlowBox;
 
@@ -38,17 +38,17 @@ impl StoreFront {
             sender,
         };
 
-        storefront.add_popular_tag("Pop", "pop");
-        storefront.add_popular_tag("Rock", "rock");
-        storefront.add_popular_tag("Classic", "classic");
-        storefront.add_popular_tag("Jazz", "jazz");
+        storefront.add_popular_tag("Pop", "tags/pop");
+        storefront.add_popular_tag("Rock", "tags/rock");
+        storefront.add_popular_tag("Classic", "tags/classic");
+        storefront.add_popular_tag("Jazz", "tags/jazz");
 
         storefront.setup_signals();
         storefront
     }
 
     fn add_popular_tag(&self, title: &str, name: &str) {
-        let tagbutton = TagButton::new(self.sender.clone(), title, name);
+        let tagbutton = TileButton::new(self.sender.clone(), title, name);
         self.tags_flowbox.add(&tagbutton.widget);
     }
 

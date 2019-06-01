@@ -13,7 +13,7 @@
       <file compressed="true" preprocess="xml-stripblanks">gtk/song_listbox.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/gtk_controller.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/station_dialog.ui</file>
-      <file compressed="true" preprocess="xml-stripblanks">gtk/tag_button.ui</file>
+      <file compressed="true" preprocess="xml-stripblanks">gtk/tile_button.ui</file>
 
       <file compressed="true">gtk/style.css</file>
 

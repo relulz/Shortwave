@@ -1,5 +1,5 @@
 mod storefront;
-mod tag_button;
+mod tile_button;
 
 pub use storefront::StoreFront;
-pub use tag_button::TagButton;
+pub use tile_button::TileButton;

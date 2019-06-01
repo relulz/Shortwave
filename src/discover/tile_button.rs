@@ -3,18 +3,18 @@ use gtk::prelude::*;
 
 use crate::app::Action;
 
-pub struct TagButton {
+pub struct TileButton {
     pub widget: gtk::FlowBoxChild,
-    name: String,
+    image_name: String,
 
     builder: gtk::Builder,
     sender: Sender<Action>,
 }
 
-impl TagButton {
-    pub fn new(sender: Sender<Action>, title: &str, name: &str) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/tag_button.ui");
-        let widget: gtk::FlowBoxChild = builder.get_object("tag_button").unwrap();
+impl TileButton {
+    pub fn new(sender: Sender<Action>, title: &str, image_name: &str) -> Self {
+        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/tile_button.ui");
+        let widget: gtk::FlowBoxChild = builder.get_object("tile_button").unwrap();
 
         let title_label: gtk::Label = builder.get_object("title_label").unwrap();
         title_label.set_text(title);
@@ -23,25 +23,25 @@ impl TagButton {
         css_provider
             .load_from_data(
                 format!(
-                    ".tagbutton{{
+                    ".tilebutton{{
                         background-color: grey;
-                        background-image: url('resource://de/haeckerfelix/Shortwave/images/tags/{}.png');
+                        background-image: url('resource://de/haeckerfelix/Shortwave/images/{}.png');
                         background-size: cover;
                         color: white;
                     }}",
-                    name
+                    image_name
                 )
                 .as_bytes(),
             )
             .unwrap();
 
         let style_ctx = widget.get_style_context();
-        style_ctx.add_class("tagbutton");
+        style_ctx.add_class("tilebutton");
         style_ctx.add_provider(&css_provider, 600);
 
         let tb = Self {
             widget,
-            name: name.to_string(),
+            image_name: image_name.to_string(),
             builder,
             sender,
         };
@@ -52,7 +52,7 @@ impl TagButton {
 
     fn setup_signals(&self) {
         let eventbox: gtk::EventBox = self.builder.get_object("eventbox").unwrap();
-        let name = self.name.clone();
+        let name = self.image_name.clone();
         eventbox.connect_button_press_event(move |_, _| {
             debug!("{} tag clicked", name);
             gtk::Inhibit(false)
