@@ -41,7 +41,7 @@ impl StationDialog {
             library_action_stack.set_visible_child_name("library-add");
         }
 
-        widget.set_transient_for(window);
+        widget.set_transient_for(Some(window));
 
         let dialog = Self {
             widget,

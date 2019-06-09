@@ -30,14 +30,14 @@ impl SongRow {
         let save_button = gtk::Button::new();
         save_button.set_relief(gtk::ReliefStyle::None);
         save_button.set_valign(gtk::Align::Center);
-        let save_image = gtk::Image::new_from_icon_name("document-save-symbolic", gtk::IconSize::__Unknown(4));
+        let save_image = gtk::Image::new_from_icon_name(Some("document-save-symbolic"), gtk::IconSize::__Unknown(4));
         save_button.add(&save_image);
         button_stack.add_named(&save_button, "save");
 
         let open_button = gtk::Button::new();
         open_button.set_relief(gtk::ReliefStyle::None);
         open_button.set_valign(gtk::Align::Center);
-        let open_image = gtk::Image::new_from_icon_name("media-playback-start-symbolic", gtk::IconSize::__Unknown(4));
+        let open_image = gtk::Image::new_from_icon_name(Some("media-playback-start-symbolic"), gtk::IconSize::__Unknown(4));
         open_button.add(&open_image);
         button_stack.add_named(&open_button, "open");
 

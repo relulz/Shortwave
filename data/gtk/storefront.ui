@@ -10,26 +10,25 @@
     <property name="vexpand">True</property>
     <property name="orientation">vertical</property>
     <child>
-      <object class="GtkBox" id="search_box">
+      <object class="GtkScrolledWindow">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
+        <property name="can_focus">True</property>
         <child>
-          <object class="GtkBox">
+          <object class="GtkViewport">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
+            <property name="shadow_type">none</property>
             <child>
-              <object class="GtkScrolledWindow">
+              <object class="GtkStack">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkViewport">
+                  <object class="GtkBox" id="overview_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="shadow_type">none</property>
+                    <property name="orientation">vertical</property>
                     <child>
-                      <object class="HdyColumn">
+                      <object class="HdyColumn" id="overview">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="maximum_width">1600</property>
@@ -37,12 +36,28 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="margin_left">12</property>
-                            <property name="margin_right">12</property>
                             <property name="margin_top">12</property>
                             <property name="margin_bottom">12</property>
                             <property name="orientation">vertical</property>
                             <property name="spacing">6</property>
+                            <child>
+                              <object class="GtkLabel" id="headline">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="halign">start</property>
+                                <property name="label" translatable="yes">Discover something new...</property>
+                                <property name="wrap">True</property>
+                                <property name="wrap_mode">word-char</property>
+                                <attributes>
+                                  <attribute name="font-desc" value="Cantarell Ultra-Bold 20"/>
+                                </attributes>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
                             <child>
                               <object class="GtkLabel" id="tags_header">
                                 <property name="visible">True</property>
@@ -56,7 +71,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">0</property>
+                                <property name="position">1</property>
                               </packing>
                             </child>
                             <child>
@@ -69,7 +84,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">1</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                             <child>
@@ -86,7 +101,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">2</property>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                             <child>
@@ -111,7 +126,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">3</property>
+                                <property name="position">4</property>
                               </packing>
                             </child>
                             <child>
@@ -126,34 +141,46 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">4</property>
+                                <property name="position">5</property>
                               </packing>
                             </child>
                           </object>
                         </child>
                       </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
                     </child>
                   </object>
+                  <packing>
+                    <property name="name">overview</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="result_box">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="name">results</property>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
         </child>
       </object>
       <packing>
         <property name="expand">True</property>
         <property name="fill">True</property>
-        <property name="position">0</property>
+        <property name="position">1</property>
       </packing>
     </child>
   </object>

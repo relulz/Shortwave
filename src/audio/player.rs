@@ -41,7 +41,7 @@ use crate::widgets::SongListBox;
 
 pub struct Player {
     pub widget: gtk::Box,
-    controller: Rc<Vec<Box<Controller>>>,
+    controller: Rc<Vec<Box<dyn Controller>>>,
 
     backend: Arc<Mutex<GstreamerBackend>>,
     song_model: Rc<RefCell<SongModel>>,
@@ -61,7 +61,7 @@ impl Player {
         let (gst_sender, gst_receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
         let backend = Arc::new(Mutex::new(GstreamerBackend::new(gst_sender)));
 
-        let mut controller: Vec<Box<Controller>> = Vec::new();
+        let mut controller: Vec<Box<dyn Controller>> = Vec::new();
 
         // Gtk Controller
         let gtk_controller = GtkController::new(sender.clone());
@@ -73,7 +73,7 @@ impl Player {
         let mpris_controller = MprisController::new(sender.clone());
         controller.push(Box::new(mpris_controller));
 
-        let controller: Rc<Vec<Box<Controller>>> = Rc::new(controller);
+        let controller: Rc<Vec<Box<dyn Controller>>> = Rc::new(controller);
 
         let player = Self {
             widget,
@@ -139,7 +139,7 @@ impl Player {
         });
     }
 
-    fn process_gst_message(message: GstreamerMessage, controller: Rc<Vec<Box<Controller>>>, song_model: Rc<RefCell<SongModel>>, backend: Arc<Mutex<GstreamerBackend>>) -> glib::Continue {
+    fn process_gst_message(message: GstreamerMessage, controller: Rc<Vec<Box<dyn Controller>>>, song_model: Rc<RefCell<SongModel>>, backend: Arc<Mutex<GstreamerBackend>>) -> glib::Continue {
         match message {
             GstreamerMessage::SongTitleChanged(title) => {
                 debug!("Song title has changed: \"{}\"", title);

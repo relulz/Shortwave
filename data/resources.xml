@@ -14,6 +14,7 @@
       <file compressed="true" preprocess="xml-stripblanks">gtk/gtk_controller.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/station_dialog.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/tile_button.ui</file>
+      <file compressed="true" preprocess="xml-stripblanks">gtk/resultview_box.ui</file>
 
       <file compressed="true">gtk/style.css</file>
 

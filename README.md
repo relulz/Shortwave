@@ -1,3 +1,5 @@
+**Note**: This branch requires a nightly version of Rust. It cannot be compiled using Flatpak. It's using unstable Rust features like async.
+
 # Shortwave
 Find and listen to internet radio stations
 
@@ -44,26 +46,11 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
 ## Development builds
 
-#### Flatpak (officially supported)
+#### Flatpak
 This Flatpak bundle gets automatically generated with every Git commit. 
 [Download the latest bundle](https://gitlab.gnome.org/World/Shortwave/-/jobs/artifacts/master/download?job=flatpak)
 
 You can install it with GNOME Software, or just run `flatpak install shortwave-dev.flatpak -y`.
-
-### Third party builds
-**These packages are not created and maintained by me. If issues with a package occur, please report them directly to the package maintainer, and NOT to me.**
-
-#### Ubuntu PPA (Requires 19.04+)
-You can add the [this PPA](https://code.launchpad.net/~shortwave-developers/+archive/ubuntu/shortwave-nightly). It gets automatically rebuild every day.
-
-```
-sudo add-apt-repository ppa:shortwave-developers/shortwave-nightly
-sudo apt update
-sudo apt install shortwave
-```
-
-#### Arch AUR
-You can get `shortwave-git` from [the AUR](https://aur.archlinux.org/packages/shortwave-git/).
 
 ## Building
 Shortwave can be built and run with [Gnome Builder](https://wiki.gnome.org/Apps/Builder) >= 3.28.

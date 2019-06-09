@@ -151,11 +151,10 @@ impl Library {
             let mut client = Client::new("http://www.radio-browser.info");
             let connection = Connection::open(path.clone())?;
             let mut stmt = connection.prepare("SELECT station_id FROM library;")?;
-            let mut rows = stmt.query(&[])?;
+            let mut rows = stmt.query(rusqlite::NO_PARAMS)?;
 
-            while let Some(result_row) = rows.next() {
-                let row = result_row.unwrap();
-                let station_id: u32 = row.get(0);
+            while let Ok(Some(row)) = rows.next() {
+                let station_id: u32 = row.get(0).unwrap();
 
                 match client.get_station_by_id(station_id)? {
                     Some(station) => {

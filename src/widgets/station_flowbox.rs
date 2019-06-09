@@ -38,7 +38,7 @@ impl StationFlowBox {
     pub fn bind_model(&self, model: &StationModel) {
         let sender = self.sender.clone();
 
-        self.widget.bind_model(&model.model, move |station| {
+        self.widget.bind_model(Some(&model.model), move |station| {
             let row = StationRow::new(sender.clone(), station.downcast_ref::<ObjectWrapper>().unwrap().deserialize());
             row.widget.upcast::<gtk::Widget>()
         });

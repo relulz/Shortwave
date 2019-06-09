@@ -59,16 +59,16 @@ pub struct GstreamerBackend {
 impl GstreamerBackend {
     pub fn new(sender: Sender<GstreamerMessage>) -> Self {
         // create gstreamer pipeline
-        let pipeline = Pipeline::new("recorder_pipeline");
+        let pipeline = Pipeline::new(Some("recorder_pipeline"));
 
         // create pipeline elements
-        let uridecodebin = ElementFactory::make("uridecodebin", "uridecodebin").unwrap();
-        let audioconvert = ElementFactory::make("audioconvert", "audioconvert").unwrap();
-        let tee = ElementFactory::make("tee", "tee").unwrap();
-        let audio_queue = ElementFactory::make("queue", "audio_queue").unwrap();
-        let volume = ElementFactory::make("volume", "volume").unwrap();
-        let autoaudiosink = ElementFactory::make("autoaudiosink", "autoaudiosink").unwrap();
-        let file_queue = ElementFactory::make("queue", "file_queue").unwrap();
+        let uridecodebin = ElementFactory::make("uridecodebin", Some("uridecodebin")).unwrap();
+        let audioconvert = ElementFactory::make("audioconvert", Some("audioconvert")).unwrap();
+        let tee = ElementFactory::make("tee", Some("tee")).unwrap();
+        let audio_queue = ElementFactory::make("queue", Some("audio_queue")).unwrap();
+        let volume = ElementFactory::make("volume", Some("volume")).unwrap();
+        let autoaudiosink = ElementFactory::make("autoaudiosink", Some("autoaudiosink")).unwrap();
+        let file_queue = ElementFactory::make("queue", Some("file_queue")).unwrap();
         let file_srcpad = file_queue.get_static_pad("src").unwrap();
 
         // link pipeline elements
@@ -313,13 +313,13 @@ struct RecorderBin {
 impl RecorderBin {
     pub fn new(song_title: String, song_path: PathBuf, pipeline: Pipeline, srcpad: &Pad) -> Self {
         // Create elements
-        let vorbisenc = ElementFactory::make("vorbisenc", "vorbisenc").unwrap();
-        let oggmux = ElementFactory::make("oggmux", "oggmux").unwrap();
-        let filesink = ElementFactory::make("filesink", "filesink").unwrap();
+        let vorbisenc = ElementFactory::make("vorbisenc", Some("vorbisenc")).unwrap();
+        let oggmux = ElementFactory::make("oggmux", Some("oggmux")).unwrap();
+        let filesink = ElementFactory::make("filesink", Some("filesink")).unwrap();
         filesink.set_property("location", &song_path.to_str().unwrap()).unwrap();
 
         // Create bin itself
-        let bin = Bin::new("bin");
+        let bin = Bin::new(Some("bin"));
         bin.set_property("message-forward", &true).unwrap();
 
         // Add elements to bin and link them
@@ -333,7 +333,7 @@ impl RecorderBin {
 
         // Link file_srcpad with vorbisenc sinkpad using a ghostpad
         let vorbisenc_sinkpad = vorbisenc.get_static_pad("sink").unwrap();
-        let ghostpad = gstreamer::GhostPad::new("sink", &vorbisenc_sinkpad).unwrap();
+        let ghostpad = gstreamer::GhostPad::new(Some("sink"), &vorbisenc_sinkpad).unwrap();
         bin.add_pad(&ghostpad).unwrap();
         bin.sync_state_with_parent().unwrap();
         srcpad.link(&ghostpad).expect("Queue src pad cannot linked to vorbisenc sinkpad");
