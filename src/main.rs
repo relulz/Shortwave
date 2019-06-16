@@ -12,6 +12,7 @@ extern crate serde_derive;
 #[macro_use]
 extern crate matches;
 
+mod api;
 mod audio;
 mod discover;
 mod model;

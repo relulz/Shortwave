@@ -1,7 +1,7 @@
 use glib::Sender;
 use gtk::prelude::*;
-use rustio::Station;
 
+use crate::api::Station;
 use crate::app::Action;
 use crate::widgets::station_dialog::StationDialog;
 

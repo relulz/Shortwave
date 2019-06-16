@@ -1,10 +1,10 @@
 use glib::Sender;
 use gtk::prelude::*;
-use rustio::Station;
 
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use crate::api::Station;
 use crate::app::Action;
 use crate::audio::Controller;
 use crate::audio::PlaybackState;

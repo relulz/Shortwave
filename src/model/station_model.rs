@@ -1,8 +1,8 @@
 use gio::prelude::ListStoreExtManual;
 use gio::prelude::*;
 use glib::prelude::*;
-use rustio::Station;
 
+use crate::api::Station;
 use crate::model::ObjectWrapper;
 
 #[derive(Clone, Debug)]
@@ -52,7 +52,7 @@ impl StationModel {
         self.index(station).map(|index| self.model.remove(index));
     }
 
-    fn index(&self, station: &Station) -> Option<u32> {
+    pub fn index(&self, station: &Station) -> Option<u32> {
         for i in 0..self.model.get_n_items() {
             let gobject = self.model.get_object(i).unwrap();
             let station_object = gobject.downcast_ref::<ObjectWrapper>().expect("ObjectWrapper is of wrong type");

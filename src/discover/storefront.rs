@@ -1,18 +1,16 @@
 use glib::Sender;
 use gtk::prelude::*;
-use rustio::{Client, StationSearch};
+use url::Url;
 
-use std::cell::RefCell;
-
+use crate::api::{Client, StationRequest};
 use crate::app::Action;
 use crate::discover::TileButton;
-use crate::model::StationModel;
 use crate::widgets::StationFlowBox;
 
 pub struct StoreFront {
     pub widget: gtk::Box,
-    result_model: RefCell<StationModel>,
     tags_flowbox: gtk::FlowBox,
+    client: Client,
 
     builder: gtk::Builder,
     sender: Sender<Action>,
@@ -24,16 +22,17 @@ impl StoreFront {
         let widget: gtk::Box = builder.get_object("storefront").unwrap();
         let tags_flowbox: gtk::FlowBox = builder.get_object("tags_flowbox").unwrap();
 
-        let result_model = RefCell::new(StationModel::new());
+        let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
+
         let results_box: gtk::Box = builder.get_object("results_box").unwrap();
         let station_flowbox = StationFlowBox::new(sender.clone());
-        station_flowbox.bind_model(&result_model.borrow());
+        station_flowbox.bind_model(&client.model.borrow());
         results_box.add(&station_flowbox.widget);
 
         let storefront = Self {
             widget,
-            result_model,
             tags_flowbox,
+            client,
             builder,
             sender,
         };
@@ -52,35 +51,17 @@ impl StoreFront {
         self.tags_flowbox.add(&tagbutton.widget);
     }
 
-    pub fn search_for(&self, data: StationSearch) {
-        debug!("search for: {:?}", data);
-        let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_LOW);
-        std::thread::spawn(move || {
-            let mut client = Client::new("http://www.radio-browser.info");
-            let result = client.search(data);
-            let _ = sender.send(result);
-        });
-        let result_model = self.result_model.clone();
-        receiver.attach(None, move |result| {
-            match result {
-                Ok(stations) => {
-                    result_model.borrow_mut().clear();
-                    for station in stations {
-                        result_model.borrow_mut().add_station(station);
-                    }
-                }
-                Err(_) => {}
-            }
-            glib::Continue(false)
-        });
+    pub fn search_for(&self, request: StationRequest) {
+        debug!("Search for: {:?}", request);
+        self.client.send_station_request(&request);
     }
 
     fn setup_signals(&self) {
         let search_entry: gtk::SearchEntry = self.builder.get_object("search_entry").unwrap();
         let sender = self.sender.clone();
         search_entry.connect_search_changed(move |entry| {
-            let data = StationSearch::search_for_name(entry.get_text().unwrap().to_string(), false, 100);
-            sender.send(Action::SearchFor(data)).unwrap();
+            let request = StationRequest::search_for_name(&entry.get_text().unwrap(), 200);
+            sender.send(Action::SearchFor(request)).unwrap();
         });
     }
 }

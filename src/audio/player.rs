@@ -1,15 +1,15 @@
 use gio::prelude::*;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
-use rustio::{Client, Station};
+use url::Url;
 
 use std::cell::RefCell;
 use std::fs;
 use std::path::PathBuf;
 use std::rc::Rc;
 use std::sync::{Arc, Mutex};
-use std::thread;
 
+use crate::api::{Client, Station};
 use crate::app::Action;
 use crate::audio::controller::{Controller, GtkController, MprisController};
 use crate::audio::gstreamer_backend::{GstreamerBackend, GstreamerMessage};
@@ -94,12 +94,15 @@ impl Player {
             con.set_station(station.clone());
         }
 
+        let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_LOW);
+        let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
+        client.get_stream_url(&station, sender);
+
         let backend = self.backend.clone();
-        thread::spawn(move || {
-            let mut client = Client::new("http://www.radio-browser.info");
-            let station_url = client.get_playable_station_url(station).unwrap();
+        receiver.attach(None, move |station_url| {
             debug!("new source uri to record: {}", station_url);
             backend.lock().unwrap().new_source_uri(&station_url);
+            glib::Continue(false)
         });
     }
 

@@ -1,8 +1,8 @@
 use glib::Sender;
 use gtk::prelude::*;
 use libhandy::Dialog;
-use rustio::Station;
 
+use crate::api::Station;
 use crate::app::Action;
 use crate::library::Library;
 

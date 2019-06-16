@@ -2,7 +2,7 @@ use gio::prelude::*;
 use glib::Sender;
 use gtk::prelude::*;
 use rusqlite::Connection;
-use rustio::{Client, Station};
+use url::Url;
 
 use std::cell::RefCell;
 use std::fs;
@@ -10,6 +10,7 @@ use std::io;
 use std::path::PathBuf;
 use std::result::Result;
 
+use crate::api::{Client, Station};
 use crate::app::Action;
 use crate::config;
 use crate::model::ObjectWrapper;
@@ -146,25 +147,26 @@ impl Library {
             let stations: Vec<Station> = serde_json::from_str(&data)?;
             Ok(stations)
         } else {
+            // TODO: Add support for importing old Gradio stations
             // Old Gradio library format (.db)
-            let mut result = Vec::new();
-            let mut client = Client::new("http://www.radio-browser.info");
-            let connection = Connection::open(path.clone())?;
-            let mut stmt = connection.prepare("SELECT station_id FROM library;")?;
-            let mut rows = stmt.query(&[])?;
+            let result = Vec::new();
+            //let mut client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
+            //let connection = Connection::open(path.clone())?;
+            //let mut stmt = connection.prepare("SELECT station_id FROM library;")?;
+            //let mut rows = stmt.query(&[])?;
 
-            while let Some(result_row) = rows.next() {
-                let row = result_row.unwrap();
-                let station_id: u32 = row.get(0);
+            //while let Some(result_row) = rows.next() {
+            //    let row = result_row.unwrap();
+            //    let station_id: u32 = row.get(0);
 
-                match client.get_station_by_id(station_id)? {
-                    Some(station) => {
-                        info!("Found Station: {}", station.name);
-                        result.insert(0, station);
-                    }
-                    None => warn!("Could not fetch station with ID {}", station_id),
-                }
-            }
+            //    match client.get_station_by_id(station_id)? {
+            //        Some(station) => {
+            //            info!("Found Station: {}", station.name);
+            //            result.insert(0, station);
+            //        }
+            //        None => warn!("Could not fetch station with ID {}", station_id),
+            //    }
+            //}
             Ok(result)
         }
     }

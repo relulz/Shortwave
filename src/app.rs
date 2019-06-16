@@ -1,12 +1,12 @@
 use gio::prelude::*;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
-use rustio::{Station, StationSearch};
 
 use std::cell::RefCell;
 use std::env;
 use std::rc::Rc;
 
+use crate::api::{Station, StationRequest};
 use crate::audio::{PlaybackState, Player};
 use crate::config;
 use crate::discover::StoreFront;
@@ -28,7 +28,7 @@ pub enum Action {
     LibraryExport,
     LibraryAddStations(Vec<Station>),
     LibraryRemoveStations(Vec<Station>),
-    SearchFor(StationSearch),
+    SearchFor(StationRequest), // is this neccessary?
 }
 
 pub struct App {
