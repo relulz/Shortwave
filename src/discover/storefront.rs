@@ -24,10 +24,10 @@ impl StoreFront {
 
         let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
 
-        let results_box: gtk::Box = builder.get_object("results_box").unwrap();
         let station_flowbox = StationFlowBox::new(sender.clone());
-        station_flowbox.bind_model(&client.model.borrow());
+        let results_box: gtk::Box = builder.get_object("results_box").unwrap();
         results_box.add(&station_flowbox.widget);
+        client.model.borrow_mut().bind(Box::new(station_flowbox));
 
         let storefront = Self {
             widget,
@@ -52,7 +52,6 @@ impl StoreFront {
     }
 
     pub fn search_for(&self, request: StationRequest) {
-        debug!("Search for: {:?}", request);
         self.client.send_station_request(&request);
     }
 

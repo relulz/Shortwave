@@ -13,7 +13,6 @@ use std::result::Result;
 use crate::api::{Client, Station};
 use crate::app::Action;
 use crate::config;
-use crate::model::ObjectWrapper;
 use crate::model::StationModel;
 use crate::model::{Order, Sorting};
 use crate::widgets::StationFlowBox;
@@ -42,7 +41,8 @@ impl Library {
 
         let library_model = RefCell::new(StationModel::new());
         let station_flowbox = StationFlowBox::new(sender.clone());
-        station_flowbox.bind_model(&library_model.borrow());
+        //TODO: implement ModelHandler for library
+        //library_model.borrow_mut().bind_flowbox(&station_flowbox, sender.clone());
         content_box.add(&station_flowbox.widget);
 
         let logo_image: gtk::Image = builder.get_object("logo_image").unwrap();
@@ -72,16 +72,12 @@ impl Library {
 
     pub fn add_stations(&self, stations: Vec<Station>) {
         debug!("Add {} station(s)", stations.len());
-        for station in stations {
-            self.library_model.borrow_mut().add_station(station.clone());
-        }
+        self.library_model.borrow_mut().add_stations(stations);
     }
 
     pub fn remove_stations(&self, stations: Vec<Station>) {
         debug!("Remove {} station(s)", stations.len());
-        for station in stations {
-            self.library_model.borrow_mut().remove_station(&station);
-        }
+        self.library_model.borrow_mut().remove_stations(stations);
     }
 
     pub fn set_sorting(&self, sorting: Sorting, order: Order) {
@@ -89,37 +85,28 @@ impl Library {
     }
 
     pub fn to_vec(&self) -> Vec<Station> {
-        Self::model_to_vec(&self.library_model.borrow().model)
-    }
-
-    fn model_to_vec(model: &gio::ListStore) -> Vec<Station> {
-        let mut stations = Vec::new();
-        for i in 0..model.get_n_items() {
-            let gobject = model.get_object(i).unwrap();
-            let station_object = gobject.downcast_ref::<ObjectWrapper>().expect("ObjectWrapper is of wrong type");
-            stations.insert(0, station_object.deserialize());
-        }
-        stations
+        self.library_model.borrow().export()
     }
 
     fn setup_signals(&self) {
         let sender = self.sender.clone();
-        self.library_model.borrow().model.connect_items_changed(move |model, _, removed, added| {
+        // TODO: Re-implement library
+        // self.library_model.borrow().model.connect_items_changed(move |model, _, removed, added| {
             // Check if data got changed
-            if removed == 1 || added == 1 {
+        //     if removed == 1 || added == 1 {
                 // Convert gio::ListStore into Vec<Station>
-                let stations = Self::model_to_vec(model);
+        //         let stations = model.export();
 
                 // Write new data to disk
-                match Self::write(stations, LIBRARY_PATH.to_path_buf()) {
-                    Ok(()) => (),
-                    Err(error) => {
-                        let message = format!("Could not write library data: {}", error.to_string());
-                        sender.send(Action::ViewShowNotification(message)).unwrap();
-                    }
-                };
-            }
-        });
+        //         match Self::write(stations, LIBRARY_PATH.to_path_buf()) {
+        //             Ok(()) => (),
+        //             Err(error) => {
+        //                 let message = format!("Could not write library data: {}", error.to_string());
+        //                 sender.send(Action::ViewShowNotification(message)).unwrap();
+        //             }
+        //         };
+        //     }
+        // });
     }
 
     pub fn write(stations: Vec<Station>, path: PathBuf) -> Result<(), LibraryError> {

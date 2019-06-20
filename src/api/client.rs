@@ -41,18 +41,17 @@ impl Client {
         // Send created message
         let model = self.model.clone();
         self.session.queue_message(&message, move |_, response| {
-            model.borrow_mut().clear();
-
+            // Parse received data
             let response_data = response.get_property_response_body_data().unwrap();
             let response_text = std::str::from_utf8(&response_data).unwrap();
 
-            // Parse result text
+            // Parse result text into Vec<Station>
             let result: Vec<Station> = serde_json::from_str(response_text).unwrap();
             debug!("Found {} station(s)!", result.len());
 
-            for station in result {
-                model.borrow_mut().add_station(station);
-            }
+            // Clear previous content and add new content
+            model.borrow_mut().clear();
+            model.borrow_mut().add_stations(result);
         });
     }
 
@@ -66,7 +65,6 @@ impl Client {
             let response_data = response.get_property_response_body_data().unwrap();
             let response_text = std::str::from_utf8(&response_data).unwrap();
 
-            // Parse result text
             let result: Vec<StationUrl> = serde_json::from_str(response_text).unwrap();
             debug!("Playable URL is: {}", result[0].url);
             sender.send(result[0].url.clone()).unwrap();

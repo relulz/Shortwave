@@ -1,9 +1,6 @@
-use gio::prelude::ListStoreExtManual;
-use gio::prelude::*;
-use glib::prelude::*;
-
 use crate::api::Station;
-use crate::model::ObjectWrapper;
+use crate::widgets::StationFlowBox;
+use crate::model::ModelHandler;
 
 #[derive(Clone, Debug)]
 pub enum Sorting {
@@ -22,68 +19,77 @@ pub enum Order {
     Descending,
 }
 
-#[derive(Clone, Debug)]
 pub struct StationModel {
-    pub model: gio::ListStore,
+    data: Vec<Station>,
     sorting: Sorting,
     order: Order,
+
+    handler: Vec<Box<ModelHandler>>,
 }
 
 impl StationModel {
     pub fn new() -> Self {
-        let model = gio::ListStore::new(ObjectWrapper::static_type());
-
+        let data = Vec::new();
         let sorting = Sorting::Name;
         let order = Order::Ascending;
+        let handler: Vec<Box<ModelHandler>> = Vec::new();
 
-        Self { model, sorting, order }
-    }
-
-    pub fn add_station(&mut self, station: Station) {
-        if !self.index(&station).is_some() {
-            let object = ObjectWrapper::new(station.clone());
-            let sorting = self.sorting.clone();
-            let order = self.order.clone();
-            self.model.insert_sorted(&object, move |a, b| Self::station_cmp(a, b, sorting.clone(), order.clone()));
+        Self {
+            data,
+            sorting,
+            order,
+            handler,
         }
     }
 
-    pub fn remove_station(&mut self, station: &Station) {
-        self.index(station).map(|index| self.model.remove(index));
-    }
-
-    pub fn index(&self, station: &Station) -> Option<u32> {
-        for i in 0..self.model.get_n_items() {
-            let gobject = self.model.get_object(i).unwrap();
-            let station_object = gobject.downcast_ref::<ObjectWrapper>().expect("ObjectWrapper is of wrong type");
-            let s: Station = station_object.deserialize();
-
-            if &s == station {
-                return Some(i);
+    pub fn add_stations(&mut self, stations: Vec<Station>) {
+        for station in &stations{
+            if !self.data.contains(&station) {
+                self.data.push(station.clone());
             }
         }
-        None
+
+        for h in &*self.handler{
+            h.add_stations(stations.clone());
+        }
+    }
+
+    pub fn remove_stations(&mut self, stations: Vec<Station>) {
+        for station in &stations{
+            let index = self.data.iter().position(|s| s == station).unwrap();
+            self.data.remove(index);
+        }
+
+        for h in &*self.handler{
+            h.remove_stations(stations.clone());
+        }
+    }
+
+    pub fn clear(&mut self) {
+        self.data.clear();
+
+        for h in &*self.handler{
+            h.clear();
+        }
     }
 
     pub fn set_sorting(&mut self, sorting: Sorting, order: Order) {
         self.sorting = sorting.clone();
         self.order = order.clone();
-
-        self.model.sort(move |a, b| Self::station_cmp(a, b, sorting.clone(), order.clone()));
     }
 
-    pub fn clear(&mut self) {
-        self.model.remove_all();
+    pub fn export(&self) -> Vec<Station>{
+        self.data.clone()
     }
 
-    fn station_cmp(a: &gio::Object, b: &gio::Object, sorting: Sorting, order: Order) -> std::cmp::Ordering {
-        let mut station_a: Station = a.downcast_ref::<ObjectWrapper>().unwrap().deserialize();
-        let mut station_b: Station = b.downcast_ref::<ObjectWrapper>().unwrap().deserialize();
+    /// Bind to a struct which implements the trait ModelHandler
+    pub fn bind(&mut self, handler: Box<ModelHandler>){
+        self.handler.push(handler);
+    }
 
+    fn station_cmp(station_a: &Station, station_b: &Station, sorting: Sorting, order: Order) -> std::cmp::Ordering {
         if order == Order::Descending {
-            let tmp = station_a;
-            station_a = station_b;
-            station_b = tmp;
+            let (station_a, station_b) = (station_b, station_a);
         }
 
         match sorting {
