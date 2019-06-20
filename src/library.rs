@@ -92,12 +92,12 @@ impl Library {
         let sender = self.sender.clone();
         // TODO: Re-implement library
         // self.library_model.borrow().model.connect_items_changed(move |model, _, removed, added| {
-            // Check if data got changed
+        // Check if data got changed
         //     if removed == 1 || added == 1 {
-                // Convert gio::ListStore into Vec<Station>
+        // Convert gio::ListStore into Vec<Station>
         //         let stations = model.export();
 
-                // Write new data to disk
+        // Write new data to disk
         //         match Self::write(stations, LIBRARY_PATH.to_path_buf()) {
         //             Ok(()) => (),
         //             Err(error) => {

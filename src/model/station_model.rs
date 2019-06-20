@@ -1,6 +1,6 @@
 use crate::api::Station;
-use crate::widgets::StationFlowBox;
 use crate::model::ModelHandler;
+use crate::widgets::StationFlowBox;
 
 #[derive(Clone, Debug)]
 pub enum Sorting {
@@ -34,33 +34,28 @@ impl StationModel {
         let order = Order::Ascending;
         let handler: Vec<Box<ModelHandler>> = Vec::new();
 
-        Self {
-            data,
-            sorting,
-            order,
-            handler,
-        }
+        Self { data, sorting, order, handler }
     }
 
     pub fn add_stations(&mut self, stations: Vec<Station>) {
-        for station in &stations{
+        for station in &stations {
             if !self.data.contains(&station) {
                 self.data.push(station.clone());
             }
         }
 
-        for h in &*self.handler{
+        for h in &*self.handler {
             h.add_stations(stations.clone());
         }
     }
 
     pub fn remove_stations(&mut self, stations: Vec<Station>) {
-        for station in &stations{
+        for station in &stations {
             let index = self.data.iter().position(|s| s == station).unwrap();
             self.data.remove(index);
         }
 
-        for h in &*self.handler{
+        for h in &*self.handler {
             h.remove_stations(stations.clone());
         }
     }
@@ -68,7 +63,7 @@ impl StationModel {
     pub fn clear(&mut self) {
         self.data.clear();
 
-        for h in &*self.handler{
+        for h in &*self.handler {
             h.clear();
         }
     }
@@ -78,12 +73,12 @@ impl StationModel {
         self.order = order.clone();
     }
 
-    pub fn export(&self) -> Vec<Station>{
+    pub fn export(&self) -> Vec<Station> {
         self.data.clone()
     }
 
     /// Bind to a struct which implements the trait ModelHandler
-    pub fn bind(&mut self, handler: Box<ModelHandler>){
+    pub fn bind(&mut self, handler: Box<ModelHandler>) {
         self.handler.push(handler);
     }
 

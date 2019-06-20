@@ -22,8 +22,8 @@ mod app;
 mod config;
 mod library;
 mod static_resource;
-mod window;
 mod utils;
+mod window;
 
 use crate::app::App;
 
