@@ -1,6 +1,6 @@
 use glib::Sender;
 use gtk::prelude::*;
-use libhandy::LeafletExt;
+use libhandy::{LeafletExt, ViewSwitcherBarExt};
 
 use crate::app::Action;
 use crate::config;
@@ -8,16 +8,17 @@ use crate::widgets::Notification;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum View {
-    Search,
+    Discover,
     Library,
     Playback,
 }
 
 pub struct Window {
     pub widget: gtk::ApplicationWindow,
-    pub player_box: gtk::Box,
+    pub stack_player_box: gtk::Box,
+    pub sidebar_player_box: gtk::Box,
     pub library_box: gtk::Box,
-    pub storefront_box: gtk::Box,
+    pub discover_box: gtk::Box,
 
     builder: gtk::Builder,
     menu_builder: gtk::Builder,
@@ -34,15 +35,17 @@ impl Window {
         view_headerbar.set_title(Some(config::NAME));
         window.set_title(config::NAME);
 
-        let player_box: gtk::Box = builder.get_object("player_box").unwrap();
+        let stack_player_box: gtk::Box = builder.get_object("stack_player_box").unwrap();
+        let sidebar_player_box: gtk::Box = builder.get_object("sidebar_player_box").unwrap();
         let library_box: gtk::Box = builder.get_object("library_box").unwrap();
-        let storefront_box: gtk::Box = builder.get_object("storefront_box").unwrap();
+        let discover_box: gtk::Box = builder.get_object("discover_box").unwrap();
 
         let window = Self {
             widget: window,
-            player_box,
+            stack_player_box,
+            sidebar_player_box,
             library_box,
-            storefront_box,
+            discover_box,
             builder,
             menu_builder,
             sender,
@@ -60,7 +63,6 @@ impl Window {
         }
 
         window.setup_signals();
-        window.set_view(View::Library);
         window
     }
 
@@ -69,7 +71,7 @@ impl Window {
         let add_button: gtk::Button = self.builder.get_object("add_button").unwrap();
         let sender = self.sender.clone();
         add_button.connect_clicked(move |_| {
-            sender.send(Action::ViewShowSearch).unwrap();
+            sender.send(Action::ViewShowDiscover).unwrap();
         });
 
         // back_button
@@ -80,47 +82,11 @@ impl Window {
         });
 
         // leaflet
-        let leaflet: libhandy::Leaflet = self.builder.get_object("content").unwrap();
-        let bottom_switcher: gtk::ActionBar = self.builder.get_object("bottom_switcher").unwrap();
-        let view_stack: gtk::Stack = self.builder.get_object("view_stack").unwrap();
-        let add_button: gtk::Button = self.builder.get_object("add_button").unwrap();
-        let back_button: gtk::Button = self.builder.get_object("back_button").unwrap();
-        leaflet.connect_property_fold_notify(move |leaflet| {
-            bottom_switcher.set_visible(leaflet.get_property_folded());
-
-            if !leaflet.get_property_folded() {
-                match view_stack.get_visible_child_name().unwrap().as_ref() {
-                    "library" => add_button.set_visible(true),
-                    _ => back_button.set_visible(true),
-                }
-            } else {
-                back_button.set_visible(false);
-                add_button.set_visible(false);
-            }
-        });
-
-        // library_switcher
-        let library_switcher: gtk::RadioButton = self.builder.get_object("library_switcher").unwrap();
+        let content_leaflet: libhandy::Leaflet = self.builder.get_object("content_leaflet").unwrap();
         let builder = self.builder.clone();
         let menu_builder = self.menu_builder.clone();
-        library_switcher.connect_clicked(move |_| {
-            Self::update_view(View::Library, builder.clone(), menu_builder.clone());
-        });
-
-        // playback_switcher
-        let playback_switcher: gtk::RadioButton = self.builder.get_object("playback_switcher").unwrap();
-        let builder = self.builder.clone();
-        let menu_builder = self.menu_builder.clone();
-        playback_switcher.connect_clicked(move |_| {
-            Self::update_view(View::Playback, builder.clone(), menu_builder.clone());
-        });
-
-        // add_switcher
-        let add_switcher: gtk::RadioButton = self.builder.get_object("add_switcher").unwrap();
-        let builder = self.builder.clone();
-        let menu_builder = self.menu_builder.clone();
-        add_switcher.connect_clicked(move |_| {
-            Self::update_view(View::Search, builder.clone(), menu_builder.clone());
+        content_leaflet.connect_property_fold_notify(move |_| {
+            Self::update_view(None, builder.clone(), menu_builder.clone());
         });
     }
 
@@ -131,52 +97,88 @@ impl Window {
         notification.show(&overlay);
     }
 
-    pub fn show_sidebar_player(&self, b: bool) {
-        let sidebar_stack: gtk::Stack = self.builder.get_object("sidebar_stack").unwrap();
-
-        match b {
-            true => sidebar_stack.set_visible_child_name("playback"),
-            false => sidebar_stack.set_visible_child_name("no-playback"),
-        }
-    }
-
-    fn update_view(view: View, builder: gtk::Builder, menu_builder: gtk::Builder) {
-        let leaflet: libhandy::Leaflet = builder.get_object("content").unwrap();
+    // view: None -> Just update the size layout (phone/desktop) without switching between views
+    fn update_view(view: Option<View>, builder: gtk::Builder, menu_builder: gtk::Builder) {
+        let view_switcherbar: libhandy::ViewSwitcherBar = builder.get_object("view_switcherbar").unwrap();
+        let view_stack: gtk::Stack = builder.get_object("view_stack").unwrap();
+        let content_leaflet: libhandy::Leaflet = builder.get_object("content_leaflet").unwrap();
         let header_leaflet: libhandy::Leaflet = builder.get_object("header_leaflet").unwrap();
         let sorting_mbutton: gtk::ModelButton = menu_builder.get_object("sorting_mbutton").unwrap();
         let library_mbutton: gtk::ModelButton = menu_builder.get_object("library_mbutton").unwrap();
-        let view_stack: gtk::Stack = builder.get_object("view_stack").unwrap();
         let add_button: gtk::Button = builder.get_object("add_button").unwrap();
         let back_button: gtk::Button = builder.get_object("back_button").unwrap();
+        let stack_player_box: gtk::Box = builder.get_object("stack_player_box").unwrap();
+        let sidebar_player_box: gtk::Box = builder.get_object("sidebar_player_box").unwrap();
 
-        // show or hide view specific buttons
-        let library_mode = view == View::Library;
-        if !leaflet.get_property_folded() {
+        // Determine if window is currently in phone mode
+        let phone_mode = content_leaflet.get_property_folded();
+
+        // Add player widget to the correct container (depends on the view mode)
+        let player_widget = Self::get_player_widget(builder.clone());
+        if !phone_mode {
+            sidebar_player_box.add(&player_widget);
+        } else {
+            stack_player_box.add(&player_widget);
+        }
+
+        view.map(|view| {
+            // Determine if current visible page is library view
+            let library_mode = view == View::Library;
+
+            // show or hide buttons depending on the selected view
             add_button.set_visible(library_mode);
             back_button.set_visible(!library_mode);
-        }
-        sorting_mbutton.set_sensitive(library_mode);
-        library_mbutton.set_sensitive(library_mode);
+            sorting_mbutton.set_sensitive(library_mode);
+            library_mbutton.set_sensitive(library_mode);
 
-        match view {
-            View::Search => {
-                leaflet.set_visible_child_name("content");
-                header_leaflet.set_visible_child_name("content");
-                view_stack.set_visible_child_name("search");
+            // Show requested view / page
+            match view {
+                View::Discover => {
+                    content_leaflet.set_visible_child_name("content");
+                    header_leaflet.set_visible_child_name("content");
+                    view_stack.set_visible_child_name("discover");
+                }
+                View::Library => {
+                    content_leaflet.set_visible_child_name("content");
+                    header_leaflet.set_visible_child_name("content");
+                    view_stack.set_visible_child_name("library");
+                }
+                View::Playback => {
+                    if phone_mode {
+                        view_stack.set_visible_child_name("playback");
+                    } else {
+                        content_leaflet.set_visible_child_name("playback");
+                        header_leaflet.set_visible_child_name("playback");
+                    }
+                }
             }
-            View::Library => {
-                leaflet.set_visible_child_name("content");
-                header_leaflet.set_visible_child_name("content");
-                view_stack.set_visible_child_name("library");
-            }
-            View::Playback => {
-                header_leaflet.set_visible_child_name("playback");
-                leaflet.set_visible_child_name("playback");
-            }
+        });
+
+        // Show or hide bottom view switcher
+        let show_view_switcher = phone_mode && view_stack.get_visible_child_name() != Some(glib::GString::from("discover"));
+        view_switcherbar.set_reveal(show_view_switcher);
+    }
+
+    // Remove player widget from its parent and return it (to reparent it)
+    fn get_player_widget(builder: gtk::Builder) -> gtk::Widget {
+        let stack_player_box: gtk::Box = builder.get_object("stack_player_box").unwrap();
+        let sidebar_player_box: gtk::Box = builder.get_object("sidebar_player_box").unwrap();
+
+        let mut player_widget;
+        let sidebar_player_widgets = sidebar_player_box.get_children();
+        let stack_player_widgets = stack_player_box.get_children();
+        if sidebar_player_widgets.is_empty() {
+            stack_player_box.remove(&stack_player_widgets[0].clone());
+            player_widget = stack_player_widgets[0].clone();
+        } else {
+            sidebar_player_box.remove(&sidebar_player_widgets[0].clone());
+            player_widget = sidebar_player_widgets[0].clone();
         }
+
+        player_widget
     }
 
     pub fn set_view(&self, view: View) {
-        Self::update_view(view, self.builder.clone(), self.menu_builder.clone());
+        Self::update_view(Some(view), self.builder.clone(), self.menu_builder.clone());
     }
 }

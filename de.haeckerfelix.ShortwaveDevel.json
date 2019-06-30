@@ -1,7 +1,7 @@
 {
     "app-id" : "de.haeckerfelix.ShortwaveDevel",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "master",
+    "runtime-version" : "3.32",
     "sdk" : "org.gnome.Sdk",
     "sdk-extensions" : [
         "org.freedesktop.Sdk.Extension.rust-stable"
@@ -31,10 +31,10 @@
             "--share=network"
         ],
         "env" : {
+            "RUSTFLAGS" : "--remap-path-prefix =../ --error-format=short",
             "CARGO_HOME" : "/run/build/Shortwave/cargo",
             "RUST_BACKTRACE" : "1",
-            "RUST_LOG" : "shortwave=debug",
-            "RUSTFLAGS" : "--remap-path-prefix =../ --error-format=short"
+            "RUST_LOG" : "shortwave=debug"
         }
     },
     "modules" : [

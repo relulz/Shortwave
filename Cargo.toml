@@ -7,7 +7,7 @@ edition = "2018"
 
 [dependencies]
 gtk = { version="0.6.0", features=["v3_22"] }
-libhandy = { version="0.3.0", features=["v0_0_7"] }
+libhandy = { git = "https://gitlab.gnome.org/haecker-felix/libhandy-rs", branch = "libhandy_0.0.10", features=["v0_0_10"]}
 glib = { version="0.7.0", features=["subclassing"] }
 gio = { version="0.6.0", features=["v2_46"] }
 gdk = "0.10.0"

@@ -16,7 +16,7 @@ use crate::window::{View, Window};
 
 #[derive(Debug, Clone)]
 pub enum Action {
-    ViewShowSearch,
+    ViewShowDiscover,
     ViewShowLibrary,
     ViewShowNotification(String),
     ViewRaise,
@@ -28,7 +28,7 @@ pub enum Action {
     LibraryExport,
     LibraryAddStations(Vec<Station>),
     LibraryRemoveStations(Vec<Station>),
-    SearchFor(StationRequest), // is this neccessary?
+    SearchFor(StationRequest), // TODO: is this neccessary?
 }
 
 pub struct App {
@@ -59,9 +59,10 @@ impl App {
         let library = Library::new(sender.clone());
         let storefront = StoreFront::new(sender.clone());
 
-        window.player_box.add(&player.widget);
+        window.sidebar_player_box.add(&player.widget);
         window.library_box.add(&library.widget);
-        window.storefront_box.add(&storefront.widget);
+        window.discover_box.add(&storefront.widget);
+        window.set_view(View::Library);
 
         // Help overlay
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
@@ -113,12 +114,12 @@ impl App {
             Self::show_about_dialog(window.clone());
         });
 
-        // Search / add stations
+        // Search / Discover / add stations
         let sender = self.sender.clone();
-        self.add_gaction("search", move |_, _| {
-            sender.send(Action::ViewShowSearch).unwrap();
+        self.add_gaction("discover", move |_, _| {
+            sender.send(Action::ViewShowDiscover).unwrap();
         });
-        self.gtk_app.set_accels_for_action("app.search", &["<primary>f"]);
+        self.gtk_app.set_accels_for_action("app.discover", &["<primary>f"]);
 
         // Import library
         let sender = self.sender.clone();
@@ -198,15 +199,12 @@ impl App {
 
     fn process_action(&self, action: Action) -> glib::Continue {
         match action {
-            Action::ViewShowSearch => self.window.set_view(View::Search),
+            Action::ViewShowDiscover => self.window.set_view(View::Discover),
             Action::ViewShowLibrary => self.window.set_view(View::Library),
             Action::ViewRaise => self.window.widget.present_with_time((glib::get_monotonic_time() / 1000) as u32),
             Action::ViewShowNotification(text) => self.window.show_notification(text),
             Action::ViewSetSorting(sorting, order) => self.library.set_sorting(sorting, order),
-            Action::PlaybackSetStation(station) => {
-                self.player.set_station(station.clone());
-                self.window.show_sidebar_player(true);
-            }
+            Action::PlaybackSetStation(station) => self.player.set_station(station.clone()),
             Action::PlaybackStart => self.player.set_playback(PlaybackState::Playing),
             Action::PlaybackStop => self.player.set_playback(PlaybackState::Stopped),
             Action::LibraryImport => self.import_stations(),

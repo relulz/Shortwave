@@ -1,5 +1,6 @@
 use glib::Sender;
 use gtk::prelude::*;
+use libhandy::{SqueezerExt, ViewSwitcherBarExt};
 use url::Url;
 
 use crate::api::{Client, StationRequest};
@@ -62,6 +63,18 @@ impl StoreFront {
         search_entry.connect_search_changed(move |entry| {
             let request = StationRequest::search_for_name(&entry.get_text().unwrap(), 200);
             sender.send(Action::SearchFor(request)).unwrap();
+        });
+
+        // Hide top switcher on phone mode and show instead the bottom view switcher bar
+        let sqeezer: libhandy::Squeezer = self.builder.get_object("squeezer").unwrap();
+        let view_switcher_bar: libhandy::ViewSwitcherBar = self.builder.get_object("view_switcher_bar").unwrap();
+        sqeezer.connect_property_visible_child_notify(move |sqeezer| {
+            let visible_child = sqeezer.get_visible_child();
+
+            visible_child.map(|child| {
+                let show = gtk::WidgetExt::get_name(&child) == Some(glib::GString::from("GtkBox"));
+                view_switcher_bar.set_reveal(show);
+            });
         });
     }
 }

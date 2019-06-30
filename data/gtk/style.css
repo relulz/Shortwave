@@ -25,24 +25,9 @@
 	background-color: @theme_base_color;
 }
 
-
-/* Original Author: Christopher Davis (https://gitlab.gnome.org/BrainBlasted/Trumpet/blob/a4c78543c970c7c998c4b3ef67d5df252048ce4c/res/stylesheet.css) */
-actionbar.bottombar > revealer > box {
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
-.bottombar {
-  min-height: 48px;
-  font-size: smaller;
-}
-
-:checked.bottom-switcher > box > label {
-  font-weight: bold;
-}
-
-.bottom-switcher {
-  border-top-width: 0px;
-  border-radius: 0px;
-  border-bottom-width: 0px;
+.discover-viewswitcher{
+	border-radius: 5px;
+	border: 1px solid @borders;
+	box-shadow: 0 4px 5px rgba(0,0,0,0.1);
+	background-color: @theme_base_color;
 }
