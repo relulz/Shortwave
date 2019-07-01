@@ -19,6 +19,7 @@ pub struct GtkController {
     title_label: gtk::Label,
     subtitle_label: gtk::Label,
     subtitle_revealer: gtk::Revealer,
+    action_revealer: gtk::Revealer,
     playback_button_stack: gtk::Stack,
     start_playback_button: gtk::Button,
     stop_playback_button: gtk::Button,
@@ -37,6 +38,7 @@ impl GtkController {
         let title_label: gtk::Label = builder.get_object("title_label").unwrap();
         let subtitle_label: gtk::Label = builder.get_object("subtitle_label").unwrap();
         let subtitle_revealer: gtk::Revealer = builder.get_object("subtitle_revealer").unwrap();
+        let action_revealer: gtk::Revealer = builder.get_object("action_revealer").unwrap();
         let playback_button_stack: gtk::Stack = builder.get_object("playback_button_stack").unwrap();
         let start_playback_button: gtk::Button = builder.get_object("start_playback_button").unwrap();
         let stop_playback_button: gtk::Button = builder.get_object("stop_playback_button").unwrap();
@@ -50,6 +52,7 @@ impl GtkController {
             app,
             title_label,
             subtitle_label,
+            action_revealer,
             subtitle_revealer,
             playback_button_stack,
             start_playback_button,
@@ -91,6 +94,7 @@ impl GtkController {
 
 impl Controller for GtkController {
     fn set_station(&self, station: Station) {
+        self.action_revealer.set_reveal_child(true);
         self.title_label.set_text(&station.name);
         *self.station.borrow_mut() = Some(station);
 
