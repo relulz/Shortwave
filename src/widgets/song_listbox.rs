@@ -25,7 +25,7 @@ impl SongListBox {
     pub fn bind_model(&self, model: &SongModel) {
         let sender = self.sender.clone();
 
-        self.listbox.bind_model(&model.model, move |song| {
+        self.listbox.bind_model(Some(&model.model), move |song| {
             let row = SongRow::new(sender.clone(), song.downcast_ref::<ObjectWrapper>().unwrap().deserialize());
             row.widget.upcast::<gtk::Widget>()
         });

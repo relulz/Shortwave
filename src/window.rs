@@ -1,6 +1,6 @@
 use glib::Sender;
 use gtk::prelude::*;
-use libhandy::{HeaderBarExt, LeafletExt, ViewSwitcherBarExt};
+use libhandy::LeafletExt;
 
 use crate::app::Action;
 use crate::config;

@@ -1,8 +1,6 @@
 use gio::prelude::*;
 use glib::Sender;
 use gtk::prelude::*;
-use rusqlite::Connection;
-use url::Url;
 
 use std::cell::RefCell;
 use std::fs;
@@ -10,7 +8,7 @@ use std::io;
 use std::path::PathBuf;
 use std::result::Result;
 
-use crate::api::{Client, Station};
+use crate::api::Station;
 use crate::app::Action;
 use crate::config;
 use crate::model::ObjectWrapper;

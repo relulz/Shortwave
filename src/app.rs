@@ -51,7 +51,7 @@ impl App {
         gtk::CssProvider::load_from_resource(&p, "/de/haeckerfelix/Shortwave/gtk/style.css");
         gtk::StyleContext::add_provider_for_screen(&gdk::Screen::get_default().unwrap(), &p, 500);
 
-        let gtk_app = gtk::Application::new(config::APP_ID, gio::ApplicationFlags::FLAGS_NONE).unwrap();
+        let gtk_app = gtk::Application::new(Some(config::APP_ID), gio::ApplicationFlags::FLAGS_NONE).unwrap();
         let (sender, r) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
         let receiver = RefCell::new(Some(r));
 
@@ -65,8 +65,8 @@ impl App {
         window.discover_box.add(&storefront.widget);
         window.set_view(View::Library);
 
-        window.discover_header_switcher.set_stack(&storefront.discover_stack);
-        window.discover_bottom_switcher.set_stack(&storefront.discover_stack);
+        window.discover_header_switcher.set_stack(Some(&storefront.discover_stack));
+        window.discover_bottom_switcher.set_stack(Some(&storefront.discover_stack));
 
         // Help overlay
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
@@ -139,11 +139,11 @@ impl App {
 
         // Sort / Order menu
         let sort_variant = "name".to_variant();
-        let sorting_action = gio::SimpleAction::new_stateful("sorting", sort_variant.type_(), &sort_variant);
+        let sorting_action = gio::SimpleAction::new_stateful("sorting", Some(sort_variant.type_()), &sort_variant);
         self.gtk_app.add_action(&sorting_action);
 
         let order_variant = "ascending".to_variant();
-        let order_action = gio::SimpleAction::new_stateful("order", order_variant.type_(), &order_variant);
+        let order_action = gio::SimpleAction::new_stateful("order", Some(order_variant.type_()), &order_variant);
         self.gtk_app.add_action(&order_action);
 
         let sa = sorting_action.clone();
@@ -186,7 +186,7 @@ impl App {
 
     fn add_gaction<F>(&self, name: &str, action: F)
     where
-        for<'r, 's> F: Fn(&'r gio::SimpleAction, &'s Option<glib::Variant>) + 'static,
+        for<'r, 's> F: Fn(&'r gio::SimpleAction, Option<&'s glib::Variant>) + 'static,
     {
         let simple_action = gio::SimpleAction::new(name, None);
         simple_action.connect_activate(action);
@@ -223,12 +223,12 @@ impl App {
     fn show_about_dialog(window: gtk::ApplicationWindow) {
         let dialog = gtk::AboutDialog::new();
         dialog.set_program_name(config::NAME);
-        dialog.set_logo_icon_name(config::APP_ID);
-        dialog.set_comments("A web radio client");
-        dialog.set_copyright("© 2019 Felix Häcker");
+        dialog.set_logo_icon_name(Some(config::APP_ID));
+        dialog.set_comments(Some("A web radio client"));
+        dialog.set_copyright(Some("© 2019 Felix Häcker"));
         dialog.set_license_type(gtk::License::Gpl30);
-        dialog.set_version(format!("{}{}", config::VERSION, config::NAME_SUFFIX).as_str());
-        dialog.set_transient_for(&window);
+        dialog.set_version(Some(format!("{}{}", config::VERSION, config::NAME_SUFFIX).as_str()));
+        dialog.set_transient_for(Some(&window));
         dialog.set_modal(true);
 
         dialog.set_authors(&["Felix Häcker"]);
@@ -239,7 +239,13 @@ impl App {
     }
 
     fn import_stations(&self) {
-        let import_dialog = gtk::FileChooserNative::new("Select database to import", &self.window.widget, gtk::FileChooserAction::Open, "Import", "Cancel");
+        let import_dialog = gtk::FileChooserNative::new(
+            Some("Select database to import"),
+            Some(&self.window.widget),
+            gtk::FileChooserAction::Open,
+            Some("Import"),
+            Some("Cancel"),
+        );
         let filter = gtk::FileFilter::new();
         import_dialog.set_filter(&filter);
         filter.add_mime_type("application/json"); // Shortwave library format
@@ -265,7 +271,7 @@ impl App {
     }
 
     fn export_stations(&self) {
-        let export_dialog = gtk::FileChooserNative::new("Export database", &self.window.widget, gtk::FileChooserAction::Save, "Export", "Cancel");
+        let export_dialog = gtk::FileChooserNative::new(Some("Export database"), Some(&self.window.widget), gtk::FileChooserAction::Save, Some("Export"), Some("Cancel"));
         export_dialog.set_current_name("library.json");
         if gtk::ResponseType::from(export_dialog.run()) == gtk::ResponseType::Accept {
             let path = export_dialog.get_file().unwrap().get_path().unwrap();

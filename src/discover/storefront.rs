@@ -1,6 +1,5 @@
 use glib::Sender;
 use gtk::prelude::*;
-use libhandy::{SqueezerExt, ViewSwitcherBarExt};
 use url::Url;
 
 use crate::api::{Client, StationRequest};

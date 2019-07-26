@@ -1,8 +1,6 @@
-use gio::prelude::*;
 use glib::Sender;
 use gtk::prelude::*;
 
-use crate::api::Station;
 use crate::app::Action;
 use crate::model::ObjectWrapper;
 use crate::model::StationModel;
@@ -39,9 +37,8 @@ impl StationFlowBox {
 
     pub fn bind_model(&self, model: &StationModel) {
         let sender = self.sender.clone();
-        let widget = self.widget.clone();
 
-        self.widget.bind_model(&model.model, move |station| {
+        self.widget.bind_model(Some(&model.model), move |station| {
             let row = StationRow::new(sender.clone(), station.downcast_ref::<ObjectWrapper>().unwrap().deserialize());
             row.widget.upcast::<gtk::Widget>()
         });
