@@ -46,13 +46,14 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
 #### Flatpak
 This Flatpak bundle gets automatically generated with every Git commit. 
-[Download the latest bundle](https://gitlab.gnome.org/World/Shortwave/-/jobs/artifacts/master/download?job=flatpak)
+[Download the latest bundle](https://gitlab.gnome.org/World/Shortwave/-/jobs/artifacts/master/download?job=flatpak).
 
-You can install it with GNOME Software, or just run `flatpak install shortwave-dev.flatpak -y`.
+You can install the downloaded bundle with GNOME Software, or just run `flatpak install shortwave-dev.flatpak -y`.
+
+If you haven't installed Flatpak yet, you can download it from [here](https://flatpak.org/setup/).
 
 ## Building
 Shortwave can be built and run with [Gnome Builder](https://wiki.gnome.org/Apps/Builder) >= 3.28.
 Just clone the repo and hit the run button!
 
 You can get Builder from [here](https://wiki.gnome.org/Apps/Builder/Downloads).
-
