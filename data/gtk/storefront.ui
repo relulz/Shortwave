@@ -10,35 +10,14 @@
     <property name="vexpand">True</property>
     <property name="orientation">vertical</property>
     <child>
-      <object class="HdySqueezer" id="squeezer">
+      <object class="GtkLabel" id="leaflet_breakpoint">
         <property name="visible">True</property>
-        <property name="homogeneous">False</property>
         <property name="can_focus">False</property>
-        <child>
-          <object class="HdyViewSwitcher" id="view_switcher">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="halign">center</property>
-            <property name="valign">start</property>
-            <property name="margin_left">12</property>
-            <property name="margin_right">12</property>
-            <property name="margin_top">12</property>
-            <property name="margin_bottom">12</property>
-            <property name="homogeneous">True</property>
-            <property name="policy">wide</property>
-            <property name="narrow_ellipsize">end</property>
-            <property name="stack">discover_stack</property>
-            <style>
-              <class name="discover-viewswitcher"/>
-            </style>
-          </object>
-        </child>
-        <child>
-          <object class="GtkBox">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-          </object>
-        </child>
+        <property name="label" translatable="yes">                                                                                                                                                                         </property>
+        <property name="ellipsize">start</property>
+        <style>
+          <class name="hide"/>
+        </style>
       </object>
       <packing>
         <property name="expand">False</property>
@@ -50,9 +29,6 @@
       <object class="GtkStack" id="discover_stack">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="margin_top">12</property>
-        <property name="hhomogeneous">False</property>
-        <property name="vhomogeneous">False</property>
         <property name="transition_type">slide-left-right</property>
         <property name="interpolate_size">True</property>
         <child>
@@ -302,18 +278,6 @@
         <property name="expand">True</property>
         <property name="fill">True</property>
         <property name="position">1</property>
-      </packing>
-    </child>
-    <child>
-      <object class="HdyViewSwitcherBar" id="view_switcher_bar">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="stack">discover_stack</property>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">2</property>
       </packing>
     </child>
   </object>

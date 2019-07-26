@@ -96,6 +96,7 @@ impl Controller for GtkController {
     fn set_station(&self, station: Station) {
         self.action_revealer.set_reveal_child(true);
         self.title_label.set_text(&station.name);
+        self.title_label.set_tooltip_text(Some(station.name.as_str()));
         *self.station.borrow_mut() = Some(station);
 
         // reset everything else
@@ -120,9 +121,11 @@ impl Controller for GtkController {
     fn set_song_title(&self, title: &str) {
         if title != "" {
             self.subtitle_label.set_text(title);
+            self.subtitle_label.set_tooltip_text(Some(title));
             self.subtitle_revealer.set_reveal_child(true);
         } else {
             self.subtitle_label.set_text("");
+            self.subtitle_label.set_tooltip_text(None);
             self.subtitle_revealer.set_reveal_child(false);
         }
     }

@@ -1,7 +1,6 @@
 use chrono::NaiveTime;
 use glib::Sender;
 use gtk::prelude::*;
-use libhandy::{ActionRow, ActionRowExt};
 use open;
 
 use std::path::PathBuf;
@@ -10,46 +9,25 @@ use crate::app::Action;
 use crate::audio::Song;
 
 pub struct SongRow {
-    pub widget: ActionRow,
+    pub widget: gtk::Box,
     song: Song,
-    button_stack: gtk::Stack,
-    save_button: gtk::Button,
-    open_button: gtk::Button,
+
+    builder: gtk::Builder,
 }
 
 impl SongRow {
     pub fn new(_sender: Sender<Action>, song: Song) -> Self {
-        let widget = ActionRow::new();
-        widget.set_title(&song.title);
-        widget.set_subtitle(&Self::format_duration(song.duration.as_secs()));
-        widget.set_icon_name("");
+        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/song_row.ui");
+        let song_row: gtk::Box = builder.get_object("song_row").unwrap();
 
-        let button_stack = gtk::Stack::new();
-        widget.add_action(&button_stack);
+        let title_label: gtk::Label = builder.get_object("title_label").unwrap();
+        title_label.set_text(&song.title);
+        title_label.set_tooltip_text(Some(song.title.as_str()));
+        let duration_label: gtk::Label = builder.get_object("duration_label").unwrap();
+        duration_label.set_text(&Self::format_duration(song.duration.as_secs()));
+        duration_label.set_tooltip_text(Some(Self::format_duration(song.duration.as_secs()).as_str()));
 
-        let save_button = gtk::Button::new();
-        save_button.set_relief(gtk::ReliefStyle::None);
-        save_button.set_valign(gtk::Align::Center);
-        let save_image = gtk::Image::new_from_icon_name("document-save-symbolic", gtk::IconSize::__Unknown(4));
-        save_button.add(&save_image);
-        button_stack.add_named(&save_button, "save");
-
-        let open_button = gtk::Button::new();
-        open_button.set_relief(gtk::ReliefStyle::None);
-        open_button.set_valign(gtk::Align::Center);
-        let open_image = gtk::Image::new_from_icon_name("media-playback-start-symbolic", gtk::IconSize::__Unknown(4));
-        open_button.add(&open_image);
-        button_stack.add_named(&open_button, "open");
-
-        widget.show_all();
-
-        let row = Self {
-            widget,
-            song,
-            button_stack,
-            save_button,
-            open_button,
-        };
+        let row = Self { widget: song_row, song, builder };
 
         row.setup_signals();
         row
@@ -57,22 +35,24 @@ impl SongRow {
 
     fn setup_signals(&self) {
         let song = self.song.clone();
-        let widget = self.widget.clone();
-        let button_stack = self.button_stack.clone();
-        self.save_button.connect_clicked(move |_| {
+        let button_stack: gtk::Stack = self.builder.get_object("button_stack").unwrap();
+        let save_button: gtk::Button = self.builder.get_object("save_button").unwrap();
+        let duration_label: gtk::Label = self.builder.get_object("duration_label").unwrap();
+        save_button.connect_clicked(move |_| {
             let mut path = PathBuf::from(glib::get_user_special_dir(glib::UserDirectory::Music).unwrap());
             path.push(&Song::simplify_title(song.title.clone()));
             match song.save_as(path) {
                 Ok(()) => {
-                    widget.set_subtitle("Saved");
+                    duration_label.set_text("Saved");
                     button_stack.set_visible_child_name("open");
                 }
-                Err(err) => widget.set_subtitle(&err.to_string()),
+                Err(err) => duration_label.set_text(&err.to_string()),
             };
         });
 
         let song = self.song.clone();
-        self.open_button.connect_clicked(move |_| {
+        let open_button: gtk::Button = self.builder.get_object("open_button").unwrap();
+        open_button.connect_clicked(move |_| {
             open::that(song.path.clone()).expect("Could not play song");
         });
     }

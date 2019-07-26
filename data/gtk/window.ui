@@ -5,8 +5,8 @@
   <requires lib="libhandy" version="0.0"/>
   <object class="GtkApplicationWindow" id="window">
     <property name="can_focus">False</property>
-    <property name="default_width">700</property>
-    <property name="default_height">500</property>
+    <property name="default_width">1050</property>
+    <property name="default_height">600</property>
     <property name="icon_name">de.haeckerfelix.Shortwave</property>
     <child type="titlebar">
       <object class="HdyTitleBar">
@@ -56,6 +56,57 @@
                   </object>
                   <packing>
                     <property name="position">2</property>
+                  </packing>
+                </child>
+                <child type="title">
+                  <object class="GtkScrolledWindow">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="hexpand">True</property>
+                    <child>
+                      <object class="GtkViewport">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <object class="GtkStack" id="header_switcher_stack">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="hhomogeneous">False</property>
+                            <property name="vhomogeneous">False</property>
+                            <property name="interpolate_size">True</property>
+                            <child>
+                              <object class="HdyViewSwitcher" id="discover_header_switcher">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="halign">center</property>
+                                <property name="narrow_ellipsize">end</property>
+                              </object>
+                              <packing>
+                                <property name="name">discover</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="app_label">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="halign">center</property>
+                                <property name="label">Shortwave</property>
+                                <style>
+                                  <class name="title"/>
+                                </style>
+                              </object>
+                              <packing>
+                                <property name="name">main</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
@@ -113,6 +164,8 @@
       <object class="GtkOverlay" id="overlay">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="width_request">350</property>
+        <property name="height_request">400</property>
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
@@ -131,6 +184,7 @@
                     <property name="hhomogeneous">False</property>
                     <property name="vhomogeneous">False</property>
                     <property name="transition_type">crossfade</property>
+                    <property name="interpolate_size">True</property>
                     <child>
                       <object class="GtkBox" id="library_box">
                         <property name="visible">True</property>
@@ -165,6 +219,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
+                        <property name="width_request">350</property>
                         <child>
                           <placeholder/>
                         </child>
@@ -219,10 +274,39 @@
               </packing>
             </child>
             <child>
-              <object class="HdyViewSwitcherBar" id="view_switcherbar">
+              <object class="GtkRevealer" id="bottom_switcher_revealer">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="stack">view_stack</property>
+                <property name="transition_type">slide-up</property>
+                <child>
+                  <object class="GtkStack" id="bottom_switcher_stack">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="transition_type">crossfade</property>
+                    <child>
+                      <object class="HdyViewSwitcherBar" id="main_bottom_switcher">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="stack">view_stack</property>
+                        <property name="reveal">True</property>
+                      </object>
+                      <packing>
+                        <property name="name">main</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="HdyViewSwitcherBar" id="discover_bottom_switcher">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="reveal">True</property>
+                      </object>
+                      <packing>
+                        <property name="name">discover</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>

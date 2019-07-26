@@ -10,6 +10,8 @@ use crate::widgets::StationFlowBox;
 
 pub struct StoreFront {
     pub widget: gtk::Box,
+    pub discover_stack: gtk::Stack,
+
     tags_flowbox: gtk::FlowBox,
     client: Client,
 
@@ -21,8 +23,9 @@ impl StoreFront {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/storefront.ui");
         let widget: gtk::Box = builder.get_object("storefront").unwrap();
-        let tags_flowbox: gtk::FlowBox = builder.get_object("tags_flowbox").unwrap();
+        let discover_stack: gtk::Stack = builder.get_object("discover_stack").unwrap();
 
+        let tags_flowbox: gtk::FlowBox = builder.get_object("tags_flowbox").unwrap();
         let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
 
         let results_box: gtk::Box = builder.get_object("results_box").unwrap();
@@ -32,6 +35,7 @@ impl StoreFront {
 
         let storefront = Self {
             widget,
+            discover_stack,
             tags_flowbox,
             client,
             builder,
@@ -63,18 +67,6 @@ impl StoreFront {
         search_entry.connect_search_changed(move |entry| {
             let request = StationRequest::search_for_name(&entry.get_text().unwrap(), 200);
             sender.send(Action::SearchFor(request)).unwrap();
-        });
-
-        // Hide top switcher on phone mode and show instead the bottom view switcher bar
-        let sqeezer: libhandy::Squeezer = self.builder.get_object("squeezer").unwrap();
-        let view_switcher_bar: libhandy::ViewSwitcherBar = self.builder.get_object("view_switcher_bar").unwrap();
-        sqeezer.connect_property_visible_child_notify(move |sqeezer| {
-            let visible_child = sqeezer.get_visible_child();
-
-            visible_child.map(|child| {
-                let show = gtk::WidgetExt::get_name(&child) == Some(glib::GString::from("GtkBox"));
-                view_switcher_bar.set_reveal(show);
-            });
         });
     }
 }

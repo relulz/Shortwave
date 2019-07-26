@@ -1,6 +1,6 @@
 use glib::Sender;
 use gtk::prelude::*;
-use libhandy::{LeafletExt, ViewSwitcherBarExt};
+use libhandy::{HeaderBarExt, LeafletExt, ViewSwitcherBarExt};
 
 use crate::app::Action;
 use crate::config;
@@ -20,6 +20,9 @@ pub struct Window {
     pub library_box: gtk::Box,
     pub discover_box: gtk::Box,
 
+    pub discover_bottom_switcher: libhandy::ViewSwitcherBar,
+    pub discover_header_switcher: libhandy::ViewSwitcher,
+
     builder: gtk::Builder,
     menu_builder: gtk::Builder,
     sender: Sender<Action>,
@@ -31,14 +34,17 @@ impl Window {
         let menu_builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/menu.ui");
 
         let window: gtk::ApplicationWindow = builder.get_object("window").unwrap();
-        let view_headerbar: gtk::HeaderBar = builder.get_object("view_headerbar").unwrap();
-        view_headerbar.set_title(Some(config::NAME));
+        let app_label: gtk::Label = builder.get_object("app_label").unwrap();
         window.set_title(config::NAME);
+        app_label.set_text(config::NAME);
 
         let stack_player_box: gtk::Box = builder.get_object("stack_player_box").unwrap();
         let sidebar_player_box: gtk::Box = builder.get_object("sidebar_player_box").unwrap();
         let library_box: gtk::Box = builder.get_object("library_box").unwrap();
         let discover_box: gtk::Box = builder.get_object("discover_box").unwrap();
+
+        let discover_bottom_switcher: libhandy::ViewSwitcherBar = builder.get_object("discover_bottom_switcher").unwrap();
+        let discover_header_switcher: libhandy::ViewSwitcher = builder.get_object("discover_header_switcher").unwrap();
 
         let window = Self {
             widget: window,
@@ -46,6 +52,8 @@ impl Window {
             sidebar_player_box,
             library_box,
             discover_box,
+            discover_bottom_switcher,
+            discover_header_switcher,
             builder,
             menu_builder,
             sender,
@@ -97,9 +105,12 @@ impl Window {
         notification.show(&overlay);
     }
 
+    // I admit this is a bit messy. If anyone wants to improve this, please do not hesitate to do so :-)
     // view: None -> Just update the size layout (phone/desktop) without switching between views
     fn update_view(view: Option<View>, builder: gtk::Builder, menu_builder: gtk::Builder) {
-        let view_switcherbar: libhandy::ViewSwitcherBar = builder.get_object("view_switcherbar").unwrap();
+        let bottom_switcher_revealer: gtk::Revealer = builder.get_object("bottom_switcher_revealer").unwrap();
+        let bottom_switcher_stack: gtk::Stack = builder.get_object("bottom_switcher_stack").unwrap();
+        let header_switcher_stack: gtk::Stack = builder.get_object("header_switcher_stack").unwrap();
         let view_stack: gtk::Stack = builder.get_object("view_stack").unwrap();
         let content_leaflet: libhandy::Leaflet = builder.get_object("content_leaflet").unwrap();
         let header_leaflet: libhandy::Leaflet = builder.get_object("header_leaflet").unwrap();
@@ -113,14 +124,7 @@ impl Window {
         // Determine if window is currently in phone mode
         let phone_mode = content_leaflet.get_property_folded();
 
-        // Add player widget to the correct container (depends on the view mode)
-        let player_widget = Self::get_player_widget(builder.clone());
-        if !phone_mode {
-            sidebar_player_box.add(&player_widget);
-        } else {
-            stack_player_box.add(&player_widget);
-        }
-
+        // Update visible view if necessary
         view.map(|view| {
             // Determine if current visible page is library view
             let library_mode = view == View::Library;
@@ -154,9 +158,34 @@ impl Window {
             }
         });
 
-        // Show or hide bottom view switcher
-        let show_view_switcher = phone_mode && view_stack.get_visible_child_name() != Some(glib::GString::from("discover"));
-        view_switcherbar.set_reveal(show_view_switcher);
+        // Show bottom view switcherbar on phone mode
+        bottom_switcher_revealer.set_reveal_child(phone_mode);
+
+        // Show discover specific view switcher, if discover page gets displayed
+        if view_stack.get_visible_child_name() == Some(glib::GString::from("discover")) {
+            bottom_switcher_stack.set_visible_child_name("discover");
+            if phone_mode {
+                header_switcher_stack.set_visible_child_name("main");
+            } else {
+                header_switcher_stack.set_visible_child_name("discover");
+            }
+        } else {
+            bottom_switcher_stack.set_visible_child_name("main");
+            header_switcher_stack.set_visible_child_name("main");
+        }
+
+        // Ensure that we don't show the playback stack page on desktop mode, since it would be empty.
+        if view_stack.get_visible_child_name() == Some(glib::GString::from("playback")) {
+            view_stack.set_visible_child_name("library");
+        }
+
+        // Add player widget to the correct container (depends on the view mode)
+        let player_widget = Self::get_player_widget(builder.clone());
+        if !phone_mode {
+            sidebar_player_box.add(&player_widget);
+        } else {
+            stack_player_box.add(&player_widget);
+        }
     }
 
     // Remove player widget from its parent and return it (to reparent it)

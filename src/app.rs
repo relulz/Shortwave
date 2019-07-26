@@ -1,6 +1,7 @@
 use gio::prelude::*;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
+use libhandy::{ViewSwitcherBarExt, ViewSwitcherExt};
 
 use std::cell::RefCell;
 use std::env;
@@ -63,6 +64,9 @@ impl App {
         window.library_box.add(&library.widget);
         window.discover_box.add(&storefront.widget);
         window.set_view(View::Library);
+
+        window.discover_header_switcher.set_stack(&storefront.discover_stack);
+        window.discover_bottom_switcher.set_stack(&storefront.discover_stack);
 
         // Help overlay
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");

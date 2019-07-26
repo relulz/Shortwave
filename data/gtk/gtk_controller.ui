@@ -98,6 +98,8 @@
         <property name="justify">center</property>
         <property name="wrap">True</property>
         <property name="selectable">True</property>
+        <property name="ellipsize">end</property>
+        <property name="max_width_chars">0</property>
         <attributes>
           <attribute name="weight" value="bold"/>
           <attribute name="scale" value="1.2"/>
@@ -122,6 +124,8 @@
             <property name="justify">center</property>
             <property name="wrap">True</property>
             <property name="selectable">True</property>
+            <property name="ellipsize">end</property>
+            <property name="max_width_chars">0</property>
           </object>
         </child>
       </object>

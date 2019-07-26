@@ -25,9 +25,6 @@
 	background-color: @theme_base_color;
 }
 
-.discover-viewswitcher{
-	border-radius: 5px;
-	border: 1px solid @borders;
-	box-shadow: 0 4px 5px rgba(0,0,0,0.1);
-	background-color: @theme_base_color;
+.hide{
+  opacity: 0;
 }
