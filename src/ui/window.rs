@@ -4,7 +4,7 @@ use libhandy::LeafletExt;
 
 use crate::app::Action;
 use crate::config;
-use crate::widgets::Notification;
+use crate::ui::Notification;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum View {

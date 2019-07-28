@@ -4,7 +4,7 @@ use gtk::prelude::*;
 use crate::app::Action;
 use crate::model::ObjectWrapper;
 use crate::model::SongModel;
-use crate::widgets::song_row::SongRow;
+use crate::ui::song_row::SongRow;
 
 pub struct SongListBox {
     pub widget: gtk::Box,

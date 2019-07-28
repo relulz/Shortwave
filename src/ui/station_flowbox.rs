@@ -4,7 +4,7 @@ use gtk::prelude::*;
 use crate::app::Action;
 use crate::model::ObjectWrapper;
 use crate::model::StationModel;
-use crate::widgets::station_row::StationRow;
+use crate::ui::station_row::StationRow;
 
 pub struct StationFlowBox {
     pub widget: gtk::FlowBox,

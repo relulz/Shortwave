@@ -4,7 +4,7 @@ use libhandy::Dialog;
 
 use crate::api::Station;
 use crate::app::Action;
-use crate::library::Library;
+use crate::database::Library;
 
 pub struct StationDialog {
     pub widget: Dialog,

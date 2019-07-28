@@ -16,7 +16,7 @@ use crate::audio::gstreamer_backend::{GstreamerBackend, GstreamerMessage};
 use crate::audio::{PlaybackState, Song};
 use crate::config;
 use crate::model::SongModel;
-use crate::widgets::SongListBox;
+use crate::ui::SongListBox;
 
 ////////////////////////////////////////////////////////////////////////////////////
 //                                                                                //

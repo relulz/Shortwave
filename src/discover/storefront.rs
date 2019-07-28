@@ -5,7 +5,7 @@ use url::Url;
 use crate::api::{Client, StationRequest};
 use crate::app::Action;
 use crate::discover::TileButton;
-use crate::widgets::StationFlowBox;
+use crate::ui::StationFlowBox;
 
 pub struct StoreFront {
     pub widget: gtk::Box,

@@ -3,7 +3,7 @@ use gtk::prelude::*;
 
 use crate::api::Station;
 use crate::app::Action;
-use crate::widgets::station_dialog::StationDialog;
+use crate::ui::station_dialog::StationDialog;
 
 pub struct StationRow {
     pub widget: gtk::FlowBoxChild,

@@ -10,10 +10,10 @@ use std::rc::Rc;
 use crate::api::{Station, StationRequest};
 use crate::audio::{PlaybackState, Player};
 use crate::config;
+use crate::database::Library;
 use crate::discover::StoreFront;
-use crate::library::Library;
 use crate::model::{Order, Sorting};
-use crate::window::{View, Window};
+use crate::ui::{View, Window};
 
 #[derive(Debug, Clone)]
 pub enum Action {

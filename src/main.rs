@@ -14,15 +14,14 @@ extern crate matches;
 
 mod api;
 mod audio;
+mod database;
 mod discover;
 mod model;
-mod widgets;
+mod ui;
 
 mod app;
 mod config;
-mod library;
 mod static_resource;
-mod window;
 
 use crate::app::App;
 

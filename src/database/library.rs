@@ -14,7 +14,7 @@ use crate::config;
 use crate::model::ObjectWrapper;
 use crate::model::StationModel;
 use crate::model::{Order, Sorting};
-use crate::widgets::StationFlowBox;
+use crate::ui::StationFlowBox;
 
 lazy_static! {
     static ref LIBRARY_PATH: PathBuf = {

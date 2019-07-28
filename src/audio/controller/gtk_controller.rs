@@ -8,7 +8,7 @@ use crate::api::Station;
 use crate::app::Action;
 use crate::audio::Controller;
 use crate::audio::PlaybackState;
-use crate::widgets::StationDialog;
+use crate::ui::StationDialog;
 
 pub struct GtkController {
     pub widget: gtk::Box,
