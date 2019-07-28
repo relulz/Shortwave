@@ -50,15 +50,15 @@ subdir('hooks')
 cargo = find_program('cargo', required: false)
 gresource = find_program('glib-compile-resources', required: false)
 cargo_vendor = find_program('cargo-vendor', required: false)
-cargo_script = find_program('build-aux/cargo.sh')
-grabber = find_program('build-aux/grabber.sh')
+cargo_script = find_program('scripts/cargo.sh')
+grabber = find_program('scripts/grabber.sh')
 
 subdir('src')
 
 meson.add_dist_script(
-  'build-aux/dist-vendor.sh',
+  'scripts/dist-vendor.sh',
   join_paths(meson.build_root(), 'meson-dist', meson.project_name() + '-' + shortwave_version),
   meson.source_root()
 )
 
-meson.add_install_script('build-aux/meson_post_install.py')
+meson.add_install_script('scripts/meson_post_install.py')
