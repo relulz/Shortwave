@@ -1,3 +1,4 @@
+mod pages;
 mod storefront;
 mod tile_button;
 

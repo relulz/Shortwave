@@ -252,43 +252,12 @@ impl App {
         filter.add_mime_type("application/x-sqlite3"); // Old Gradio library format
         filter.add_mime_type("application/vnd.sqlite3"); // Old Gradio library format
 
-        if gtk::ResponseType::from(import_dialog.run()) == gtk::ResponseType::Accept {
-            let path = import_dialog.get_file().unwrap().get_path().unwrap();
-            debug!("Import path: {:?}", path);
-            match Library::read(path) {
-                Ok(stations) => {
-                    let message = format!("Successfully imported {} stations.", stations.len());
-                    self.sender.send(Action::ViewShowNotification(message)).unwrap();
-                    self.sender.send(Action::LibraryAddStations(stations)).unwrap();
-                }
-                Err(error) => {
-                    let message = format!("Could not import stations: {}", error.to_string());
-                    self.sender.send(Action::ViewShowNotification(message)).unwrap();
-                }
-            };
-        }
-        import_dialog.destroy();
+        // TODO: Reimplement station import
     }
 
     fn export_stations(&self) {
         let export_dialog = gtk::FileChooserNative::new(Some("Export database"), Some(&self.window.widget), gtk::FileChooserAction::Save, Some("Export"), Some("Cancel"));
         export_dialog.set_current_name("library.json");
-        if gtk::ResponseType::from(export_dialog.run()) == gtk::ResponseType::Accept {
-            let path = export_dialog.get_file().unwrap().get_path().unwrap();
-            debug!("Export path: {:?}", path);
-            let stations = self.library.to_vec();
-            let count = stations.len();
-            match Library::write(stations, path) {
-                Ok(()) => {
-                    let message = format!("Successfully exported {} stations.", count);
-                    self.sender.send(Action::ViewShowNotification(message)).unwrap();
-                }
-                Err(error) => {
-                    let message = format!("Could not export stations: {}", error.to_string());
-                    self.sender.send(Action::ViewShowNotification(message)).unwrap();
-                }
-            };
-        }
-        export_dialog.destroy();
+        // TODO: Reimplement station export
     }
 }

@@ -1,18 +1,16 @@
 use glib::Sender;
 use gtk::prelude::*;
-use url::Url;
 
-use crate::api::{Client, StationRequest};
+use crate::api::StationRequest;
 use crate::app::Action;
+use crate::discover::pages::Search;
 use crate::discover::TileButton;
-use crate::ui::StationFlowBox;
 
 pub struct StoreFront {
     pub widget: gtk::Box,
     pub discover_stack: gtk::Stack,
 
-    tags_flowbox: gtk::FlowBox,
-    client: Client,
+    search: Search,
 
     builder: gtk::Builder,
     sender: Sender<Action>,
@@ -24,19 +22,14 @@ impl StoreFront {
         let widget: gtk::Box = builder.get_object("storefront").unwrap();
         let discover_stack: gtk::Stack = builder.get_object("discover_stack").unwrap();
 
-        let tags_flowbox: gtk::FlowBox = builder.get_object("tags_flowbox").unwrap();
-        let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
-
-        let results_box: gtk::Box = builder.get_object("results_box").unwrap();
-        let station_flowbox = StationFlowBox::new(sender.clone());
-        station_flowbox.bind_model(&client.model.borrow());
-        results_box.add(&station_flowbox.widget);
+        let search = Search::new(sender.clone());
+        let search_box: gtk::Box = builder.get_object("search_box").unwrap();
+        search_box.add(&search.widget);
 
         let storefront = Self {
             widget,
             discover_stack,
-            tags_flowbox,
-            client,
+            search,
             builder,
             sender,
         };
@@ -51,21 +44,14 @@ impl StoreFront {
     }
 
     fn add_popular_tag(&self, title: &str, name: &str) {
+        let tags_flowbox: gtk::FlowBox = self.builder.get_object("tags_flowbox").unwrap();
         let tagbutton = TileButton::new(self.sender.clone(), title, name);
-        self.tags_flowbox.add(&tagbutton.widget);
+        tags_flowbox.add(&tagbutton.widget);
     }
 
     pub fn search_for(&self, request: StationRequest) {
-        debug!("Search for: {:?}", request);
-        self.client.send_station_request(&request);
+        self.search.search_for(request);
     }
 
-    fn setup_signals(&self) {
-        let search_entry: gtk::SearchEntry = self.builder.get_object("search_entry").unwrap();
-        let sender = self.sender.clone();
-        search_entry.connect_search_changed(move |entry| {
-            let request = StationRequest::search_for_name(&entry.get_text().unwrap(), 200);
-            sender.send(Action::SearchFor(request)).unwrap();
-        });
-    }
+    fn setup_signals(&self) {}
 }

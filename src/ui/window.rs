@@ -193,7 +193,7 @@ impl Window {
         let stack_player_box: gtk::Box = builder.get_object("stack_player_box").unwrap();
         let sidebar_player_box: gtk::Box = builder.get_object("sidebar_player_box").unwrap();
 
-        let mut player_widget;
+        let player_widget;
         let sidebar_player_widgets = sidebar_player_box.get_children();
         let stack_player_widgets = stack_player_box.get_children();
         if sidebar_player_widgets.is_empty() {

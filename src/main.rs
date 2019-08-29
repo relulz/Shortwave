@@ -1,3 +1,5 @@
+#![feature(async_await, await_macro, async_closure)]
+
 #[macro_use]
 extern crate log;
 extern crate pretty_env_logger;
@@ -11,6 +13,10 @@ extern crate lazy_static;
 extern crate serde_derive;
 #[macro_use]
 extern crate matches;
+#[macro_use]
+extern crate diesel;
+#[macro_use]
+extern crate diesel_migrations;
 
 mod api;
 mod audio;
@@ -21,7 +27,9 @@ mod ui;
 
 mod app;
 mod config;
+mod path;
 mod static_resource;
+mod utils;
 
 use crate::app::App;
 

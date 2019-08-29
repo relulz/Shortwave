@@ -4,7 +4,7 @@
     "runtime-version" : "master",
     "sdk" : "org.gnome.Sdk",
     "sdk-extensions" : [
-        "org.freedesktop.Sdk.Extension.rust-stable"
+        "org.freedesktop.Sdk.Extension.rust-nightly"
     ],
     "command" : "shortwave",
     "tags" : [
@@ -26,7 +26,7 @@
         "--own-name=org.mpris.MediaPlayer2.Shortwave"
     ],
     "build-options" : {
-        "append-path" : "/usr/lib/sdk/rust-stable/bin",
+        "append-path" : "/usr/lib/sdk/rust-nightly/bin",
         "build-args" : [
             "--share=network"
         ],
@@ -55,7 +55,8 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://source.puri.sm/Librem5/libhandy.git"
+                    "url" : "https://source.puri.sm/Librem5/libhandy.git",
+                    "commit" : "2d777677352d037b6f5cc24d9c1c8d9a74ac0ded"
                 }
             ]
         },

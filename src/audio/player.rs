@@ -1,4 +1,5 @@
 use gio::prelude::*;
+use glib::futures::FutureExt;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
 use url::Url;
@@ -14,8 +15,8 @@ use crate::app::Action;
 use crate::audio::controller::{Controller, GtkController, MprisController};
 use crate::audio::gstreamer_backend::{GstreamerBackend, GstreamerMessage};
 use crate::audio::{PlaybackState, Song};
-use crate::config;
 use crate::model::SongModel;
+use crate::path;
 use crate::ui::SongListBox;
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +42,7 @@ use crate::ui::SongListBox;
 
 pub struct Player {
     pub widget: gtk::Box,
-    controller: Rc<Vec<Box<Controller>>>,
+    controller: Rc<Vec<Box<dyn Controller>>>,
 
     backend: Arc<Mutex<GstreamerBackend>>,
     song_model: Rc<RefCell<SongModel>>,
@@ -61,7 +62,7 @@ impl Player {
         let (gst_sender, gst_receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
         let backend = Arc::new(Mutex::new(GstreamerBackend::new(gst_sender)));
 
-        let mut controller: Vec<Box<Controller>> = Vec::new();
+        let mut controller: Vec<Box<dyn Controller>> = Vec::new();
 
         // Gtk Controller
         let gtk_controller = GtkController::new(sender.clone());
@@ -73,7 +74,7 @@ impl Player {
         let mpris_controller = MprisController::new(sender.clone());
         controller.push(Box::new(mpris_controller));
 
-        let controller: Rc<Vec<Box<Controller>>> = Rc::new(controller);
+        let controller: Rc<Vec<Box<dyn Controller>>> = Rc::new(controller);
 
         let player = Self {
             widget,
@@ -94,16 +95,16 @@ impl Player {
             con.set_station(station.clone());
         }
 
-        let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_LOW);
-        let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
-        client.get_stream_url(&station, sender);
-
         let backend = self.backend.clone();
-        receiver.attach(None, move |station_url| {
-            debug!("new source uri to record: {}", station_url);
-            backend.lock().unwrap().new_source_uri(&station_url);
-            glib::Continue(false)
+        let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
+        // get asynchronously the stream url and play it
+        let fut = client.get_stream_url(station).map(move |station_url| {
+            debug!("new source uri to record: {}", station_url.url);
+            backend.lock().unwrap().new_source_uri(&station_url.url);
         });
+
+        let ctx = glib::MainContext::default();
+        ctx.spawn_local(fut);
     }
 
     pub fn set_playback(&self, playback: PlaybackState) {
@@ -142,7 +143,7 @@ impl Player {
         });
     }
 
-    fn process_gst_message(message: GstreamerMessage, controller: Rc<Vec<Box<Controller>>>, song_model: Rc<RefCell<SongModel>>, backend: Arc<Mutex<GstreamerBackend>>) -> glib::Continue {
+    fn process_gst_message(message: GstreamerMessage, controller: Rc<Vec<Box<dyn Controller>>>, song_model: Rc<RefCell<SongModel>>, backend: Arc<Mutex<GstreamerBackend>>) -> glib::Continue {
         match message {
             GstreamerMessage::SongTitleChanged(title) => {
                 debug!("Song title has changed: \"{}\"", title);
@@ -192,8 +193,7 @@ impl Player {
     fn get_song_path(title: String) -> PathBuf {
         let title = Song::simplify_title(title);
 
-        let mut path = glib::get_user_cache_dir().unwrap();
-        path.push(config::NAME);
+        let mut path = path::CACHE.clone();
         path.push("recording");
 
         // Make sure that the path exists
@@ -203,6 +203,6 @@ impl Player {
             path.push(title);
             path.set_extension("ogg");
         }
-        path
+        path.to_path_buf()
     }
 }

@@ -1,21 +1,17 @@
-use glib::Sender;
+use gio::prelude::*;
+use glib::GString;
 use soup::prelude::*;
-use soup::MessageExt;
 use soup::Session;
 use url::Url;
 
-use std::cell::RefCell;
-use std::rc::Rc;
-
 use crate::api::*;
 use crate::config;
-use crate::model::StationModel;
+use crate::database::StationIdentifier;
 
+#[derive(Clone)]
 pub struct Client {
     session: Session,
     server: Url,
-
-    pub model: Rc<RefCell<StationModel>>,
 }
 
 impl Client {
@@ -24,53 +20,62 @@ impl Client {
 
         let session = soup::Session::new();
         session.set_property_user_agent(Some(&user_agent));
-
-        let model = Rc::new(RefCell::new(StationModel::new()));
         debug!("Initialized new soup session with user agent \"{}\"", user_agent);
 
-        Client { server, session, model }
+        Client { server, session }
     }
 
-    pub fn send_station_request(&self, request: &StationRequest) {
+    pub async fn send_station_request(self, request: StationRequest) -> Vec<Station> {
         let url = self.build_url(STATION_SEARCH, Some(&request.url_encode()));
         debug!("Station request URL: {}", url);
+        let data = self.send_message(url).await.unwrap().0;
 
+        // Parse text to Vec<Station>
+        let stations: Vec<Station> = serde_json::from_str(data.as_str()).unwrap();
+        debug!("Found {} station(s)!", stations.len());
+
+        stations
+    }
+
+    pub async fn get_stations_by_identifiers(self, identifiers: Vec<StationIdentifier>) -> Vec<Station> {
+        let mut stations = Vec::new();
+
+        for identifier in identifiers {
+            let url = self.build_url(&format!("{}{}", STATION_BY_ID, identifier.station_id), None);
+            debug!("Request station by ID URL: {}", url);
+            let data = self.send_message(url).await.unwrap().0;
+
+            // Parse text to Vec<Station>
+            let mut s: Vec<Station> = serde_json::from_str(data.as_str()).unwrap();
+            stations.append(&mut s);
+        }
+
+        debug!("Found {} station(s)!", stations.len());
+        stations
+    }
+
+    pub async fn get_stream_url(self, station: Station) -> StationUrl {
+        let url = self.build_url(&format!("{}{}", PLAYABLE_STATION_URL, station.id), None);
+        debug!("Request playable URL: {}", url);
+        let data = self.send_message(url).await.unwrap().0;
+
+        // Parse text to StationUrl
+        let result: Vec<StationUrl> = serde_json::from_str(data.as_str()).unwrap();
+        debug!("Playable URL is: {}", result[0].url);
+        result[0].clone()
+    }
+
+    // Create and send soup message, return the received data.
+    async fn send_message(&self, url: Url) -> Result<(GString, usize), gio::Error> {
         // Create SOUP message
         let message = soup::Message::new("GET", &url.to_string()).unwrap();
 
         // Send created message
-        let model = self.model.clone();
-        self.session.queue_message(&message, move |_, response| {
-            model.borrow_mut().clear();
+        let input_stream = self.session.send_async_future(&message).await.unwrap();
 
-            let response_data = response.get_property_response_body_data().unwrap();
-            let response_text = std::str::from_utf8(&response_data).unwrap();
-
-            // Parse result text
-            let result: Vec<Station> = serde_json::from_str(response_text).unwrap();
-            debug!("Found {} station(s)!", result.len());
-
-            for station in result {
-                model.borrow_mut().add_station(station);
-            }
-        });
-    }
-
-    pub fn get_stream_url(&self, station: &Station, sender: Sender<String>) {
-        let url = self.build_url(&format!("{}{}", PLAYABLE_STATION_URL, station.id), None);
-        debug!("Request playable URL: {}", url);
-
-        let message = soup::Message::new("GET", &url.to_string()).unwrap();
-        let sender = sender.clone();
-        self.session.queue_message(&message, move |_, response| {
-            let response_data = response.get_property_response_body_data().unwrap();
-            let response_text = std::str::from_utf8(&response_data).unwrap();
-
-            // Parse result text
-            let result: Vec<StationUrl> = serde_json::from_str(response_text).unwrap();
-            debug!("Playable URL is: {}", result[0].url);
-            sender.send(result[0].url.clone()).unwrap();
-        });
+        // Create DataInputStream and read read received data
+        let data_input_stream = gio::DataInputStream::new(&input_stream);
+        data_input_stream.read_upto_async_future("", glib::PRIORITY_LOW).await
     }
 
     fn build_url(&self, param: &str, options: Option<&str>) -> Url {

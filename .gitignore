@@ -34,3 +34,4 @@ src/config.rs
 **/#*#
 **/tags.*
 .flatpak-builder
+shortwave.db

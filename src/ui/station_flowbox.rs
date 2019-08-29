@@ -1,10 +1,10 @@
 use glib::Sender;
 use gtk::prelude::*;
 
+use crate::api::Station;
 use crate::app::Action;
-use crate::model::ObjectWrapper;
-use crate::model::StationModel;
 use crate::ui::station_row::StationRow;
+use crate::utils;
 
 pub struct StationFlowBox {
     pub widget: gtk::FlowBox,
@@ -35,12 +35,23 @@ impl StationFlowBox {
         Self { widget, sender }
     }
 
-    pub fn bind_model(&self, model: &StationModel) {
-        let sender = self.sender.clone();
+    pub fn set_stations(&self, stations: Vec<Station>) {
+        self.clear();
 
-        self.widget.bind_model(Some(&model.model), move |station| {
-            let row = StationRow::new(sender.clone(), station.downcast_ref::<ObjectWrapper>().unwrap().deserialize());
-            row.widget.upcast::<gtk::Widget>()
-        });
+        let widget = self.widget.downgrade();
+        let sender = self.sender.clone();
+        let constructor = move |station: Station| StationRow::new(sender.clone(), station).widget.clone();
+
+        // Start lazy loading
+        utils::lazy_load(stations.clone(), widget.clone(), constructor.clone());
+    }
+
+    // Clears everything
+    fn clear(&self) {
+        let children = self.widget.get_children();
+        for widget in children {
+            self.widget.remove(&widget);
+            widget.destroy();
+        }
     }
 }

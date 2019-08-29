@@ -8,6 +8,9 @@ export SHORTWAVE_PROFILE="$5"
 export CARGO_TARGET_DIR="$MESON_BUILD_ROOT"/target
 export CARGO_HOME="$CARGO_TARGET_DIR"/cargo-home
 
+echo "** Rust version:"
+rustc --version
+
 if test "$SHORTWAVE_PROFILE" != "Devel"
 then
     echo "** RELEASE MODE **"
