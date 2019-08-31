@@ -1,5 +1,3 @@
-#![feature(async_await, await_macro, async_closure)]
-
 #[macro_use]
 extern crate log;
 extern crate pretty_env_logger;

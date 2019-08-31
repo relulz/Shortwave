@@ -69,7 +69,8 @@ impl Search {
             let request = request.clone();
             let fut = client.send_station_request(request).map(move |stations| {
                 debug!("{:?}", stations);
-                flowbox.set_stations(stations);
+                flowbox.clear();
+                flowbox.add_stations(stations);
             });
 
             let ctx = glib::MainContext::default();

@@ -12,8 +12,8 @@ use crate::audio::{PlaybackState, Player};
 use crate::config;
 use crate::database::Library;
 use crate::discover::StoreFront;
-use crate::model::{Order, Sorting};
 use crate::ui::{View, Window};
+use crate::utils::{Order, Sorting};
 
 #[derive(Debug, Clone)]
 pub enum Action {

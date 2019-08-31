@@ -12,8 +12,8 @@ use crate::config;
 use crate::database::connection;
 use crate::database::queries;
 use crate::database::StationIdentifier;
-use crate::model::{Order, Sorting};
 use crate::ui::StationFlowBox;
+use crate::utils::{Order, Sorting};
 
 pub struct Library {
     pub widget: gtk::Box,
@@ -35,33 +35,33 @@ impl Library {
         welcome_text.set_text(format!("Welcome to {}", config::NAME).as_str());
 
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
+        flowbox.set_sorting(Sorting::Name, Order::Ascending);
         content_box.add(&flowbox.widget);
 
         let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
 
         let library = Self { widget, flowbox, client, sender };
 
-        library.check_database();
-        library.update_flowbox();
+        library.load_stations();
         library
     }
 
     pub fn add_stations(&self, stations: Vec<Station>) {
         debug!("Add {} station(s)", stations.len());
+        self.flowbox.add_stations(stations.clone());
         for station in stations {
             let id = StationIdentifier::new(&station);
             queries::insert_station_identifier(id).unwrap();
         }
-        self.update_flowbox();
     }
 
     pub fn remove_stations(&self, stations: Vec<Station>) {
         debug!("Remove {} station(s)", stations.len());
+        self.flowbox.remove_stations(stations.clone());
         for station in stations {
             let id = StationIdentifier::new(&station);
             queries::delete_station_identifier(id).unwrap();
         }
-        self.update_flowbox();
     }
 
     pub fn contains_station(station: &Station) -> bool {
@@ -74,25 +74,23 @@ impl Library {
     }
 
     pub fn set_sorting(&self, sorting: Sorting, order: Order) {
-        //self.library_model.borrow_mut().set_sorting(sorting, order);
+        self.flowbox.set_sorting(sorting, order);
     }
 
-    fn update_flowbox(&self) {
-        let identifiers = queries::get_station_identifiers().unwrap();
-
-        let flowbox = self.flowbox.clone();
-        let fut = self.client.clone().get_stations_by_identifiers(identifiers).map(move |stations| {
-            flowbox.set_stations(stations);
-        });
-
-        let ctx = glib::MainContext::default();
-        ctx.spawn_local(fut);
-    }
-
-    fn check_database(&self) {
+    fn load_stations(&self) {
         // Print database info
         info!("Database Path: {}", connection::DB_PATH.to_str().unwrap());
         info!("Stations: {}", queries::get_station_identifiers().unwrap().len());
+
+        // Load database async
+        let identifiers = queries::get_station_identifiers().unwrap();
+        let ctx = glib::MainContext::default();
+
+        let flowbox = self.flowbox.clone();
+        let fut = self.client.clone().get_stations_by_identifiers(identifiers).map(move |stations| {
+            flowbox.add_stations(stations);
+        });
+        ctx.spawn_local(fut);
     }
 }
 
