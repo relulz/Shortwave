@@ -50,7 +50,7 @@ impl Library {
         debug!("Add {} station(s)", stations.len());
         self.flowbox.add_stations(stations.clone());
         for station in stations {
-            let id = StationIdentifier::new(&station);
+            let id = StationIdentifier::from_station(&station);
             queries::insert_station_identifier(id).unwrap();
         }
     }
@@ -59,14 +59,14 @@ impl Library {
         debug!("Remove {} station(s)", stations.len());
         self.flowbox.remove_stations(stations.clone());
         for station in stations {
-            let id = StationIdentifier::new(&station);
+            let id = StationIdentifier::from_station(&station);
             queries::delete_station_identifier(id).unwrap();
         }
     }
 
     pub fn contains_station(station: &Station) -> bool {
         // Get station identifier
-        let identifier = StationIdentifier::new(station);
+        let identifier = StationIdentifier::from_station(station);
 
         // Check if database contains this identifier
         let db = queries::get_station_identifiers().unwrap();

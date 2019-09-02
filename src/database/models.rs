@@ -9,7 +9,7 @@ pub struct StationIdentifier {
 }
 
 impl StationIdentifier {
-    pub fn new(station: &Station) -> Self {
+    pub fn from_station(station: &Station) -> Self {
         StationIdentifier { id: None, station_id: station.id }
     }
 }

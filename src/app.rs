@@ -1,16 +1,19 @@
 use gio::prelude::*;
 use glib::{Receiver, Sender};
+use glib::futures::FutureExt;
 use gtk::prelude::*;
 use libhandy::{ViewSwitcherBarExt, ViewSwitcherExt};
+use url::Url;
 
 use std::cell::RefCell;
 use std::env;
 use std::rc::Rc;
 
-use crate::api::{Station, StationRequest};
+use crate::api::{Station, StationRequest, Client};
 use crate::audio::{PlaybackState, Player};
 use crate::config;
 use crate::database::Library;
+use crate::database::gradio_db;
 use crate::discover::StoreFront;
 use crate::ui::{View, Window};
 use crate::utils::{Order, Sorting};
@@ -25,8 +28,7 @@ pub enum Action {
     PlaybackSetStation(Station),
     PlaybackStart,
     PlaybackStop,
-    LibraryImport,
-    LibraryExport,
+    LibraryGradioImport,
     LibraryAddStations(Vec<Station>),
     LibraryRemoveStations(Vec<Station>),
     SearchFor(StationRequest), // TODO: is this neccessary?
@@ -127,14 +129,8 @@ impl App {
 
         // Import library
         let sender = self.sender.clone();
-        self.add_gaction("import-library", move |_, _| {
-            sender.send(Action::LibraryImport).unwrap();
-        });
-
-        // Export library
-        let sender = self.sender.clone();
-        self.add_gaction("export-library", move |_, _| {
-            sender.send(Action::LibraryExport).unwrap();
+        self.add_gaction("import-gradio-library", move |_, _| {
+            sender.send(Action::LibraryGradioImport).unwrap();
         });
 
         // Sort / Order menu
@@ -211,8 +207,7 @@ impl App {
             Action::PlaybackSetStation(station) => self.player.set_station(station.clone()),
             Action::PlaybackStart => self.player.set_playback(PlaybackState::Playing),
             Action::PlaybackStop => self.player.set_playback(PlaybackState::Stopped),
-            Action::LibraryImport => self.import_stations(),
-            Action::LibraryExport => self.export_stations(),
+            Action::LibraryGradioImport => self.import_gradio_library(),
             Action::LibraryAddStations(stations) => self.library.add_stations(stations),
             Action::LibraryRemoveStations(stations) => self.library.remove_stations(stations),
             Action::SearchFor(data) => self.storefront.search_for(data),
@@ -238,7 +233,7 @@ impl App {
         dialog.show();
     }
 
-    fn import_stations(&self) {
+    fn import_gradio_library(&self) {
         let import_dialog = gtk::FileChooserNative::new(
             Some("Select database to import"),
             Some(&self.window.widget),
@@ -246,18 +241,35 @@ impl App {
             Some("Import"),
             Some("Cancel"),
         );
+
+        // Set filechooser filters
         let filter = gtk::FileFilter::new();
         import_dialog.set_filter(&filter);
-        filter.add_mime_type("application/json"); // Shortwave library format
-        filter.add_mime_type("application/x-sqlite3"); // Old Gradio library format
-        filter.add_mime_type("application/vnd.sqlite3"); // Old Gradio library format
+        filter.add_mime_type("application/x-sqlite3");
+        filter.add_mime_type("application/vnd.sqlite3");
 
-        // TODO: Reimplement station import
-    }
+        if gtk::ResponseType::from(import_dialog.run()) == gtk::ResponseType::Accept {
+            let path = import_dialog.get_file().unwrap().get_path().unwrap();
+            debug!("Import path: {:?}", path);
 
-    fn export_stations(&self) {
-        let export_dialog = gtk::FileChooserNative::new(Some("Export database"), Some(&self.window.widget), gtk::FileChooserAction::Save, Some("Export"), Some("Cancel"));
-        export_dialog.set_current_name("library.json");
-        // TODO: Reimplement station export
+            // Get station identifiers
+            let ids = gradio_db::read_database(path);
+            let message = format!("Importing {} stations...", ids.len());
+            self.sender.send(Action::ViewShowNotification(message)).unwrap();
+
+            // Get actual stations from identifiers
+            let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
+            let sender = self.sender.clone();
+            let fut = client.get_stations_by_identifiers(ids).map(move |stations|{
+                sender.send(Action::LibraryAddStations(stations.clone())).unwrap();
+
+                let message = format!("Imported {} stations!", stations.len());
+                sender.send(Action::ViewShowNotification(message)).unwrap();
+            });
+
+            let ctx = glib::MainContext::default();
+            ctx.spawn_local(fut);
+        }
+        import_dialog.destroy();
     }
 }

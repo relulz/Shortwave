@@ -123,22 +123,8 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="receives_default">False</property>
-            <property name="action_name">app.export-library</property>
-            <property name="text" translatable="yes">Export stations</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkModelButton">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="receives_default">False</property>
-            <property name="action_name">app.import-library</property>
-            <property name="text" translatable="yes">Import stations</property>
+            <property name="action_name">app.import-gradio-library</property>
+            <property name="text" translatable="yes">Import from Gradio</property>
           </object>
           <packing>
             <property name="expand">False</property>
