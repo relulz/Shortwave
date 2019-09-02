@@ -1,6 +1,6 @@
 use gio::prelude::*;
-use glib::{Receiver, Sender};
 use glib::futures::FutureExt;
+use glib::{Receiver, Sender};
 use gtk::prelude::*;
 use libhandy::{ViewSwitcherBarExt, ViewSwitcherExt};
 use url::Url;
@@ -9,11 +9,11 @@ use std::cell::RefCell;
 use std::env;
 use std::rc::Rc;
 
-use crate::api::{Station, StationRequest, Client};
+use crate::api::{Client, Station, StationRequest};
 use crate::audio::{PlaybackState, Player};
 use crate::config;
-use crate::database::Library;
 use crate::database::gradio_db;
+use crate::database::Library;
 use crate::discover::StoreFront;
 use crate::ui::{View, Window};
 use crate::utils::{Order, Sorting};
@@ -260,7 +260,7 @@ impl App {
             // Get actual stations from identifiers
             let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
             let sender = self.sender.clone();
-            let fut = client.get_stations_by_identifiers(ids).map(move |stations|{
+            let fut = client.get_stations_by_identifiers(ids).map(move |stations| {
                 sender.send(Action::LibraryAddStations(stations.clone())).unwrap();
 
                 let message = format!("Imported {} stations!", stations.len());

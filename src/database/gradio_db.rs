@@ -15,7 +15,7 @@ pub struct GradioStationID {
     pub station_id: i32,
 }
 
-pub fn read_database(path: PathBuf) -> Vec<StationIdentifier>{
+pub fn read_database(path: PathBuf) -> Vec<StationIdentifier> {
     // Establish connection to database
     let connection: diesel::SqliteConnection = Connection::establish(path.to_str().unwrap()).unwrap(); //TODO: don't unwrap
 
@@ -26,7 +26,7 @@ pub fn read_database(path: PathBuf) -> Vec<StationIdentifier>{
     // Convert GradioIdentifier to Shortwave StationIdentifier
     let mut result = Vec::new();
     for id in ids {
-        let sid = StationIdentifier{
+        let sid = StationIdentifier {
             id: None,
             station_id: id.station_id.clone(),
         };
