@@ -45,15 +45,38 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 ## Development builds
 
 #### Flatpak
-This Flatpak bundle gets automatically generated with every Git commit. 
-[Download the latest bundle](https://gitlab.gnome.org/World/Shortwave/-/jobs/artifacts/master/download?job=flatpak).
+**Automatic Flatpak builds are currently disabled, because we need currently a nightly version of Rust, which is not included in the CI image. We'll re-enable it as soon as possible.**
 
-You can install the downloaded bundle with GNOME Software, or just run `flatpak install shortwave-dev.flatpak -y`.
+~~This Flatpak bundle gets automatically generated with every Git commit. 
+[Download the latest bundle](https://gitlab.gnome.org/World/Shortwave/-/jobs/artifacts/master/download?job=flatpak).~~
+
+~~You can install the downloaded bundle with GNOME Software, or just run `flatpak install shortwave-dev.flatpak -y`.~~
 
 If you haven't installed Flatpak yet, you can download it from [here](https://flatpak.org/setup/).
 
 ## Building
-Shortwave can be built and run with [Gnome Builder](https://wiki.gnome.org/Apps/Builder) >= 3.28.
+Shortwave requires Rust nightly features like async/await, so you have to use Rust 1.39+. 
+It is expected that async/await will be included in Rust 1.39 which gets released in November. 
+After that you can compile Shortwave again with a stable Rust version.
+
+### Building with Flatpak + GNOME Builder
+Shortwave can be built and run with [GNOME Builder](https://wiki.gnome.org/Apps/Builder) >= 3.28.
 Just clone the repo and hit the run button!
 
-You can get Builder from [here](https://wiki.gnome.org/Apps/Builder/Downloads).
+You can get Builder from [here](https://wiki.gnome.org/Apps/Builder/Downloads), and the Rust Nightly Flatpak SDK (if necessary) from [here](https://gitlab.gnome.org/snippets/844)
+
+### Building it manually
+1. `git clone https://gitlab.gnome.org/World/Shortwave.git`
+2. `cd Shortwave`
+3. `meson --prefix=/usr build`
+4. `ninja -C build`
+5. `sudo ninja -C build install`
+
+You need following dependencies to build Shortwave:
+- Rust 1.39 or later
+- GTK 3.24 or later
+- Gstreamer 1.12 or later
+- [libhandy](https://source.puri.sm/Librem5/libhandy)
+- [Meson Buildsystem](https://mesonbuild.com/)
+
+If you need help to build Shortwave, please don't hesitate to ask [here](https://matrix.to/#/#shortwave:matrix.org)!
