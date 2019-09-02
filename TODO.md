@@ -10,6 +10,6 @@ This is what still needs to be done for the first release of Shortwave. There's 
 - [ ] Add ability to vote for stations
 - [ ] Improve stream recorder (Add several record modes, automatically ignore songs that are shorter than 30 seconds, ...)
 - [ ] Implement GNOME Search Provider (https://gitlab.gnome.org/World/Rust/search-provider)
-- [ ] Rewrite library backend using diesel crate / using a database instead of a plain json file
-- [ ] Rustio: Implement async backend for discover features
+- [x] Rewrite library backend using diesel crate / using a database instead of a plain json file
+- [x] radio-browser.info API: Implement async backend for discover features
 - ...
