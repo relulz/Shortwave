@@ -80,3 +80,18 @@ You need following dependencies to build Shortwave:
 - [Meson Buildsystem](https://mesonbuild.com/)
 
 If you need help to build Shortwave, please don't hesitate to ask [here](https://matrix.to/#/#shortwave:matrix.org)!
+
+## To-Do
+This is what still needs to be done for the first release of Shortwave. There's probably much more.
+
+- [ ] Make application translatable
+- [ ] Implement disover page
+- [ ] Implement UI selection mode (https://developer.gnome.org/hig/stable/selection-mode.html.en)
+- [ ] Implement settings dialog
+- [ ] Show station icons instead of placeholder icon
+- [ ] Add ability to vote for stations
+- [ ] Improve stream recorder (Add several record modes, automatically ignore songs that are shorter than 30 seconds, ...)
+- [ ] Implement GNOME Search Provider (https://gitlab.gnome.org/World/Rust/search-provider)
+- [x] Rewrite library backend using diesel crate / using a database instead of a plain json file
+- [x] radio-browser.info API: Implement async backend for discover features
+- ...
