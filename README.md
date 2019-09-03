@@ -13,10 +13,6 @@ If you have any questions regarding the use or development of Shortwave,
 want to discuss design or simply hang out, please join us on our [#shortwave:matrix.org](https://matrix.to/#/#shortwave:matrix.org) channel.
 
 ## FAQ
-- **Whats missing for the first release?**
-
-    A number of features are still missing. If you want to know more, check [this list](https://gitlab.gnome.org/World/Shortwave/blob/master/TODO.md).
-
 - **Why its called 'Shortwave'?**
 
     Shortwave signals have a very long range because of their very good reflection properties. 
