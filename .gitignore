@@ -20,6 +20,7 @@ resources.gresource
 tags.*
 wip
 src/config.rs
+src/static_resource.rs
 /_build/
 /target/
 **/*.rs.bk

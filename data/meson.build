@@ -52,18 +52,6 @@ if appstream_util.found()
 endif
 
 
-# DBUS service
-service_conf = configuration_data()
-service_conf.set('appid', app_id)
-service_conf.set('bindir', join_paths(get_option('prefix'), get_option('bindir')))
-configure_file(
-  input: 'de.haeckerfelix.Shortwave.service.in',
-  output: '@0@.service'.format(app_id),
-  configuration: service_conf,
-  install_dir: join_paths(datadir,'dbus-1', 'services')
-)
-
-
 # Gschema file #
 install_data('de.haeckerfelix.Shortwave.gschema.xml',
   install_dir: join_paths(datadir, 'glib-2.0/schemas')
@@ -76,3 +64,24 @@ if compile_schemas.found()
     args: ['--strict', '--dry-run', meson.current_source_dir()]
   )
 endif
+
+
+# DBUS service
+service_conf = configuration_data()
+service_conf.set('appid', app_id)
+service_conf.set('bindir', join_paths(get_option('prefix'), get_option('bindir')))
+configure_file(
+  input: 'de.haeckerfelix.Shortwave.service.in',
+  output: '@0@.service'.format(app_id),
+  configuration: service_conf,
+  install_dir: join_paths(datadir,'dbus-1', 'services')
+)
+
+
+# Resources
+app_resources = gnome.compile_resources(
+  'de.haeckerfelix.Shortwave',
+  'de.haeckerfelix.Shortwave.gresource.xml',
+  gresource_bundle: true,
+  source_dir: meson.current_build_dir()
+)
