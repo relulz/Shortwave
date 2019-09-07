@@ -1,3 +1,21 @@
+# Resources
+resource_conf = configuration_data()
+resource_conf.set_quoted('RESOURCEFILE', app_resources.full_path())
+resource_rs = configure_file(
+  input: 'static_resource.rs.in',
+  output: 'static_resource.rs',
+  configuration: resource_conf
+)
+
+run_command(
+  'cp',
+  resource_rs,
+  meson.current_source_dir(),
+  check: true
+)
+
+
+# Configuration file
 conf = configuration_data()
 conf.set_quoted('NAME', name)
 conf.set_quoted('APP_ID', app_id)
@@ -19,6 +37,8 @@ run_command(
   check: true
 )
 
+
+# Source code itself
 sources = files(
   'api/client.rs',
   'api/mod.rs',
@@ -78,6 +98,7 @@ cargo_release = custom_target(
   console: true,
   install: true,
   install_dir: get_option('bindir'),
+  depends: app_resources,
   command: [
     cargo_script,
     meson.build_root(),
@@ -87,4 +108,3 @@ cargo_release = custom_target(
     profile
   ]
 )
-
