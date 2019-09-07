@@ -15,6 +15,7 @@ extern crate matches;
 extern crate diesel;
 #[macro_use]
 extern crate diesel_migrations;
+use gettextrs::*;
 
 mod api;
 mod audio;
@@ -41,6 +42,11 @@ fn main() {
 
     // Initialize Gstreamer
     gstreamer::init().expect("Failed to initialize Gstreamer");
+
+    // Setup translations
+    setlocale(LocaleCategory::LcAll, "");
+    bindtextdomain("demo", config::LOCALEDIR);
+    textdomain("shortwave");
 
     // Run app itself
     let app = App::new();

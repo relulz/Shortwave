@@ -2,7 +2,6 @@
 name = "shortwave"
 version = "0.1.0"
 authors = ["Felix Häcker <haeckerfelix@gnome.org>"]
-build = "build.rs"
 edition = "2018"
 
 [dependencies]
@@ -37,3 +36,4 @@ diesel_migrations = "1.4.0"
 xdg = "2.2.0"
 soup = { git="https://gitlab.gnome.org/haecker-felix/soup-rs", features = ["futures"] }
 indexmap = { git = "https://github.com/bluss/indexmap.git", rev = "380e55c6a330b03f554f59ebd01c075bf396dd47" }
+gettext-rs= { version = "0.4", features = ["gettext-system"] }

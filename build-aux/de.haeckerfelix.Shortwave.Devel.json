@@ -1,5 +1,5 @@
 {
-    "app-id" : "de.haeckerfelix.ShortwaveDevel",
+    "app-id" : "de.haeckerfelix.Shortwave.Devel",
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "master",
     "sdk" : "org.gnome.Sdk",

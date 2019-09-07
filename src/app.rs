@@ -85,7 +85,7 @@ impl App {
             storefront,
         });
 
-        glib::set_application_name(&format!("{}{}", config::NAME, config::NAME_SUFFIX));
+        glib::set_application_name(&config::NAME);
         glib::set_prgname(Some("shortwave"));
         gtk::Window::set_default_icon_name(config::APP_ID);
 
@@ -95,9 +95,8 @@ impl App {
     }
 
     pub fn run(&self, app: Rc<Self>) {
-        info!("{}{} ({})", config::NAME, config::NAME_SUFFIX, config::APP_ID);
+        info!("{} ({}) ({})", config::NAME, config::APP_ID, config::VCS_TAG);
         info!("Version: {} ({})", config::VERSION, config::PROFILE);
-        info!("Datadir: {}", config::PKGDATADIR);
 
         let a = app.clone();
         let receiver = self.receiver.borrow_mut().take().unwrap();
@@ -216,13 +215,19 @@ impl App {
     }
 
     fn show_about_dialog(window: gtk::ApplicationWindow) {
+        let vcs_tag = config::VCS_TAG;
+        let version_suffix: String = match config::PROFILE {
+            "development" => format!("\n(Development Commit {})", vcs_tag).to_string(),
+            _ => "".to_string(),
+        };
+
         let dialog = gtk::AboutDialog::new();
         dialog.set_program_name(config::NAME);
         dialog.set_logo_icon_name(Some(config::APP_ID));
         dialog.set_comments(Some("A web radio client"));
         dialog.set_copyright(Some("© 2019 Felix Häcker"));
         dialog.set_license_type(gtk::License::Gpl30);
-        dialog.set_version(Some(format!("{}{}", config::VERSION, config::NAME_SUFFIX).as_str()));
+        dialog.set_version(Some(format!("{}{}", config::VERSION, version_suffix).as_str()));
         dialog.set_transient_for(Some(&window));
         dialog.set_modal(true);
 

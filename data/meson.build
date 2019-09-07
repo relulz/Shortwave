@@ -1,67 +1,78 @@
+gnome = import('gnome')
+
+# Icons #
 subdir('icons')
 
-# Desktop file
+# Desktop file #
 desktop_conf = configuration_data()
-desktop_conf.set('icon', application_id)
-desktop_file = i18n.merge_file (
-  type: 'desktop',
+desktop_conf.set('icon', app_id)
+desktop_file = i18n.merge_file(
   input: configure_file(
-    input: files('de.haeckerfelix.Shortwave.desktop.in.in'),
-    output: 'de.haeckerfelix.Shortwave.desktop.in',
+    input: files('de.haeckerfelix.Shortwave.desktop.in'),
+    output: 'de.haeckerfelix.Shortwave.desktop',
     configuration: desktop_conf
   ),
-  output: '@0@.desktop'.format(application_id),
-  po_dir: podir,
+  output: '@0@.desktop'.format(app_id),
+  type: 'desktop',
+  po_dir: '../po',
   install: true,
-  install_dir: join_paths (shortwave_datadir, 'applications')
+  install_dir: join_paths(datadir, 'applications')
 )
-# Validate Desktop file
-desktop_file_validate = find_program('desktop-file-validate', required: false)
-if desktop_file_validate.found()
-  test(
-    'validate-desktop',
-    desktop_file_validate,
-    args: [
-      desktop_file.full_path()
-    ]
+
+# Validate desktop file #
+desktop_utils = find_program('desktop-file-validate', required: false)
+if desktop_utils.found()
+  test('Validate desktop file', desktop_utils,
+    args: [desktop_file]
   )
 endif
 
-# Appdata
+
+# Appstream metadata #
 appdata_conf = configuration_data()
-appdata_conf.set('appid', application_id)
-appdata_file = i18n.merge_file (
+appdata_conf.set('appid', app_id)
+appstream_file = i18n.merge_file(
   input: configure_file(
-    input: files('de.haeckerfelix.Shortwave.appdata.xml.in.in'),
-    output: 'de.haeckerfelix.Shortwave.appdata.xml.in',
+    input: files('de.haeckerfelix.Shortwave.appdata.xml.in'),
+    output: 'de.haeckerfelix.Shortwave.appdata.xml',
     configuration: appdata_conf
   ),
-  output: '@0@.appdata.xml'.format(application_id),
-  po_dir: podir,
+  output: '@0@.appdata.xml'.format(app_id),
+  po_dir: '../po',
   install: true,
-  install_dir: join_paths (shortwave_datadir, 'metainfo')
+  install_dir: join_paths(datadir, 'appdata')
 )
-# Validate Appdata
+
+# Validate appstream metadata #
 appstream_util = find_program('appstream-util', required: false)
 if appstream_util.found()
-  test(
-    'validate-appdata', appstream_util,
-    args: [
-      'validate-relax', '--nonet', appdata_file.full_path()
-    ]
+  test('Validate appstream file', appstream_util,
+    args: ['validate', appstream_file]
   )
 endif
 
-# dbus service
+
+# DBUS service
 service_conf = configuration_data()
-service_conf.set('appid', application_id)
-service_conf.set('bindir', shortwave_bindir)
+service_conf.set('appid', app_id)
+service_conf.set('bindir', join_paths(get_option('prefix'), get_option('bindir')))
 configure_file(
   input: 'de.haeckerfelix.Shortwave.service.in',
-  output: '@0@.service'.format(application_id),
+  output: '@0@.service'.format(app_id),
   configuration: service_conf,
-  install_dir: join_paths(shortwave_datadir,'dbus-1', 'services')
+  install_dir: join_paths(datadir,'dbus-1', 'services')
 )
 
-# gschema
-install_data('de.haeckerfelix.Shortwave.gschema.xml', install_dir: join_paths(shortwave_datadir, 'glib-2.0', 'schemas'))
+
+# Gschema file #
+install_data('de.haeckerfelix.Shortwave.gschema.xml',
+  install_dir: join_paths(datadir, 'glib-2.0/schemas')
+)
+
+# Validate gschema file #
+compile_schemas = find_program('glib-compile-schemas', required: false)
+if compile_schemas.found()
+  test('Validate schema file', compile_schemas,
+    args: ['--strict', '--dry-run', meson.current_source_dir()]
+  )
+endif
