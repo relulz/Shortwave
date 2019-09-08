@@ -10,7 +10,7 @@ use crate::audio::Controller;
 use crate::audio::PlaybackState;
 use crate::ui::StationDialog;
 
-pub struct GtkController {
+pub struct SidebarController {
     pub widget: gtk::Box,
     sender: Sender<Action>,
     station: Rc<RefCell<Option<Station>>>,
@@ -27,14 +27,14 @@ pub struct GtkController {
     error_label: gtk::Label,
 }
 
-impl GtkController {
+impl SidebarController {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/gtk_controller.ui");
+        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/sidebar_controller.ui");
 
         let station = Rc::new(RefCell::new(None));
         let app = builder.get_application().unwrap();
 
-        let widget: gtk::Box = builder.get_object("gtk_controller").unwrap();
+        let widget: gtk::Box = builder.get_object("sidebar_controller").unwrap();
         let title_label: gtk::Label = builder.get_object("title_label").unwrap();
         let subtitle_label: gtk::Label = builder.get_object("subtitle_label").unwrap();
         let subtitle_revealer: gtk::Revealer = builder.get_object("subtitle_revealer").unwrap();
@@ -92,7 +92,7 @@ impl GtkController {
     }
 }
 
-impl Controller for GtkController {
+impl Controller for SidebarController {
     fn set_station(&self, station: Station) {
         self.action_revealer.set_reveal_child(true);
         self.title_label.set_text(&station.name);

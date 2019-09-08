@@ -1,8 +1,10 @@
-mod gtk_controller;
+mod mini_controller;
 mod mpris_controller;
+mod sidebar_controller;
 
-pub use gtk_controller::GtkController;
+pub use mini_controller::MiniController;
 pub use mpris_controller::MprisController;
+pub use sidebar_controller::SidebarController;
 
 use crate::api::Station;
 use crate::audio::PlaybackState;

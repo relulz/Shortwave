@@ -55,8 +55,8 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://source.puri.sm/Librem5/libhandy.git",
-                    "commit" : "2d777677352d037b6f5cc24d9c1c8d9a74ac0ded"
+                    "url" : "https://source.puri.sm/exalm/libhandy.git",
+                    "commit" : "29e97a4ffeac522f34040ba082b43419c597ecf5"
                 }
             ]
         },

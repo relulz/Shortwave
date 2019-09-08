@@ -47,7 +47,8 @@ sources = files(
   'api/station_request.rs',
   'api/station_url.rs',
 
-  'audio/controller/gtk_controller.rs',
+  'audio/controller/sidebar_controller.rs',
+  'audio/controller/mini_controller.rs',
   'audio/controller/mod.rs',
   'audio/controller/mpris_controller.rs',
   'audio/gstreamer_backend.rs',

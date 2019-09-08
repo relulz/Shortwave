@@ -4,6 +4,7 @@
   <requires lib="gtk+" version="3.22"/>
   <requires lib="libhandy" version="0.0"/>
   <object class="GtkBox" id="storefront">
+    <property name="width_request">350</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="hexpand">True</property>
@@ -87,21 +88,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="leaflet_width_breakpoint">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">                                                                                                                                                                         </property>
-                <property name="ellipsize">start</property>
-                <style>
-                  <class name="hide"/>
-                </style>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="pack_type">end</property>
-                <property name="position">1</property>
-              </packing>
+              <placeholder/>
             </child>
           </object>
           <packing>

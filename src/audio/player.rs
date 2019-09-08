@@ -12,7 +12,7 @@ use std::sync::{Arc, Mutex};
 
 use crate::api::{Client, Station};
 use crate::app::Action;
-use crate::audio::controller::{Controller, GtkController, MprisController};
+use crate::audio::controller::{Controller, MiniController, MprisController, SidebarController};
 use crate::audio::gstreamer_backend::{GstreamerBackend, GstreamerMessage};
 use crate::audio::{PlaybackState, Song};
 use crate::model::SongModel;
@@ -23,11 +23,11 @@ use crate::ui::SongListBox;
 //                                                                                //
 //  A small overview of the player/gstreamer program structure  :)                //
 //                                                                                //
-//   ----------------------    -----------------    ---------------               //
-//  | ChromecastController |  | MprisController |  | GtkController |              //
-//   ----------------------    -----------------    ---------------               //
+//   ----------------------    -----------------    -------------------           //
+//  | ChromecastController |  | MprisController |  | SidebarController |          //
+//   ----------------------    -----------------    -------------------           //
 //            |                        |                   |                      //
-//            \--------------------------------------------/                      //
+//            \--------------------------------------------- ( + MiniController ) //
 //                                     |                                          //
 //                           ------------     -------------------                 //
 //                          | Controller |   | Gstreamer Backend |                //
@@ -42,6 +42,7 @@ use crate::ui::SongListBox;
 
 pub struct Player {
     pub widget: gtk::Box,
+    pub mini_controller_widget: gtk::Box,
     controller: Rc<Vec<Box<dyn Controller>>>,
 
     backend: Arc<Mutex<GstreamerBackend>>,
@@ -65,10 +66,15 @@ impl Player {
         let mut controller: Vec<Box<dyn Controller>> = Vec::new();
 
         // Gtk Controller
-        let gtk_controller = GtkController::new(sender.clone());
+        let sidebar_controller = SidebarController::new(sender.clone());
         let controller_box: gtk::Box = builder.get_object("controller_box").unwrap();
-        controller_box.add(&gtk_controller.widget);
-        controller.push(Box::new(gtk_controller));
+        controller_box.add(&sidebar_controller.widget);
+        controller.push(Box::new(sidebar_controller));
+
+        // Mini Controller (gets used in phone mode / bottom toolbar)
+        let mini_controller = MiniController::new(sender.clone());
+        let mini_controller_widget = mini_controller.widget.clone();
+        controller.push(Box::new(mini_controller));
 
         // Mpris Controller
         let mpris_controller = MprisController::new(sender.clone());
@@ -78,6 +84,7 @@ impl Player {
 
         let player = Self {
             widget,
+            mini_controller_widget,
             controller,
             backend,
             song_model,

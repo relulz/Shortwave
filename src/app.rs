@@ -22,6 +22,7 @@ use crate::utils::{Order, Sorting};
 pub enum Action {
     ViewShowDiscover,
     ViewShowLibrary,
+    ViewShowPlayer,
     ViewShowNotification(String),
     ViewRaise,
     ViewSetSorting(Sorting, Order),
@@ -62,7 +63,8 @@ impl App {
         let library = Library::new(sender.clone());
         let storefront = StoreFront::new(sender.clone());
 
-        window.sidebar_player_box.add(&player.widget);
+        window.player_box.add(&player.widget);
+        window.mini_controller_box.add(&player.mini_controller_widget);
         window.library_box.add(&library.widget);
         window.discover_box.add(&storefront.widget);
         window.set_view(View::Library);
@@ -200,6 +202,7 @@ impl App {
         match action {
             Action::ViewShowDiscover => self.window.set_view(View::Discover),
             Action::ViewShowLibrary => self.window.set_view(View::Library),
+            Action::ViewShowPlayer => self.window.set_view(View::Player),
             Action::ViewRaise => self.window.widget.present_with_time((glib::get_monotonic_time() / 1000) as u32),
             Action::ViewShowNotification(text) => self.window.show_notification(text),
             Action::ViewSetSorting(sorting, order) => self.library.set_sorting(sorting, order),
