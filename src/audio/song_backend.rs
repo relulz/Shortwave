@@ -75,6 +75,8 @@ impl SongBackend {
 
         // Just delete the whole recording dir.
         // It gets recreated automatically
-        fs::remove_dir_all(path).unwrap();
+        if path.exists() {
+            fs::remove_dir_all(path).unwrap();
+        }
     }
 }
