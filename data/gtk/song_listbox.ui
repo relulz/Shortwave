@@ -3,49 +3,112 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkBox" id="song_listbox">
+    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="no_show_all">True</property>
     <property name="margin_top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
-      <object class="GtkLabel">
+      <object class="GtkStack" id="stack">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="halign">start</property>
-        <property name="label" translatable="yes">Last played songs</property>
-        <attributes>
-          <attribute name="weight" value="bold"/>
-        </attributes>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">2</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkFrame">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_bottom">6</property>
-        <property name="label_xalign">0</property>
+        <property name="hhomogeneous">False</property>
+        <property name="vhomogeneous">False</property>
+        <property name="transition_type">crossfade</property>
+        <property name="interpolate_size">True</property>
         <child>
-          <object class="GtkListBox" id="listbox">
+          <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="selection_mode">none</property>
-            <property name="activate_on_single_click">False</property>
+            <property name="margin_top">30</property>
+            <property name="margin_bottom">30</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_bottom">6</property>
+                <property name="pixel_size">64</property>
+                <property name="icon_name">dialog-information-symbolic</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">No songs</property>
+                <property name="wrap">True</property>
+                <attributes>
+                  <attribute name="weight" value="bold"/>
+                  <attribute name="scale" value="1.2"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Play something, and you'll see the songs here.</property>
+                <property name="justify">center</property>
+                <property name="wrap">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <style>
+              <class name="dim-label"/>
+            </style>
           </object>
+          <packing>
+            <property name="name">empty</property>
+          </packing>
         </child>
-        <child type="label_item">
-          <placeholder/>
+        <child>
+          <object class="GtkFrame">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label_xalign">0</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <object class="GtkListBox" id="listbox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="selection_mode">none</property>
+                <property name="activate_on_single_click">False</property>
+              </object>
+            </child>
+            <child type="label_item">
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="name">content</property>
+            <property name="position">1</property>
+          </packing>
         </child>
+        <style>
+          <class name="songlistbox"/>
+        </style>
       </object>
       <packing>
         <property name="expand">False</property>
         <property name="fill">True</property>
-        <property name="position">3</property>
+        <property name="position">0</property>
       </packing>
     </child>
   </object>

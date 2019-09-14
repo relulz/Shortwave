@@ -79,3 +79,19 @@ where
     let mut data = data.into_iter();
     gtk::idle_add(move || data.next().map(|x| func(x)).map(|_| glib::Continue(true)).unwrap_or_else(|| glib::Continue(false)));
 }
+
+// Removes special chars from a string
+// If anybody knows a better way to do this, feel free to open a MR on GitLab :)
+pub fn simplify_string(s: String) -> String {
+    let mut string = s.replace("/", "");
+    string = string.replace("\\", "");
+    string = string.replace(":", "");
+    string = string.replace("<", "");
+    string = string.replace(">", "");
+    string = string.replace("\"", "");
+    string = string.replace("|", "");
+    string = string.replace("?", "");
+    string = string.replace("*", "");
+    string = string.replace(".", "");
+    string
+}

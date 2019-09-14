@@ -52,6 +52,7 @@ sources = files(
   'audio/controller/mod.rs',
   'audio/controller/mpris_controller.rs',
   'audio/gstreamer_backend.rs',
+  'audio/song_backend.rs',
   'audio/mod.rs',
   'audio/playback_state.rs',
   'audio/player.rs',
@@ -68,10 +69,6 @@ sources = files(
   'discover/mod.rs',
   'discover/storefront.rs',
   'discover/tile_button.rs',
-
-  'model/mod.rs',
-  'model/object_wrapper.rs',
-  'model/song_model.rs',
 
   'ui/mod.rs',
   'ui/notification.rs',

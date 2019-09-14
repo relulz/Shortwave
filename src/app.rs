@@ -10,7 +10,7 @@ use std::env;
 use std::rc::Rc;
 
 use crate::api::{Client, Station, StationRequest};
-use crate::audio::{PlaybackState, Player};
+use crate::audio::{PlaybackState, Player, Song};
 use crate::config;
 use crate::database::gradio_db;
 use crate::database::Library;
@@ -29,10 +29,11 @@ pub enum Action {
     PlaybackSetStation(Station),
     PlaybackStart,
     PlaybackStop,
+    PlaybackSaveSong(Song),
     LibraryGradioImport,
     LibraryAddStations(Vec<Station>),
     LibraryRemoveStations(Vec<Station>),
-    SearchFor(StationRequest), // TODO: is this neccessary?
+    SearchFor(StationRequest), // TODO: is this neccessary?,
 }
 
 pub struct App {
@@ -106,7 +107,6 @@ impl App {
 
         let args: Vec<String> = env::args().collect();
         self.gtk_app.run(&args);
-        self.player.shutdown();
     }
 
     fn setup_gaction(&self) {
@@ -209,6 +209,7 @@ impl App {
             Action::PlaybackSetStation(station) => self.player.set_station(station.clone()),
             Action::PlaybackStart => self.player.set_playback(PlaybackState::Playing),
             Action::PlaybackStop => self.player.set_playback(PlaybackState::Stopped),
+            Action::PlaybackSaveSong(song) => self.player.save_song(song),
             Action::LibraryGradioImport => self.import_gradio_library(),
             Action::LibraryAddStations(stations) => self.library.add_stations(stations),
             Action::LibraryRemoveStations(stations) => self.library.remove_stations(stations),

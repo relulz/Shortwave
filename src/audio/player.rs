@@ -1,4 +1,3 @@
-use gio::prelude::*;
 use glib::futures::FutureExt;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
@@ -14,61 +13,52 @@ use crate::api::{Client, Station};
 use crate::app::Action;
 use crate::audio::controller::{Controller, MiniController, MprisController, SidebarController};
 use crate::audio::gstreamer_backend::{GstreamerBackend, GstreamerMessage};
-use crate::audio::{PlaybackState, Song};
-use crate::model::SongModel;
+use crate::audio::{PlaybackState, Song, SongBackend};
 use crate::path;
-use crate::ui::SongListBox;
+use crate::utils;
 
-////////////////////////////////////////////////////////////////////////////////////
-//                                                                                //
-//  A small overview of the player/gstreamer program structure  :)                //
-//                                                                                //
-//   ----------------------    -----------------    -------------------           //
-//  | ChromecastController |  | MprisController |  | SidebarController |          //
-//   ----------------------    -----------------    -------------------           //
-//            |                        |                   |                      //
-//            \--------------------------------------------- ( + MiniController ) //
-//                                     |                                          //
-//                           ------------     -------------------                 //
-//                          | Controller |   | Gstreamer Backend |                //
-//                           ------------     -------------------                 //
-//                                     |        |                                 //
-//                                     |        |                                 //
-//                                    -----------                                 //
-//                                   |  Player   |                                //
-//                                    -----------                                 //
-//                                                                                //
-////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                             //
+//  A small overview of the player/gstreamer program structure  :)                             //
+//                                                                                             //
+//   ----------------------    -----------------    -------------------    ----------------    //
+//  | ChromecastController |  | MprisController |  | SidebarController |  | MiniController |   //
+//   ----------------------    -----------------    -------------------    ----------------    //
+//            |                        |                   |                      |            //
+//            \-------------------------------------------------------------------/            //
+//                                     |                                                       //
+//                           ------------     -------------------     --------------           //
+//                          | Controller |   | Gstreamer Backend |   | Song Backend |          //
+//                           ------------     -------------------     --------------           //
+//                                     \______ | _______________________/                      //
+//                                            \|/                                              //
+//                                        -----------                                          //
+//                                       |  Player   |                                         //
+//                                        -----------                                          //
+//                                                                                             //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+// ListBox Widget -> Song Backend -> Gstreamer Backend -> Player
 
 pub struct Player {
     pub widget: gtk::Box,
     pub mini_controller_widget: gtk::Box,
     controller: Rc<Vec<Box<dyn Controller>>>,
 
-    backend: Arc<Mutex<GstreamerBackend>>,
-    song_model: Rc<RefCell<SongModel>>,
-    song_listbox: SongListBox,
+    gst_backend: Arc<Mutex<GstreamerBackend>>,
+    song_backend: Rc<RefCell<SongBackend>>,
 }
 
 impl Player {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/player.ui");
         let widget: gtk::Box = builder.get_object("player").unwrap();
-
-        let song_model = Rc::new(RefCell::new(SongModel::new(5)));
-        let song_listbox = SongListBox::new(sender.clone());
-        song_listbox.bind_model(&song_model.borrow());
-        widget.add(&song_listbox.widget);
-
-        let (gst_sender, gst_receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
-        let backend = Arc::new(Mutex::new(GstreamerBackend::new(gst_sender)));
-
         let mut controller: Vec<Box<dyn Controller>> = Vec::new();
 
         // Gtk Controller
         let sidebar_controller = SidebarController::new(sender.clone());
-        let controller_box: gtk::Box = builder.get_object("controller_box").unwrap();
-        controller_box.add(&sidebar_controller.widget);
+        let player_box: gtk::Box = builder.get_object("player_box").unwrap();
+        player_box.add(&sidebar_controller.widget);
         controller.push(Box::new(sidebar_controller));
 
         // Mini Controller (gets used in phone mode / bottom toolbar)
@@ -80,15 +70,23 @@ impl Player {
         let mpris_controller = MprisController::new(sender.clone());
         controller.push(Box::new(mpris_controller));
 
+        // Song backend + Widget
+        let song_backend = Rc::new(RefCell::new(SongBackend::new(sender.clone(), 3)));
+        song_backend.borrow().delete_songs(); // Delete old songs
+        player_box.add(&song_backend.borrow().listbox.widget);
+
+        // Gstreamer backend
+        let (gst_sender, gst_receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
+        let gst_backend = Arc::new(Mutex::new(GstreamerBackend::new(gst_sender)));
+
         let controller: Rc<Vec<Box<dyn Controller>>> = Rc::new(controller);
 
         let player = Self {
             widget,
             mini_controller_widget,
             controller,
-            backend,
-            song_model,
-            song_listbox,
+            gst_backend,
+            song_backend,
         };
 
         player.setup_signals(gst_receiver);
@@ -102,12 +100,12 @@ impl Player {
             con.set_station(station.clone());
         }
 
-        let backend = self.backend.clone();
+        let gst_backend = self.gst_backend.clone();
         let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
         // get asynchronously the stream url and play it
         let fut = client.get_stream_url(station).map(move |station_url| {
             debug!("new source uri to record: {}", station_url.url);
-            backend.lock().unwrap().new_source_uri(&station_url.url);
+            gst_backend.lock().unwrap().new_source_uri(&station_url.url);
         });
 
         let ctx = glib::MainContext::default();
@@ -117,40 +115,28 @@ impl Player {
     pub fn set_playback(&self, playback: PlaybackState) {
         match playback {
             PlaybackState::Playing => {
-                let _ = self.backend.lock().unwrap().set_state(gstreamer::State::Playing);
+                let _ = self.gst_backend.lock().unwrap().set_state(gstreamer::State::Playing);
             }
             PlaybackState::Stopped => {
-                let _ = self.backend.lock().unwrap().set_state(gstreamer::State::Null);
+                let _ = self.gst_backend.lock().unwrap().set_state(gstreamer::State::Null);
             }
             _ => (),
         }
     }
 
-    pub fn shutdown(&self) {
-        self.set_playback(PlaybackState::Stopped);
-
-        // Clear song model and remove all saved songs
-        self.song_model.borrow_mut().clear().unwrap();
-        fs::remove_dir_all(Self::get_song_path("".to_string())).expect("Could not remove recording folder");
+    pub fn save_song(&self, song: Song) {
+        self.song_backend.borrow().save_song(song);
     }
 
     fn setup_signals(&self, receiver: Receiver<GstreamerMessage>) {
         // Wait for new messages from the Gstreamer backend
         let controller = self.controller.clone();
-        let song_model = self.song_model.clone();
-        let backend = self.backend.clone();
-        receiver.attach(None, move |message| Self::process_gst_message(message, controller.clone(), song_model.clone(), backend.clone()));
-
-        // Show song listbox if a song gets added
-        let listbox = self.song_listbox.widget.clone();
-        self.song_model.borrow().model.connect_items_changed(move |_, _, _, added| {
-            if added == 1 {
-                listbox.set_visible(true);
-            }
-        });
+        let song_backend = self.song_backend.clone();
+        let gst_backend = self.gst_backend.clone();
+        receiver.attach(None, move |message| Self::process_gst_message(message, controller.clone(), song_backend.clone(), gst_backend.clone()));
     }
 
-    fn process_gst_message(message: GstreamerMessage, controller: Rc<Vec<Box<dyn Controller>>>, song_model: Rc<RefCell<SongModel>>, backend: Arc<Mutex<GstreamerBackend>>) -> glib::Continue {
+    fn process_gst_message(message: GstreamerMessage, controller: Rc<Vec<Box<dyn Controller>>>, song_backend: Rc<RefCell<SongBackend>>, gst_backend: Arc<Mutex<GstreamerBackend>>) -> glib::Continue {
         match message {
             GstreamerMessage::SongTitleChanged(title) => {
                 debug!("Song title has changed: \"{}\"", title);
@@ -160,15 +146,15 @@ impl Player {
                 }
 
                 // Song have changed -> stop recording
-                if backend.lock().unwrap().is_recording() {
-                    let song = backend.lock().unwrap().stop_recording(true).unwrap();
-                    song_model.borrow_mut().add_song(song);
+                if gst_backend.lock().unwrap().is_recording() {
+                    let song = gst_backend.lock().unwrap().stop_recording(true).unwrap();
+                    song_backend.borrow_mut().add_song(song);
                 } else {
                     // Get current/new song title
-                    let title = backend.lock().unwrap().get_current_song_title();
+                    let title = gst_backend.lock().unwrap().get_current_song_title();
 
                     // Nothing needs to be stopped, so we can start directly recording.
-                    backend.lock().unwrap().start_recording(Self::get_song_path(title));
+                    gst_backend.lock().unwrap().start_recording(Self::get_song_path(title));
                 }
             }
             GstreamerMessage::RecordingStopped => {
@@ -176,11 +162,11 @@ impl Player {
                 debug!("Recording stopped.");
 
                 // Get current/new song title
-                let title = backend.lock().unwrap().get_current_song_title();
+                let title = gst_backend.lock().unwrap().get_current_song_title();
 
                 // Start recording new song
                 if title != "" {
-                    backend.lock().unwrap().start_recording(Self::get_song_path(title));
+                    gst_backend.lock().unwrap().start_recording(Self::get_song_path(title));
                 }
             }
             GstreamerMessage::PlaybackStateChanged(state) => {
@@ -190,7 +176,7 @@ impl Player {
 
                 if matches!(state, PlaybackState::Failure(_)) || matches!(state, PlaybackState::Stopped) {
                     // Discard current recording because the song has not yet been completely recorded.
-                    backend.lock().unwrap().stop_recording(false);
+                    gst_backend.lock().unwrap().stop_recording(false);
                 }
             }
         }
@@ -198,7 +184,7 @@ impl Player {
     }
 
     fn get_song_path(title: String) -> PathBuf {
-        let title = Song::simplify_title(title);
+        let title = utils::simplify_string(title);
 
         let mut path = path::CACHE.clone();
         path.push("recording");

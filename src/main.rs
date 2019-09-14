@@ -4,8 +4,6 @@ extern crate pretty_env_logger;
 #[macro_use]
 extern crate quick_error;
 #[macro_use]
-extern crate glib;
-#[macro_use]
 extern crate lazy_static;
 #[macro_use]
 extern crate serde_derive;
@@ -21,7 +19,6 @@ mod api;
 mod audio;
 mod database;
 mod discover;
-mod model;
 mod ui;
 
 mod app;
