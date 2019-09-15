@@ -8,7 +8,7 @@ use std::rc::Rc;
 
 use crate::api::{Client, StationRequest};
 use crate::app::Action;
-use crate::ui::StationFlowBox;
+use crate::ui::{StationFlowBox, Notification};
 
 pub struct Search {
     pub widget: gtk::Box,
@@ -59,6 +59,7 @@ impl Search {
         let id = self.timeout_id.clone();
         let client = self.client.clone();
         let flowbox = self.flowbox.clone();
+        let sender = self.sender.clone();
         let id = glib::source::timeout_add_seconds_local(1, move || {
             *id.borrow_mut() = None;
 
@@ -67,10 +68,18 @@ impl Search {
             let client = client.clone();
             let flowbox = flowbox.clone();
             let request = request.clone();
+            let sender = sender.clone();
             let fut = client.send_station_request(request).map(move |stations| {
-                debug!("{:?}", stations);
-                flowbox.clear();
-                flowbox.add_stations(stations);
+                match stations{
+                    Ok(s) => {
+                        flowbox.clear();
+                        flowbox.add_stations(s);
+                    },
+                    Err(err) => {
+                        let notification = Notification::new_error("Could not receive station data.", &err.to_string());
+                        sender.send(Action::ViewShowNotification(notification.clone()));
+                    }
+                }
             });
 
             let ctx = glib::MainContext::default();

@@ -4,9 +4,11 @@ use std::rc::Rc;
 #[derive(Debug, Clone)]
 pub struct Notification {
     revealer: gtk::Revealer,
-    spinner: gtk::Spinner,
+    spinner: gtk::Box,
     text_label: gtk::Label,
+    error_label: gtk::Label,
     close_button: gtk::Button,
+    error_box: gtk::Box,
 }
 
 impl Default for Notification{
@@ -14,9 +16,11 @@ impl Default for Notification{
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/notification.ui");
 
         let revealer: gtk::Revealer = builder.get_object("revealer").unwrap();
-        let spinner: gtk::Spinner = builder.get_object("spinner").unwrap();
+        let spinner: gtk::Box = builder.get_object("spinner").unwrap();
         let text_label: gtk::Label = builder.get_object("text_label").unwrap();
+        let error_label: gtk::Label = builder.get_object("error_label").unwrap();
         let close_button: gtk::Button = builder.get_object("close_button").unwrap();
+        let error_box: gtk::Box = builder.get_object("error_box").unwrap();
 
         // Hide notification when close button gets clicked
         let r = revealer.clone();
@@ -29,7 +33,9 @@ impl Default for Notification{
             revealer,
             spinner,
             text_label,
+            error_label,
             close_button,
+            error_box,
         }
     }
 }
@@ -51,6 +57,18 @@ impl Notification {
 
         notification.text_label.set_text(text);
         notification.spinner.set_visible(true);
+
+        Rc::new(notification)
+    }
+
+    // Returns new error notification
+    pub fn new_error (text: &str, error: &str) -> Rc<Self> {
+        let notification = Self::default();
+
+        notification.text_label.set_text(text);
+        notification.error_label.set_text(error);
+        notification.close_button.set_visible(true);
+        notification.error_box.set_visible(true);
 
         Rc::new(notification)
     }

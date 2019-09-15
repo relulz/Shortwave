@@ -90,9 +90,16 @@ impl Library {
         let ctx = glib::MainContext::default();
 
         let flowbox = self.flowbox.clone();
+        let sender = self.sender.clone();
         let fut = self.client.clone().get_stations_by_identifiers(identifiers).map(move |stations| {
-            flowbox.add_stations(stations);
             notification.hide();
+            match stations{
+                Ok(stations) => flowbox.add_stations(stations),
+                Err(err) => {
+                    let notification = Notification::new_error("Could not receive station data.", &err.to_string());
+                    sender.send(Action::ViewShowNotification(notification.clone()));
+                }
+            }
         });
         ctx.spawn_local(fut);
     }

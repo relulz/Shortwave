@@ -41,6 +41,7 @@ run_command(
 # Source code itself
 sources = files(
   'api/client.rs',
+  'api/error.rs',
   'api/mod.rs',
   'api/object.rs',
   'api/station.rs',

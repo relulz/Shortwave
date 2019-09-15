@@ -37,3 +37,5 @@ xdg = "2.2.0"
 soup = { git="https://gitlab.gnome.org/haecker-felix/soup-rs", features = ["futures"] }
 indexmap = { git = "https://github.com/bluss/indexmap.git", rev = "380e55c6a330b03f554f59ebd01c075bf396dd47" }
 gettext-rs= { version = "0.4", features = ["gettext-system"] }
+failure = "0.1.5"
+failure_derive = "0.1.5"

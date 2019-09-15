@@ -9,11 +9,12 @@ use std::path::PathBuf;
 use std::rc::Rc;
 use std::sync::{Arc, Mutex};
 
-use crate::api::{Client, Station};
+use crate::api::{Client, Station, Error};
 use crate::app::Action;
 use crate::audio::controller::{Controller, MiniController, MprisController, SidebarController};
 use crate::audio::gstreamer_backend::{GstreamerBackend, GstreamerMessage};
 use crate::audio::{PlaybackState, Song, SongBackend};
+use crate::ui::Notification;
 use crate::path;
 use crate::utils;
 
@@ -47,6 +48,8 @@ pub struct Player {
 
     gst_backend: Arc<Mutex<GstreamerBackend>>,
     song_backend: Rc<RefCell<SongBackend>>,
+
+    sender: Sender<Action>,
 }
 
 impl Player {
@@ -87,6 +90,7 @@ impl Player {
             controller,
             gst_backend,
             song_backend,
+            sender,
         };
 
         player.setup_signals(gst_receiver);
@@ -101,11 +105,21 @@ impl Player {
         }
 
         let gst_backend = self.gst_backend.clone();
+        let sender = self.sender.clone();
         let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
         // get asynchronously the stream url and play it
         let fut = client.get_stream_url(station).map(move |station_url| {
-            debug!("new source uri to record: {}", station_url.url);
-            gst_backend.lock().unwrap().new_source_uri(&station_url.url);
+            match station_url {
+                Ok(station_url) => {
+                    debug!("new source uri to record: {}", station_url.url);
+                    gst_backend.lock().unwrap().new_source_uri(&station_url.url);
+                },
+                Err(err) => {
+                    let notification = Notification::new_error("Could not play station", &err.to_string());
+                    sender.send(Action::ViewShowNotification(notification)).unwrap();
+                }
+            }
+
         });
 
         let ctx = glib::MainContext::default();

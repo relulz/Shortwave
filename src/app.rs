@@ -271,12 +271,20 @@ impl App {
             let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
             let sender = self.sender.clone();
             let fut = client.get_stations_by_identifiers(ids).map(move |stations| {
-                sender.send(Action::LibraryAddStations(stations.clone())).unwrap();
                 spinner_notification.hide();
+                match stations{
+                    Ok(stations) => {
+                        sender.send(Action::LibraryAddStations(stations.clone())).unwrap();
 
-                let message = format!("Imported {} stations!", stations.len());
-                let notification = Notification::new_info(&message);
-                sender.send(Action::ViewShowNotification(notification)).unwrap();
+                        let message = format!("Imported {} stations!", stations.len());
+                        let notification = Notification::new_info(&message);
+                        sender.send(Action::ViewShowNotification(notification)).unwrap();
+                    },
+                    Err(err) => {
+                        let notification = Notification::new_error("Could not receive station data.", &err.to_string());
+                        sender.send(Action::ViewShowNotification(notification.clone()));
+                    }
+                }
             });
 
             let ctx = glib::MainContext::default();

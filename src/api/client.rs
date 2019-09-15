@@ -1,4 +1,6 @@
 use gio::prelude::*;
+use gio::{NONE_CANCELLABLE, DataInputStream};
+use glib::prelude::*;
 use glib::GString;
 use soup::prelude::*;
 use soup::Session;
@@ -25,62 +27,70 @@ impl Client {
         Client { server, session }
     }
 
-    pub async fn send_station_request(self, request: StationRequest) -> Vec<Station> {
-        let url = self.build_url(STATION_SEARCH, Some(&request.url_encode()));
+    pub async fn send_station_request(self, request: StationRequest) -> Result<Vec<Station>, Error> {
+        let url = self.build_url(STATION_SEARCH, Some(&request.url_encode()))?;
         debug!("Station request URL: {}", url);
-        let data = self.send_message(url).await.unwrap().0;
+        let data = self.send_message(url).await?;
 
         // Parse text to Vec<Station>
-        let stations: Vec<Station> = serde_json::from_str(data.as_str()).unwrap();
+        let stations: Vec<Station> = serde_json::from_str(data.as_str())?;
         debug!("Found {} station(s)!", stations.len());
 
-        stations
+        Ok(stations)
     }
 
-    pub async fn get_stations_by_identifiers(self, identifiers: Vec<StationIdentifier>) -> Vec<Station> {
+    pub async fn get_stations_by_identifiers(self, identifiers: Vec<StationIdentifier>) -> Result<Vec<Station>, Error> {
         let mut stations = Vec::new();
 
         for identifier in identifiers {
-            let url = self.build_url(&format!("{}{}", STATION_BY_ID, identifier.station_id), None);
+            let url = self.build_url(&format!("{}{}", STATION_BY_ID, identifier.station_id), None)?;
             debug!("Request station by ID URL: {}", url);
-            let data = self.send_message(url).await.unwrap().0;
+            let data = self.send_message(url).await?;
 
             // Parse text to Vec<Station>
-            let mut s: Vec<Station> = serde_json::from_str(data.as_str()).unwrap();
+            let mut s: Vec<Station> = serde_json::from_str(data.as_str())?;
             stations.append(&mut s);
         }
 
         debug!("Found {} station(s)!", stations.len());
-        stations
+        Ok(stations)
     }
 
-    pub async fn get_stream_url(self, station: Station) -> StationUrl {
-        let url = self.build_url(&format!("{}{}", PLAYABLE_STATION_URL, station.id), None);
+    pub async fn get_stream_url(self, station: Station) -> Result<StationUrl, Error> {
+        let url = self.build_url(&format!("{}{}", PLAYABLE_STATION_URL, station.id), None)?;
         debug!("Request playable URL: {}", url);
-        let data = self.send_message(url).await.unwrap().0;
+        let data = self.send_message(url).await?;
 
         // Parse text to StationUrl
-        let result: Vec<StationUrl> = serde_json::from_str(data.as_str()).unwrap();
+        let result: Vec<StationUrl> = serde_json::from_str(data.as_str())?;
         debug!("Playable URL is: {}", result[0].url);
-        result[0].clone()
+        Ok(result[0].clone())
     }
 
     // Create and send soup message, return the received data.
-    async fn send_message(&self, url: Url) -> Result<(GString, usize), gio::Error> {
+    async fn send_message(&self, url: Url) -> std::result::Result<GString, Error> {
         // Create SOUP message
-        let message = soup::Message::new("GET", &url.to_string()).unwrap();
+        dbg!(url.clone());
+        match soup::Message::new("GET", &url.to_string()){
+            Some(message) => {
+                // Send created message
+                let input_stream = self.session.send_async_future(&message).await?;
 
-        // Send created message
-        let input_stream = self.session.send_async_future(&message).await.unwrap();
+                // Create DataInputStream and read read received data
+                let data_input_stream: DataInputStream = gio::DataInputStream::new(&input_stream);
+                //TODO: Crash here, if stream is empty
+                let result = data_input_stream.read_upto_async_future("", glib::PRIORITY_LOW).await?;
 
-        // Create DataInputStream and read read received data
-        let data_input_stream = gio::DataInputStream::new(&input_stream);
-        data_input_stream.read_upto_async_future("", glib::PRIORITY_LOW).await
+                Ok(result.0)
+            },
+            // Return error when message cannot be created
+            None => Err(Error::SoupMessageError),
+        }
     }
 
-    fn build_url(&self, param: &str, options: Option<&str>) -> Url {
-        let mut url = self.server.join(param).unwrap();
+    fn build_url(&self, param: &str, options: Option<&str>) -> Result<Url, Error> {
+        let mut url = self.server.join(param)?;
         options.map(|options| url.set_query(Some(options)));
-        url
+        Ok(url)
     }
 }
