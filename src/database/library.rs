@@ -12,7 +12,7 @@ use crate::config;
 use crate::database::connection;
 use crate::database::queries;
 use crate::database::StationIdentifier;
-use crate::ui::StationFlowBox;
+use crate::ui::{StationFlowBox, Notification};
 use crate::utils::{Order, Sorting};
 
 pub struct Library {
@@ -82,6 +82,9 @@ impl Library {
         info!("Database Path: {}", connection::DB_PATH.to_str().unwrap());
         info!("Stations: {}", queries::get_station_identifiers().unwrap().len());
 
+        let notification = Notification::new_spinner("Receiving station data...");
+        self.sender.send(Action::ViewShowNotification(notification.clone()));
+
         // Load database async
         let identifiers = queries::get_station_identifiers().unwrap();
         let ctx = glib::MainContext::default();
@@ -89,6 +92,7 @@ impl Library {
         let flowbox = self.flowbox.clone();
         let fut = self.client.clone().get_stations_by_identifiers(identifiers).map(move |stations| {
             flowbox.add_stations(stations);
+            notification.hide();
         });
         ctx.spawn_local(fut);
     }

@@ -15,7 +15,7 @@ use crate::config;
 use crate::database::gradio_db;
 use crate::database::Library;
 use crate::discover::StoreFront;
-use crate::ui::{View, Window};
+use crate::ui::{View, Window, Notification};
 use crate::utils::{Order, Sorting};
 
 #[derive(Debug, Clone)]
@@ -23,7 +23,7 @@ pub enum Action {
     ViewShowDiscover,
     ViewShowLibrary,
     ViewShowPlayer,
-    ViewShowNotification(String),
+    ViewShowNotification(Rc<Notification>),
     ViewRaise,
     ViewSetSorting(Sorting, Order),
     PlaybackSetStation(Station),
@@ -204,7 +204,7 @@ impl App {
             Action::ViewShowLibrary => self.window.set_view(View::Library),
             Action::ViewShowPlayer => self.window.set_view(View::Player),
             Action::ViewRaise => self.window.widget.present_with_time((glib::get_monotonic_time() / 1000) as u32),
-            Action::ViewShowNotification(text) => self.window.show_notification(text),
+            Action::ViewShowNotification(notification) => self.window.show_notification(notification),
             Action::ViewSetSorting(sorting, order) => self.library.set_sorting(sorting, order),
             Action::PlaybackSetStation(station) => self.player.set_station(station.clone()),
             Action::PlaybackStart => self.player.set_playback(PlaybackState::Playing),
@@ -264,16 +264,19 @@ impl App {
             // Get station identifiers
             let ids = gradio_db::read_database(path);
             let message = format!("Importing {} stations...", ids.len());
-            self.sender.send(Action::ViewShowNotification(message)).unwrap();
+            let spinner_notification = Notification::new_spinner (&message);
+            self.sender.send(Action::ViewShowNotification(spinner_notification.clone())).unwrap();
 
             // Get actual stations from identifiers
             let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
             let sender = self.sender.clone();
             let fut = client.get_stations_by_identifiers(ids).map(move |stations| {
                 sender.send(Action::LibraryAddStations(stations.clone())).unwrap();
+                spinner_notification.hide();
 
                 let message = format!("Imported {} stations!", stations.len());
-                sender.send(Action::ViewShowNotification(message)).unwrap();
+                let notification = Notification::new_info(&message);
+                sender.send(Action::ViewShowNotification(notification)).unwrap();
             });
 
             let ctx = glib::MainContext::default();

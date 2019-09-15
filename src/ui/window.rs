@@ -120,9 +120,7 @@ impl Window {
         leaflet.connect_property_fold_notify(leaflet_closure.clone());
     }
 
-    pub fn show_notification(&self, text: String) {
-        let notification = Notification::new(text.as_str());
-
+    pub fn show_notification(&self, notification: Rc<Notification>) {
         let overlay: gtk::Overlay = self.builder.get_object("overlay").unwrap();
         notification.show(&overlay);
     }
