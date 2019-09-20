@@ -36,7 +36,7 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
 - **Where I can find the old Gradio source code?**
 
-    The old Gradio Vala source code is still available in the [gradio-old](https://gitlab.gnome.org/World/Shortwave/tree/gradio-old) branch. 
+    The old Vala source code is still available in the [old Gradio repository](https://github.com/haecker-felix/Gradio). 
 
 ## Development builds
 
