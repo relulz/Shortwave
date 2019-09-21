@@ -47,23 +47,16 @@ impl StationRow {
             sender.send(Action::PlaybackSetStation(station.clone())).unwrap();
         });
 
-        // eventbox
+        // button
         let station = self.station.clone();
         let app = self.app.clone();
-        let eventbox: gtk::EventBox = self.builder.get_object("eventbox").unwrap();
+        let button: gtk::Button = self.builder.get_object("button").unwrap();
         let check_button: gtk::CheckButton = self.builder.get_object("check_button").unwrap();
         let sender = self.sender.clone();
-        eventbox.connect_button_press_event(move |_, button| {
-            // 3 -> Right mouse button
-            if button.get_button() == 3 {
-                // TODO: enable selection mode
-                check_button.set_active(true);
-            } else {
-                let window = app.get_active_window().unwrap();
-                let station_dialog = StationDialog::new(sender.clone(), station.clone(), &window);
-                station_dialog.show();
-            }
-            gtk::Inhibit(false)
+        button.connect_clicked(move |_| {
+            let window = app.get_active_window().unwrap();
+            let station_dialog = StationDialog::new(sender.clone(), station.clone(), &window);
+            station_dialog.show();
         });
     }
 }
