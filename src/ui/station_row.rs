@@ -17,12 +17,12 @@ pub struct StationRow {
 impl StationRow {
     pub fn new(sender: Sender<Action>, station: Station) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_row.ui");
-        let row: gtk::FlowBoxChild = builder.get_object("station_row").unwrap();
+        let row: gtk::FlowBoxChild = get_widget!(builder, "station_row");
         let app = builder.get_application().unwrap();
 
         // Set row information
-        let station_label: gtk::Label = builder.get_object("station_label").unwrap();
-        let subtitle_label: gtk::Label = builder.get_object("subtitle_label").unwrap();
+        let station_label: gtk::Label = get_widget!(builder, "station_label");
+        let subtitle_label: gtk::Label = get_widget!(builder, "subtitle_label");
         station_label.set_text(&station.name);
         subtitle_label.set_text(&format!("{} {} · {} Votes", station.country, station.state, station.votes));
 
@@ -40,7 +40,7 @@ impl StationRow {
 
     fn setup_signals(&self) {
         // play_button
-        let play_button: gtk::Button = self.builder.get_object("play_button").unwrap();
+        let play_button: gtk::Button = get_widget!(self.builder, "play_button");
         let sender = self.sender.clone();
         let station = self.station.clone();
         play_button.connect_clicked(move |_| {
@@ -50,8 +50,7 @@ impl StationRow {
         // button
         let station = self.station.clone();
         let app = self.app.clone();
-        let button: gtk::Button = self.builder.get_object("button").unwrap();
-        let check_button: gtk::CheckButton = self.builder.get_object("check_button").unwrap();
+        let button: gtk::Button = get_widget!(self.builder, "button");
         let sender = self.sender.clone();
         button.connect_clicked(move |_| {
             let window = app.get_active_window().unwrap();

@@ -15,12 +15,12 @@ impl Default for Notification{
     fn default() -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/notification.ui");
 
-        let revealer: gtk::Revealer = builder.get_object("revealer").unwrap();
-        let spinner: gtk::Box = builder.get_object("spinner").unwrap();
-        let text_label: gtk::Label = builder.get_object("text_label").unwrap();
-        let error_label: gtk::Label = builder.get_object("error_label").unwrap();
-        let close_button: gtk::Button = builder.get_object("close_button").unwrap();
-        let error_box: gtk::Box = builder.get_object("error_box").unwrap();
+        let revealer: gtk::Revealer = get_widget!(builder, "revealer");
+        let spinner: gtk::Box = get_widget!(builder, "spinner");
+        let text_label: gtk::Label = get_widget!(builder, "text_label");
+        let error_label: gtk::Label = get_widget!(builder, "error_label");
+        let close_button: gtk::Button = get_widget!(builder, "close_button");
+        let error_box: gtk::Box = get_widget!(builder, "error_box");
 
         // Hide notification when close button gets clicked
         let r = revealer.clone();

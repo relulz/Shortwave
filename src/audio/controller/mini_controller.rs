@@ -30,15 +30,15 @@ impl MiniController {
 
         let station = Rc::new(RefCell::new(None));
 
-        let widget: gtk::Box = builder.get_object("mini_controller").unwrap();
-        let title_label: gtk::Label = builder.get_object("title_label").unwrap();
-        let subtitle_label: gtk::Label = builder.get_object("subtitle_label").unwrap();
-        let subtitle_revealer: gtk::Revealer = builder.get_object("subtitle_revealer").unwrap();
-        let action_revealer: gtk::Revealer = builder.get_object("action_revealer").unwrap();
-        let playback_button_stack: gtk::Stack = builder.get_object("playback_button_stack").unwrap();
-        let start_playback_button: gtk::Button = builder.get_object("start_playback_button").unwrap();
-        let stop_playback_button: gtk::Button = builder.get_object("stop_playback_button").unwrap();
-        let show_player_button: gtk::Button = builder.get_object("show_player_button").unwrap();
+        let widget: gtk::Box = get_widget!(builder, "mini_controller");
+        let title_label: gtk::Label = get_widget!(builder, "title_label");
+        let subtitle_label: gtk::Label = get_widget!(builder, "subtitle_label");
+        let subtitle_revealer: gtk::Revealer = get_widget!(builder, "subtitle_revealer");
+        let action_revealer: gtk::Revealer = get_widget!(builder, "action_revealer");
+        let playback_button_stack: gtk::Stack = get_widget!(builder, "playback_button_stack");
+        let start_playback_button: gtk::Button = get_widget!(builder, "start_playback_button");
+        let stop_playback_button: gtk::Button = get_widget!(builder, "stop_playback_button");
+        let show_player_button: gtk::Button = get_widget!(builder, "show_player_button");
 
         let controller = Self {
             widget,

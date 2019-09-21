@@ -17,6 +17,9 @@ extern crate failure_derive;
 extern crate diesel_migrations;
 use gettextrs::*;
 
+#[macro_use]
+mod utils;
+
 mod api;
 mod audio;
 mod database;
@@ -27,7 +30,6 @@ mod app;
 mod config;
 mod path;
 mod static_resource;
-mod utils;
 
 use crate::app::App;
 

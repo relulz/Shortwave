@@ -19,11 +19,11 @@ pub struct StoreFront {
 impl StoreFront {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/storefront.ui");
-        let widget: gtk::Box = builder.get_object("storefront").unwrap();
-        let discover_stack: gtk::Stack = builder.get_object("discover_stack").unwrap();
+        let widget: gtk::Box = get_widget!(builder, "storefront");
+        let discover_stack: gtk::Stack = get_widget!(builder, "discover_stack");
 
         let search = Search::new(sender.clone());
-        let search_box: gtk::Box = builder.get_object("search_box").unwrap();
+        let search_box: gtk::Box = get_widget!(builder, "search_box");
         search_box.add(&search.widget);
 
         let storefront = Self {
@@ -44,7 +44,7 @@ impl StoreFront {
     }
 
     fn add_popular_tag(&self, title: &str, name: &str) {
-        let tags_flowbox: gtk::FlowBox = self.builder.get_object("tags_flowbox").unwrap();
+        let tags_flowbox: gtk::FlowBox = get_widget!(self.builder, "tags_flowbox");
         let tagbutton = TileButton::new(self.sender.clone(), title, name);
         tags_flowbox.add(&tagbutton.widget);
     }

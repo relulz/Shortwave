@@ -55,12 +55,12 @@ pub struct Player {
 impl Player {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/player.ui");
-        let widget: gtk::Box = builder.get_object("player").unwrap();
+        let widget: gtk::Box = get_widget!(builder, "player");
         let mut controller: Vec<Box<dyn Controller>> = Vec::new();
 
         // Gtk Controller
         let sidebar_controller = SidebarController::new(sender.clone());
-        let player_box: gtk::Box = builder.get_object("player_box").unwrap();
+        let player_box: gtk::Box = get_widget!(builder, "player_box");
         player_box.add(&sidebar_controller.widget);
         controller.push(Box::new(sidebar_controller));
 

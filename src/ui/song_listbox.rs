@@ -16,9 +16,9 @@ pub struct SongListBox {
 impl SongListBox {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/song_listbox.ui");
-        let widget: gtk::Box = builder.get_object("song_listbox").unwrap();
-        let listbox: gtk::ListBox = builder.get_object("listbox").unwrap();
-        let stack: gtk::Stack = builder.get_object("stack").unwrap();
+        let widget: gtk::Box = get_widget!(builder, "song_listbox");
+        let listbox: gtk::ListBox = get_widget!(builder, "listbox");
+        let stack: gtk::Stack = get_widget!(builder, "stack");
 
         Self { widget, listbox, stack, sender }
     }

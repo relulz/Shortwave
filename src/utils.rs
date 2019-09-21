@@ -3,6 +3,13 @@ use gtk::prelude::*;
 
 use crate::api::Station;
 
+// We could do this also with a 'fn', but the macro is somehow fancier :)
+macro_rules! get_widget {
+    ($builder:expr, $name:expr) => {
+        $builder.get_object($name).expect(&format!("Could not find widget \"{}\".", $name));
+    };
+}
+
 #[derive(Clone, Debug)]
 pub enum Sorting {
     Default,

@@ -75,7 +75,7 @@ impl App {
 
         // Help overlay
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
-        let dialog: gtk::ShortcutsWindow = builder.get_object("shortcuts").unwrap();
+        let dialog: gtk::ShortcutsWindow = get_widget!(builder, "shortcuts");
         window.widget.set_help_overlay(Some(&dialog));
 
         let app = Rc::new(Self {

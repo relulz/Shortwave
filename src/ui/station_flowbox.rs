@@ -24,7 +24,7 @@ pub struct StationFlowBox {
 impl StationFlowBox {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_flowbox.ui");
-        let widget: gtk::FlowBox = builder.get_object("station_flowbox").unwrap();
+        let widget: gtk::FlowBox = get_widget!(builder, "station_flowbox");
         let stations = RefCell::new(IndexMap::new());
 
         let sorting = RefCell::new(Sorting::Default);

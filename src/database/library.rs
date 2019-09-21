@@ -26,12 +26,12 @@ pub struct Library {
 impl Library {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/library.ui");
-        let widget: gtk::Box = builder.get_object("library").unwrap();
-        let content_box: gtk::Box = builder.get_object("content_box").unwrap();
+        let widget: gtk::Box = get_widget!(builder, "library");
+        let content_box: gtk::Box = get_widget!(builder, "content_box");
 
-        let logo_image: gtk::Image = builder.get_object("logo_image").unwrap();
+        let logo_image: gtk::Image = get_widget!(builder, "logo_image");
         logo_image.set_from_icon_name(Some(format!("{}-symbolic", config::APP_ID).as_str()), gtk::IconSize::__Unknown(128));
-        let welcome_text: gtk::Label = builder.get_object("welcome_text").unwrap();
+        let welcome_text: gtk::Label = get_widget!(builder, "welcome_text");
         welcome_text.set_text(format!("Welcome to {}", config::NAME).as_str());
 
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));

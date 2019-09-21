@@ -24,12 +24,12 @@ pub struct Search {
 impl Search {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/search.ui");
-        let widget: gtk::Box = builder.get_object("search").unwrap();
+        let widget: gtk::Box = get_widget!(builder, "search");
 
         let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
 
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        let results_box: gtk::Box = builder.get_object("results_box").unwrap();
+        let results_box: gtk::Box = get_widget!(builder, "results_box");
         results_box.add(&flowbox.widget);
 
         let timeout_id = Rc::new(RefCell::new(None));
@@ -91,7 +91,7 @@ impl Search {
     }
 
     fn setup_signals(&self) {
-        let search_entry: gtk::SearchEntry = self.builder.get_object("search_entry").unwrap();
+        let search_entry: gtk::SearchEntry = get_widget!(self.builder, "search_entry");
         let sender = self.sender.clone();
         search_entry.connect_search_changed(move |entry| {
             let request = StationRequest::search_for_name(&entry.get_text().unwrap(), 500);
