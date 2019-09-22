@@ -1,6 +1,5 @@
 use gio::prelude::*;
-use gio::{NONE_CANCELLABLE, DataInputStream};
-use glib::prelude::*;
+use gio::DataInputStream;
 use glib::GString;
 use soup::prelude::*;
 use soup::Session;

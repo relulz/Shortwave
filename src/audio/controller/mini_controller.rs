@@ -27,21 +27,20 @@ pub struct MiniController {
 impl MiniController {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/mini_controller.ui");
+        get_widget!(builder, gtk::Box, mini_controller);
+        get_widget!(builder, gtk::Label, title_label);
+        get_widget!(builder, gtk::Label, subtitle_label);
+        get_widget!(builder, gtk::Revealer, subtitle_revealer);
+        get_widget!(builder, gtk::Revealer, action_revealer);
+        get_widget!(builder, gtk::Stack, playback_button_stack);
+        get_widget!(builder, gtk::Button, start_playback_button);
+        get_widget!(builder, gtk::Button, stop_playback_button);
+        get_widget!(builder, gtk::Button, show_player_button);
 
         let station = Rc::new(RefCell::new(None));
 
-        let widget: gtk::Box = get_widget!(builder, "mini_controller");
-        let title_label: gtk::Label = get_widget!(builder, "title_label");
-        let subtitle_label: gtk::Label = get_widget!(builder, "subtitle_label");
-        let subtitle_revealer: gtk::Revealer = get_widget!(builder, "subtitle_revealer");
-        let action_revealer: gtk::Revealer = get_widget!(builder, "action_revealer");
-        let playback_button_stack: gtk::Stack = get_widget!(builder, "playback_button_stack");
-        let start_playback_button: gtk::Button = get_widget!(builder, "start_playback_button");
-        let stop_playback_button: gtk::Button = get_widget!(builder, "stop_playback_button");
-        let show_player_button: gtk::Button = get_widget!(builder, "show_player_button");
-
         let controller = Self {
-            widget,
+            widget: mini_controller,
             sender,
             station,
             title_label,

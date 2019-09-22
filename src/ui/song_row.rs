@@ -17,12 +17,13 @@ pub struct SongRow {
 impl SongRow {
     pub fn new(sender: Sender<Action>, song: Song) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/song_row.ui");
-        let song_row: gtk::Box = get_widget!(builder, "song_row");
+        get_widget!(builder, gtk::Box, song_row);
 
-        let title_label: gtk::Label = get_widget!(builder, "title_label");
+        get_widget!(builder, gtk::Label, title_label);
         title_label.set_text(&song.title);
         title_label.set_tooltip_text(Some(song.title.as_str()));
-        let duration_label: gtk::Label = get_widget!(builder, "duration_label");
+
+        get_widget!(builder, gtk::Label, duration_label);
         duration_label.set_text(&Self::format_duration(song.duration.as_secs()));
         duration_label.set_tooltip_text(Some(Self::format_duration(song.duration.as_secs()).as_str()));
 
@@ -41,8 +42,8 @@ impl SongRow {
         let sender = self.sender.clone();
         let song = self.song.clone();
         let widget = self.widget.clone();
-        let button_stack: gtk::Stack = get_widget!(self.builder, "button_stack");
-        let save_button: gtk::Button = get_widget!(self.builder, "save_button");
+        get_widget!(self.builder, gtk::Stack, button_stack);
+        get_widget!(self.builder, gtk::Button, save_button);
         save_button.connect_clicked(move |_| {
             sender.send(Action::PlaybackSaveSong(song.clone())).unwrap();
 
@@ -55,7 +56,7 @@ impl SongRow {
         });
 
         let song = self.song.clone();
-        let open_button: gtk::Button = get_widget!(self.builder, "open_button");
+        get_widget!(self.builder, gtk::Button, open_button);
         open_button.connect_clicked(move |_| {
             open::that(song.path.clone()).expect("Could not play song");
         });

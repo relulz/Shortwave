@@ -38,18 +38,18 @@ impl Window {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/window.ui");
         let menu_builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/menu.ui");
 
-        let window: gtk::ApplicationWindow = get_widget!(builder, "window");
-        let app_label: gtk::Label = get_widget!(builder, "app_label");
+        get_widget!(builder, gtk::ApplicationWindow, window);
+        get_widget!(builder, gtk::Label, app_label);
         window.set_title(config::NAME);
         app_label.set_text(config::NAME);
 
-        let player_box: gtk::Box = get_widget!(builder, "player_box");
-        let mini_controller_box: gtk::Box = get_widget!(builder, "mini_controller_box");
-        let library_box: gtk::Box = get_widget!(builder, "library_box");
-        let discover_box: gtk::Box = get_widget!(builder, "discover_box");
+        get_widget!(builder, gtk::Box, player_box);
+        get_widget!(builder, gtk::Box, mini_controller_box);
+        get_widget!(builder, gtk::Box, library_box);
+        get_widget!(builder, gtk::Box, discover_box);
 
-        let discover_bottom_switcher: libhandy::ViewSwitcherBar = get_widget!(builder, "discover_bottom_switcher");
-        let discover_header_switcher: libhandy::ViewSwitcher = get_widget!(builder, "discover_header_switcher");
+        get_widget!(builder, libhandy::ViewSwitcherBar, discover_bottom_switcher);
+        get_widget!(builder, libhandy::ViewSwitcher, discover_header_switcher);
 
         let current_view = Rc::new(RefCell::new(View::Library));
 
@@ -68,8 +68,8 @@ impl Window {
         };
 
         // Appmenu / hamburger button
-        let popover_menu: gtk::PopoverMenu = get_widget!(window.menu_builder, "popover_menu");
-        let appmenu_button: gtk::MenuButton = get_widget!(window.builder, "appmenu_button");
+        get_widget!(window.menu_builder, gtk::PopoverMenu, popover_menu);
+        get_widget!(window.builder, gtk::MenuButton, appmenu_button);
         appmenu_button.set_popover(Some(&popover_menu));
 
         // Devel style class
@@ -84,21 +84,21 @@ impl Window {
 
     fn setup_signals(&self) {
         // add_button
-        let add_button: gtk::Button = get_widget!(self.builder, "add_button");
+        get_widget!(self.builder, gtk::Button, add_button);
         let sender = self.sender.clone();
         add_button.connect_clicked(move |_| {
             sender.send(Action::ViewShowDiscover).unwrap();
         });
 
         // back_button
-        let back_button: gtk::Button = get_widget!(self.builder, "back_button");
+        get_widget!(self.builder, gtk::Button, back_button);
         let sender = self.sender.clone();
         back_button.connect_clicked(move |_| {
             sender.send(Action::ViewShowLibrary).unwrap();
         });
 
         // leaflet
-        let view_stack: gtk::Stack = get_widget!(self.builder, "view_stack");
+        get_widget!(self.builder, gtk::Stack, view_stack);
         let current_view = self.current_view.clone();
         let builder = self.builder.clone();
         let menu_builder = self.menu_builder.clone();
@@ -115,26 +115,26 @@ impl Window {
             Self::update_view(current_view.borrow().clone(), builder.clone(), menu_builder.clone());
         };
 
-        let leaflet: libhandy::Leaflet = get_widget!(self.builder, "leaflet");
+        get_widget!(self.builder, libhandy::Leaflet, leaflet);
         leaflet.connect_property_visible_child_name_notify(leaflet_closure.clone());
         leaflet.connect_property_fold_notify(leaflet_closure.clone());
     }
 
     pub fn show_notification(&self, notification: Rc<Notification>) {
-        let overlay: gtk::Overlay = get_widget!(self.builder, "overlay");
+        get_widget!(self.builder, gtk::Overlay, overlay);
         notification.show(&overlay);
     }
 
     fn update_view(view: View, builder: gtk::Builder, menu_builder: gtk::Builder) {
-        let bottom_switcher_revealer: gtk::Revealer = get_widget!(builder, "bottom_switcher_revealer");
-        let bottom_switcher_stack: gtk::Stack = get_widget!(builder, "bottom_switcher_stack");
-        let header_switcher_stack: gtk::Stack = get_widget!(builder, "header_switcher_stack");
-        let view_stack: gtk::Stack = get_widget!(builder, "view_stack");
-        let leaflet: libhandy::Leaflet = get_widget!(builder, "leaflet");
-        let sorting_mbutton: gtk::ModelButton = get_widget!(menu_builder, "sorting_mbutton");
-        let library_mbutton: gtk::ModelButton = get_widget!(menu_builder, "library_mbutton");
-        let add_button: gtk::Button = get_widget!(builder, "add_button");
-        let back_button: gtk::Button = get_widget!(builder, "back_button");
+        get_widget!(builder, gtk::Revealer, bottom_switcher_revealer);
+        get_widget!(builder, gtk::Stack, bottom_switcher_stack);
+        get_widget!(builder, gtk::Stack, header_switcher_stack);
+        get_widget!(builder, gtk::Stack, view_stack);
+        get_widget!(builder, libhandy::Leaflet, leaflet);
+        get_widget!(menu_builder, gtk::ModelButton, sorting_mbutton);
+        get_widget!(menu_builder, gtk::ModelButton, library_mbutton);
+        get_widget!(builder, gtk::Button, add_button);
+        get_widget!(builder, gtk::Button, back_button);
 
         // Determine if window is currently in phone mode (leaflet = folded)
         let phone_mode = leaflet.get_property_folded();

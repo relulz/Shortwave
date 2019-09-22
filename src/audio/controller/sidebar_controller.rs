@@ -30,23 +30,23 @@ pub struct SidebarController {
 impl SidebarController {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/sidebar_controller.ui");
+        get_widget!(builder, gtk::Box, sidebar_controller);
+        get_widget!(builder, gtk::Label, title_label);
+        get_widget!(builder, gtk::Label, subtitle_label);
+        get_widget!(builder, gtk::Revealer, subtitle_revealer);
+        get_widget!(builder, gtk::Revealer, action_revealer);
+        get_widget!(builder, gtk::Stack, playback_button_stack);
+        get_widget!(builder, gtk::Button, start_playback_button);
+        get_widget!(builder, gtk::Button, stop_playback_button);
+        get_widget!(builder, gtk::Button, info_button);
+        get_widget!(builder, gtk::Label, error_label);
+
 
         let station = Rc::new(RefCell::new(None));
         let app = builder.get_application().unwrap();
 
-        let widget: gtk::Box = get_widget!(builder, "sidebar_controller");
-        let title_label: gtk::Label = get_widget!(builder, "title_label");
-        let subtitle_label: gtk::Label = get_widget!(builder, "subtitle_label");
-        let subtitle_revealer: gtk::Revealer = get_widget!(builder, "subtitle_revealer");
-        let action_revealer: gtk::Revealer = get_widget!(builder, "action_revealer");
-        let playback_button_stack: gtk::Stack = get_widget!(builder, "playback_button_stack");
-        let start_playback_button: gtk::Button = get_widget!(builder, "start_playback_button");
-        let stop_playback_button: gtk::Button = get_widget!(builder, "stop_playback_button");
-        let info_button: gtk::Button = get_widget!(builder, "info_button");
-        let error_label: gtk::Label = get_widget!(builder, "error_label");
-
         let controller = Self {
-            widget,
+            widget: sidebar_controller,
             sender,
             station,
             app,

@@ -24,15 +24,15 @@ pub struct StationFlowBox {
 impl StationFlowBox {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_flowbox.ui");
-        let widget: gtk::FlowBox = get_widget!(builder, "station_flowbox");
+        get_widget!(builder, gtk::FlowBox, station_flowbox);
         let stations = RefCell::new(IndexMap::new());
 
         let sorting = RefCell::new(Sorting::Default);
         let order = RefCell::new(Order::Ascending);
 
         // Set automatically flowbox colums
-        let fb = widget.clone();
-        widget.connect_size_allocate(move |_, alloc| {
+        let fb = station_flowbox.clone();
+        station_flowbox.connect_size_allocate(move |_, alloc| {
             if alloc.width > 1000 {
                 fb.set_min_children_per_line(3);
                 fb.set_max_children_per_line(3);
@@ -46,7 +46,7 @@ impl StationFlowBox {
         });
 
         Self {
-            widget,
+            widget: station_flowbox,
             stations,
             sorting,
             order,

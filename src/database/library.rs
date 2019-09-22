@@ -26,12 +26,13 @@ pub struct Library {
 impl Library {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/library.ui");
-        let widget: gtk::Box = get_widget!(builder, "library");
-        let content_box: gtk::Box = get_widget!(builder, "content_box");
+        get_widget!(builder, gtk::Box, library);
+        get_widget!(builder, gtk::Box, content_box);
 
-        let logo_image: gtk::Image = get_widget!(builder, "logo_image");
+        get_widget!(builder, gtk::Image, logo_image);
         logo_image.set_from_icon_name(Some(format!("{}-symbolic", config::APP_ID).as_str()), gtk::IconSize::__Unknown(128));
-        let welcome_text: gtk::Label = get_widget!(builder, "welcome_text");
+
+        get_widget!(builder, gtk::Label, welcome_text);
         welcome_text.set_text(format!("Welcome to {}", config::NAME).as_str());
 
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
@@ -40,7 +41,12 @@ impl Library {
 
         let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
 
-        let library = Self { widget, flowbox, client, sender };
+        let library = Self {
+            widget: library,
+            flowbox,
+            client,
+            sender
+        };
 
         library.load_stations();
         library
@@ -83,7 +89,7 @@ impl Library {
         info!("Stations: {}", queries::get_station_identifiers().unwrap().len());
 
         let notification = Notification::new_spinner("Receiving station data...");
-        self.sender.send(Action::ViewShowNotification(notification.clone()));
+        self.sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
 
         // Load database async
         let identifiers = queries::get_station_identifiers().unwrap();
@@ -97,7 +103,7 @@ impl Library {
                 Ok(stations) => flowbox.add_stations(stations),
                 Err(err) => {
                     let notification = Notification::new_error("Could not receive station data.", &err.to_string());
-                    sender.send(Action::ViewShowNotification(notification.clone()));
+                    sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
                 }
             }
         });

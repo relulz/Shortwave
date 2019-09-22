@@ -24,18 +24,18 @@ pub struct Search {
 impl Search {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/search.ui");
-        let widget: gtk::Box = get_widget!(builder, "search");
+        get_widget!(builder, gtk::Box, search);
 
         let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
 
+        get_widget!(builder, gtk::Box, results_box);
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        let results_box: gtk::Box = get_widget!(builder, "results_box");
         results_box.add(&flowbox.widget);
 
         let timeout_id = Rc::new(RefCell::new(None));
 
         let search = Self {
-            widget,
+            widget: search,
             client,
             flowbox,
             timeout_id,
@@ -77,7 +77,7 @@ impl Search {
                     },
                     Err(err) => {
                         let notification = Notification::new_error("Could not receive station data.", &err.to_string());
-                        sender.send(Action::ViewShowNotification(notification.clone()));
+                        sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
                     }
                 }
             });
@@ -91,7 +91,7 @@ impl Search {
     }
 
     fn setup_signals(&self) {
-        let search_entry: gtk::SearchEntry = get_widget!(self.builder, "search_entry");
+        get_widget!(self.builder, gtk::SearchEntry, search_entry);
         let sender = self.sender.clone();
         search_entry.connect_search_changed(move |entry| {
             let request = StationRequest::search_for_name(&entry.get_text().unwrap(), 500);

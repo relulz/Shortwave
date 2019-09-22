@@ -75,8 +75,8 @@ impl App {
 
         // Help overlay
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
-        let dialog: gtk::ShortcutsWindow = get_widget!(builder, "shortcuts");
-        window.widget.set_help_overlay(Some(&dialog));
+        get_widget!(builder, gtk::ShortcutsWindow, shortcuts);
+        window.widget.set_help_overlay(Some(&shortcuts));
 
         let app = Rc::new(Self {
             gtk_app,
@@ -282,7 +282,7 @@ impl App {
                     },
                     Err(err) => {
                         let notification = Notification::new_error("Could not receive station data.", &err.to_string());
-                        sender.send(Action::ViewShowNotification(notification.clone()));
+                        sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
                     }
                 }
             });

@@ -24,27 +24,26 @@ pub struct StationDialog {
 impl StationDialog {
     pub fn new(sender: Sender<Action>, station: Station, window: &gtk::Window) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_dialog.ui");
-        let widget: Dialog = get_widget!(builder, "station_dialog");
-
-        let title_label: gtk::Label = get_widget!(builder, "title_label");
-        let subtitle_label: gtk::Label = get_widget!(builder, "subtitle_label");
-        let codec_label: gtk::Label = get_widget!(builder, "codec_label");
-        let homepage_label: gtk::Label = get_widget!(builder, "homepage_label");
-        let tags_label: gtk::Label = get_widget!(builder, "tags_label");
-        let language_label: gtk::Label = get_widget!(builder, "language_label");
+        get_widget!(builder, Dialog, station_dialog);
+        get_widget!(builder, gtk::Label, title_label);
+        get_widget!(builder, gtk::Label, subtitle_label);
+        get_widget!(builder, gtk::Label, codec_label);
+        get_widget!(builder, gtk::Label, homepage_label);
+        get_widget!(builder, gtk::Label, tags_label);
+        get_widget!(builder, gtk::Label, language_label);
 
         // Show correct library action
-        let library_action_stack: gtk::Stack = get_widget!(builder, "library_action_stack");
+        get_widget!(builder, gtk::Stack, library_action_stack);
         if Library::contains_station(&station) {
             library_action_stack.set_visible_child_name("library-remove");
         } else {
             library_action_stack.set_visible_child_name("library-add");
         }
 
-        widget.set_transient_for(Some(window));
+        station_dialog.set_transient_for(Some(window));
 
         let dialog = Self {
-            widget,
+            widget: station_dialog,
             station,
             title_label,
             subtitle_label,
@@ -86,8 +85,8 @@ impl StationDialog {
 
     fn setup_signals(&self) {
         // remove_button
-        let library_action_stack: gtk::Stack = get_widget!(self.builder, "library_action_stack");
-        let remove_button: gtk::Button = get_widget!(self.builder, "remove_button");
+        get_widget!(self.builder, gtk::Stack, library_action_stack);
+        get_widget!(self.builder, gtk::Button, remove_button);
         let sender = self.sender.clone();
         let station = self.station.clone();
         remove_button.connect_clicked(move |_| {
@@ -96,8 +95,8 @@ impl StationDialog {
         });
 
         // add_button
-        let library_action_stack: gtk::Stack = get_widget!(self.builder, "library_action_stack");
-        let add_button: gtk::Button = get_widget!(self.builder, "add_button");
+        get_widget!(self.builder, gtk::Stack, library_action_stack);
+        get_widget!(self.builder, gtk::Button, add_button);
         let sender = self.sender.clone();
         let station = self.station.clone();
         add_button.connect_clicked(move |_| {

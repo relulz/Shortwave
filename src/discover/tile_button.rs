@@ -14,9 +14,9 @@ pub struct TileButton {
 impl TileButton {
     pub fn new(sender: Sender<Action>, title: &str, image_name: &str) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/tile_button.ui");
-        let widget: gtk::FlowBoxChild = get_widget!(builder, "tile_button");
+        get_widget!(builder, gtk::FlowBoxChild, tile_button);
 
-        let title_label: gtk::Label = get_widget!(builder, "title_label");
+        get_widget!(builder, gtk::Label, title_label);
         title_label.set_text(title);
 
         let css_provider = gtk::CssProvider::new();
@@ -35,12 +35,12 @@ impl TileButton {
             )
             .unwrap();
 
-        let style_ctx = widget.get_style_context();
+        let style_ctx = tile_button.get_style_context();
         style_ctx.add_class("tilebutton");
         style_ctx.add_provider(&css_provider, 600);
 
         let tb = Self {
-            widget,
+            widget: tile_button,
             image_name: image_name.to_string(),
             builder,
             sender,
@@ -51,7 +51,7 @@ impl TileButton {
     }
 
     fn setup_signals(&self) {
-        let eventbox: gtk::EventBox = get_widget!(self.builder, "eventbox");
+        get_widget!(self.builder, gtk::EventBox, eventbox);
         let name = self.image_name.clone();
         eventbox.connect_button_press_event(move |_, _| {
             debug!("{} tag clicked", name);
