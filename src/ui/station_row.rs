@@ -1,7 +1,8 @@
 use glib::Sender;
 use gtk::prelude::*;
+use glib::futures::FutureExt;
 
-use crate::api::Station;
+use crate::api::{Station, FaviconDownloader};
 use crate::app::Action;
 use crate::ui::station_dialog::StationDialog;
 
@@ -15,7 +16,7 @@ pub struct StationRow {
 }
 
 impl StationRow {
-    pub fn new(sender: Sender<Action>, station: Station) -> Self {
+    pub fn new(sender: Sender<Action>, favicon_downloader: FaviconDownloader, station: Station) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_row.ui");
         get_widget!(builder, gtk::FlowBoxChild, station_row);
         let app = builder.get_application().unwrap();
@@ -25,6 +26,14 @@ impl StationRow {
         get_widget!(builder, gtk::Label, subtitle_label);
         station_label.set_text(&station.name);
         subtitle_label.set_text(&format!("{} {} · {} Votes", station.country, station.state, station.votes));
+
+        // Download & set station favicon
+        get_widget!(builder, gtk::Image, station_favicon);
+        let fut = favicon_downloader.download_favicon(station.favicon.clone(), 60).map(move|pixbuf|{
+            pixbuf.map(|pixbuf| station_favicon.set_from_pixbuf(Some(&pixbuf)));
+        });
+        let ctx = glib::MainContext::default();
+        ctx.spawn_local(fut);
 
         let stationrow = Self {
             widget: station_row,

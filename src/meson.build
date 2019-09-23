@@ -42,6 +42,7 @@ run_command(
 sources = files(
   'api/client.rs',
   'api/error.rs',
+  'api/favicon_downloader.rs',
   'api/mod.rs',
   'api/object.rs',
   'api/station.rs',

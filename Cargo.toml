@@ -12,6 +12,7 @@ gobject-sys = "0.9.0"
 glib-sys = "0.9.0"
 gio = { version = "0.7.0", features = ["v2_46"] }
 gdk = "0.11.0"
+gdk-pixbuf = { version = "0.7.0", features = ["futures"] }
 gstreamer = "0.14.5"
 gstreamer-pbutils = "0.14.0"
 mpris-player = "0.4.0"

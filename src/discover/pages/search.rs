@@ -94,7 +94,7 @@ impl Search {
         get_widget!(self.builder, gtk::SearchEntry, search_entry);
         let sender = self.sender.clone();
         search_entry.connect_search_changed(move |entry| {
-            let request = StationRequest::search_for_name(&entry.get_text().unwrap(), 500);
+            let request = StationRequest::search_for_name(&entry.get_text().unwrap(), 250);
             sender.send(Action::SearchFor(request)).unwrap();
         });
     }

@@ -14,19 +14,27 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="border_width">12</property>
-            <property name="spacing">6</property>
             <child>
-              <object class="GtkRevealer" id="selection_mode_revealer">
+              <object class="GtkBox">
+                <property name="width_request">62</property>
+                <property name="height_request">62</property>
+                <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="transition_type">slide-right</property>
+                <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkCheckButton" id="check_button">
+                  <object class="GtkImage" id="station_favicon">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="pixel_size">32</property>
+                    <property name="icon_name">emblem-music-symbolic</property>
                   </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
                 </child>
               </object>
               <packing>
@@ -36,11 +44,10 @@
               </packing>
             </child>
             <child>
-              <object class="GtkImage" id="station_favicon">
+              <object class="GtkSeparator">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="pixel_size">32</property>
-                <property name="icon_name">emblem-music-symbolic</property>
+                <property name="orientation">vertical</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -52,73 +59,86 @@
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
+                <property name="border_width">12</property>
+                <property name="spacing">6</property>
                 <child>
-                  <object class="GtkLabel" id="station_label">
+                  <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="label" translatable="yes">label</property>
-                    <property name="wrap">True</property>
-                    <property name="wrap_mode">char</property>
-                    <property name="ellipsize">end</property>
-                    <property name="xalign">0</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel" id="station_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="label" translatable="yes">label</property>
+                        <property name="wrap">True</property>
+                        <property name="wrap_mode">char</property>
+                        <property name="ellipsize">end</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="subtitle_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="label" translatable="yes">label</property>
+                        <property name="wrap">True</property>
+                        <property name="wrap_mode">char</property>
+                        <property name="ellipsize">end</property>
+                        <property name="xalign">0</property>
+                        <style>
+                          <class name="dim-label"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
+                    <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">0</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="subtitle_label">
+                  <object class="GtkButton" id="play_button">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="label" translatable="yes">label</property>
-                    <property name="wrap">True</property>
-                    <property name="wrap_mode">char</property>
-                    <property name="ellipsize">end</property>
-                    <property name="xalign">0</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="valign">center</property>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="icon_name">media-playback-start-symbolic</property>
+                      </object>
+                    </child>
                     <style>
-                      <class name="dim-label"/>
+                      <class name="image-button"/>
                     </style>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
+                    <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="pack_type">end</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
               </object>
               <packing>
-                <property name="expand">False</property>
+                <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="play_button">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="valign">center</property>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="icon_name">media-playback-start-symbolic</property>
-                  </object>
-                </child>
-                <style>
-                  <class name="image-button"/>
-                </style>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="pack_type">end</property>
-                <property name="position">3</property>
               </packing>
             </child>
           </object>

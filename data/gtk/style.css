@@ -7,7 +7,7 @@
 }
 
 .tile {
-	padding: 1px;
+	padding: 0px;
 	border-radius: 6px;
 	border: 1px solid @borders;
   color: @theme_fg_color;
