@@ -99,11 +99,13 @@ impl Controller for MiniController {
 
         // Download & set icon
         let station_favicon = self.station_favicon.clone();
-        let fut = self.favicon_downloader.clone().download (station.favicon.clone(), FaviconSize::Mini as i32).map(move|pixbuf|{
-            pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
+        station.favicon.map(|favicon| {
+            let fut = self.favicon_downloader.clone().download (favicon, FaviconSize::Mini as i32).map(move|pixbuf|{
+                pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
+            });
+            let ctx = glib::MainContext::default();
+            ctx.spawn_local(fut);
         });
-        let ctx = glib::MainContext::default();
-        ctx.spawn_local(fut);
 
         // reset everything else
         self.subtitle_revealer.set_reveal_child(false);

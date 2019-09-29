@@ -111,11 +111,13 @@ impl Controller for SidebarController {
 
         // Download & set icon
         let station_favicon = self.station_favicon.clone();
-        let fut = self.favicon_downloader.clone().download (station.favicon.clone(), FaviconSize::Big as i32).map(move|pixbuf|{
-            pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
+        station.favicon.map(|favicon| {
+            let fut = self.favicon_downloader.clone().download (favicon, FaviconSize::Big as i32).map(move|pixbuf|{
+                pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
+            });
+            let ctx = glib::MainContext::default();
+            ctx.spawn_local(fut);
         });
-        let ctx = glib::MainContext::default();
-        ctx.spawn_local(fut);
 
         // reset everything else
         self.error_label.set_text(" ");

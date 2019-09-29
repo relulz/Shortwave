@@ -10,11 +10,11 @@ pub struct Station {
     pub stationuuid: String,
     pub name: String,
     #[serde(deserialize_with = "str_to_url")]
-    pub url: Url,
+    pub url: Option<Url>,
     #[serde(deserialize_with = "str_to_url")]
-    pub homepage: Url,
+    pub homepage: Option<Url>,
     #[serde(deserialize_with = "str_to_url")]
-    pub favicon: Url,
+    pub favicon: Option<Url>,
     pub tags: String,
     pub country: String,
     pub state: String,
@@ -51,11 +51,11 @@ where
     i32::from_str(&s).map_err(de::Error::custom)
 }
 
-fn str_to_url<'de, D>(deserializer: D) -> Result<Url, D::Error>
+fn str_to_url<'de, D>(deserializer: D) -> Result<Option<Url>, D::Error>
 where
     D: Deserializer<'de>,
 {
     let s = String::deserialize(deserializer)?;
-    Url::from_str(&s).map_err(de::Error::custom)
+    Ok(Url::from_str(&s).ok())
 }
 

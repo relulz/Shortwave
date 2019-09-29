@@ -31,11 +31,13 @@ impl StationRow {
         get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = StationFavicon::new(FaviconSize::Small);
         favicon_box.add(&station_favicon.widget);
-        let fut = favicon_downloader.download(station.favicon.clone(), FaviconSize::Small as i32).map(move|pixbuf|{
-            pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
+        station.favicon.as_ref().map(|favicon| {
+            let fut = favicon_downloader.download(favicon.clone(), FaviconSize::Small as i32).map(move|pixbuf|{
+                pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
+            });
+            let ctx = glib::MainContext::default();
+            ctx.spawn_local(fut);
         });
-        let ctx = glib::MainContext::default();
-        ctx.spawn_local(fut);
 
         let stationrow = Self {
             widget: station_row,

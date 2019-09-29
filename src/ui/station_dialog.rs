@@ -39,11 +39,13 @@ impl StationDialog {
         let station_favicon = StationFavicon::new(FaviconSize::Big);
         favicon_box.add(&station_favicon.widget);
         let favicon_downloader = FaviconDownloader::new();
-        let fut = favicon_downloader.download(station.favicon.clone(), FaviconSize::Big as i32).map(move|pixbuf|{
-            pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
+        station.favicon.as_ref().map(|favicon| {
+            let fut = favicon_downloader.download(favicon.clone(), FaviconSize::Big as i32).map(move|pixbuf|{
+                pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
+            });
+            let ctx = glib::MainContext::default();
+            ctx.spawn_local(fut);
         });
-        let ctx = glib::MainContext::default();
-        ctx.spawn_local(fut);
 
         // Show correct library action
         get_widget!(builder, gtk::Stack, library_action_stack);
@@ -77,7 +79,6 @@ impl StationDialog {
         self.title_label.set_text(&self.station.name);
         let subtitle_text = &format!("{} {} · {} Votes", self.station.country, self.station.state, self.station.votes);
         self.subtitle_label.set_text(subtitle_text);
-        self.homepage_label.set_markup(&format!("<a href=\"{}\">{}</a>", self.station.homepage, self.station.homepage));
 
         if self.station.codec != "" {
             self.codec_label.set_text(&self.station.codec);
@@ -88,6 +89,9 @@ impl StationDialog {
         if self.station.language != "" {
             self.language_label.set_text(&self.station.language);
         }
+        self.station.homepage.as_ref().map(|homepage|{
+            self.homepage_label.set_markup(&format!("<a href=\"{}\">{}</a>", homepage, homepage));
+        });
     }
 
     pub fn show(&self) {
