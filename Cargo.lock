@@ -1744,6 +1744,7 @@ dependencies = [
 name = "shortwave"
 version = "0.1.0"
 dependencies = [
+ "cairo-rs 0.7.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "chrono 0.4.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "diesel 1.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "diesel_migrations 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",

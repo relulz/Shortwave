@@ -1,18 +1,23 @@
 use glib::Sender;
+use glib::futures::FutureExt;
 use gtk::prelude::*;
 
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::api::Station;
+use crate::api::{Station, FaviconDownloader};
 use crate::app::Action;
 use crate::audio::Controller;
 use crate::audio::PlaybackState;
+use crate::ui::{StationFavicon, FaviconSize};
 
 pub struct MiniController {
     pub widget: gtk::Box,
     sender: Sender<Action>,
     station: Rc<RefCell<Option<Station>>>,
+
+    station_favicon: Rc<StationFavicon>,
+    favicon_downloader: FaviconDownloader,
 
     title_label: gtk::Label,
     subtitle_label: gtk::Label,
@@ -39,10 +44,17 @@ impl MiniController {
 
         let station = Rc::new(RefCell::new(None));
 
+        get_widget!(builder, gtk::Box, favicon_box);
+        let station_favicon = Rc::new(StationFavicon::new(FaviconSize::Mini));
+        favicon_box.add(&station_favicon.widget);
+        let favicon_downloader = FaviconDownloader::new();
+
         let controller = Self {
             widget: mini_controller,
             sender,
             station,
+            station_favicon,
+            favicon_downloader,
             title_label,
             subtitle_label,
             action_revealer,
@@ -83,7 +95,15 @@ impl Controller for MiniController {
         self.action_revealer.set_reveal_child(true);
         self.title_label.set_text(&station.name);
         self.title_label.set_tooltip_text(Some(station.name.as_str()));
-        *self.station.borrow_mut() = Some(station);
+        *self.station.borrow_mut() = Some(station.clone());
+
+        // Download & set icon
+        let station_favicon = self.station_favicon.clone();
+        let fut = self.favicon_downloader.clone().download (station.favicon.clone(), FaviconSize::Mini as i32).map(move|pixbuf|{
+            pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
+        });
+        let ctx = glib::MainContext::default();
+        ctx.spawn_local(fut);
 
         // reset everything else
         self.subtitle_revealer.set_reveal_child(false);

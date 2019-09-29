@@ -1,10 +1,12 @@
 use glib::Sender;
 use gtk::prelude::*;
 use libhandy::Dialog;
+use glib::futures::FutureExt;
 
-use crate::api::Station;
+use crate::api::{Station, FaviconDownloader};
 use crate::app::Action;
 use crate::database::Library;
+use crate::ui::{StationFavicon, FaviconSize};
 
 pub struct StationDialog {
     pub widget: Dialog,
@@ -31,6 +33,17 @@ impl StationDialog {
         get_widget!(builder, gtk::Label, homepage_label);
         get_widget!(builder, gtk::Label, tags_label);
         get_widget!(builder, gtk::Label, language_label);
+
+        // Download & set station favicon
+        get_widget!(builder, gtk::Box, favicon_box);
+        let station_favicon = StationFavicon::new(FaviconSize::Big);
+        favicon_box.add(&station_favicon.widget);
+        let favicon_downloader = FaviconDownloader::new();
+        let fut = favicon_downloader.download(station.favicon.clone(), FaviconSize::Big as i32).map(move|pixbuf|{
+            pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
+        });
+        let ctx = glib::MainContext::default();
+        ctx.spawn_local(fut);
 
         // Show correct library action
         get_widget!(builder, gtk::Stack, library_action_stack);
@@ -64,12 +77,10 @@ impl StationDialog {
         self.title_label.set_text(&self.station.name);
         let subtitle_text = &format!("{} {} · {} Votes", self.station.country, self.station.state, self.station.votes);
         self.subtitle_label.set_text(subtitle_text);
+        self.homepage_label.set_markup(&format!("<a href=\"{}\">{}</a>", self.station.homepage, self.station.homepage));
 
         if self.station.codec != "" {
             self.codec_label.set_text(&self.station.codec);
-        }
-        if self.station.homepage != "" {
-            self.homepage_label.set_markup(&format!("<a href=\"{}\">{}</a>", self.station.homepage, self.station.homepage));
         }
         if self.station.tags != "" {
             self.tags_label.set_text(&self.station.tags);

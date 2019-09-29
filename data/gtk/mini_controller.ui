@@ -93,9 +93,6 @@
                 <property name="position">2</property>
               </packing>
             </child>
-            <child>
-              <placeholder/>
-            </child>
           </object>
         </child>
       </object>
@@ -107,18 +104,14 @@
       </packing>
     </child>
     <child>
-      <object class="GtkImage" id="favicon_image">
-        <property name="width_request">46</property>
-        <property name="height_request">46</property>
+      <object class="GtkBox" id="favicon_box">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="valign">center</property>
-        <property name="pixel_size">24</property>
-        <property name="icon_name">emblem-music-symbolic</property>
-        <property name="icon_size">6</property>
-        <style>
-          <class name="smallcover"/>
-        </style>
+        <property name="halign">center</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <placeholder/>
+        </child>
       </object>
       <packing>
         <property name="expand">False</property>

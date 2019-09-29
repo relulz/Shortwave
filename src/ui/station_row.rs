@@ -4,7 +4,7 @@ use glib::futures::FutureExt;
 
 use crate::api::{Station, FaviconDownloader};
 use crate::app::Action;
-use crate::ui::station_dialog::StationDialog;
+use crate::ui::{StationDialog, StationFavicon, FaviconSize};
 
 pub struct StationRow {
     pub widget: gtk::FlowBoxChild,
@@ -28,9 +28,11 @@ impl StationRow {
         subtitle_label.set_text(&format!("{} {} · {} Votes", station.country, station.state, station.votes));
 
         // Download & set station favicon
-        get_widget!(builder, gtk::Image, station_favicon);
-        let fut = favicon_downloader.download_favicon(station.favicon.clone(), 60).map(move|pixbuf|{
-            pixbuf.map(|pixbuf| station_favicon.set_from_pixbuf(Some(&pixbuf)));
+        get_widget!(builder, gtk::Box, favicon_box);
+        let station_favicon = StationFavicon::new(FaviconSize::Small);
+        favicon_box.add(&station_favicon.widget);
+        let fut = favicon_downloader.download(station.favicon.clone(), FaviconSize::Small as i32).map(move|pixbuf|{
+            pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
         });
         let ctx = glib::MainContext::default();
         ctx.spawn_local(fut);
@@ -59,12 +61,16 @@ impl StationRow {
         // button
         let station = self.station.clone();
         let app = self.app.clone();
-        get_widget!(self.builder, gtk::Button, button);
+        get_widget!(self.builder, gtk::EventBox, eventbox);
         let sender = self.sender.clone();
-        button.connect_clicked(move |_| {
-            let window = app.get_active_window().unwrap();
-            let station_dialog = StationDialog::new(sender.clone(), station.clone(), &window);
-            station_dialog.show();
+        eventbox.connect_button_press_event(move |_, button| {
+            // 3 -> Right mouse button
+            if button.get_button() != 3 {
+                let window = app.get_active_window().unwrap();
+                let station_dialog = StationDialog::new(sender.clone(), station.clone(), &window);
+                station_dialog.show();
+            }
+            gtk::Inhibit(false)
         });
     }
 }

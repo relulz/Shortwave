@@ -44,7 +44,7 @@ impl MprisController {
         let song_title = self.song_title.take();
 
         station.clone().map(|station| {
-            metadata.art_url = Some(station.favicon);
+            metadata.art_url = Some(station.favicon.to_string());
             metadata.artist = Some(vec![station.name]);
         });
         song_title.clone().map(|song_title| {

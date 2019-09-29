@@ -32,8 +32,6 @@
                   <object class="GtkSearchEntry" id="search_entry">
                     <property name="visible">True</property>
                     <property name="hexpand">True</property>
-                    <property name="margin_left">7</property>
-                    <property name="margin_right">7</property>
                   </object>
                 </child>
               </object>

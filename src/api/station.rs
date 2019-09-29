@@ -1,21 +1,25 @@
+use url::Url;
 use serde::{de, Deserialize, Deserializer};
 use std::str::FromStr;
 
-#[derive(Serialize, Deserialize, Debug, Clone, Eq, Hash)]
+#[derive(Deserialize, Debug, Clone, Eq, Hash)]
 pub struct Station {
-    #[serde(deserialize_with = "de_from_str")]
+    #[serde(deserialize_with = "str_to_i32")]
     pub id: i32,
     pub changeuuid: String,
     pub stationuuid: String,
     pub name: String,
-    pub url: String,
-    pub homepage: String,
-    pub favicon: String,
+    #[serde(deserialize_with = "str_to_url")]
+    pub url: Url,
+    #[serde(deserialize_with = "str_to_url")]
+    pub homepage: Url,
+    #[serde(deserialize_with = "str_to_url")]
+    pub favicon: Url,
     pub tags: String,
     pub country: String,
     pub state: String,
     pub language: String,
-    #[serde(deserialize_with = "de_from_str")]
+    #[serde(deserialize_with = "str_to_i32")]
     pub votes: i32,
     pub negativevotes: String,
     pub lastchangetime: String,
@@ -27,9 +31,9 @@ pub struct Station {
     pub lastchecktime: String,
     pub lastcheckoktime: String,
     pub clicktimestamp: String,
-    #[serde(deserialize_with = "de_from_str")]
+    #[serde(deserialize_with = "str_to_i32")]
     pub clickcount: i32,
-    #[serde(deserialize_with = "de_from_str")]
+    #[serde(deserialize_with = "str_to_i32")]
     pub clicktrend: i32,
 }
 
@@ -39,10 +43,19 @@ impl PartialEq for Station {
     }
 }
 
-fn de_from_str<'de, D>(deserializer: D) -> Result<i32, D::Error>
+fn str_to_i32<'de, D>(deserializer: D) -> Result<i32, D::Error>
 where
     D: Deserializer<'de>,
 {
     let s = String::deserialize(deserializer)?;
     i32::from_str(&s).map_err(de::Error::custom)
 }
+
+fn str_to_url<'de, D>(deserializer: D) -> Result<Url, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let s = String::deserialize(deserializer)?;
+    Url::from_str(&s).map_err(de::Error::custom)
+}
+

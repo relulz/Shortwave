@@ -2,6 +2,7 @@ use soup::prelude::*;
 use soup::Session;
 use gio::DataInputStream;
 use gdk_pixbuf::Pixbuf;
+use url::Url;
 
 use crate::api::Error;
 use crate::config;
@@ -22,8 +23,7 @@ impl FaviconDownloader{
         Self { session }
     }
 
-    // TODO: use Url here instead of String
-    pub async fn download_favicon(self, url: String, size: i32) -> Result<Pixbuf, Error>{
+    pub async fn download (self, url: Url, size: i32) -> Result<Pixbuf, Error>{
         match soup::Message::new("GET", &url.to_string()){
             Some(message) => {
                 // Send created message

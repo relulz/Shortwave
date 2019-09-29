@@ -76,6 +76,7 @@ sources = files(
   'ui/notification.rs',
   'ui/song_listbox.rs',
   'ui/song_row.rs',
+  'ui/station_favicon.rs',
   'ui/station_dialog.rs',
   'ui/station_flowbox.rs',
   'ui/station_row.rs',

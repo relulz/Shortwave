@@ -5,6 +5,8 @@
       <file compressed="true" preprocess="xml-stripblanks">gtk/player.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/library.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/storefront.ui</file>
+      <file compressed="true" preprocess="xml-stripblanks">gtk/station_favicon.ui</file>
+      <file compressed="true" preprocess="xml-stripblanks">gtk/station_dialog.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/station_row.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/station_flowbox.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/menu.ui</file>
@@ -14,7 +16,6 @@
       <file compressed="true" preprocess="xml-stripblanks">gtk/song_row.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/sidebar_controller.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/mini_controller.ui</file>
-      <file compressed="true" preprocess="xml-stripblanks">gtk/station_dialog.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/tile_button.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/search.ui</file>
 
