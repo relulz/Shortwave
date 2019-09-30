@@ -34,19 +34,14 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
     [radio-browser.info](http://www.radio-browser.info/gui/#/). It's a community database. Everybody can add/edit information.
 
-- **Where I can find the old Gradio source code?**
-
-    The old Vala source code is still available in the [old Gradio repository](https://github.com/haecker-felix/Gradio). 
-
 ## Development builds
 
-#### Flatpak
-**Automatic Flatpak builds are currently disabled, because we need currently a nightly version of Rust, which is not included in the CI image. We'll re-enable it as soon as possible.**
+#### Flatpak nightly builds
+You can install nightly builds of Shortwave by using this command:
 
-~~This Flatpak bundle gets automatically generated with every Git commit. 
-[Download the latest bundle](https://gitlab.gnome.org/World/Shortwave/-/jobs/artifacts/master/download?job=flatpak).~~
+`flatpak install https://haeckerfelix.de/~repo/shortwave.flatpakref`
 
-~~You can install the downloaded bundle with GNOME Software, or just run `flatpak install shortwave-dev.flatpak -y`.~~
+More information are [here available](https://haeckerfelix.de/~repo/shortwave)! The repository is automatically updated every day. You can update to the latest nightly by running `flatpak update`!
 
 If you haven't installed Flatpak yet, you can download it from [here](https://flatpak.org/setup/).
 
@@ -59,7 +54,7 @@ After that you can compile Shortwave again with a stable Rust version.
 Shortwave can be built and run with [GNOME Builder](https://wiki.gnome.org/Apps/Builder) >= 3.28.
 Just clone the repo and hit the run button!
 
-You can get Builder from [here](https://wiki.gnome.org/Apps/Builder/Downloads), and the Rust Nightly Flatpak SDK (if necessary) from [here](https://gitlab.gnome.org/snippets/844)
+You can get Builder from [here](https://wiki.gnome.org/Apps/Builder/Downloads), and the Rust Nightly Flatpak SDK (if necessary) from [here](https://haeckerfelix.de/~repo/)
 
 ### Building it manually
 1. `git clone https://gitlab.gnome.org/World/Shortwave.git`
@@ -84,7 +79,7 @@ This is what still needs to be done for the first release of Shortwave. There's 
 - [ ] Implement disover page
 - [ ] Implement UI selection mode (https://developer.gnome.org/hig/stable/selection-mode.html.en)
 - [ ] Implement settings dialog
-- [ ] Show station icons instead of placeholder icon
+- [x] Show station icons instead of placeholder icon
 - [ ] Add ability to vote for stations
 - [ ] Improve stream recorder (Add several record modes, automatically ignore songs that are shorter than 30 seconds, ...)
 - [ ] Implement GNOME Search Provider (https://gitlab.gnome.org/World/Rust/search-provider)
