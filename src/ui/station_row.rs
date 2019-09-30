@@ -9,7 +9,6 @@ use crate::ui::{StationDialog, StationFavicon, FaviconSize};
 pub struct StationRow {
     pub widget: gtk::FlowBoxChild,
     station: Station,
-    app: gtk::Application,
 
     builder: gtk::Builder,
     sender: Sender<Action>,
@@ -19,7 +18,6 @@ impl StationRow {
     pub fn new(sender: Sender<Action>, favicon_downloader: FaviconDownloader, station: Station) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_row.ui");
         get_widget!(builder, gtk::FlowBoxChild, station_row);
-        let app = builder.get_application().unwrap();
 
         // Set row information
         get_widget!(builder, gtk::Label, station_label);
@@ -42,7 +40,6 @@ impl StationRow {
         let stationrow = Self {
             widget: station_row,
             station,
-            app,
             builder,
             sender,
         };
@@ -58,21 +55,6 @@ impl StationRow {
         let station = self.station.clone();
         play_button.connect_clicked(move |_| {
             sender.send(Action::PlaybackSetStation(station.clone())).unwrap();
-        });
-
-        // button
-        let station = self.station.clone();
-        let app = self.app.clone();
-        get_widget!(self.builder, gtk::EventBox, eventbox);
-        let sender = self.sender.clone();
-        eventbox.connect_button_press_event(move |_, button| {
-            // 3 -> Right mouse button
-            if button.get_button() != 3 {
-                let window = app.get_active_window().unwrap();
-                let station_dialog = StationDialog::new(sender.clone(), station.clone(), &window);
-                station_dialog.show();
-            }
-            gtk::Inhibit(false)
         });
     }
 }

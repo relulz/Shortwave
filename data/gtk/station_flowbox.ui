@@ -11,7 +11,6 @@
     <property name="min_children_per_line">1</property>
     <property name="max_children_per_line">1</property>
     <property name="selection_mode">none</property>
-    <property name="activate_on_single_click">False</property>
     <style>
       <class name="transparent"/>
     </style>

@@ -3,22 +3,24 @@ use gtk::prelude::*;
 use indexmap::IndexMap;
 
 use std::cell::RefCell;
+use std::rc::Rc;
 use std::convert::TryInto;
 
 use crate::api::{Station, FaviconDownloader};
 use crate::app::Action;
-use crate::ui::station_row::StationRow;
+use crate::ui::{StationDialog, StationRow};
 use crate::utils;
 use crate::utils::{Order, Sorting};
 
 pub struct StationFlowBox {
     pub widget: gtk::FlowBox,
-    stations: RefCell<IndexMap<i32, Station>>,
+    stations: Rc<RefCell<IndexMap<i32, Station>>>,
     favicon_downloader: FaviconDownloader,
 
     sorting: RefCell<Sorting>,
     order: RefCell<Order>,
 
+    app: gtk::Application,
     sender: Sender<Action>,
 }
 
@@ -26,16 +28,33 @@ impl StationFlowBox {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_flowbox.ui");
         get_widget!(builder, gtk::FlowBox, station_flowbox);
-        let stations = RefCell::new(IndexMap::new());
+        let stations = Rc::new(RefCell::new(IndexMap::new()));
 
         let favicon_downloader = FaviconDownloader::new();
 
         let sorting = RefCell::new(Sorting::Default);
         let order = RefCell::new(Order::Ascending);
 
+        let app = builder.get_application().unwrap();
+
+        let flowbox = Self {
+            widget: station_flowbox,
+            stations,
+            favicon_downloader,
+            sorting,
+            order,
+            app,
+            sender,
+        };
+
+        flowbox.connect_signals();
+        flowbox
+    }
+
+    fn connect_signals(&self){
         // Set automatically flowbox colums
-        let fb = station_flowbox.clone();
-        station_flowbox.connect_size_allocate(move |_, alloc| {
+        let fb = self.widget.clone();
+        self.widget.connect_size_allocate(move |_, alloc| {
             if alloc.width > 1000 {
                 fb.set_min_children_per_line(3);
                 fb.set_max_children_per_line(3);
@@ -48,14 +67,18 @@ impl StationFlowBox {
             }
         });
 
-        Self {
-            widget: station_flowbox,
-            stations,
-            favicon_downloader,
-            sorting,
-            order,
-            sender,
-        }
+        // Show StationDialog when row gets clicked
+        let stations = self.stations.clone();
+        let app = self.app.clone();
+        let sender = self.sender.clone();
+        self.widget.connect_child_activated(move |fb, child|{
+            let index = child.get_index();
+            let station = stations.borrow().get_index(index.try_into().unwrap()).unwrap().1.clone();
+
+            let window = app.get_active_window().unwrap();
+            let station_dialog = StationDialog::new(sender.clone(), station.clone(), &window);
+            station_dialog.show();
+        });
     }
 
     pub fn add_stations(&self, stations: Vec<Station>) {
