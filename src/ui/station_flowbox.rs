@@ -71,7 +71,7 @@ impl StationFlowBox {
         let stations = self.stations.clone();
         let app = self.app.clone();
         let sender = self.sender.clone();
-        self.widget.connect_child_activated(move |fb, child|{
+        self.widget.connect_child_activated(move |_, child|{
             let index = child.get_index();
             let station = stations.borrow().get_index(index.try_into().unwrap()).unwrap().1.clone();
 

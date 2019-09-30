@@ -4,7 +4,7 @@ use glib::futures::FutureExt;
 
 use crate::api::{Station, FaviconDownloader};
 use crate::app::Action;
-use crate::ui::{StationDialog, StationFavicon, FaviconSize};
+use crate::ui::{StationFavicon, FaviconSize};
 
 pub struct StationRow {
     pub widget: gtk::FlowBoxChild,

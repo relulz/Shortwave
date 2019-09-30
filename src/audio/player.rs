@@ -100,6 +100,13 @@ impl Player {
     pub fn set_station(&self, station: Station) {
         self.set_playback(PlaybackState::Stopped);
 
+        // Station is broken, we refuse to play it
+        if !station.lastcheckok {
+            let notification = Notification::new_info("This station cannot be played because the stream is offline.");
+            self.sender.send(Action::ViewShowNotification(notification)).unwrap();
+            return;
+        }
+
         for con in &*self.controller {
             con.set_station(station.clone());
         }

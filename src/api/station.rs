@@ -27,7 +27,8 @@ pub struct Station {
     pub codec: String,
     pub bitrate: String,
     pub hls: String,
-    pub lastcheckok: String,
+    #[serde(deserialize_with = "str_to_bool")]
+    pub lastcheckok: bool,
     pub lastchecktime: String,
     pub lastcheckoktime: String,
     pub clicktimestamp: String,
@@ -57,5 +58,17 @@ where
 {
     let s = String::deserialize(deserializer)?;
     Ok(Url::from_str(&s).ok())
+}
+
+fn str_to_bool<'de, D>(deserializer: D) -> Result<bool, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let s = String::deserialize(deserializer)?;
+    if s == "0" {
+        Ok(false)
+    }else{
+        Ok(true)
+    }
 }
 
