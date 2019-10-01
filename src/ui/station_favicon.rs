@@ -45,7 +45,7 @@ impl StationFavicon {
             },
         };
         image.set_size_request(size as i32, size as i32);
-        placeholder.set_pixel_size(((size as i32) as f64 * 0.7) as i32);
+        placeholder.set_pixel_size(((size as i32) as f64 * 0.5) as i32);
 
         let favicon = Self {
             widget: station_favicon,
