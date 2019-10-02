@@ -29,6 +29,8 @@ pub struct SidebarController {
     stop_playback_button: gtk::Button,
     info_button: gtk::Button,
     error_label: gtk::Label,
+    volume_button: gtk::VolumeButton,
+    volume_signal_id: glib::signal::SignalHandlerId,
 }
 
 impl SidebarController {
@@ -44,6 +46,7 @@ impl SidebarController {
         get_widget!(builder, gtk::Button, stop_playback_button);
         get_widget!(builder, gtk::Button, info_button);
         get_widget!(builder, gtk::Label, error_label);
+        get_widget!(builder, gtk::VolumeButton, volume_button);
 
         let station = Rc::new(RefCell::new(None));
         let app = builder.get_application().unwrap();
@@ -52,6 +55,12 @@ impl SidebarController {
         let station_favicon = Rc::new(StationFavicon::new(FaviconSize::Big));
         favicon_box.add(&station_favicon.widget);
         let favicon_downloader = FaviconDownloader::new();
+
+        // volume_button | We need the volume_signal_id later to block the signal
+        let s = sender.clone();
+        let volume_signal_id = volume_button.connect_value_changed(move|_, value| {
+            s.send(Action::PlaybackSetVolume(value)).unwrap();
+        });
 
         let controller = Self {
             widget: sidebar_controller,
@@ -69,6 +78,8 @@ impl SidebarController {
             stop_playback_button,
             info_button,
             error_label,
+            volume_button,
+            volume_signal_id,
         };
 
         controller.setup_signals();
@@ -136,6 +147,13 @@ impl Controller for SidebarController {
                 self.error_label.set_text(&text);
             }
         };
+    }
+
+    fn set_volume(&self, volume: f64) {
+        // We need to block the signal, otherwise we risk creating a endless loop
+        glib::signal::signal_handler_block(&self.volume_button, &self.volume_signal_id);
+        self.volume_button.set_value(volume);
+        glib::signal::signal_handler_unblock(&self.volume_button, &self.volume_signal_id);
     }
 
     fn set_song_title(&self, title: &str) {

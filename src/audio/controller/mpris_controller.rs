@@ -1,7 +1,8 @@
 use glib::Sender;
 use mpris_player::{Metadata, MprisPlayer, OrgMprisMediaPlayer2Player, PlaybackStatus};
 
-use std::cell::Cell;
+use std::rc::Rc;
+use std::cell::{RefCell, Cell};
 use std::sync::Arc;
 
 use crate::api::Station;
@@ -15,6 +16,7 @@ pub struct MprisController {
 
     song_title: Cell<Option<String>>,
     station: Cell<Option<Station>>,
+    volume: Rc<RefCell<f64>>,
 }
 
 impl MprisController {
@@ -26,11 +28,14 @@ impl MprisController {
         mpris.set_can_set_fullscreen(false);
         mpris.set_can_pause(true);
 
+        let volume = Rc::new(RefCell::new(0.0));
+
         let controller = Self {
             sender,
             mpris,
             song_title: Cell::new(None),
             station: Cell::new(None),
+            volume,
         };
 
         controller.setup_signals();
@@ -92,6 +97,16 @@ impl MprisController {
         self.mpris.connect_pause(move || {
             sender.send(Action::PlaybackStop).unwrap();
         });
+
+        // mpris volume
+        let sender = self.sender.clone();
+        let old_volume = self.volume.clone();
+        self.mpris.connect_volume(move|new_volume| {
+            if *old_volume.borrow() != new_volume {
+                sender.send(Action::PlaybackSetVolume(new_volume.clone())).unwrap();
+                *old_volume.borrow_mut() = new_volume;
+            }
+        });
     }
 }
 
@@ -108,6 +123,11 @@ impl Controller for MprisController {
             PlaybackState::Playing => self.mpris.set_playback_status(PlaybackStatus::Playing),
             _ => self.mpris.set_playback_status(PlaybackStatus::Stopped),
         };
+    }
+
+    fn set_volume(&self, volume: f64) {
+        *self.volume.borrow_mut() = volume;
+        self.mpris.set_volume(volume.clone()).unwrap();
     }
 
     fn set_song_title(&self, title: &str) {

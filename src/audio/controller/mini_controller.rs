@@ -120,6 +120,10 @@ impl Controller for MiniController {
         };
     }
 
+    fn set_volume(&self, _volume: f64) {
+        // We don't have to do anything here.
+    }
+
     fn set_song_title(&self, title: &str) {
         if title != "" {
             self.subtitle_label.set_text(title);

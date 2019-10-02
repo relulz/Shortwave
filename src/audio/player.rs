@@ -80,7 +80,7 @@ impl Player {
 
         // Gstreamer backend
         let (gst_sender, gst_receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
-        let gst_backend = Arc::new(Mutex::new(GstreamerBackend::new(gst_sender)));
+        let gst_backend = Arc::new(Mutex::new(GstreamerBackend::new(gst_sender, sender.clone())));
 
         let controller: Rc<Vec<Box<dyn Controller>>> = Rc::new(controller);
 
@@ -142,6 +142,14 @@ impl Player {
                 let _ = self.gst_backend.lock().unwrap().set_state(gstreamer::State::Null);
             }
             _ => (),
+        }
+    }
+
+    pub fn set_volume(&self, volume: f64){
+        self.gst_backend.lock().unwrap().set_volume(volume.clone());
+
+        for con in &*self.controller {
+            con.set_volume(volume);
         }
     }
 

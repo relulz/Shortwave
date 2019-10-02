@@ -7,26 +7,27 @@ use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 use std::time::SystemTime;
 
+use crate::app::Action;
 use crate::audio::PlaybackState;
 use crate::audio::Song;
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                      //
-//  # Gstreamer Pipeline                                                                                //
-//                                            -----      --------       -------------                   //
-//                                           |     | -> | queue [1] -> | recorderbin |                  //
-//    --------------      --------------     |     |     --------       -------------                   //
-//   | uridecodebin | -> | audioconvert | -> | tee |                                                    //
-//    --------------      --------------     |     |     -------      --------      ---------------     //
-//                                           |     | -> | queue | -> | volume | -> | autoaudiosink |    //
-//                                            -----      -------      --------      ---------------     //
-//                                                                                                      //
-//                                                                                                      //
-//                                                                                                      //
-//  We use the the file_srcpad[1] to block the dataflow, so we can change the recorderbin.              //
-//  The dataflow gets blocked when the song changes.                                                    //
-//                                                                                                      //
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                //
+//  # Gstreamer Pipeline                                                                          //
+//                                            -----      --------       -------------             //
+//                                           |     | -> | queue [1] -> | recorderbin |            //
+//    --------------      --------------     |     |     --------       -------------             //
+//   | uridecodebin | -> | audioconvert | -> | tee |                                              //
+//    --------------      --------------     |     |     -------      -----------                 //
+//                                           |     | -> | queue | -> | pulsesink |                //
+//                                            -----      -------      -----------                 //
+//                                                                                                //
+//                                                                                                //
+//                                                                                                //
+//  We use the the file_srcpad[1] to block the dataflow, so we can change the recorderbin.        //
+//  The dataflow gets blocked when the song changes.                                              //
+//                                                                                                //
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone)]
 pub enum GstreamerMessage {
@@ -44,8 +45,7 @@ pub struct GstreamerBackend {
     tee: Element,
 
     audio_queue: Element,
-    volume: Element,
-    autoaudiosink: Element,
+    pulsesink: Element, // TODO: Is it good to hardcode pulsesink here instead of autoaudiosink?
 
     file_queue: Element,
     recorderbin: Arc<Mutex<Option<RecorderBin>>>,
@@ -53,11 +53,14 @@ pub struct GstreamerBackend {
     file_blockprobe_id: Option<PadProbeId>,
 
     current_title: Arc<Mutex<String>>,
+
+    volume: Arc<Mutex<f64>>,
+    volume_signal_id: glib::signal::SignalHandlerId,
     sender: Sender<GstreamerMessage>,
 }
 
 impl GstreamerBackend {
-    pub fn new(sender: Sender<GstreamerMessage>) -> Self {
+    pub fn new(gst_sender: Sender<GstreamerMessage>, app_sender: Sender<Action>) -> Self {
         // create gstreamer pipeline
         let pipeline = Pipeline::new(Some("recorder_pipeline"));
 
@@ -66,13 +69,12 @@ impl GstreamerBackend {
         let audioconvert = ElementFactory::make("audioconvert", Some("audioconvert")).unwrap();
         let tee = ElementFactory::make("tee", Some("tee")).unwrap();
         let audio_queue = ElementFactory::make("queue", Some("audio_queue")).unwrap();
-        let volume = ElementFactory::make("volume", Some("volume")).unwrap();
-        let autoaudiosink = ElementFactory::make("autoaudiosink", Some("autoaudiosink")).unwrap();
+        let pulsesink = ElementFactory::make("pulsesink", Some("pulsesink")).unwrap();
         let file_queue = ElementFactory::make("queue", Some("file_queue")).unwrap();
         let file_srcpad = file_queue.get_static_pad("src").unwrap();
 
         // link pipeline elements
-        pipeline.add_many(&[&uridecodebin, &audioconvert, &tee, &audio_queue, &volume, &autoaudiosink, &file_queue]).unwrap();
+        pipeline.add_many(&[&uridecodebin, &audioconvert, &tee, &audio_queue, &pulsesink, &file_queue]).unwrap();
         Element::link_many(&[&audioconvert, &tee]).unwrap();
         let tee_tempmlate = tee.get_pad_template("src_%u").unwrap();
 
@@ -80,11 +82,12 @@ impl GstreamerBackend {
         let tee_file_srcpad = tee.request_pad(&tee_tempmlate, None, None).unwrap();
         let _ = tee_file_srcpad.link(&file_queue.get_static_pad("sink").unwrap());
 
-        // link tee -> queue -> volume -> autoaudiosink
+        // link tee -> queue -> pulsesink
         let tee_audio_srcpad = tee.request_pad(&tee_tempmlate, None, None).unwrap();
         let _ = tee_audio_srcpad.link(&audio_queue.get_static_pad("sink").unwrap());
-        let _ = audio_queue.link(&volume);
-        let _ = volume.link(&autoaudiosink);
+        let _ = audio_queue.link(&pulsesink);
+
+        let recorderbin = Arc::new(Mutex::new(None));
 
         // dynamically link uridecodebin element with audioconvert element
         let convert = audioconvert.clone();
@@ -111,7 +114,7 @@ impl GstreamerBackend {
         // listen for new pipeline / bus messages
         let ct = current_title.clone();
         let bus = pipeline.get_bus().expect("Unable to get pipeline bus");
-        let s = sender.clone();
+        let s = gst_sender.clone();
         gtk::timeout_add(250, move || {
             while bus.have_pending() {
                 bus.pop().map(|message| {
@@ -122,7 +125,50 @@ impl GstreamerBackend {
             Continue(true)
         });
 
-        let recorderbin = Arc::new(Mutex::new(None));
+
+        // We have to update the volume if we get changes from pulseaudio (pulsesink).
+        // The user is able to control the volume from g-c-c.
+        let volume = Arc::new(Mutex::new(1.0));
+        let (volume_sender, volume_receiver) = glib::MainContext::channel(glib::PRIORITY_LOW);
+
+        // We need to do message passing (sender/receiver) here, because gstreamer messages are
+        // coming from a other thread (and app::Action enum is not thread safe).
+        let a_s = app_sender.clone();
+        volume_receiver.attach(None, move |volume| {
+            a_s.send(Action::PlaybackSetVolume(volume)).unwrap();
+            glib::Continue(true)
+        });
+
+
+        // Update volume coming from pulseaudio / pulsesink
+        let old_volume = volume.clone();
+        let v_s = volume_sender.clone();
+        let volume_signal_id = pulsesink.connect_notify(Some("volume"), move |element, _| {
+            let new_volume: f64 = element.get_property("volume").unwrap().get().unwrap();
+
+            // We have to check if the values are the same. For some reason gstreamer sends us
+            // slightly differents floats, so we round up here (only the the first two digits are
+            // important for use here).
+            let new_val = format!("{:.2}", new_volume);
+            let old_val = format!("{:.2}", old_volume.lock().unwrap());
+
+            if new_val != old_val {
+                v_s.send(new_volume).unwrap();
+                *old_volume.lock().unwrap() = new_volume;
+            }
+        });
+
+        // It's possible to mute the audio (!= 0.0) from pulseaudio side, so we should handle
+        // this too by setting the volume to 0.0
+        let old_volume = volume.clone();
+        let v_s = volume_sender.clone();
+        pulsesink.connect_notify(Some("mute"), move |element, _| {
+            let mute: bool = element.get_property("mute").unwrap().get().unwrap();
+            if mute && *old_volume.lock().unwrap() != 0.0 {
+                v_s.send(0.0).unwrap();
+                *old_volume.lock().unwrap() = 0.0;
+            }
+        });
 
         let pipeline = Self {
             pipeline,
@@ -130,14 +176,15 @@ impl GstreamerBackend {
             audioconvert,
             tee,
             audio_queue,
-            volume,
-            autoaudiosink,
+            pulsesink,
             file_queue,
             recorderbin,
             file_srcpad,
             file_blockprobe_id: None,
             current_title,
-            sender,
+            volume,
+            volume_signal_id,
+            sender: gst_sender,
         };
 
         pipeline
@@ -149,6 +196,14 @@ impl GstreamerBackend {
         }
 
         let _ = self.pipeline.set_state(state);
+    }
+
+    pub fn set_volume(&self, volume: f64){
+        // We need to block the signal, otherwise we risk creating a endless loop
+        glib::signal::signal_handler_block(&self.pulsesink, &self.volume_signal_id);
+        *self.volume.lock().unwrap() = volume;
+        self.pulsesink.set_property("volume", &volume).unwrap();
+        glib::signal::signal_handler_unblock(&self.pulsesink, &self.volume_signal_id);
     }
 
     pub fn new_source_uri(&mut self, source: &str) {

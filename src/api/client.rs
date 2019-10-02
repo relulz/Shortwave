@@ -69,7 +69,6 @@ impl Client {
     // Create and send soup message, return the received data.
     async fn send_message(&self, url: Url) -> std::result::Result<GString, Error> {
         // Create SOUP message
-        dbg!(url.clone());
         match soup::Message::new("GET", &url.to_string()){
             Some(message) => {
                 // Send created message
