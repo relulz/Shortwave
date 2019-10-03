@@ -26,7 +26,7 @@ pub struct MiniController {
     playback_button_stack: gtk::Stack,
     start_playback_button: gtk::Button,
     stop_playback_button: gtk::Button,
-    show_player_button: gtk::Button,
+    eventbox: gtk::EventBox,
 }
 
 impl MiniController {
@@ -40,7 +40,7 @@ impl MiniController {
         get_widget!(builder, gtk::Stack, playback_button_stack);
         get_widget!(builder, gtk::Button, start_playback_button);
         get_widget!(builder, gtk::Button, stop_playback_button);
-        get_widget!(builder, gtk::Button, show_player_button);
+        get_widget!(builder, gtk::EventBox, eventbox);
 
         let station = Rc::new(RefCell::new(None));
 
@@ -62,7 +62,7 @@ impl MiniController {
             playback_button_stack,
             start_playback_button,
             stop_playback_button,
-            show_player_button,
+            eventbox,
         };
 
         controller.setup_signals();
@@ -84,8 +84,9 @@ impl MiniController {
 
         // show_player_button
         let sender = self.sender.clone();
-        self.show_player_button.connect_clicked(move |_| {
+        self.eventbox.connect_button_release_event(move |_,_| {
             sender.send(Action::ViewShowPlayer).unwrap();
+            glib::signal::Inhibit(false)
         });
     }
 }
