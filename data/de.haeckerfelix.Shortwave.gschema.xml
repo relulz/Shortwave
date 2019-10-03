@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schemalist>
-    <schema path="/de/haeckerfelix/Shortwave/" id="de.haeckerfelix.Shortwave" gettext-domain="shortwave">
-
-    </schema>
+  <schema path="/de/haeckerfelix/Shortwave/" id="de.haeckerfelix.Shortwave" gettext-domain="shortwave">
+    <key name="api-server" type="s">
+      <default>"https://www.radio-browser.info/webservice/"</default>
+    </key>
+    <key name="dark-mode" type="b">
+      <default>false</default>
+    </key>
+  </schema>
 </schemalist>
+

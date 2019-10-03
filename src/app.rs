@@ -17,6 +17,7 @@ use crate::database::Library;
 use crate::discover::StoreFront;
 use crate::ui::{View, Window, Notification};
 use crate::utils::{Order, Sorting};
+use crate::settings;
 
 #[derive(Debug, Clone)]
 pub enum Action {
@@ -270,7 +271,7 @@ impl App {
             self.sender.send(Action::ViewShowNotification(spinner_notification.clone())).unwrap();
 
             // Get actual stations from identifiers
-            let client = Client::new(Url::parse("http://www.radio-browser.info/webservice/").unwrap());
+            let client = Client::new(Url::parse(&settings::get_string(settings::Key::ApiServer)).unwrap());
             let sender = self.sender.clone();
             let fut = client.get_stations_by_identifiers(ids).map(move |stations| {
                 spinner_notification.hide();

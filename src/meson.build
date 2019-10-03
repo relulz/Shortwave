@@ -72,6 +72,8 @@ sources = files(
   'discover/storefront.rs',
   'discover/tile_button.rs',
 
+  'settings/mod.rs',
+
   'ui/mod.rs',
   'ui/notification.rs',
   'ui/song_listbox.rs',

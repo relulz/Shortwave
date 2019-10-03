@@ -8,6 +8,7 @@ use std::rc::Rc;
 use crate::app::Action;
 use crate::config;
 use crate::ui::Notification;
+use crate::settings;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum View {
@@ -77,6 +78,10 @@ impl Window {
             let ctx = window.widget.get_style_context();
             ctx.add_class("devel");
         }
+
+        // Dark mode
+        let gtk_settings = gtk::Settings::get_default().unwrap();
+        gtk_settings.set_property_gtk_application_prefer_dark_theme(settings::get_boolean(settings::Key::DarkMode));
 
         window.setup_signals();
         window

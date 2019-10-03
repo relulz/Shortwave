@@ -41,3 +41,4 @@ indexmap = { git = "https://github.com/bluss/indexmap.git", rev = "380e55c6a330b
 gettext-rs= { version = "0.4", features = ["gettext-system"] }
 failure = "0.1.5"
 failure_derive = "0.1.5"
+Inflector = "0.11.4"
