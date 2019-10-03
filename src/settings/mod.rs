@@ -5,8 +5,13 @@ use crate::config;
 
 #[derive(Debug)]
 pub enum Key {
+    /* Client Backend */
     ApiServer,
+
+    /* User Interface */
     DarkMode,
+    WindowWidth,
+    WindowHeight,
 }
 
 impl Key{

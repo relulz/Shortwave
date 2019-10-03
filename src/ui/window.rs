@@ -83,6 +83,11 @@ impl Window {
         let gtk_settings = gtk::Settings::get_default().unwrap();
         gtk_settings.set_property_gtk_application_prefer_dark_theme(settings::get_boolean(settings::Key::DarkMode));
 
+        // Restore window geometry
+        let width = settings::get_integer(settings::Key::WindowWidth);
+        let height = settings::get_integer(settings::Key::WindowHeight);
+        window.widget.resize(width, height);
+
         window.setup_signals();
         window
     }
@@ -123,6 +128,17 @@ impl Window {
         get_widget!(self.builder, libhandy::Leaflet, leaflet);
         leaflet.connect_property_visible_child_name_notify(leaflet_closure.clone());
         leaflet.connect_property_fold_notify(leaflet_closure.clone());
+
+        // window gets closed
+        self.widget.connect_delete_event(move |window, _| {
+            debug!("Saving window geometry.");
+            let width = window.get_size().0;
+            let height = window.get_size().1;
+
+            settings::set_integer(settings::Key::WindowWidth, width);
+            settings::set_integer(settings::Key::WindowHeight, height);
+            Inhibit(false)
+        });
     }
 
     pub fn show_notification(&self, notification: Rc<Notification>) {
