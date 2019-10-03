@@ -1,6 +1,6 @@
 [package]
 name = "shortwave"
-version = "0.1.0"
+version = "0.0.0"
 authors = ["Felix Häcker <haeckerfelix@gnome.org>"]
 edition = "2018"
 
