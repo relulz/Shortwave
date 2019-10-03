@@ -230,7 +230,7 @@ impl App {
         let dialog = gtk::AboutDialog::new();
         dialog.set_program_name(config::NAME);
         dialog.set_logo_icon_name(Some(config::APP_ID));
-        dialog.set_comments(Some("A web radio client"));
+        dialog.set_comments(Some("Listen to internet radio"));
         dialog.set_copyright(Some("© 2019 Felix Häcker"));
         dialog.set_license_type(gtk::License::Gpl30);
         dialog.set_version(Some(format!("{}{}", config::VERSION, version_suffix).as_str()));
