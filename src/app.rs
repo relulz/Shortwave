@@ -8,6 +8,7 @@ use url::Url;
 use std::cell::RefCell;
 use std::env;
 use std::rc::Rc;
+use std::str::FromStr;
 
 use crate::api::{Client, Station, StationRequest};
 use crate::audio::{PlaybackState, Player, Song};
@@ -27,7 +28,6 @@ pub enum Action {
     ViewShowSettings,
     ViewShowNotification(Rc<Notification>),
     ViewRaise,
-    ViewSetSorting(Sorting, Order),
     PlaybackSetStation(Station),
     PlaybackStart,
     PlaybackStop,
@@ -86,6 +86,9 @@ impl App {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
         get_widget!(builder, gtk::ShortcutsWindow, shortcuts);
         window.widget.set_help_overlay(Some(&shortcuts));
+
+        // Small workaround to update every view to the correct sorting/order.
+        sender.send(Action::SettingsKeyChanged(Key::ViewSorting)).unwrap();
 
         let app = Rc::new(Self {
             gtk_app,
@@ -153,50 +156,39 @@ impl App {
         });
 
         // Sort / Order menu
-        let sort_variant = "name".to_variant();
+        let sort_variant = SettingsManager::get_string(Key::ViewSorting).to_variant();
         let sorting_action = gio::SimpleAction::new_stateful("sorting", Some(sort_variant.type_()), &sort_variant);
         self.gtk_app.add_action(&sorting_action);
 
-        let order_variant = "ascending".to_variant();
+        let order_variant = SettingsManager::get_string(Key::ViewOrder).to_variant();
         let order_action = gio::SimpleAction::new_stateful("order", Some(order_variant.type_()), &order_variant);
         self.gtk_app.add_action(&order_action);
 
         let sa = sorting_action.clone();
         let oa = order_action.clone();
-        let sender = self.sender.clone();
         sorting_action.connect_activate(move |a, b| {
             a.set_state(&b.clone().unwrap());
-            Self::sort_action(&sa, &oa, &sender);
+            Self::sort_action(&sa, &oa);
         });
 
         let sa = sorting_action.clone();
         let oa = order_action.clone();
-        let sender = self.sender.clone();
         order_action.connect_activate(move |a, b| {
             a.set_state(&b.clone().unwrap());
-            Self::sort_action(&sa, &oa, &sender);
+            Self::sort_action(&sa, &oa);
         });
     }
 
-    fn sort_action(sorting_action: &gio::SimpleAction, order_action: &gio::SimpleAction, sender: &Sender<Action>) {
-        let order_str: String = order_action.get_state().unwrap().get_str().unwrap().to_string();
-        let order = match order_str.as_ref() {
-            "ascending" => Order::Ascending,
-            _ => Order::Descending,
-        };
-
+    fn sort_action(sorting_action: &gio::SimpleAction, order_action: &gio::SimpleAction) {
         let sorting_str: String = sorting_action.get_state().unwrap().get_str().unwrap().to_string();
-        let sorting = match sorting_str.as_ref() {
-            "language" => Sorting::Language,
-            "country" => Sorting::Country,
-            "state" => Sorting::State,
-            "codec" => Sorting::Codec,
-            "votes" => Sorting::Votes,
-            "bitrate" => Sorting::Bitrate,
-            _ => Sorting::Name,
-        };
+        let order_str: String = order_action.get_state().unwrap().get_str().unwrap().to_string();
 
-        sender.send(Action::ViewSetSorting(sorting, order)).unwrap();
+        if SettingsManager::get_string(Key::ViewSorting) != sorting_str {
+            SettingsManager::set_string(Key::ViewSorting, sorting_str);
+        }
+        if SettingsManager::get_string(Key::ViewOrder) != order_str {
+            SettingsManager::set_string(Key::ViewOrder, order_str);
+        }
     }
 
     fn add_gaction<F>(&self, name: &str, action: F)
@@ -224,7 +216,6 @@ impl App {
             Action::ViewShowSettings => self.show_settings_window(),
             Action::ViewRaise => self.window.widget.present_with_time((glib::get_monotonic_time() / 1000) as u32),
             Action::ViewShowNotification(notification) => self.window.show_notification(notification),
-            Action::ViewSetSorting(sorting, order) => self.library.set_sorting(sorting, order),
             Action::PlaybackSetStation(station) => self.player.set_station(station.clone()),
             Action::PlaybackStart => self.player.set_playback(PlaybackState::Playing),
             Action::PlaybackStop => self.player.set_playback(PlaybackState::Stopped),
@@ -237,6 +228,12 @@ impl App {
             Action::SettingsKeyChanged(key) => {
                 match key {
                     Key::DarkMode => self.window.update_dark_mode(),
+                    Key::ViewSorting | Key::ViewOrder => {
+                        let sorting: Sorting = Sorting::from_str(&SettingsManager::get_string(Key::ViewSorting)).unwrap();
+                        let order: Order = Order::from_str(&SettingsManager::get_string(Key::ViewOrder)).unwrap();
+
+                        self.library.set_sorting(sorting, order);
+                    },
                     _ => (),
                 }
             },

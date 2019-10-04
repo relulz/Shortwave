@@ -166,7 +166,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="action_name">app.sorting</property>
-            <property name="action_target">'name'</property>
+            <property name="action_target">'Name'</property>
             <property name="text" translatable="yes">Name</property>
           </object>
           <packing>
@@ -181,7 +181,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="action_name">app.sorting</property>
-            <property name="action_target">'language'</property>
+            <property name="action_target">'Language'</property>
             <property name="text" translatable="yes">Language</property>
           </object>
           <packing>
@@ -196,7 +196,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="action_name">app.sorting</property>
-            <property name="action_target">'country'</property>
+            <property name="action_target">'Country'</property>
             <property name="text" translatable="yes">Country</property>
           </object>
           <packing>
@@ -211,7 +211,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="action_name">app.sorting</property>
-            <property name="action_target">'state'</property>
+            <property name="action_target">'State'</property>
             <property name="text" translatable="yes">State</property>
           </object>
           <packing>
@@ -226,7 +226,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="action_name">app.sorting</property>
-            <property name="action_target">'votes'</property>
+            <property name="action_target">'Votes'</property>
             <property name="text" translatable="yes">Votes</property>
           </object>
           <packing>
@@ -252,7 +252,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="action_name">app.order</property>
-            <property name="action_target">'ascending'</property>
+            <property name="action_target">'Ascending'</property>
             <property name="text" translatable="yes">Ascending</property>
           </object>
           <packing>
@@ -267,7 +267,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="action_name">app.order</property>
-            <property name="action_target">'descending'</property>
+            <property name="action_target">'Descending'</property>
             <property name="text" translatable="yes">Descending</property>
           </object>
           <packing>

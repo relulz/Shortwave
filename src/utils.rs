@@ -9,7 +9,7 @@ macro_rules! get_widget{
     };
 }
 
-#[derive(Clone, Debug)]
+#[derive(Display, Debug, Clone, EnumString, PartialEq)]
 pub enum Sorting {
     Default,
     Name,
@@ -21,7 +21,7 @@ pub enum Sorting {
     Bitrate,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Display, Debug, Clone, EnumString, PartialEq)]
 pub enum Order {
     Ascending,
     Descending,

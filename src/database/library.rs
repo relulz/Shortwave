@@ -37,7 +37,6 @@ impl Library {
         welcome_text.set_text(format!("Welcome to {}", config::NAME).as_str());
 
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        flowbox.set_sorting(Sorting::Name, Order::Ascending);
         content_box.add(&flowbox.widget);
 
         let client = Client::new(Url::parse(&SettingsManager::get_string(Key::ApiServer)).unwrap());

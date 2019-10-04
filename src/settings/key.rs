@@ -8,4 +8,6 @@ pub enum Key {
     DarkMode,
     WindowWidth,
     WindowHeight,
+    ViewSorting,
+    ViewOrder,
 }

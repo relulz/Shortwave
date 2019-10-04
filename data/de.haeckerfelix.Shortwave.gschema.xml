@@ -13,6 +13,12 @@
     <key name="window-height" type="i">
       <default>550</default>
     </key>
+    <key name="view-sorting" type="s">
+      <default>"Name"</default>
+    </key>
+    <key name="view-order" type="s">
+      <default>"Ascending"</default>
+    </key>
   </schema>
 </schemalist>
 
