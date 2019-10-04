@@ -156,39 +156,11 @@ impl App {
         });
 
         // Sort / Order menu
-        let sort_variant = SettingsManager::get_string(Key::ViewSorting).to_variant();
-        let sorting_action = gio::SimpleAction::new_stateful("sorting", Some(sort_variant.type_()), &sort_variant);
+        let sorting_action = self.settings.create_action(Key::ViewSorting);
         self.gtk_app.add_action(&sorting_action);
 
-        let order_variant = SettingsManager::get_string(Key::ViewOrder).to_variant();
-        let order_action = gio::SimpleAction::new_stateful("order", Some(order_variant.type_()), &order_variant);
+        let order_action = self.settings.create_action(Key::ViewOrder);
         self.gtk_app.add_action(&order_action);
-
-        let sa = sorting_action.clone();
-        let oa = order_action.clone();
-        sorting_action.connect_activate(move |a, b| {
-            a.set_state(&b.clone().unwrap());
-            Self::sort_action(&sa, &oa);
-        });
-
-        let sa = sorting_action.clone();
-        let oa = order_action.clone();
-        order_action.connect_activate(move |a, b| {
-            a.set_state(&b.clone().unwrap());
-            Self::sort_action(&sa, &oa);
-        });
-    }
-
-    fn sort_action(sorting_action: &gio::SimpleAction, order_action: &gio::SimpleAction) {
-        let sorting_str: String = sorting_action.get_state().unwrap().get_str().unwrap().to_string();
-        let order_str: String = order_action.get_state().unwrap().get_str().unwrap().to_string();
-
-        if SettingsManager::get_string(Key::ViewSorting) != sorting_str {
-            SettingsManager::set_string(Key::ViewSorting, sorting_str);
-        }
-        if SettingsManager::get_string(Key::ViewOrder) != order_str {
-            SettingsManager::set_string(Key::ViewOrder, order_str);
-        }
     }
 
     fn add_gaction<F>(&self, name: &str, action: F)

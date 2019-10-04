@@ -165,7 +165,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.sorting</property>
+            <property name="action_name">app.view-sorting</property>
             <property name="action_target">'Name'</property>
             <property name="text" translatable="yes">Name</property>
           </object>
@@ -180,7 +180,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.sorting</property>
+            <property name="action_name">app.view-sorting</property>
             <property name="action_target">'Language'</property>
             <property name="text" translatable="yes">Language</property>
           </object>
@@ -195,7 +195,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.sorting</property>
+            <property name="action_name">app.view-sorting</property>
             <property name="action_target">'Country'</property>
             <property name="text" translatable="yes">Country</property>
           </object>
@@ -210,7 +210,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.sorting</property>
+            <property name="action_name">app.view-sorting</property>
             <property name="action_target">'State'</property>
             <property name="text" translatable="yes">State</property>
           </object>
@@ -225,7 +225,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.sorting</property>
+            <property name="action_name">app.view-sorting</property>
             <property name="action_target">'Votes'</property>
             <property name="text" translatable="yes">Votes</property>
           </object>
@@ -251,7 +251,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.order</property>
+            <property name="action_name">app.view-order</property>
             <property name="action_target">'Ascending'</property>
             <property name="text" translatable="yes">Ascending</property>
           </object>
@@ -266,7 +266,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.order</property>
+            <property name="action_name">app.view-order</property>
             <property name="action_target">'Descending'</property>
             <property name="text" translatable="yes">Descending</property>
           </object>
