@@ -38,7 +38,7 @@ impl SettingsManager{
         self.settings.create_action(&key.to_string()).unwrap()
     }
 
-    fn get_settings() -> gio::Settings{
+    pub fn get_settings() -> gio::Settings{
         let app_id = config::APP_ID.trim_end_matches(".Devel");
         gio::Settings::new(app_id)
     }

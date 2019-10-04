@@ -199,11 +199,9 @@ impl App {
             Action::SearchFor(data) => self.storefront.search_for(data),
             Action::SettingsKeyChanged(key) => {
                 match key {
-                    Key::DarkMode => self.window.update_dark_mode(),
                     Key::ViewSorting | Key::ViewOrder => {
                         let sorting: Sorting = Sorting::from_str(&SettingsManager::get_string(Key::ViewSorting)).unwrap();
                         let order: Order = Order::from_str(&SettingsManager::get_string(Key::ViewOrder)).unwrap();
-
                         self.library.set_sorting(sorting, order);
                     },
                     _ => (),

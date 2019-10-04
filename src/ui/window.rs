@@ -1,5 +1,6 @@
 use glib::Sender;
 use gtk::prelude::*;
+use gio::prelude::SettingsExt;
 use libhandy::LeafletExt;
 
 use std::cell::RefCell;
@@ -85,11 +86,15 @@ impl Window {
         window.widget.resize(width, height);
 
         window.setup_signals();
-        window.update_dark_mode();
         window
     }
 
     fn setup_signals(&self) {
+        // dark mode
+        let s = SettingsManager::get_settings();
+        let gtk_s = gtk::Settings::get_default().unwrap();
+        s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme", gio::SettingsBindFlags::GET);
+
         // add_button
         get_widget!(self.builder, gtk::Button, add_button);
         let sender = self.sender.clone();
@@ -121,7 +126,6 @@ impl Window {
             }
             Self::update_view(current_view.borrow().clone(), builder.clone(), menu_builder.clone());
         };
-
         get_widget!(self.builder, libhandy::Leaflet, leaflet);
         leaflet.connect_property_visible_child_name_notify(leaflet_closure.clone());
         leaflet.connect_property_fold_notify(leaflet_closure.clone());
@@ -207,11 +211,6 @@ impl Window {
                 }
             }
         }
-    }
-
-    pub fn update_dark_mode(&self){
-        let gtk_settings = gtk::Settings::get_default().unwrap();
-        gtk_settings.set_property_gtk_application_prefer_dark_theme(SettingsManager::get_boolean(Key::DarkMode));
     }
 
     pub fn set_view(&self, view: View) {
