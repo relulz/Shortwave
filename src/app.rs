@@ -76,8 +76,8 @@ impl App {
         window.discover_box.add(&storefront.widget);
         window.set_view(View::Library);
 
-        window.discover_header_switcher.set_stack(Some(&storefront.discover_stack));
-        window.discover_bottom_switcher.set_stack(Some(&storefront.discover_stack));
+        window.discover_header_switcher.set_stack(Some(&storefront.storefront_stack));
+        window.discover_bottom_switcher.set_stack(Some(&storefront.storefront_stack));
 
         // Create new SettingsManager which notifies about settings changes
         let settings = SettingsManager::new(sender.clone());

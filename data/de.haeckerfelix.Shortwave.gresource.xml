@@ -19,12 +19,8 @@
       <file compressed="true" preprocess="xml-stripblanks">gtk/tile_button.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/search.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/settings_window.ui</file>
+      <file compressed="true" preprocess="xml-stripblanks">gtk/discover.ui</file>
 
       <file compressed="true">gtk/style.css</file>
-
-      <file compressed="true">images/tags/pop.png</file>
-      <file compressed="true">images/tags/rock.png</file>
-      <file compressed="true">images/tags/classic.png</file>
-      <file compressed="true">images/tags/jazz.png</file>
   </gresource>
 </gresources>

@@ -66,11 +66,11 @@ sources = files(
   'database/mod.rs',
   'database/queries.rs',
   'database/schema.rs',
+  'discover/pages/discover.rs',
   'discover/pages/mod.rs',
   'discover/pages/search.rs',
   'discover/mod.rs',
   'discover/storefront.rs',
-  'discover/tile_button.rs',
 
   'settings/key.rs',
   'settings/mod.rs',
