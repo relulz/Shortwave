@@ -115,8 +115,8 @@
         </child>
         <child>
           <object class="GtkBox" id="locations_box">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="no_show_all">True</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel">
@@ -140,8 +140,8 @@
         </child>
         <child>
           <object class="GtkBox" id="languages_box">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="no_show_all">True</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel">
@@ -165,8 +165,8 @@
         </child>
         <child>
           <object class="GtkBox" id="tags_box">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="no_show_all">True</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel">
