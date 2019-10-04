@@ -14,8 +14,6 @@ pub struct SongBackend {
 
     songs: IndexMap<String, Song>,
     save_count: usize,
-
-    sender: Sender<Action>,
 }
 
 // songs: IndexMap<String, Song>,
@@ -30,7 +28,7 @@ impl SongBackend {
         let listbox = SongListBox::new(sender.clone());
         let songs = IndexMap::new();
 
-        let song_backend = Self { listbox, songs, save_count, sender };
+        let song_backend = Self { listbox, songs, save_count };
         song_backend
     }
 

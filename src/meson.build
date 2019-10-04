@@ -72,7 +72,10 @@ sources = files(
   'discover/storefront.rs',
   'discover/tile_button.rs',
 
+  'settings/key.rs',
   'settings/mod.rs',
+  'settings/settings_window.rs',
+  'settings/settings_manager.rs',
 
   'ui/mod.rs',
   'ui/notification.rs',

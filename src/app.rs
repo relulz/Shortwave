@@ -17,13 +17,14 @@ use crate::database::Library;
 use crate::discover::StoreFront;
 use crate::ui::{View, Window, Notification};
 use crate::utils::{Order, Sorting};
-use crate::settings;
+use crate::settings::{Key, SettingsManager, SettingsWindow};
 
 #[derive(Debug, Clone)]
 pub enum Action {
     ViewShowDiscover,
     ViewShowLibrary,
     ViewShowPlayer,
+    ViewShowSettings,
     ViewShowNotification(Rc<Notification>),
     ViewRaise,
     ViewSetSorting(Sorting, Order),
@@ -36,6 +37,7 @@ pub enum Action {
     LibraryAddStations(Vec<Station>),
     LibraryRemoveStations(Vec<Station>),
     SearchFor(StationRequest), // TODO: is this neccessary?,
+    SettingsKeyChanged(Key),
 }
 
 pub struct App {
@@ -48,6 +50,8 @@ pub struct App {
     player: Player,
     library: Library,
     storefront: StoreFront,
+
+    settings: SettingsManager,
 }
 
 impl App {
@@ -75,6 +79,9 @@ impl App {
         window.discover_header_switcher.set_stack(Some(&storefront.discover_stack));
         window.discover_bottom_switcher.set_stack(Some(&storefront.discover_stack));
 
+        // Create new SettingsManager which notifies about settings changes
+        let settings = SettingsManager::new(sender.clone());
+
         // Help overlay
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
         get_widget!(builder, gtk::ShortcutsWindow, shortcuts);
@@ -88,6 +95,7 @@ impl App {
             player,
             library,
             storefront,
+            settings,
         });
 
         glib::set_application_name(&config::NAME);
@@ -102,6 +110,8 @@ impl App {
     pub fn run(&self, app: Rc<Self>) {
         info!("{} ({}) ({})", config::NAME, config::APP_ID, config::VCS_TAG);
         info!("Version: {} ({})", config::VERSION, config::PROFILE);
+
+        self.settings.list_keys();
 
         let a = app.clone();
         let receiver = self.receiver.borrow_mut().take().unwrap();
@@ -121,6 +131,12 @@ impl App {
         let window = self.window.widget.clone();
         self.add_gaction("about", move |_, _| {
             Self::show_about_dialog(window.clone());
+        });
+
+        // Preferences
+        let sender = self.sender.clone();
+        self.add_gaction("preferences", move |_, _| {
+            sender.send(Action::ViewShowSettings).unwrap();
         });
 
         // Search / Discover / add stations
@@ -205,6 +221,7 @@ impl App {
             Action::ViewShowDiscover => self.window.set_view(View::Discover),
             Action::ViewShowLibrary => self.window.set_view(View::Library),
             Action::ViewShowPlayer => self.window.set_view(View::Player),
+            Action::ViewShowSettings => self.show_settings_window(),
             Action::ViewRaise => self.window.widget.present_with_time((glib::get_monotonic_time() / 1000) as u32),
             Action::ViewShowNotification(notification) => self.window.show_notification(notification),
             Action::ViewSetSorting(sorting, order) => self.library.set_sorting(sorting, order),
@@ -217,8 +234,19 @@ impl App {
             Action::LibraryAddStations(stations) => self.library.add_stations(stations),
             Action::LibraryRemoveStations(stations) => self.library.remove_stations(stations),
             Action::SearchFor(data) => self.storefront.search_for(data),
+            Action::SettingsKeyChanged(key) => {
+                match key {
+                    Key::DarkMode => self.window.update_dark_mode(),
+                    _ => (),
+                }
+            },
         }
         glib::Continue(true)
+    }
+
+    fn show_settings_window(&self) {
+        let settings_window = SettingsWindow::new(&self.window.widget);
+        settings_window.show();
     }
 
     fn show_about_dialog(window: gtk::ApplicationWindow) {
@@ -271,7 +299,7 @@ impl App {
             self.sender.send(Action::ViewShowNotification(spinner_notification.clone())).unwrap();
 
             // Get actual stations from identifiers
-            let client = Client::new(Url::parse(&settings::get_string(settings::Key::ApiServer)).unwrap());
+            let client = Client::new(Url::parse(&SettingsManager::get_string(Key::ApiServer)).unwrap());
             let sender = self.sender.clone();
             let fut = client.get_stations_by_identifiers(ids).map(move |stations| {
                 spinner_notification.hide();

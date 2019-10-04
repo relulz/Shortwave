@@ -8,7 +8,7 @@ use std::rc::Rc;
 use crate::app::Action;
 use crate::config;
 use crate::ui::Notification;
-use crate::settings;
+use crate::settings::{Key, SettingsManager};
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum View {
@@ -79,16 +79,13 @@ impl Window {
             ctx.add_class("devel");
         }
 
-        // Dark mode
-        let gtk_settings = gtk::Settings::get_default().unwrap();
-        gtk_settings.set_property_gtk_application_prefer_dark_theme(settings::get_boolean(settings::Key::DarkMode));
-
         // Restore window geometry
-        let width = settings::get_integer(settings::Key::WindowWidth);
-        let height = settings::get_integer(settings::Key::WindowHeight);
+        let width = SettingsManager::get_integer(Key::WindowWidth);
+        let height = SettingsManager::get_integer(Key::WindowHeight);
         window.widget.resize(width, height);
 
         window.setup_signals();
+        window.update_dark_mode();
         window
     }
 
@@ -135,8 +132,8 @@ impl Window {
             let width = window.get_size().0;
             let height = window.get_size().1;
 
-            settings::set_integer(settings::Key::WindowWidth, width);
-            settings::set_integer(settings::Key::WindowHeight, height);
+            SettingsManager::set_integer(Key::WindowWidth, width);
+            SettingsManager::set_integer(Key::WindowHeight, height);
             Inhibit(false)
         });
     }
@@ -210,6 +207,11 @@ impl Window {
                 }
             }
         }
+    }
+
+    pub fn update_dark_mode(&self){
+        let gtk_settings = gtk::Settings::get_default().unwrap();
+        gtk_settings.set_property_gtk_application_prefer_dark_theme(SettingsManager::get_boolean(Key::DarkMode));
     }
 
     pub fn set_view(&self, view: View) {

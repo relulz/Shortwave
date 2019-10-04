@@ -17,7 +17,7 @@ use crate::audio::{PlaybackState, Song, SongBackend};
 use crate::ui::Notification;
 use crate::path;
 use crate::utils;
-use crate::settings;
+use crate::settings::{Key, SettingsManager};
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                             //
@@ -114,7 +114,7 @@ impl Player {
 
         let gst_backend = self.gst_backend.clone();
         let sender = self.sender.clone();
-        let client = Client::new(Url::parse(&settings::get_string(settings::Key::ApiServer)).unwrap());
+        let client = Client::new(Url::parse(&SettingsManager::get_string(Key::ApiServer)).unwrap());
         // get asynchronously the stream url and play it
         let fut = client.get_stream_url(station).map(move |station_url| {
             match station_url {

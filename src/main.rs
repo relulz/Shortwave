@@ -15,6 +15,9 @@ extern crate diesel;
 extern crate failure_derive;
 #[macro_use]
 extern crate diesel_migrations;
+#[macro_use]
+extern crate strum_macros;
+
 use gettextrs::*;
 
 #[macro_use]
@@ -54,3 +57,4 @@ fn main() {
     let app = App::new();
     app.run(app.clone());
 }
+

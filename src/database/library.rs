@@ -14,7 +14,7 @@ use crate::database::queries;
 use crate::database::StationIdentifier;
 use crate::ui::{StationFlowBox, Notification};
 use crate::utils::{Order, Sorting};
-use crate::settings;
+use crate::settings::{Key, SettingsManager};
 
 pub struct Library {
     pub widget: gtk::Box,
@@ -40,7 +40,7 @@ impl Library {
         flowbox.set_sorting(Sorting::Name, Order::Ascending);
         content_box.add(&flowbox.widget);
 
-        let client = Client::new(Url::parse(&settings::get_string(settings::Key::ApiServer)).unwrap());
+        let client = Client::new(Url::parse(&SettingsManager::get_string(Key::ApiServer)).unwrap());
 
         let library = Self {
             widget: library,
