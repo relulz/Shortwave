@@ -52,7 +52,7 @@
                 {
                     "type" : "git",
                     "url" : "https://source.puri.sm/exalm/libhandy.git",
-                    "commit" : "29e97a4ffeac522f34040ba082b43419c597ecf5"
+                    "commit" : "cd98b1ea0b08941207202a0561cee5b1ccd68db5"
                 }
             ]
         },
