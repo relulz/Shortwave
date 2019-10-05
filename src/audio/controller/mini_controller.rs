@@ -109,6 +109,7 @@ impl Controller for MiniController {
         });
 
         // reset everything else
+        self.station_favicon.reset();
         self.subtitle_revealer.set_reveal_child(false);
     }
 

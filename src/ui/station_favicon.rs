@@ -65,6 +65,10 @@ impl StationFavicon {
         self.stack.set_visible_child_name("image");
     }
 
+    pub fn reset(&self){
+        self.stack.set_visible_child_name("placeholder");
+    }
+
     // Based on the custom drawing by GNOME Games
     // https://gitlab.gnome.org/GNOME/gnome-games/blob/de7e39e6c75423fe7357cdba48c1c3d73a2eea03/src/ui/savestate-listbox-row.vala#L106
     pub fn draw_image(image: &gtk::DrawingArea, cr: &Context, pixbuf: Rc<RefCell<Option<Pixbuf>>>, size: FaviconSize) -> gtk::Inhibit {
