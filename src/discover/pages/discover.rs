@@ -3,7 +3,6 @@ use glib::Sender;
 use gtk::prelude::*;
 use url::Url;
 
-use std::cell::RefCell;
 use std::rc::Rc;
 
 use crate::api::{Client, StationRequest};

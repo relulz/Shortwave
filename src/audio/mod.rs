@@ -1,13 +1,14 @@
+mod backend;
 mod controller;
-mod gstreamer_backend;
-mod playback_state;
+
+pub use backend::GstreamerBackend;
+pub use backend::SongBackend;
+pub use controller::Controller;
+
+
 mod player;
 mod song;
-mod song_backend;
 
-pub use controller::Controller;
-pub use gstreamer_backend::GstreamerBackend;
-pub use playback_state::PlaybackState;
 pub use player::Player;
+pub use player::PlaybackState;
 pub use song::Song;
-pub use song_backend::SongBackend;

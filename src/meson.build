@@ -49,14 +49,14 @@ sources = files(
   'api/station_request.rs',
   'api/station_url.rs',
 
+  'audio/backend/gstreamer_backend.rs',
+  'audio/backend/mod.rs',
+  'audio/backend/song_backend.rs',
   'audio/controller/sidebar_controller.rs',
   'audio/controller/mini_controller.rs',
   'audio/controller/mod.rs',
   'audio/controller/mpris_controller.rs',
-  'audio/gstreamer_backend.rs',
-  'audio/song_backend.rs',
   'audio/mod.rs',
-  'audio/playback_state.rs',
   'audio/player.rs',
   'audio/song.rs',
 

@@ -12,8 +12,8 @@ use std::sync::{Arc, Mutex};
 use crate::api::{Client, Station};
 use crate::app::Action;
 use crate::audio::controller::{Controller, MiniController, MprisController, SidebarController};
-use crate::audio::gstreamer_backend::{GstreamerBackend, GstreamerMessage};
-use crate::audio::{PlaybackState, Song, SongBackend};
+use crate::audio::backend::{GstreamerBackend, GstreamerMessage, SongBackend};
+use crate::audio::Song;
 use crate::ui::Notification;
 use crate::path;
 use crate::utils;
@@ -40,7 +40,13 @@ use crate::settings::{Key, SettingsManager};
 //                                                                                             //
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-// ListBox Widget -> Song Backend -> Gstreamer Backend -> Player
+#[derive(Clone, PartialEq)]
+pub enum PlaybackState {
+    Playing,
+    Stopped,
+    Loading,
+    Failure(String),
+}
 
 pub struct Player {
     pub widget: gtk::Box,
