@@ -52,21 +52,6 @@ impl StationFlowBox {
     }
 
     fn connect_signals(&self){
-        // Set automatically flowbox colums
-        let fb = self.widget.clone();
-        self.widget.connect_size_allocate(move |_, alloc| {
-            if alloc.width > 1000 {
-                fb.set_min_children_per_line(3);
-                fb.set_max_children_per_line(3);
-            } else if alloc.width > 650 {
-                fb.set_min_children_per_line(2);
-                fb.set_max_children_per_line(2);
-            } else {
-                fb.set_min_children_per_line(1);
-                fb.set_max_children_per_line(1);
-            }
-        });
-
         // Show StationDialog when row gets clicked
         let stations = self.stations.clone();
         let app = self.app.clone();
