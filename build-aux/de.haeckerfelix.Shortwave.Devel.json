@@ -52,7 +52,7 @@
                 {
                     "type" : "git",
                     "url" : "https://source.puri.sm/exalm/libhandy.git",
-                    "commit" : "912b3e84adf5dbdab107724802998cc94fe349bc"
+                    "branch" : "wip/exalm/gesture"
                 }
             ]
         },
