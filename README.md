@@ -86,3 +86,7 @@ This is what still needs to be done for the first release of Shortwave. There's 
 - [x] Rewrite library backend using diesel crate / using a database instead of a plain json file
 - [x] radio-browser.info API: Implement async backend for discover features
 - ...
+
+## Code Of Conduct
+We follow the [GNOME Code of Conduct](/CODE_OF_CONDUCT.mdmd).
+All communications in project spaces are expected to follow it.
