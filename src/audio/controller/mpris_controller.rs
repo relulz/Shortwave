@@ -9,6 +9,7 @@ use crate::api::Station;
 use crate::app::Action;
 use crate::audio::Controller;
 use crate::audio::PlaybackState;
+use crate::config;
 
 pub struct MprisController {
     sender: Sender<Action>,
@@ -21,7 +22,7 @@ pub struct MprisController {
 
 impl MprisController {
     pub fn new(sender: Sender<Action>) -> Self {
-        let mpris = MprisPlayer::new("Shortwave".to_string(), "Shortwave".to_string(), "de.haeckerfelix.Shortwave".to_string());
+        let mpris = MprisPlayer::new(config::APP_ID.to_string(), config::NAME.to_string(), config::APP_ID.to_string());
         mpris.set_can_raise(true);
         mpris.set_can_play(false);
         mpris.set_can_seek(false);

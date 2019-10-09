@@ -18,8 +18,7 @@
         "--socket=x11",
         "--socket=wayland",
         "--socket=pulseaudio",
-        "--device=dri",
-        "--own-name=org.mpris.MediaPlayer2.Shortwave"
+        "--device=dri"
     ],
     "build-options" : {
         "append-path" : "/usr/lib/sdk/rust-nightly/bin",
