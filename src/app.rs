@@ -102,10 +102,6 @@ impl App {
             settings,
         });
 
-        glib::set_application_name(&config::NAME);
-        glib::set_prgname(Some("shortwave"));
-        gtk::Window::set_default_icon_name(config::APP_ID);
-
         app.setup_gaction();
         app.setup_signals();
         app

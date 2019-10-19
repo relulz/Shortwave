@@ -19,6 +19,7 @@ extern crate diesel_migrations;
 extern crate strum_macros;
 
 use gettextrs::*;
+use std::env;
 
 #[macro_use]
 mod utils;
@@ -47,6 +48,13 @@ fn main() {
 
     // Initialize Gstreamer
     gstreamer::init().expect("Failed to initialize Gstreamer");
+
+    // Initialize variables
+    glib::set_application_name(config::NAME);
+    glib::set_prgname(Some(&config::NAME.to_lowercase()));
+    gtk::Window::set_default_icon_name(config::APP_ID);
+    env::set_var("PULSE_PROP_application.icon_name", config::APP_ID);
+    env::set_var("PULSE_PROP_application.name", config::NAME);
 
     // Setup translations
     setlocale(LocaleCategory::LcAll, "");
