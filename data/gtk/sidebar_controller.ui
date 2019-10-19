@@ -277,7 +277,7 @@ audio-volume-medium-symbolic</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="info_button">
+              <object class="GtkMenuButton" id="playermenu_button">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -288,7 +288,7 @@ audio-volume-medium-symbolic</property>
                   <object class="GtkImage">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="icon_name">dialog-information-symbolic</property>
+                    <property name="icon_name">view-more-symbolic</property>
                   </object>
                 </child>
               </object>
@@ -305,21 +305,6 @@ audio-volume-medium-symbolic</property>
         <property name="expand">False</property>
         <property name="fill">True</property>
         <property name="position">3</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkSeparator">
-        <property name="width_request">100</property>
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="halign">center</property>
-        <property name="margin_top">12</property>
-        <property name="margin_bottom">12</property>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">4</property>
       </packing>
     </child>
   </object>

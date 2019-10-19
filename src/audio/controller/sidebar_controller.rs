@@ -1,6 +1,7 @@
 use glib::Sender;
 use glib::futures::FutureExt;
 use gtk::prelude::*;
+use gio::prelude::*;
 
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -27,10 +28,11 @@ pub struct SidebarController {
     playback_button_stack: gtk::Stack,
     start_playback_button: gtk::Button,
     stop_playback_button: gtk::Button,
-    info_button: gtk::Button,
     error_label: gtk::Label,
     volume_button: gtk::VolumeButton,
     volume_signal_id: glib::signal::SignalHandlerId,
+
+    action_group: gio::SimpleActionGroup,
 }
 
 impl SidebarController {
@@ -44,7 +46,6 @@ impl SidebarController {
         get_widget!(builder, gtk::Stack, playback_button_stack);
         get_widget!(builder, gtk::Button, start_playback_button);
         get_widget!(builder, gtk::Button, stop_playback_button);
-        get_widget!(builder, gtk::Button, info_button);
         get_widget!(builder, gtk::Label, error_label);
         get_widget!(builder, gtk::VolumeButton, volume_button);
 
@@ -62,6 +63,16 @@ impl SidebarController {
             s.send(Action::PlaybackSetVolume(value)).unwrap();
         });
 
+        // menu button
+        let menu_builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/menu/player_menu.ui");
+        get_widget!(menu_builder, gtk::PopoverMenu, popover_menu);
+        get_widget!(builder, gtk::MenuButton, playermenu_button);
+        playermenu_button.set_popover(Some(&popover_menu));
+
+        // action group
+        let action_group = gio::SimpleActionGroup::new();
+        sidebar_controller.insert_action_group("player", Some(&action_group));
+
         let controller = Self {
             widget: sidebar_controller,
             sender,
@@ -76,10 +87,10 @@ impl SidebarController {
             playback_button_stack,
             start_playback_button,
             stop_playback_button,
-            info_button,
             error_label,
             volume_button,
             volume_signal_id,
+            action_group,
         };
 
         controller.setup_signals();
@@ -99,17 +110,27 @@ impl SidebarController {
             sender.send(Action::PlaybackStop).unwrap();
         });
 
-        // info_button
+        // details button
         let station = self.station.clone();
         let app = self.app.clone();
         let sender = self.sender.clone();
-        self.info_button.connect_clicked(move |_| {
+        let details_action = gio::SimpleAction::new("show-details", None);
+        details_action.connect_activate(move |_,_|{
             let window = app.get_active_window().unwrap();
             let s = station.borrow().clone().unwrap();
 
             let station_dialog = StationDialog::new(sender.clone(), s, &window);
             station_dialog.show();
         });
+        self.action_group.add_action(&details_action);
+
+        // stream button
+        let sender = self.sender.clone();
+        let stream_action = gio::SimpleAction::new("stream-audio", None);
+        stream_action.connect_activate(move |_,_|{
+            sender.send(Action::ViewShowStreamDialog).unwrap();
+        });
+        self.action_group.add_action(&stream_action);
     }
 }
 

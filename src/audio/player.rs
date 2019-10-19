@@ -12,7 +12,7 @@ use std::sync::{Arc, Mutex};
 use crate::api::{Client, Station};
 use crate::app::Action;
 use crate::audio::controller::{Controller, MiniController, MprisController, SidebarController};
-use crate::audio::backend::{GstreamerBackend, GstreamerMessage, SongBackend};
+use crate::audio::backend::*;
 use crate::audio::Song;
 use crate::ui::Notification;
 use crate::path;
@@ -55,6 +55,7 @@ pub struct Player {
 
     gst_backend: Arc<Mutex<GstreamerBackend>>,
     song_backend: Rc<RefCell<SongBackend>>,
+    streaming_backend: Rc<RefCell<StreamingBackend>>,
 
     sender: Sender<Action>,
 }
@@ -65,10 +66,11 @@ impl Player {
         get_widget!(builder, gtk::Box, player);
         let mut controller: Vec<Box<dyn Controller>> = Vec::new();
 
-        // Gtk Controller
+        // Sidebar Controller
         let sidebar_controller = SidebarController::new(sender.clone());
         get_widget!(builder, gtk::Box, player_box);
         player_box.add(&sidebar_controller.widget);
+        player_box.reorder_child(&sidebar_controller.widget, 0);
         controller.push(Box::new(sidebar_controller));
 
         // Mini Controller (gets used in phone mode / bottom toolbar)
@@ -80,10 +82,14 @@ impl Player {
         let mpris_controller = MprisController::new(sender.clone());
         controller.push(Box::new(mpris_controller));
 
+        // Streaming backend
+        let streaming_backend = Rc::new(RefCell::new(StreamingBackend::new(sender.clone())));
+
         // Song backend + Widget
         let song_backend = Rc::new(RefCell::new(SongBackend::new(sender.clone(), 3)));
         song_backend.borrow().delete_songs(); // Delete old songs
         player_box.add(&song_backend.borrow().listbox.widget);
+        player_box.reorder_child(&song_backend.borrow().listbox.widget, 3);
 
         // Gstreamer backend
         let (gst_sender, gst_receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
@@ -97,6 +103,7 @@ impl Player {
             controller,
             gst_backend,
             song_backend,
+            streaming_backend,
             sender,
         };
 
@@ -162,6 +169,10 @@ impl Player {
 
     pub fn save_song(&self, song: Song) {
         self.song_backend.borrow().save_song(song);
+    }
+
+    pub fn show_stream_dialog(&self) {
+        self.streaming_backend.borrow().open_dialog();
     }
 
     fn setup_signals(&self, receiver: Receiver<GstreamerMessage>) {

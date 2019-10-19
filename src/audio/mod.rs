@@ -1,5 +1,6 @@
 mod backend;
 mod controller;
+mod streamer;
 
 pub use backend::GstreamerBackend;
 pub use backend::SongBackend;

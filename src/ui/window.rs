@@ -38,7 +38,7 @@ pub struct Window {
 impl Window {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/window.ui");
-        let menu_builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/menu.ui");
+        let menu_builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/menu/app_menu.ui");
 
         get_widget!(builder, gtk::ApplicationWindow, window);
         get_widget!(builder, gtk::Label, app_label);
