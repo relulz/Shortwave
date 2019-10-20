@@ -127,7 +127,6 @@ impl Window {
             Self::update_view(current_view.borrow().clone(), builder.clone(), menu_builder.clone());
         };
         get_widget!(self.builder, libhandy::Leaflet, leaflet);
-        leaflet.connect_property_visible_child_name_notify(leaflet_closure.clone());
         leaflet.connect_property_fold_notify(leaflet_closure.clone());
 
         // window gets closed
