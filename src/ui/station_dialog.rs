@@ -19,6 +19,11 @@ pub struct StationDialog {
     tags_label: gtk::Label,
     language_label: gtk::Label,
 
+    codec_label_label: gtk::Label,
+    homepage_label_label: gtk::Label,
+    tags_label_label: gtk::Label,
+    language_label_label: gtk::Label,
+
     builder: gtk::Builder,
     sender: Sender<Action>,
 }
@@ -33,6 +38,10 @@ impl StationDialog {
         get_widget!(builder, gtk::Label, homepage_label);
         get_widget!(builder, gtk::Label, tags_label);
         get_widget!(builder, gtk::Label, language_label);
+        get_widget!(builder, gtk::Label, codec_label_label);
+        get_widget!(builder, gtk::Label, homepage_label_label);
+        get_widget!(builder, gtk::Label, tags_label_label);
+        get_widget!(builder, gtk::Label, language_label_label);
 
         // Download & set station favicon
         get_widget!(builder, gtk::Box, favicon_box);
@@ -64,6 +73,10 @@ impl StationDialog {
             homepage_label,
             tags_label,
             language_label,
+            codec_label_label,
+            homepage_label_label,
+            tags_label_label,
+            language_label_label,
             builder,
             sender,
         };
@@ -80,16 +93,28 @@ impl StationDialog {
 
         if self.station.codec != "" {
             self.codec_label.set_text(&self.station.codec);
+        } else {
+            self.codec_label.hide();
+            self.codec_label_label.hide();
         }
         if self.station.tags != "" {
             self.tags_label.set_text(&self.station.tags);
+        } else {
+            self.tags_label.hide();
+            self.tags_label_label.hide();
         }
         if self.station.language != "" {
             self.language_label.set_text(&self.station.language);
+        } else {
+            self.language_label.hide();
+            self.language_label_label.hide();
         }
-        self.station.homepage.as_ref().map(|homepage| {
+        if let Some(ref homepage) = self.station.homepage {
             self.homepage_label.set_markup(&format!("<a href=\"{}\">{}</a>", homepage, homepage));
-        });
+        } else {
+            self.homepage_label.hide();
+            self.homepage_label_label.hide();
+        }
     }
 
     pub fn show(&self) {
