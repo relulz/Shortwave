@@ -1,7 +1,9 @@
+mod gcast_controller;
 mod mini_controller;
 mod mpris_controller;
 mod sidebar_controller;
 
+pub use gcast_controller::GCastController;
 pub use mini_controller::MiniController;
 pub use mpris_controller::MprisController;
 pub use sidebar_controller::SidebarController;

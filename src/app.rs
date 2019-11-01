@@ -11,7 +11,7 @@ use std::rc::Rc;
 use std::str::FromStr;
 
 use crate::api::{Client, Station, StationRequest};
-use crate::audio::{PlaybackState, Player, Song};
+use crate::audio::{PlaybackState, Player, Song, GCastDevice};
 use crate::config;
 use crate::database::gradio_db;
 use crate::database::Library;
@@ -26,9 +26,9 @@ pub enum Action {
     ViewShowLibrary,
     ViewShowPlayer,
     ViewShowSettings,
-    ViewShowStreamDialog,
-    ViewShowNotification(Rc<Notification>),
     ViewRaise,
+    ViewShowNotification(Rc<Notification>),
+    PlaybackConnectGCastDevice(GCastDevice),
     PlaybackSetStation(Station),
     PlaybackStart,
     PlaybackStop,
@@ -183,9 +183,9 @@ impl App {
             Action::ViewShowLibrary => self.window.set_view(View::Library),
             Action::ViewShowPlayer => self.window.set_view(View::Player),
             Action::ViewShowSettings => self.show_settings_window(),
-            Action::ViewShowStreamDialog => self.player.show_stream_dialog(),
             Action::ViewRaise => self.window.widget.present_with_time((glib::get_monotonic_time() / 1000) as u32),
             Action::ViewShowNotification(notification) => self.window.show_notification(notification),
+            Action::PlaybackConnectGCastDevice(device) => self.player.connect_to_gcast_device(device),
             Action::PlaybackSetStation(station) => self.player.set_station(station.clone()),
             Action::PlaybackStart => self.player.set_playback(PlaybackState::Playing),
             Action::PlaybackStop => self.player.set_playback(PlaybackState::Stopped),

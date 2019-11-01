@@ -10,13 +10,12 @@ use crate::api::{Station, FaviconDownloader};
 use crate::app::Action;
 use crate::audio::Controller;
 use crate::audio::PlaybackState;
-use crate::ui::{StationDialog, StationFavicon, FaviconSize};
+use crate::ui::{StationDialog, StreamingDialog, StationFavicon, FaviconSize};
 
 pub struct SidebarController {
     pub widget: gtk::Box,
     sender: Sender<Action>,
     station: Rc<RefCell<Option<Station>>>,
-    app: gtk::Application,
 
     station_favicon: Rc<StationFavicon>,
     favicon_downloader: FaviconDownloader,
@@ -33,6 +32,7 @@ pub struct SidebarController {
     volume_signal_id: glib::signal::SignalHandlerId,
 
     action_group: gio::SimpleActionGroup,
+    streaming_dialog: Rc<StreamingDialog>,
 }
 
 impl SidebarController {
@@ -50,7 +50,6 @@ impl SidebarController {
         get_widget!(builder, gtk::VolumeButton, volume_button);
 
         let station = Rc::new(RefCell::new(None));
-        let app = builder.get_application().unwrap();
 
         get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = Rc::new(StationFavicon::new(FaviconSize::Big));
@@ -73,11 +72,13 @@ impl SidebarController {
         let action_group = gio::SimpleActionGroup::new();
         sidebar_controller.insert_action_group("player", Some(&action_group));
 
+        // streaming dialog
+        let streaming_dialog = Rc::new(StreamingDialog::new(sender.clone()));
+
         let controller = Self {
             widget: sidebar_controller,
             sender,
             station,
-            app,
             station_favicon,
             favicon_downloader,
             title_label,
@@ -91,6 +92,7 @@ impl SidebarController {
             volume_button,
             volume_signal_id,
             action_group,
+            streaming_dialog,
         };
 
         controller.setup_signals();
@@ -112,23 +114,21 @@ impl SidebarController {
 
         // details button
         let station = self.station.clone();
-        let app = self.app.clone();
         let sender = self.sender.clone();
         let details_action = gio::SimpleAction::new("show-details", None);
         details_action.connect_activate(move |_,_|{
-            let window = app.get_active_window().unwrap();
             let s = station.borrow().clone().unwrap();
 
-            let station_dialog = StationDialog::new(sender.clone(), s, &window);
+            let station_dialog = StationDialog::new(sender.clone(), s);
             station_dialog.show();
         });
         self.action_group.add_action(&details_action);
 
         // stream button
-        let sender = self.sender.clone();
+        let streaming_dialog = self.streaming_dialog.clone();
         let stream_action = gio::SimpleAction::new("stream-audio", None);
         stream_action.connect_activate(move |_,_|{
-            sender.send(Action::ViewShowStreamDialog).unwrap();
+            streaming_dialog.show();
         });
         self.action_group.add_action(&stream_action);
     }

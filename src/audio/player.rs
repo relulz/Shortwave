@@ -11,9 +11,9 @@ use std::sync::{Arc, Mutex};
 
 use crate::api::{Client, Station};
 use crate::app::Action;
-use crate::audio::controller::{Controller, MiniController, MprisController, SidebarController};
+use crate::audio::controller::{Controller, GCastController, MiniController, MprisController, SidebarController};
 use crate::audio::backend::*;
-use crate::audio::Song;
+use crate::audio::{Song, GCastDevice};
 use crate::ui::Notification;
 use crate::path;
 use crate::utils;
@@ -23,9 +23,9 @@ use crate::settings::{Key, SettingsManager};
 //                                                                                             //
 //  A small overview of the player/gstreamer program structure  :)                             //
 //                                                                                             //
-//   ----------------------    -----------------    -------------------    ----------------    //
-//  | ChromecastController |  | MprisController |  | SidebarController |  | MiniController |   //
-//   ----------------------    -----------------    -------------------    ----------------    //
+//   -----------------    -----------------    -------------------    ----------------         //
+//  | GCastController |  | MprisController |  | SidebarController |  | MiniController |        //
+//   -----------------    -----------------    -------------------    ----------------         //
 //            |                        |                   |                      |            //
 //            \-------------------------------------------------------------------/            //
 //                                     |                                                       //
@@ -40,7 +40,7 @@ use crate::settings::{Key, SettingsManager};
 //                                                                                             //
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone, PartialEq, Debug)]
 pub enum PlaybackState {
     Playing,
     Stopped,
@@ -52,10 +52,10 @@ pub struct Player {
     pub widget: gtk::Box,
     pub mini_controller_widget: gtk::Box,
     controller: Rc<Vec<Box<dyn Controller>>>,
+    gcast_controller: Rc<GCastController>,
 
     gst_backend: Arc<Mutex<GstreamerBackend>>,
     song_backend: Rc<RefCell<SongBackend>>,
-    streaming_backend: Rc<RefCell<StreamingBackend>>,
 
     sender: Sender<Action>,
 }
@@ -82,8 +82,9 @@ impl Player {
         let mpris_controller = MprisController::new(sender.clone());
         controller.push(Box::new(mpris_controller));
 
-        // Streaming backend
-        let streaming_backend = Rc::new(RefCell::new(StreamingBackend::new(sender.clone())));
+        // Google Cast Controller
+        let gcast_controller = GCastController::new(sender.clone());
+        controller.push(Box::new(gcast_controller.clone()));
 
         // Song backend + Widget
         let song_backend = Rc::new(RefCell::new(SongBackend::new(sender.clone(), 3)));
@@ -101,9 +102,9 @@ impl Player {
             widget: player,
             mini_controller_widget,
             controller,
+            gcast_controller,
             gst_backend,
             song_backend,
-            streaming_backend,
             sender,
         };
 
@@ -171,8 +172,8 @@ impl Player {
         self.song_backend.borrow().save_song(song);
     }
 
-    pub fn show_stream_dialog(&self) {
-        self.streaming_backend.borrow().open_dialog();
+    pub fn connect_to_gcast_device(&self, device: GCastDevice){
+        self.gcast_controller.connect_to_device(device);
     }
 
     fn setup_signals(&self, receiver: Receiver<GstreamerMessage>) {

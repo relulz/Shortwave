@@ -20,7 +20,6 @@ pub struct StationFlowBox {
     sorting: RefCell<Sorting>,
     order: RefCell<Order>,
 
-    app: gtk::Application,
     sender: Sender<Action>,
 }
 
@@ -35,15 +34,12 @@ impl StationFlowBox {
         let sorting = RefCell::new(Sorting::Default);
         let order = RefCell::new(Order::Ascending);
 
-        let app = builder.get_application().unwrap();
-
         let flowbox = Self {
             widget: station_flowbox,
             stations,
             favicon_downloader,
             sorting,
             order,
-            app,
             sender,
         };
 
@@ -54,14 +50,12 @@ impl StationFlowBox {
     fn connect_signals(&self){
         // Show StationDialog when row gets clicked
         let stations = self.stations.clone();
-        let app = self.app.clone();
         let sender = self.sender.clone();
         self.widget.connect_child_activated(move |_, child|{
             let index = child.get_index();
             let station = stations.borrow().get_index(index.try_into().unwrap()).unwrap().1.clone();
 
-            let window = app.get_active_window().unwrap();
-            let station_dialog = StationDialog::new(sender.clone(), station.clone(), &window);
+            let station_dialog = StationDialog::new(sender.clone(), station.clone());
             station_dialog.show();
         });
     }

@@ -24,7 +24,7 @@ pub struct StationDialog {
 }
 
 impl StationDialog {
-    pub fn new(sender: Sender<Action>, station: Station, window: &gtk::Window) -> Self {
+    pub fn new(sender: Sender<Action>, station: Station) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_dialog.ui");
         get_widget!(builder, Dialog, station_dialog);
         get_widget!(builder, gtk::Label, title_label);
@@ -54,8 +54,6 @@ impl StationDialog {
         } else {
             library_action_stack.set_visible_child_name("library-add");
         }
-
-        station_dialog.set_transient_for(Some(window));
 
         let dialog = Self {
             widget: station_dialog,
@@ -95,6 +93,9 @@ impl StationDialog {
     }
 
     pub fn show(&self) {
+        let application = self.builder.get_application().unwrap();
+        let window = application.get_active_window().unwrap();
+        self.widget.set_transient_for(Some(&window));
         self.widget.set_visible(true);
     }
 
