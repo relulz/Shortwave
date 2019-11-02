@@ -18,14 +18,12 @@ use crate::audio::{GCastDevice, Controller, PlaybackState};
 enum GCastAction{
     Connect,
     SetStation,
-    SetPlaybackState,
     Disconnect,
 }
 
 pub struct GCastController{
     station: Arc<Mutex<Option<Station>>>,
     device_ip: Arc<Mutex<String>>,
-    playback_state: Arc<Mutex<PlaybackState>>,
 
     gcast_sender: Sender<GCastAction>,
     app_sender: glib::Sender<Action>,
@@ -35,13 +33,11 @@ impl GCastController {
     pub fn new(app_sender: glib::Sender<Action>) -> Rc<Self> {
         let station = Arc::new(Mutex::new(None));
         let device_ip = Arc::new(Mutex::new("".to_string()));
-        let playback_state = Arc::new(Mutex::new(PlaybackState::Stopped));
 
         let (gcast_sender, gcast_receiver) = channel();
         let gcast_controller = Self {
             station,
             device_ip,
-            playback_state,
 
             gcast_sender,
             app_sender,
@@ -54,7 +50,6 @@ impl GCastController {
 
     fn start_thread(&self, receiver: Receiver<GCastAction>){
         let station = self.station.clone();
-        let playback_state = self.playback_state.clone();
         let device_ip = self.device_ip.clone();
 
         let gcast_sender = self.gcast_sender.clone();
@@ -124,20 +119,6 @@ impl GCastController {
                                 media_session_id = status.media_session_id;
                             });
                         }
-                        GCastAction::SetPlaybackState => {
-                            device.as_ref().map(|d| {
-                                let state = &*playback_state.lock().unwrap();
-
-                                debug!("Update playback state of gcast device: {:?}", state);
-                                let transport_id = app.as_ref().unwrap().transport_id.as_str();
-
-                                match state {
-                                    PlaybackState::Playing => { d.media.play(transport_id, media_session_id).expect("Could not set gcast state"); },
-                                    PlaybackState::Stopped => { d.media.pause(transport_id, media_session_id).expect("Could not set gcast state"); },
-                                    _ => (),
-                                }
-                            });
-                        },
                         GCastAction::Disconnect => {
                             device.as_ref().map(|d| {
                                 debug!("Disconnect from gcast device...");
@@ -163,19 +144,15 @@ impl Controller for Rc<GCastController> {
         self.gcast_sender.send(GCastAction::SetStation).unwrap();
     }
 
-    fn set_playback_state(&self, playback_state: &PlaybackState) {
-        // Check if state really changed
-        if playback_state != &*self.playback_state.lock().unwrap() {
-            *self.playback_state.lock().unwrap() = playback_state.clone();
-            self.gcast_sender.send(GCastAction::SetPlaybackState).unwrap();
-        }
+    fn set_playback_state(&self, _playback_state: &PlaybackState) {
+        // Ignore
     }
 
     fn set_volume(&self, _volume: f64) {
-
+        // Ignore
     }
 
     fn set_song_title(&self, _title: &str) {
-
+        // Ignore
     }
 }
