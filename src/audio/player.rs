@@ -11,13 +11,13 @@ use std::sync::{Arc, Mutex};
 
 use crate::api::{Client, Station};
 use crate::app::Action;
-use crate::audio::controller::{Controller, GCastController, MiniController, MprisController, SidebarController};
 use crate::audio::backend::*;
-use crate::audio::{Song, GCastDevice};
-use crate::ui::Notification;
+use crate::audio::controller::{Controller, GCastController, MiniController, MprisController, SidebarController};
+use crate::audio::{GCastDevice, Song};
 use crate::path;
-use crate::utils;
 use crate::settings::{Key, SettingsManager};
+use crate::ui::Notification;
+use crate::utils;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                             //
@@ -130,18 +130,15 @@ impl Player {
         let sender = self.sender.clone();
         let client = Client::new(Url::parse(&SettingsManager::get_string(Key::ApiServer)).unwrap());
         // get asynchronously the stream url and play it
-        let fut = client.get_stream_url(station).map(move |station_url| {
-            match station_url {
-                Ok(station_url) => {
-                    debug!("new source uri to record: {}", station_url.url);
-                    gst_backend.lock().unwrap().new_source_uri(&station_url.url);
-                },
-                Err(err) => {
-                    let notification = Notification::new_error("Could not play station", &err.to_string());
-                    sender.send(Action::ViewShowNotification(notification)).unwrap();
-                }
+        let fut = client.get_stream_url(station).map(move |station_url| match station_url {
+            Ok(station_url) => {
+                debug!("new source uri to record: {}", station_url.url);
+                gst_backend.lock().unwrap().new_source_uri(&station_url.url);
             }
-
+            Err(err) => {
+                let notification = Notification::new_error("Could not play station", &err.to_string());
+                sender.send(Action::ViewShowNotification(notification)).unwrap();
+            }
         });
 
         let ctx = glib::MainContext::default();
@@ -160,7 +157,7 @@ impl Player {
         }
     }
 
-    pub fn set_volume(&self, volume: f64){
+    pub fn set_volume(&self, volume: f64) {
         self.gst_backend.lock().unwrap().set_volume(volume.clone());
 
         for con in &*self.controller {
@@ -172,7 +169,7 @@ impl Player {
         self.song_backend.borrow().save_song(song);
     }
 
-    pub fn connect_to_gcast_device(&self, device: GCastDevice){
+    pub fn connect_to_gcast_device(&self, device: GCastDevice) {
         self.gcast_controller.connect_to_device(device);
     }
 

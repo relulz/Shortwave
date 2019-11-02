@@ -1,6 +1,6 @@
-use url::Url;
 use serde::{de, Deserialize, Deserializer};
 use std::str::FromStr;
+use url::Url;
 
 #[derive(Deserialize, Debug, Clone, Eq, Hash)]
 pub struct Station {
@@ -67,8 +67,7 @@ where
     let s = String::deserialize(deserializer)?;
     if s == "0" {
         Ok(false)
-    }else{
+    } else {
         Ok(true)
     }
 }
-

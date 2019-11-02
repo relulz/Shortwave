@@ -125,7 +125,6 @@ impl GstreamerBackend {
             Continue(true)
         });
 
-
         // We have to update the volume if we get changes from pulseaudio (pulsesink).
         // The user is able to control the volume from g-c-c.
         let volume = Arc::new(Mutex::new(1.0));
@@ -138,7 +137,6 @@ impl GstreamerBackend {
             a_s.send(Action::PlaybackSetVolume(volume)).unwrap();
             glib::Continue(true)
         });
-
 
         // Update volume coming from pulseaudio / pulsesink
         let old_volume = volume.clone();
@@ -198,7 +196,7 @@ impl GstreamerBackend {
         let _ = self.pipeline.set_state(state);
     }
 
-    pub fn set_volume(&self, volume: f64){
+    pub fn set_volume(&self, volume: f64) {
         // We need to block the signal, otherwise we risk creating a endless loop
         glib::signal::signal_handler_block(&self.pulsesink, &self.volume_signal_id);
         *self.volume.lock().unwrap() = volume;

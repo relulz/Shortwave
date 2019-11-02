@@ -69,7 +69,7 @@ impl Client {
     // Create and send soup message, return the received data.
     async fn send_message(&self, url: Url) -> std::result::Result<GString, Error> {
         // Create SOUP message
-        match soup::Message::new("GET", &url.to_string()){
+        match soup::Message::new("GET", &url.to_string()) {
             Some(message) => {
                 // Send created message
                 let input_stream = self.session.send_async_future(&message).await?;
@@ -80,7 +80,7 @@ impl Client {
                 let result = data_input_stream.read_upto_async_future("", glib::PRIORITY_LOW).await?;
 
                 Ok(result.0)
-            },
+            }
             // Return error when message cannot be created
             None => Err(Error::SoupMessageError),
         }

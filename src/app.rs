@@ -11,14 +11,14 @@ use std::rc::Rc;
 use std::str::FromStr;
 
 use crate::api::{Client, Station, StationRequest};
-use crate::audio::{PlaybackState, Player, Song, GCastDevice};
+use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
 use crate::database::gradio_db;
 use crate::database::Library;
 use crate::discover::StoreFront;
-use crate::ui::{View, Window, Notification};
-use crate::utils::{Order, Sorting};
 use crate::settings::{Key, SettingsManager, SettingsWindow};
+use crate::ui::{Notification, View, Window};
+use crate::utils::{Order, Sorting};
 
 #[derive(Debug, Clone)]
 pub enum Action {
@@ -195,15 +195,13 @@ impl App {
             Action::LibraryAddStations(stations) => self.library.add_stations(stations),
             Action::LibraryRemoveStations(stations) => self.library.remove_stations(stations),
             Action::SearchFor(data) => self.storefront.search_for(data),
-            Action::SettingsKeyChanged(key) => {
-                match key {
-                    Key::ViewSorting | Key::ViewOrder => {
-                        let sorting: Sorting = Sorting::from_str(&SettingsManager::get_string(Key::ViewSorting)).unwrap();
-                        let order: Order = Order::from_str(&SettingsManager::get_string(Key::ViewOrder)).unwrap();
-                        self.library.set_sorting(sorting, order);
-                    },
-                    _ => (),
+            Action::SettingsKeyChanged(key) => match key {
+                Key::ViewSorting | Key::ViewOrder => {
+                    let sorting: Sorting = Sorting::from_str(&SettingsManager::get_string(Key::ViewSorting)).unwrap();
+                    let order: Order = Order::from_str(&SettingsManager::get_string(Key::ViewOrder)).unwrap();
+                    self.library.set_sorting(sorting, order);
                 }
+                _ => (),
             },
         }
         glib::Continue(true)
@@ -260,7 +258,7 @@ impl App {
             // Get station identifiers
             let ids = gradio_db::read_database(path);
             let message = format!("Importing {} stations...", ids.len());
-            let spinner_notification = Notification::new_spinner (&message);
+            let spinner_notification = Notification::new_spinner(&message);
             self.sender.send(Action::ViewShowNotification(spinner_notification.clone())).unwrap();
 
             // Get actual stations from identifiers
@@ -268,14 +266,14 @@ impl App {
             let sender = self.sender.clone();
             let fut = client.get_stations_by_identifiers(ids).map(move |stations| {
                 spinner_notification.hide();
-                match stations{
+                match stations {
                     Ok(stations) => {
                         sender.send(Action::LibraryAddStations(stations.clone())).unwrap();
 
                         let message = format!("Imported {} stations!", stations.len());
                         let notification = Notification::new_info(&message);
                         sender.send(Action::ViewShowNotification(notification)).unwrap();
-                    },
+                    }
                     Err(err) => {
                         let notification = Notification::new_error("Could not receive station data.", &err.to_string());
                         sender.send(Action::ViewShowNotification(notification.clone())).unwrap();

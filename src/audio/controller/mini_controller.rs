@@ -1,15 +1,15 @@
-use glib::Sender;
 use glib::futures::FutureExt;
+use glib::Sender;
 use gtk::prelude::*;
 
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::api::{Station, FaviconDownloader};
+use crate::api::{FaviconDownloader, Station};
 use crate::app::Action;
 use crate::audio::Controller;
 use crate::audio::PlaybackState;
-use crate::ui::{StationFavicon, FaviconSize};
+use crate::ui::{FaviconSize, StationFavicon};
 
 pub struct MiniController {
     pub widget: gtk::Box,
@@ -84,7 +84,7 @@ impl MiniController {
 
         // show_player_button
         let sender = self.sender.clone();
-        self.eventbox.connect_button_release_event(move |_,_| {
+        self.eventbox.connect_button_release_event(move |_, _| {
             sender.send(Action::ViewShowPlayer).unwrap();
             glib::signal::Inhibit(false)
         });
@@ -101,7 +101,7 @@ impl Controller for MiniController {
         // Download & set icon
         let station_favicon = self.station_favicon.clone();
         station.favicon.map(|favicon| {
-            let fut = self.favicon_downloader.clone().download (favicon, FaviconSize::Mini as i32).map(move|pixbuf|{
+            let fut = self.favicon_downloader.clone().download(favicon, FaviconSize::Mini as i32).map(move |pixbuf| {
                 pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
             });
             let ctx = glib::MainContext::default();

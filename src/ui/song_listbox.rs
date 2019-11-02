@@ -24,7 +24,7 @@ impl SongListBox {
             widget: song_listbox,
             listbox,
             stack,
-            sender
+            sender,
         }
     }
 

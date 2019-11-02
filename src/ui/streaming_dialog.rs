@@ -1,8 +1,8 @@
 use glib::Sender;
 use gtk::prelude::*;
 
-use std::rc::Rc;
 use std::net::IpAddr;
+use std::rc::Rc;
 use std::str::FromStr;
 
 use crate::app::Action;
@@ -37,7 +37,7 @@ impl StreamingDialog {
         get_widget!(sd.builder, gtk::Stack, stream_stack);
         get_widget!(sd.builder, gtk::ListBox, devices_listbox);
         get_widget!(sd.builder, gtk::Button, connect_button);
-        gcd_receiver.attach(None, move |device|{
+        gcd_receiver.attach(None, move |device| {
             stream_stack.set_visible_child_name("results");
             connect_button.set_sensitive(true);
 
@@ -60,7 +60,7 @@ impl StreamingDialog {
         sd
     }
 
-    pub fn show(&self){
+    pub fn show(&self) {
         let application = self.builder.get_application().unwrap();
         let window = application.get_active_window().unwrap();
         self.widget.set_transient_for(Some(&window));
@@ -69,11 +69,11 @@ impl StreamingDialog {
         self.widget.show();
     }
 
-    fn connect_signals(&self){
+    fn connect_signals(&self) {
         // cancel_button
         let widget = self.widget.clone();
         get_widget!(self.builder, gtk::Button, cancel_button);
-        cancel_button.connect_clicked(move |_|{
+        cancel_button.connect_clicked(move |_| {
             widget.set_visible(false);
             widget.hide();
         });
@@ -84,7 +84,7 @@ impl StreamingDialog {
         let widget = self.widget.clone();
         let gcd = self.gcd.clone();
         let sender = self.sender.clone();
-        connect_button.connect_clicked(move|_|{
+        connect_button.connect_clicked(move |_| {
             let active_row = devices_listbox.get_selected_row().unwrap();
 
             // Very hackish way to get the selected ip address
@@ -101,7 +101,7 @@ impl StreamingDialog {
         });
 
         // hide on delete
-        self.widget.connect_delete_event(|widget,_|{
+        self.widget.connect_delete_event(|widget, _| {
             widget.hide_on_delete();
             widget.hide();
             glib::signal::Inhibit(true)

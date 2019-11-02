@@ -7,27 +7,27 @@ use crate::app::Action;
 use crate::config;
 use crate::settings::Key;
 
-pub struct SettingsManager{
+pub struct SettingsManager {
     settings: gio::Settings,
 }
 
-impl SettingsManager{
-    pub fn new (sender: glib::Sender<Action>) -> Self {
+impl SettingsManager {
+    pub fn new(sender: glib::Sender<Action>) -> Self {
         let settings = Self::get_settings();
 
-        settings.connect_changed(move|_, key_str|{
+        settings.connect_changed(move |_, key_str| {
             let key: Key = Key::from_str(key_str).unwrap();
             sender.send(Action::SettingsKeyChanged(key)).unwrap();
         });
 
-        Self{settings}
+        Self { settings }
     }
 
-    pub fn list_keys(&self){
+    pub fn list_keys(&self) {
         debug!("Settings values:");
         let keys = self.settings.list_keys();
 
-        for key in keys{
+        for key in keys {
             let name = key.to_string();
             let value = self.settings.get_value(&name).unwrap();
             debug!("  \"{}\" -> {}", name, value);
@@ -38,7 +38,7 @@ impl SettingsManager{
         self.settings.create_action(&key.to_string()).unwrap()
     }
 
-    pub fn get_settings() -> gio::Settings{
+    pub fn get_settings() -> gio::Settings {
         let app_id = config::APP_ID.trim_end_matches(".Devel");
         gio::Settings::new(app_id)
     }

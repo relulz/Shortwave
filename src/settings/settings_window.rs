@@ -1,7 +1,7 @@
 use gtk::prelude::*;
 use libhandy::PreferencesWindow;
 
-use crate::settings::{SettingsManager, Key};
+use crate::settings::{Key, SettingsManager};
 
 pub struct SettingsWindow {
     pub widget: PreferencesWindow,
@@ -16,10 +16,7 @@ impl SettingsWindow {
 
         settings_window.set_transient_for(Some(window));
 
-        let window = Self {
-            widget: settings_window,
-            builder,
-        };
+        let window = Self { widget: settings_window, builder };
 
         window.setup_signals();
         window

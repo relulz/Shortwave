@@ -1,26 +1,26 @@
+use glib::{Receiver, Sender};
 use mdns::{Record, RecordKind};
-use glib::{Sender, Receiver};
 
-use std::net::IpAddr;
-use std::thread;
 use std::collections::HashMap;
+use std::net::IpAddr;
 use std::sync::Arc;
 use std::sync::Mutex;
+use std::thread;
 
 #[derive(Debug, Clone, PartialEq)]
-pub struct GCastDevice{
+pub struct GCastDevice {
     pub id: String,
     pub ip: IpAddr,
     pub name: String,
 }
 
-pub struct GCastDiscoverer{
+pub struct GCastDiscoverer {
     sender: Sender<GCastDevice>,
     known_devices: Arc<Mutex<Vec<GCastDevice>>>,
 }
 
-impl GCastDiscoverer{
-    pub fn new() -> (Self, Receiver<GCastDevice>){
+impl GCastDiscoverer {
+    pub fn new() -> (Self, Receiver<GCastDevice>) {
         let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
         let known_devices = Arc::new(Mutex::new(Vec::new()));
 
@@ -28,7 +28,7 @@ impl GCastDiscoverer{
         (gcd, receiver)
     }
 
-    pub fn start_discover(&self){
+    pub fn start_discover(&self) {
         debug!("Start searching for google cast devices...");
         let known_devices = self.known_devices.clone();
         let sender = self.sender.clone();
@@ -39,8 +39,8 @@ impl GCastDiscoverer{
 
                 let known_devices = known_devices.clone();
                 let sender = sender.clone();
-                Self::get_device(response).map(move |device|{
-                    if !known_devices.lock().unwrap().contains(&device){
+                Self::get_device(response).map(move |device| {
+                    if !known_devices.lock().unwrap().contains(&device) {
                         debug!("Found new google cast device!");
                         debug!("{:?}", device);
                         known_devices.lock().unwrap().insert(0, device.clone());
@@ -51,8 +51,8 @@ impl GCastDiscoverer{
         });
     }
 
-    pub fn get_device_by_ip_addr(&self, ip: IpAddr) -> Option<GCastDevice>{
-        for device in self.known_devices.lock().unwrap().iter(){
+    pub fn get_device_by_ip_addr(&self, ip: IpAddr) -> Option<GCastDevice> {
+        for device in self.known_devices.lock().unwrap().iter() {
             if device.ip == ip {
                 return Some(device.clone());
             }
@@ -64,13 +64,13 @@ impl GCastDiscoverer{
         let mut values: HashMap<String, String> = HashMap::new();
 
         let addr = response.records().filter_map(Self::to_ip_addr).next();
-        if addr == None{
+        if addr == None {
             debug!("Cast device does not advertise address.");
             return None;
         }
 
         // To get the values, we need to iterate the additional records and check the TXT kind
-        for record in response.additional{
+        for record in response.additional {
             // Check if record kind is TXT
             if let mdns::RecordKind::TXT(v) = record.kind {
                 // Iterate TXT values
@@ -82,10 +82,10 @@ impl GCastDiscoverer{
             }
         }
 
-        let device = GCastDevice{
+        let device = GCastDevice {
             id: values.get("id").unwrap().to_string(),
             ip: addr.unwrap(),
-            name: values.get("fn").unwrap().to_string()
+            name: values.get("fn").unwrap().to_string(),
         };
 
         Some(device)

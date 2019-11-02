@@ -6,4 +6,3 @@ pub use key::Key;
 
 mod settings_manager;
 pub use settings_manager::SettingsManager;
-

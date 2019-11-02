@@ -12,9 +12,9 @@ use crate::config;
 use crate::database::connection;
 use crate::database::queries;
 use crate::database::StationIdentifier;
-use crate::ui::{StationFlowBox, Notification};
-use crate::utils::{Order, Sorting};
 use crate::settings::{Key, SettingsManager};
+use crate::ui::{Notification, StationFlowBox};
+use crate::utils::{Order, Sorting};
 
 pub struct Library {
     pub widget: gtk::Box,
@@ -45,7 +45,7 @@ impl Library {
             widget: library,
             flowbox,
             client,
-            sender
+            sender,
         };
 
         library.load_stations();
@@ -99,7 +99,7 @@ impl Library {
         let sender = self.sender.clone();
         let fut = self.client.clone().get_stations_by_identifiers(identifiers).map(move |stations| {
             notification.hide();
-            match stations{
+            match stations {
                 Ok(stations) => flowbox.add_stations(stations),
                 Err(err) => {
                     let notification = Notification::new_error("Could not receive station data.", &err.to_string());

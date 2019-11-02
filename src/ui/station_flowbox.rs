@@ -3,10 +3,10 @@ use gtk::prelude::*;
 use indexmap::IndexMap;
 
 use std::cell::RefCell;
-use std::rc::Rc;
 use std::convert::TryInto;
+use std::rc::Rc;
 
-use crate::api::{Station, FaviconDownloader};
+use crate::api::{FaviconDownloader, Station};
 use crate::app::Action;
 use crate::ui::{StationDialog, StationRow};
 use crate::utils;
@@ -47,11 +47,11 @@ impl StationFlowBox {
         flowbox
     }
 
-    fn connect_signals(&self){
+    fn connect_signals(&self) {
         // Show StationDialog when row gets clicked
         let stations = self.stations.clone();
         let sender = self.sender.clone();
-        self.widget.connect_child_activated(move |_, child|{
+        self.widget.connect_child_activated(move |_, child| {
             let index = child.get_index();
             let station = stations.borrow().get_index(index.try_into().unwrap()).unwrap().1.clone();
 

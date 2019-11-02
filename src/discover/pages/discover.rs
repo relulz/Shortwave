@@ -7,8 +7,8 @@ use std::rc::Rc;
 
 use crate::api::{Client, StationRequest};
 use crate::app::Action;
-use crate::ui::{StationFlowBox, Notification};
 use crate::settings::{Key, SettingsManager};
+use crate::ui::{Notification, StationFlowBox};
 
 pub struct Discover {
     pub widget: gtk::Box,
@@ -55,7 +55,7 @@ impl Discover {
         search
     }
 
-    fn fetch_data(&self){
+    fn fetch_data(&self) {
         // Stations with the most votes
         let mut votes_request = StationRequest::default();
         votes_request.order = Some("votes".to_string());
@@ -76,20 +76,18 @@ impl Discover {
         self.fill_flowbox(self.clicked_flowbox.clone(), clicked_request);
     }
 
-    fn fill_flowbox(&self, fb: Rc<StationFlowBox>, request: StationRequest){
+    fn fill_flowbox(&self, fb: Rc<StationFlowBox>, request: StationRequest) {
         let client = self.client.clone();
         let flowbox = fb.clone();
         let sender = self.sender.clone();
-        let fut = client.send_station_request(request).map(move |stations| {
-            match stations{
-                Ok(s) => {
-                    flowbox.clear();
-                    flowbox.add_stations(s);
-                },
-                Err(err) => {
-                    let notification = Notification::new_error("Could not receive station data.", &err.to_string());
-                    sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
-                }
+        let fut = client.send_station_request(request).map(move |stations| match stations {
+            Ok(s) => {
+                flowbox.clear();
+                flowbox.add_stations(s);
+            }
+            Err(err) => {
+                let notification = Notification::new_error("Could not receive station data.", &err.to_string());
+                sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
             }
         });
 

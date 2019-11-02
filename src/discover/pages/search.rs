@@ -8,8 +8,8 @@ use std::rc::Rc;
 
 use crate::api::{Client, StationRequest};
 use crate::app::Action;
-use crate::ui::{StationFlowBox, Notification};
 use crate::settings::{Key, SettingsManager};
+use crate::ui::{Notification, StationFlowBox};
 
 pub struct Search {
     pub widget: gtk::Box,
@@ -70,16 +70,14 @@ impl Search {
             let flowbox = flowbox.clone();
             let request = request.clone();
             let sender = sender.clone();
-            let fut = client.send_station_request(request).map(move |stations| {
-                match stations{
-                    Ok(s) => {
-                        flowbox.clear();
-                        flowbox.add_stations(s);
-                    },
-                    Err(err) => {
-                        let notification = Notification::new_error("Could not receive station data.", &err.to_string());
-                        sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
-                    }
+            let fut = client.send_station_request(request).map(move |stations| match stations {
+                Ok(s) => {
+                    flowbox.clear();
+                    flowbox.add_stations(s);
+                }
+                Err(err) => {
+                    let notification = Notification::new_error("Could not receive station data.", &err.to_string());
+                    sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
                 }
             });
 

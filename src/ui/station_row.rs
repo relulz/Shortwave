@@ -1,10 +1,10 @@
+use glib::futures::FutureExt;
 use glib::Sender;
 use gtk::prelude::*;
-use glib::futures::FutureExt;
 
-use crate::api::{Station, FaviconDownloader};
+use crate::api::{FaviconDownloader, Station};
 use crate::app::Action;
-use crate::ui::{StationFavicon, FaviconSize};
+use crate::ui::{FaviconSize, StationFavicon};
 
 pub struct StationRow {
     pub widget: gtk::FlowBoxChild,
@@ -30,7 +30,7 @@ impl StationRow {
         let station_favicon = StationFavicon::new(FaviconSize::Small);
         favicon_box.add(&station_favicon.widget);
         station.favicon.as_ref().map(|favicon| {
-            let fut = favicon_downloader.download(favicon.clone(), FaviconSize::Small as i32).map(move|pixbuf|{
+            let fut = favicon_downloader.download(favicon.clone(), FaviconSize::Small as i32).map(move |pixbuf| {
                 pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
             });
             let ctx = glib::MainContext::default();

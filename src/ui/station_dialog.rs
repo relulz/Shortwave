@@ -1,12 +1,12 @@
+use glib::futures::FutureExt;
 use glib::Sender;
 use gtk::prelude::*;
 use libhandy::Dialog;
-use glib::futures::FutureExt;
 
-use crate::api::{Station, FaviconDownloader};
+use crate::api::{FaviconDownloader, Station};
 use crate::app::Action;
 use crate::database::Library;
-use crate::ui::{StationFavicon, FaviconSize};
+use crate::ui::{FaviconSize, StationFavicon};
 
 pub struct StationDialog {
     pub widget: Dialog,
@@ -40,7 +40,7 @@ impl StationDialog {
         favicon_box.add(&station_favicon.widget);
         let favicon_downloader = FaviconDownloader::new();
         station.favicon.as_ref().map(|favicon| {
-            let fut = favicon_downloader.download(favicon.clone(), FaviconSize::Big as i32).map(move|pixbuf|{
+            let fut = favicon_downloader.download(favicon.clone(), FaviconSize::Big as i32).map(move |pixbuf| {
                 pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
             });
             let ctx = glib::MainContext::default();
@@ -87,7 +87,7 @@ impl StationDialog {
         if self.station.language != "" {
             self.language_label.set_text(&self.station.language);
         }
-        self.station.homepage.as_ref().map(|homepage|{
+        self.station.homepage.as_ref().map(|homepage| {
             self.homepage_label.set_markup(&format!("<a href=\"{}\">{}</a>", homepage, homepage));
         });
     }

@@ -1,16 +1,16 @@
-use glib::Sender;
-use glib::futures::FutureExt;
-use gtk::prelude::*;
 use gio::prelude::*;
+use glib::futures::FutureExt;
+use glib::Sender;
+use gtk::prelude::*;
 
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::api::{Station, FaviconDownloader};
+use crate::api::{FaviconDownloader, Station};
 use crate::app::Action;
 use crate::audio::Controller;
 use crate::audio::PlaybackState;
-use crate::ui::{StationDialog, StreamingDialog, StationFavicon, FaviconSize};
+use crate::ui::{FaviconSize, StationDialog, StationFavicon, StreamingDialog};
 
 pub struct SidebarController {
     pub widget: gtk::Box,
@@ -58,7 +58,7 @@ impl SidebarController {
 
         // volume_button | We need the volume_signal_id later to block the signal
         let s = sender.clone();
-        let volume_signal_id = volume_button.connect_value_changed(move|_, value| {
+        let volume_signal_id = volume_button.connect_value_changed(move |_, value| {
             s.send(Action::PlaybackSetVolume(value)).unwrap();
         });
 
@@ -116,7 +116,7 @@ impl SidebarController {
         let station = self.station.clone();
         let sender = self.sender.clone();
         let details_action = gio::SimpleAction::new("show-details", None);
-        details_action.connect_activate(move |_,_|{
+        details_action.connect_activate(move |_, _| {
             let s = station.borrow().clone().unwrap();
 
             let station_dialog = StationDialog::new(sender.clone(), s);
@@ -127,7 +127,7 @@ impl SidebarController {
         // stream button
         let streaming_dialog = self.streaming_dialog.clone();
         let stream_action = gio::SimpleAction::new("stream-audio", None);
-        stream_action.connect_activate(move |_,_|{
+        stream_action.connect_activate(move |_, _| {
             streaming_dialog.show();
         });
         self.action_group.add_action(&stream_action);
@@ -144,7 +144,7 @@ impl Controller for SidebarController {
         // Download & set icon
         let station_favicon = self.station_favicon.clone();
         station.favicon.map(|favicon| {
-            let fut = self.favicon_downloader.clone().download (favicon, FaviconSize::Big as i32).map(move|pixbuf|{
+            let fut = self.favicon_downloader.clone().download(favicon, FaviconSize::Big as i32).map(move |pixbuf| {
                 pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
             });
             let ctx = glib::MainContext::default();

@@ -1,6 +1,6 @@
+use gio::prelude::SettingsExt;
 use glib::Sender;
 use gtk::prelude::*;
-use gio::prelude::SettingsExt;
 use libhandy::LeafletExt;
 
 use std::cell::RefCell;
@@ -8,8 +8,8 @@ use std::rc::Rc;
 
 use crate::app::Action;
 use crate::config;
-use crate::ui::Notification;
 use crate::settings::{Key, SettingsManager};
+use crate::ui::Notification;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum View {

@@ -11,7 +11,7 @@ pub struct Notification {
     error_box: gtk::Box,
 }
 
-impl Default for Notification{
+impl Default for Notification {
     fn default() -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/notification.ui");
         get_widget!(builder, gtk::Revealer, revealer);
@@ -41,7 +41,7 @@ impl Default for Notification{
 
 impl Notification {
     // Returns new information notification
-    pub fn new_info (text: &str) -> Rc<Self> {
+    pub fn new_info(text: &str) -> Rc<Self> {
         let notification = Self::default();
 
         notification.text_label.set_text(text);
@@ -51,7 +51,7 @@ impl Notification {
     }
 
     // Returns new spinner notification
-    pub fn new_spinner (text: &str) -> Rc<Self> {
+    pub fn new_spinner(text: &str) -> Rc<Self> {
         let notification = Self::default();
 
         notification.text_label.set_text(text);
@@ -61,7 +61,7 @@ impl Notification {
     }
 
     // Returns new error notification
-    pub fn new_error (text: &str, error: &str) -> Rc<Self> {
+    pub fn new_error(text: &str, error: &str) -> Rc<Self> {
         let notification = Self::default();
 
         notification.text_label.set_text(text);
@@ -77,13 +77,13 @@ impl Notification {
         self.revealer.set_reveal_child(true);
     }
 
-    pub fn hide (&self){
+    pub fn hide(&self) {
         self.revealer.set_reveal_child(false);
         Self::destroy(self.revealer.clone());
     }
 
-    fn destroy(r: gtk::Revealer){
-        gtk::timeout_add(1000, move||{
+    fn destroy(r: gtk::Revealer) {
+        gtk::timeout_add(1000, move || {
             r.destroy();
             glib::Continue(false)
         });

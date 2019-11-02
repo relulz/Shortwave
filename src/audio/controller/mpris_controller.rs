@@ -1,8 +1,8 @@
 use glib::Sender;
 use mpris_player::{Metadata, MprisPlayer, OrgMprisMediaPlayer2Player, PlaybackStatus};
 
+use std::cell::{Cell, RefCell};
 use std::rc::Rc;
-use std::cell::{RefCell, Cell};
 use std::sync::Arc;
 
 use crate::api::Station;
@@ -50,7 +50,9 @@ impl MprisController {
         let song_title = self.song_title.take();
 
         station.clone().map(|station| {
-            station.favicon.map(|favicon| {metadata.art_url = Some(favicon.to_string());} );
+            station.favicon.map(|favicon| {
+                metadata.art_url = Some(favicon.to_string());
+            });
             metadata.artist = Some(vec![station.name]);
         });
         song_title.clone().map(|song_title| {
@@ -102,7 +104,7 @@ impl MprisController {
         // mpris volume
         let sender = self.sender.clone();
         let old_volume = self.volume.clone();
-        self.mpris.connect_volume(move|new_volume| {
+        self.mpris.connect_volume(move |new_volume| {
             if *old_volume.borrow() != new_volume {
                 sender.send(Action::PlaybackSetVolume(new_volume.clone())).unwrap();
                 *old_volume.borrow_mut() = new_volume;
