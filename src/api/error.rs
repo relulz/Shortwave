@@ -8,6 +8,10 @@ pub enum Error {
     GLibError(#[cause] glib::error::Error),
     #[fail(display = "Could not create Soup message.")]
     SoupMessageError,
+    #[fail(display = "Input/Output error.")]
+    IOError(#[cause] std::io::Error),
+    #[fail(display = "Could not open cached image.")]
+    CacheError,
 }
 
 // Maps a type to a variant of the Error enum
@@ -30,5 +34,6 @@ easy_from_impl!(
     Error,
     serde_json::error::Error => Error::SerdeError,
     glib::error::Error       => Error::GLibError,
-    url::ParseError          => Error::UrlParseError
+    url::ParseError          => Error::UrlParseError,
+    std::io::Error           => Error::IOError
 );
