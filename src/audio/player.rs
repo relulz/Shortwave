@@ -57,6 +57,7 @@ pub struct Player {
     gst_backend: Arc<Mutex<GstreamerBackend>>,
     song_backend: Rc<RefCell<SongBackend>>,
 
+    builder: gtk::Builder,
     sender: Sender<Action>,
 }
 
@@ -105,6 +106,7 @@ impl Player {
             gcast_controller,
             gst_backend,
             song_backend,
+            builder,
             sender,
         };
 
@@ -170,6 +172,11 @@ impl Player {
     }
 
     pub fn connect_to_gcast_device(&self, device: GCastDevice) {
+        get_widget!(self.builder, gtk::Label, device_name);
+        get_widget!(self.builder, gtk::Revealer, stream_revealer);
+        device_name.set_text(&format!("\"{}\"", &device.name));
+        stream_revealer.set_reveal_child(true);
+
         self.gcast_controller.connect_to_device(device);
     }
 

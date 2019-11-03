@@ -122,6 +122,7 @@ impl GCastController {
                         GCastAction::Disconnect => {
                             device.as_ref().map(|d| {
                                 debug!("Disconnect from gcast device...");
+                                // FIXME: Crash -> thread '<unnamed>' panicked at 'called `Result::unwrap()` on an `Err` value: Io(Custom { kind: UnexpectedEof, error: "failed to fill whole buffer" })', src/libcore/result.rs:1165:5
                                 d.receiver.stop_app(app.as_ref().unwrap().session_id.as_str()).unwrap();
                             });
                         }
