@@ -9,7 +9,7 @@ use std::str::FromStr;
 use std::rc::Rc;
 use std::sync::mpsc::{channel, Receiver, Sender};
 use std::sync::{Arc, Mutex};
-use std::thread;
+use std::{thread, time};
 
 use crate::api::Station;
 use crate::app::Action;
@@ -86,44 +86,49 @@ impl GCastController {
                         GCastAction::SetStation => {
                             device.as_ref().map(|d| {
                                 let s = station.lock().unwrap().as_ref().unwrap().clone();
+                                debug!("Transfer media information to gcast device...");
 
                                 let image = Image {
-                                    url: s.favicon.unwrap().to_string(),
+                                    url: s.clone().favicon.unwrap().to_string(),
                                     dimensions: None,
                                 };
 
                                 let metadata = GenericMediaMetadata {
-                                    title: Some(s.name),
+                                    title: Some(s.name.clone()),
                                     subtitle: None,
                                     images: vec![image],
                                     release_date: None,
                                 };
 
-                                debug!("Transfer media information to gcast device...");
-                                let status = d
-                                    .media
-                                    .load(
-                                        app.as_ref().unwrap().transport_id.as_str(),
-                                        app.as_ref().unwrap().session_id.as_str(),
-                                        &Media {
-                                            content_id: s.url.unwrap().to_string(),
-                                            content_type: "".to_string(),
-                                            stream_type: StreamType::Live,
-                                            duration: None,
-                                            metadata: Some(rust_cast::channels::media::Metadata::Generic(metadata)),
-                                        },
-                                    )
-                                    .unwrap();
+                                let result = d.media.load(
+                                    app.as_ref().unwrap().transport_id.as_str(),
+                                    app.as_ref().unwrap().session_id.as_str(),
+                                    &Media {
+                                        content_id: s.url.clone().unwrap().to_string(),
+                                        content_type: "".to_string(),
+                                        stream_type: StreamType::Live,
+                                        duration: None,
+                                        metadata: Some(rust_cast::channels::media::Metadata::Generic(metadata)),
+                                    },
+                                );
 
-                                let status = status.entries.first().unwrap();
-                                media_session_id = status.media_session_id;
+                                match result {
+                                    Ok(status) => {
+                                        let status = status.entries.first().unwrap();
+                                        media_session_id = status.media_session_id;
+                                    }
+                                    _ => warn!("Unable to transfer media information to gcast device."),
+                                }
                             });
                         }
                         GCastAction::Disconnect => {
                             device.as_ref().map(|d| {
                                 debug!("Disconnect from gcast device...");
-                                // FIXME: Crash -> thread '<unnamed>' panicked at 'called `Result::unwrap()` on an `Err` value: Io(Custom { kind: UnexpectedEof, error: "failed to fill whole buffer" })', src/libcore/result.rs:1165:5
-                                d.receiver.stop_app(app.as_ref().unwrap().session_id.as_str()).unwrap();
+
+                                match d.receiver.stop_app(app.as_ref().unwrap().session_id.as_str()) {
+                                    Ok(_) => (),
+                                    _ => warn!("Unable to disconnect from gcast device."),
+                                }
                             });
                         }
                     }
@@ -135,6 +140,10 @@ impl GCastController {
     pub fn connect_to_device(&self, device: GCastDevice) {
         *self.device_ip.lock().unwrap() = device.ip.to_string();
         self.gcast_sender.send(GCastAction::Connect).unwrap();
+    }
+
+    pub fn disconnect_from_device(&self) {
+        self.gcast_sender.send(GCastAction::Disconnect).unwrap();
     }
 }
 

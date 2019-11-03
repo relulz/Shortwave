@@ -180,12 +180,25 @@ impl Player {
         self.gcast_controller.connect_to_device(device);
     }
 
+    pub fn disconnect_from_gcast_device(&self) {
+        get_widget!(self.builder, gtk::Revealer, stream_revealer);
+        stream_revealer.set_reveal_child(false);
+        self.gcast_controller.disconnect_from_device();
+    }
+
     fn setup_signals(&self, receiver: Receiver<GstreamerMessage>) {
         // Wait for new messages from the Gstreamer backend
         let controller = self.controller.clone();
         let song_backend = self.song_backend.clone();
         let gst_backend = self.gst_backend.clone();
         receiver.attach(None, move |message| Self::process_gst_message(message, controller.clone(), song_backend.clone(), gst_backend.clone()));
+
+        // Disconnect from gcast device
+        let sender = self.sender.clone();
+        get_widget!(self.builder, gtk::Button, disconnect_button);
+        disconnect_button.connect_clicked(move |_| {
+            sender.send(Action::PlaybackDisconnectGCastDevice).unwrap();
+        });
     }
 
     fn process_gst_message(message: GstreamerMessage, controller: Rc<Vec<Box<dyn Controller>>>, song_backend: Rc<RefCell<SongBackend>>, gst_backend: Arc<Mutex<GstreamerBackend>>) -> glib::Continue {
