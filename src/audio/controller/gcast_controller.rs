@@ -60,7 +60,7 @@ impl GCastController {
             let mut media_session_id: i32 = 0;
 
             loop {
-                if let Ok(action) = receiver.try_recv() {
+                if let Ok(action) = receiver.recv() {
                     match action {
                         GCastAction::Connect => {
                             debug!("Connect to gcast device with IP \"{}\"...", *device_ip.lock().unwrap());

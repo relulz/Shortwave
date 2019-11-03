@@ -29,12 +29,15 @@ impl GCastDiscoverer {
     }
 
     pub fn start_discover(&self) {
-        debug!("Start searching for google cast devices...");
         let known_devices = self.known_devices.clone();
         let sender = self.sender.clone();
 
         thread::spawn(move || {
-            for response in mdns::discover::all("_googlecast._tcp.local").unwrap() {
+            debug!("Start discovering for google cast devices...");
+            let discovery = mdns::discover::all("_googlecast._tcp.local").unwrap();
+            let discovery = discovery.timeout(std::time::Duration::from_secs(15));
+
+            for response in discovery {
                 let response = response.unwrap();
 
                 let known_devices = known_devices.clone();
@@ -48,6 +51,7 @@ impl GCastDiscoverer {
                     }
                 });
             }
+            debug!("GCast discovery ended.")
         });
     }
 
