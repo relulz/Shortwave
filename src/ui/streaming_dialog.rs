@@ -56,7 +56,7 @@ impl StreamingDialog {
         });
 
         sd.gcd.start_discover();
-        sd.connect_signals();
+        sd.setup_signals();
         sd
     }
 
@@ -69,7 +69,7 @@ impl StreamingDialog {
         self.widget.show();
     }
 
-    fn connect_signals(&self) {
+    fn setup_signals(&self) {
         // cancel_button
         let widget = self.widget.clone();
         get_widget!(self.builder, gtk::Button, cancel_button);

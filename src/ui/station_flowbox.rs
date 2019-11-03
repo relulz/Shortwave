@@ -43,11 +43,11 @@ impl StationFlowBox {
             sender,
         };
 
-        flowbox.connect_signals();
+        flowbox.setup_signals();
         flowbox
     }
 
-    fn connect_signals(&self) {
+    fn setup_signals(&self) {
         // Show StationDialog when row gets clicked
         let stations = self.stations.clone();
         let sender = self.sender.clone();
