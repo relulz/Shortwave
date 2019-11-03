@@ -17,6 +17,13 @@ if profile == 'development'
   app_id = '@0@.Devel'.format(app_id)
 endif
 
+# Setup pre-commit hook for ensuring coding style is always consistent
+if profile == 'development'
+    message('Setting up git pre-commit hook..')
+    run_command('mkdir', '.git/hooks/')
+    run_command('cp', '-f', 'build-aux/pre-commit.hook', '.git/hooks/pre-commit')
+endif
+
 i18n = import('i18n')
 
 subdir('data')
