@@ -9,7 +9,7 @@ use std::str::FromStr;
 use std::rc::Rc;
 use std::sync::mpsc::{channel, Receiver, Sender};
 use std::sync::{Arc, Mutex};
-use std::{thread, time};
+use std::thread;
 
 use crate::api::Station;
 use crate::app::Action;

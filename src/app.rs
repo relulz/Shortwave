@@ -2,7 +2,7 @@ use gio::prelude::*;
 use glib::futures::FutureExt;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
-use libhandy::{LeafletExt, ViewSwitcherBarExt, ViewSwitcherExt};
+use libhandy::{ViewSwitcherBarExt, ViewSwitcherExt};
 use url::Url;
 
 use std::cell::RefCell;
@@ -189,13 +189,7 @@ impl App {
             Action::PlaybackDisconnectGCastDevice => self.player.disconnect_from_gcast_device(),
             Action::PlaybackSetStation(station) => {
                 self.player.set_station(station.clone());
-
-                let separator = gtk::Separator::new(gtk::Orientation::Vertical);
-                separator.set_visible(true);
-                self.window.leaflet.add(&separator);
-
-                self.window.leaflet.add(&self.player.widget);
-                self.window.leaflet.set_child_name(&self.player.widget, Some("player"));
+                self.player.show(self.window.leaflet.clone());
             }
             Action::PlaybackStart => self.player.set_playback(PlaybackState::Playing),
             Action::PlaybackStop => self.player.set_playback(PlaybackState::Stopped),

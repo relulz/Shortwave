@@ -257,6 +257,7 @@ impl GstreamerBackend {
                     .add_probe(gstreamer::PadProbeType::BLOCK_DOWNSTREAM, move |_, _| {
                         // Dataflow is blocked
                         debug!("Push EOS into recorderbin sinkpad...");
+                        //TODO: Fix crash here...| thread '<unnamed>' panicked at 'called `Option::unwrap()` on a `None` value', src/libcore/option.rs:378:21
                         let sinkpad = rbin.lock().unwrap().clone().unwrap().gstbin.get_static_pad("sink").unwrap();
                         sinkpad.send_event(gstreamer::Event::new_eos().build());
 

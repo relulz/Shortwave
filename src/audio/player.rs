@@ -1,6 +1,7 @@
 use glib::futures::FutureExt;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
+use libhandy::LeafletExt;
 use url::Url;
 
 use std::cell::RefCell;
@@ -112,6 +113,23 @@ impl Player {
 
         player.setup_signals(gst_receiver);
         player
+    }
+
+    pub fn show(&self, leaflet: libhandy::Leaflet) {
+        let separator = gtk::Separator::new(gtk::Orientation::Vertical);
+        separator.set_visible(true);
+        leaflet.add(&separator);
+
+        leaflet.add(&self.widget);
+        leaflet.set_child_name(&self.widget, Some("player"));
+
+        // Show a animation using a Gtk.Revealer. We need to add a timeout here,
+        // otherwise the animation wouldn't be visible.
+        get_widget!(self.builder, gtk::Revealer, revealer);
+        gtk::timeout_add_seconds(0, move || {
+            revealer.set_reveal_child(true);
+            glib::Continue(false)
+        });
     }
 
     pub fn set_station(&self, station: Station) {
