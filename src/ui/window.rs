@@ -20,7 +20,7 @@ pub enum View {
 
 pub struct Window {
     pub widget: gtk::ApplicationWindow,
-    pub player_box: gtk::Box,
+    pub leaflet: libhandy::Leaflet,
     pub mini_controller_box: gtk::Box,
     pub library_box: gtk::Box,
     pub discover_box: gtk::Box,
@@ -45,7 +45,7 @@ impl Window {
         window.set_title(config::NAME);
         app_label.set_text(config::NAME);
 
-        get_widget!(builder, gtk::Box, player_box);
+        get_widget!(builder, libhandy::Leaflet, leaflet);
         get_widget!(builder, gtk::Box, mini_controller_box);
         get_widget!(builder, gtk::Box, library_box);
         get_widget!(builder, gtk::Box, discover_box);
@@ -57,7 +57,7 @@ impl Window {
 
         let window = Self {
             widget: window,
-            player_box,
+            leaflet,
             mini_controller_box,
             library_box,
             discover_box,

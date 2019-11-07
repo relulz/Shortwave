@@ -2,7 +2,7 @@ use gio::prelude::*;
 use glib::futures::FutureExt;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
-use libhandy::{ViewSwitcherBarExt, ViewSwitcherExt};
+use libhandy::{LeafletExt, ViewSwitcherBarExt, ViewSwitcherExt};
 use url::Url;
 
 use std::cell::RefCell;
@@ -72,7 +72,6 @@ impl App {
         let library = Library::new(sender.clone());
         let storefront = StoreFront::new(sender.clone());
 
-        window.player_box.add(&player.widget);
         window.mini_controller_box.add(&player.mini_controller_widget);
         window.library_box.add(&library.widget);
         window.discover_box.add(&storefront.widget);
@@ -188,7 +187,16 @@ impl App {
             Action::ViewShowNotification(notification) => self.window.show_notification(notification),
             Action::PlaybackConnectGCastDevice(device) => self.player.connect_to_gcast_device(device),
             Action::PlaybackDisconnectGCastDevice => self.player.disconnect_from_gcast_device(),
-            Action::PlaybackSetStation(station) => self.player.set_station(station.clone()),
+            Action::PlaybackSetStation(station) => {
+                self.player.set_station(station.clone());
+
+                let separator = gtk::Separator::new(gtk::Orientation::Vertical);
+                separator.set_visible(true);
+                self.window.leaflet.add(&separator);
+
+                self.window.leaflet.add(&self.player.widget);
+                self.window.leaflet.set_child_name(&self.player.widget, Some("player"));
+            }
             Action::PlaybackStart => self.player.set_playback(PlaybackState::Playing),
             Action::PlaybackStop => self.player.set_playback(PlaybackState::Stopped),
             Action::PlaybackSetVolume(volume) => self.player.set_volume(volume),
