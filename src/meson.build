@@ -1,28 +1,13 @@
-# Resources
-resource_conf = configuration_data()
-resource_conf.set_quoted('RESOURCEFILE', app_resources.full_path())
-resource_rs = configure_file(
-  input: 'static_resource.rs.in',
-  output: 'static_resource.rs',
-  configuration: resource_conf
-)
-
-run_command(
-  'cp',
-  resource_rs,
-  meson.current_source_dir(),
-  check: true
-)
-
-
 # Configuration file
 conf = configuration_data()
 conf.set_quoted('NAME', name)
+conf.set_quoted('PKGNAME', meson.project_name())
 conf.set_quoted('APP_ID', app_id)
 conf.set_quoted('VERSION', meson.project_version())
 conf.set_quoted('PROFILE', profile)
 conf.set_quoted('VCS_TAG', vcs_tag)
 conf.set_quoted('LOCALEDIR', localedir)
+conf.set_quoted('PKGDATADIR', pkgdatadir)
 
 configure_file(
     input: 'config.rs.in',
@@ -94,7 +79,6 @@ sources = files(
   'config.rs',
   'main.rs',
   'path.rs',
-  'static_resource.rs',
   'utils.rs'
 )
 
@@ -107,7 +91,6 @@ cargo_release = custom_target(
   console: true,
   install: true,
   install_dir: get_option('bindir'),
-  depends: app_resources,
   command: [
     cargo_script,
     meson.build_root(),

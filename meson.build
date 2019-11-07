@@ -11,6 +11,7 @@ profile    = get_option('profile')
 vcs_tag    = run_command('git', 'rev-parse', '--short', 'HEAD').stdout().strip()
 localedir  = join_paths(get_option('prefix'), get_option('localedir'))
 datadir    = get_option('datadir')
+pkgdatadir = join_paths(get_option('prefix'), datadir, meson.project_name())
 
 # Change app id for development builds
 if profile == 'development'

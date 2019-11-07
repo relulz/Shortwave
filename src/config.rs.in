@@ -1,6 +1,8 @@
 pub static NAME: &'static str = @NAME@;
+pub static PKGNAME: &'static str = @PKGNAME@;
 pub static APP_ID: &'static str = @APP_ID@;
 pub static VERSION: &'static str = @VERSION@;
 pub static PROFILE: &'static str = @PROFILE@;
 pub static VCS_TAG: &'static str = @VCS_TAG@;
 pub static LOCALEDIR: &'static str = @LOCALEDIR@;
+pub static PKGDATADIR: &'static str = @PKGDATADIR@;

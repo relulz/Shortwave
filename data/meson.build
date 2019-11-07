@@ -79,9 +79,12 @@ configure_file(
 
 
 # Resources
-app_resources = gnome.compile_resources(
-  'de.haeckerfelix.Shortwave',
+gnome.compile_resources(
+  app_id,
   'de.haeckerfelix.Shortwave.gresource.xml',
   gresource_bundle: true,
-  source_dir: meson.current_build_dir()
+  source_dir: meson.current_build_dir(),
+  install: true,
+  install_dir: join_paths(datadir, meson.project_name())
 )
+
