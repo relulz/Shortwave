@@ -11,12 +11,12 @@ flatpak:
     image: "docker.io/bilelmoussaoui/rust-nightly:master"
     stage: "test"
     variables:
-        MANIFEST_PATH: "de.haeckerfelix.ShortwaveDevel.json"
+        MANIFEST_PATH: "build-aux/de.haeckerfelix.Shortwave.Devel.json"
         VENDOR_PATH: "shortwave.tar.xz"
         FLATPAK_MODULE: "shortwave"
         CONFIGURE_ARGS: "-Dprofile=development"
         RUNTIME_REPO: "https://sdk.gnome.org/gnome-nightly.flatpakrepo"
-        APP_ID: "de.haeckerfelix.ShortwaveDevel"
+        APP_ID: "de.haeckerfelix.Shortwave.Devel"
 
     script:
         - flatpak-builder --stop-at=${FLATPAK_MODULE} app ${MANIFEST_PATH}
