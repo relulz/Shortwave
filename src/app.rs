@@ -219,8 +219,9 @@ impl App {
 
     fn show_about_dialog(window: gtk::ApplicationWindow) {
         let vcs_tag = config::VCS_TAG;
-        let version_suffix: String = match config::PROFILE {
-            "development" => format!("\n(Development Commit {})", vcs_tag).to_string(),
+        let version: String = match config::PROFILE {
+            "development" => format!("{} \n(Development Commit {})", config::VERSION, vcs_tag).to_string(),
+            "beta" => format!("Beta {}", config::VERSION.split_at(4).1).to_string(),
             _ => "".to_string(),
         };
 
@@ -230,7 +231,7 @@ impl App {
         dialog.set_comments(Some("Listen to internet radio"));
         dialog.set_copyright(Some("© 2019 Felix Häcker"));
         dialog.set_license_type(gtk::License::Gpl30);
-        dialog.set_version(Some(format!("{}{}", config::VERSION, version_suffix).as_str()));
+        dialog.set_version(Some(version.as_str()));
         dialog.set_transient_for(Some(&window));
         dialog.set_modal(true);
 

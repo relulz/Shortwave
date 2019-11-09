@@ -1,0 +1,71 @@
+{
+    "app-id" : "de.haeckerfelix.Shortwave",
+    "runtime" : "org.gnome.Platform",
+    "runtime-version" : "3.34",
+    "sdk" : "org.gnome.Sdk",
+    "sdk-extensions" : [
+        "org.freedesktop.Sdk.Extension.rust-nightly"
+    ],
+    "command" : "shortwave",
+    "tags" : [
+        "beta"
+    ],
+    "finish-args" : [
+        "--filesystem=xdg-music",
+        "--share=network",
+        "--share=ipc",
+        "--socket=x11",
+        "--socket=wayland",
+        "--socket=pulseaudio",
+        "--device=dri"
+    ],
+    "build-options" : {
+        "append-path" : "/usr/lib/sdk/rust-nightly/bin",
+        "build-args" : [
+            "--share=network"
+        ],
+        "env" : {
+            "RUSTFLAGS" : "--remap-path-prefix =../",
+            "CARGO_HOME" : "/run/build/Shortwave/cargo",
+            "RUST_BACKTRACE" : "1",
+            "RUST_LOG" : "shortwave=debug"
+        }
+    },
+    "modules" : [
+        {
+            "name" : "libhandy",
+            "buildsystem" : "meson",
+            "config-opts" : [
+                "-Dintrospection=enabled",
+                "-Dtests=false",
+                "-Dexamples=false",
+                "-Dvapi=false",
+                "-Dglade_catalog=disabled"
+            ],
+            "cleanup" : [
+                "/include",
+                "/lib/pkgconfig"
+            ],
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://source.puri.sm/Librem5/libhandy.git",
+                    "tag" : "v0.0.11"
+                }
+            ]
+        },
+        {
+            "name" : "shortwave",
+            "buildsystem" : "meson",
+            "config-opts" : [
+                "-Dprofile=beta"
+            ],
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://gitlab.gnome.org/World/Shortwave.git"
+                }
+            ]
+        }
+    ]
+}

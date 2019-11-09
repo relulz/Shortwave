@@ -78,7 +78,7 @@ impl Window {
         appmenu_button.set_popover(Some(&popover_menu));
 
         // Devel style class
-        if config::APP_ID.ends_with("Devel") {
+        if config::PROFILE == "devel" || config::PROFILE == "beta" {
             let ctx = window.widget.get_style_context();
             ctx.add_class("devel");
         }
