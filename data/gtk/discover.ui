@@ -104,7 +104,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_top">12</property>
-                        <property name="label" translatable="yes">Most voted stations</property>
+                        <property name="label" translatable="yes">Other users are listening to…</property>
                         <property name="wrap">True</property>
                         <property name="xalign">0</property>
                         <property name="yalign">0</property>
