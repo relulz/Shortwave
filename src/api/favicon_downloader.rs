@@ -52,10 +52,7 @@ impl FaviconDownloader {
                 // Save pixbuf for caching
                 let file = Self::get_file(&url)?;
                 if !Self::exists(&file) {
-                    let ios = file
-                        .create_readwrite_async_future(gio::FileCreateFlags::REPLACE_DESTINATION, glib::PRIORITY_DEFAULT)
-                        .await
-                        .expect("Could not create file");
+                    let ios = file.create_readwrite_async_future(gio::FileCreateFlags::REPLACE_DESTINATION, glib::PRIORITY_DEFAULT).await?;
                     let data_output_stream = gio::DataOutputStream::new(&ios.get_output_stream().unwrap());
                     pixbuf.save_to_streamv_async_future(&data_output_stream, "png", &[]).await?;
                 }
