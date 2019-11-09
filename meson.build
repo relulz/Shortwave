@@ -33,3 +33,10 @@ subdir('po')
 
 # Postinstall script (Update icon cache, gsettings, ...)
 meson.add_install_script('build-aux/meson/postinstall.py')
+
+meson.add_dist_script(
+  'build-aux/dist-vendor.sh',
+  meson.source_root(),
+  join_paths(meson.build_root(), 'meson-dist', meson.project_name() + '-' + meson.project_version())
+)
+
