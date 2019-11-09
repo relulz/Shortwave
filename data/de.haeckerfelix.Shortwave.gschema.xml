@@ -19,6 +19,9 @@
     <key name="view-order" type="s">
       <default>"Ascending"</default>
     </key>
+    <key name="recorder-save-count" type="i">
+      <default>7</default>
+    </key>
   </schema>
 </schemalist>
 

@@ -5,6 +5,7 @@ use libhandy::LeafletExt;
 use url::Url;
 
 use std::cell::RefCell;
+use std::convert::TryInto;
 use std::fs;
 use std::path::PathBuf;
 use std::rc::Rc;
@@ -89,7 +90,8 @@ impl Player {
         controller.push(Box::new(gcast_controller.clone()));
 
         // Song backend + Widget
-        let song_backend = Rc::new(RefCell::new(SongBackend::new(sender.clone(), 3)));
+        let save_count: usize = SettingsManager::get_integer(Key::RecorderSaveCount).try_into().unwrap();
+        let song_backend = Rc::new(RefCell::new(SongBackend::new(sender.clone(), save_count)));
         song_backend.borrow().delete_songs(); // Delete old songs
         player_box.add(&song_backend.borrow().listbox.widget);
         player_box.reorder_child(&song_backend.borrow().listbox.widget, 3);

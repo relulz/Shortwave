@@ -10,4 +10,7 @@ pub enum Key {
     WindowHeight,
     ViewSorting,
     ViewOrder,
+
+    /* Audio */
+    RecorderSaveCount,
 }
