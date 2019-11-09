@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2019 Felix Häcker -->
 <component type="desktop">
   <id>@appid@.desktop</id>
   <name>Shortwave</name>
@@ -12,23 +13,19 @@
 
   <description>
     <p>
-      With Shortwave you can browse, search and of course play radio stations. All
-      this is simple and uncomplicated.
+      With Shortwave you can browse, search and of course play radio stations.
     </p>
   </description>
 
   <screenshots>
-    <screenshot type="default" height="568" width="818">
-      <image>https://raw.githubusercontent.com/haecker-felix/gradio-appdata/master/screenshot_1.png</image>
+    <screenshot type="default" height="1000" width="547">
+      <image>https://gitlab.gnome.org/World/Shortwave/raw/master/data/screenshots/1.png</image>
     </screenshot>
-    <screenshot height="568" width="818">
-      <image>https://raw.githubusercontent.com/haecker-felix/gradio-appdata/master/screenshot_2.png</image>
+    <screenshot height="1000" width="547">
+      <image>https://gitlab.gnome.org/World/Shortwave/raw/master/data/screenshots/2.png</image>
     </screenshot>
-    <screenshot height="568" width="818">
-      <image>https://raw.githubusercontent.com/haecker-felix/gradio-appdata/master/screenshot_3.png</image>
-    </screenshot>
-    <screenshot height="568" width="818">
-      <image>https://raw.githubusercontent.com/haecker-felix/gradio-appdata/master/screenshot_4.png</image>
+    <screenshot height="1000" width="547">
+      <image>https://gitlab.gnome.org/World/Shortwave/raw/master/data/screenshots/3.png</image>
     </screenshot>
   </screenshots>
 
@@ -43,9 +40,9 @@
   </kudos>
 
   <releases>
-    <release version="0.0.1" date="2019-10-03">
+    <release version="0.0.1" date="2019-11-09">
       <description>
-        <p>Development version</p>
+        <p>First beta release.</p>
       </description>
     </release>
   </releases>
