@@ -10,7 +10,7 @@
     Radio app for GNOME
   </shortdesc>
   <description xml:lang="en">
-      Find and listen to internet radio stations
+      Listen to internet radio
   </description>
   <bug-database rdf:resource="https://gitlab.gnome.org/World/Shortwave/issues" />
   <category rdf:resource="http://api.gnome.org/doap-extensions#apps" />

@@ -3,11 +3,6 @@ Find and listen to internet radio stations
 
 ![alt text](https://gitlab.gnome.org/World/Shortwave/raw/master/data/icons/hicolor/scalable/apps/de.haeckerfelix.Shortwave.svg "Logo")
 
-___
-**Shortwave is still in an early stage of development. It will be the successor of Gradio.**
-As long as Shortwave is still in development, you can still download Gradio from [here](https://flathub.org/apps/details/de.haeckerfelix.gradio).
-___
-
 ## Getting in Touch
 If you have any questions regarding the use or development of Shortwave,
 want to discuss design or simply hang out, please join us on our [#shortwave:matrix.org](https://matrix.to/#/#shortwave:matrix.org) channel.
@@ -46,10 +41,6 @@ More information are [here available](https://haeckerfelix.de/~repo/shortwave)! 
 If you haven't installed Flatpak yet, you can download it from [here](https://flatpak.org/setup/).
 
 ## Building
-Shortwave requires Rust nightly features like async/await, so you have to use Rust 1.39+. 
-It is expected that async/await will be included in Rust 1.39 which gets released in November. 
-After that you can compile Shortwave again with a stable Rust version.
-
 ### Building with Flatpak + GNOME Builder
 Shortwave can be built and run with [GNOME Builder](https://wiki.gnome.org/Apps/Builder) >= 3.28.
 Just clone the repo and hit the run button!
