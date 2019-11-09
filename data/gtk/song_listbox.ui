@@ -43,7 +43,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">No songs</property>
+                <property name="label" translatable="yes">No songs detected</property>
                 <property name="wrap">True</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
@@ -60,7 +60,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Play something, and you'll see the songs here.</property>
+                <property name="label" translatable="yes">Detected songs will appear here.</property>
                 <property name="justify">center</property>
                 <property name="wrap">True</property>
               </object>
