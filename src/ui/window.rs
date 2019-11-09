@@ -26,7 +26,8 @@ pub struct Window {
     pub discover_box: gtk::Box,
 
     pub discover_bottom_switcher: libhandy::ViewSwitcherBar,
-    pub discover_header_switcher: libhandy::ViewSwitcher,
+    pub discover_header_switcher_wide: libhandy::ViewSwitcher,
+    pub discover_header_switcher_narrow: libhandy::ViewSwitcher,
 
     current_view: Rc<RefCell<View>>,
 
@@ -51,7 +52,8 @@ impl Window {
         get_widget!(builder, gtk::Box, discover_box);
 
         get_widget!(builder, libhandy::ViewSwitcherBar, discover_bottom_switcher);
-        get_widget!(builder, libhandy::ViewSwitcher, discover_header_switcher);
+        get_widget!(builder, libhandy::ViewSwitcher, discover_header_switcher_wide);
+        get_widget!(builder, libhandy::ViewSwitcher, discover_header_switcher_narrow);
 
         let current_view = Rc::new(RefCell::new(View::Library));
 
@@ -62,7 +64,8 @@ impl Window {
             library_box,
             discover_box,
             discover_bottom_switcher,
-            discover_header_switcher,
+            discover_header_switcher_wide,
+            discover_header_switcher_narrow,
             current_view,
             builder,
             menu_builder,

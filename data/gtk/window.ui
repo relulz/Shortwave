@@ -9,11 +9,13 @@
     <property name="default_height">550</property>
     <property name="icon_name">de.haeckerfelix.Shortwave</property>
     <child type="titlebar">
-      <object class="GtkHeaderBar" id="view_headerbar">
+      <object class="HdyHeaderBar" id="view_headerbar">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="hexpand">True</property>
         <property name="show_close_button">True</property>
+        <property name="centering_policy">loose</property>
+        <property name="interpolate_size">True</property>
         <child>
           <object class="GtkButton" id="add_button">
             <property name="visible">True</property>
@@ -48,9 +50,6 @@
             <property name="position">2</property>
           </packing>
         </child>
-        <child>
-          <placeholder/>
-        </child>
         <child type="title">
           <object class="GtkStack" id="header_switcher_stack">
             <property name="visible">True</property>
@@ -59,11 +58,27 @@
             <property name="vhomogeneous">False</property>
             <property name="interpolate_size">True</property>
             <child>
-              <object class="HdyViewSwitcher" id="discover_header_switcher">
+              <object class="HdySqueezer">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">center</property>
-                <property name="narrow_ellipsize">end</property>
+                <property name="transition-type">crossfade</property>
+                <child>
+                  <object class="HdyViewSwitcher" id="discover_header_switcher_wide">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="policy">wide</property>
+                    <property name="narrow_ellipsize">end</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="HdyViewSwitcher" id="discover_header_switcher_narrow">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="policy">narrow</property>
+                    <property name="narrow_ellipsize">end</property>
+                  </object>
+                </child>
               </object>
               <packing>
                 <property name="name">discover</property>
@@ -88,6 +103,9 @@
           <packing>
             <property name="position">3</property>
           </packing>
+        </child>
+        <child>
+          <placeholder/>
         </child>
         <child>
           <object class="GtkMenuButton" id="appmenu_button">
@@ -168,12 +186,6 @@
                     <property name="name">content</property>
                   </packing>
                 </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -232,3 +244,4 @@
     </child>
   </object>
 </interface>
+
