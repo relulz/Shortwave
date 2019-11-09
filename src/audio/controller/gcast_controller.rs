@@ -12,7 +12,6 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 
 use crate::api::Station;
-use crate::app::Action;
 use crate::audio::{Controller, GCastDevice, PlaybackState};
 
 enum GCastAction {
@@ -26,22 +25,15 @@ pub struct GCastController {
     device_ip: Arc<Mutex<String>>,
 
     gcast_sender: Sender<GCastAction>,
-    app_sender: glib::Sender<Action>,
 }
 
 impl GCastController {
-    pub fn new(app_sender: glib::Sender<Action>) -> Rc<Self> {
+    pub fn new() -> Rc<Self> {
         let station = Arc::new(Mutex::new(None));
         let device_ip = Arc::new(Mutex::new("".to_string()));
 
         let (gcast_sender, gcast_receiver) = channel();
-        let gcast_controller = Self {
-            station,
-            device_ip,
-
-            gcast_sender,
-            app_sender,
-        };
+        let gcast_controller = Self { station, device_ip, gcast_sender };
 
         let gcc = Rc::new(gcast_controller);
         gcc.start_thread(gcast_receiver);

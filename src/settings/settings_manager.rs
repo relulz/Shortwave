@@ -48,31 +48,37 @@ impl SettingsManager {
         settings.bind(key.to_string().as_str(), object, property, gio::SettingsBindFlags::DEFAULT);
     }
 
+    #[allow(dead_code)]
     pub fn get_string(key: Key) -> String {
         let settings = Self::get_settings();
         settings.get_string(&key.to_string()).unwrap().to_string()
     }
 
+    #[allow(dead_code)]
     pub fn set_string(key: Key, value: String) {
         let settings = Self::get_settings();
         settings.set_string(&key.to_string(), &value);
     }
 
+    #[allow(dead_code)]
     pub fn get_boolean(key: Key) -> bool {
         let settings = Self::get_settings();
         settings.get_boolean(&key.to_string())
     }
 
+    #[allow(dead_code)]
     pub fn set_boolean(key: Key, value: bool) {
         let settings = Self::get_settings();
         settings.set_boolean(&key.to_string(), value);
     }
 
+    #[allow(dead_code)]
     pub fn get_integer(key: Key) -> i32 {
         let settings = Self::get_settings();
         settings.get_int(&key.to_string())
     }
 
+    #[allow(dead_code)]
     pub fn set_integer(key: Key, value: i32) {
         let settings = Self::get_settings();
         settings.set_int(&key.to_string(), value);

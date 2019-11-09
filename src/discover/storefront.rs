@@ -5,6 +5,7 @@ use crate::api::StationRequest;
 use crate::app::Action;
 use crate::discover::pages::{Discover, Search};
 
+#[allow(dead_code)]
 pub struct StoreFront {
     pub widget: gtk::Box,
     pub storefront_stack: gtk::Stack,
@@ -13,7 +14,6 @@ pub struct StoreFront {
     search: Search,
 
     builder: gtk::Builder,
-    sender: Sender<Action>,
 }
 
 impl StoreFront {
@@ -38,7 +38,6 @@ impl StoreFront {
             discover,
             search,
             builder,
-            sender,
         };
 
         storefront.setup_signals();

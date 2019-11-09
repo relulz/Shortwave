@@ -85,7 +85,7 @@ impl Player {
         controller.push(Box::new(mpris_controller));
 
         // Google Cast Controller
-        let gcast_controller = GCastController::new(sender.clone());
+        let gcast_controller = GCastController::new();
         controller.push(Box::new(gcast_controller.clone()));
 
         // Song backend + Widget

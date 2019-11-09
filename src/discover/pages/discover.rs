@@ -18,7 +18,6 @@ pub struct Discover {
     trending_flowbox: Rc<StationFlowBox>,
     clicked_flowbox: Rc<StationFlowBox>,
 
-    builder: gtk::Builder,
     sender: Sender<Action>,
 }
 
@@ -47,7 +46,6 @@ impl Discover {
             votes_flowbox,
             trending_flowbox,
             clicked_flowbox,
-            builder,
             sender,
         };
 
