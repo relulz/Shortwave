@@ -11,25 +11,11 @@
         <property name="can_focus">False</property>
         <property name="spacing">6</property>
         <child>
-          <object class="GtkImage">
-            <property name="width_request">45</property>
-            <property name="height_request">45</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="pixel_size">24</property>
-            <property name="icon_name">network-cellular-symbolic</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="valign">center</property>
+            <property name="margin_left">6</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="name_label">
@@ -78,7 +64,7 @@
     <property name="height_request">400</property>
     <property name="can_focus">False</property>
     <property name="default_width">400</property>
-    <property name="default_height">500</property>
+    <property name="default_height">300</property>
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
     <property name="deletable">False</property>
@@ -138,26 +124,22 @@
           </packing>
         </child>
         <child>
-          <object class="GtkStack" id="stream_stack">
+          <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="hhomogeneous">False</property>
-            <property name="vhomogeneous">False</property>
-            <property name="transition_type">crossfade</property>
+            <property name="orientation">vertical</property>
             <child>
-              <object class="GtkBox" id="no_devices">
+              <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="halign">center</property>
-                <property name="valign">center</property>
-                <property name="orientation">vertical</property>
-                <property name="spacing">22</property>
+                <property name="border_width">6</property>
+                <property name="spacing">6</property>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="pixel_size">128</property>
-                    <property name="icon_name">network-wired-symbolic</property>
+                    <property name="valign">start</property>
+                    <property name="icon_name">network-wireless-symbolic</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -169,60 +151,127 @@
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">No streaming devices found </property>
+                    <property name="label" translatable="yes">Devices which implement the Google Cast protocol are supported.</property>
                     <property name="wrap">True</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                      <attribute name="scale" value="1.2"/>
-                    </attributes>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">2</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
-                <style>
-                  <class name="dim-label"/>
-                </style>
               </object>
               <packing>
-                <property name="name">no-devices</property>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="results">
+              <object class="GtkFrame">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <property name="spacing">22</property>
+                <property name="border_width">6</property>
+                <property name="label_xalign">0</property>
                 <child>
-                  <object class="GtkScrolledWindow">
+                  <object class="GtkStack" id="stream_stack">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="hhomogeneous">False</property>
+                    <property name="vhomogeneous">False</property>
+                    <property name="transition_type">crossfade</property>
                     <child>
-                      <object class="GtkViewport">
+                      <object class="GtkBox" id="no_devices">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="shadow_type">none</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">22</property>
                         <child>
-                          <object class="GtkListBox" id="devices_listbox">
+                          <object class="GtkImage">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="pixel_size">128</property>
+                            <property name="icon_name">network-wireless-offline-symbolic</property>
                           </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">No devices found </property>
+                            <property name="wrap">True</property>
+                            <attributes>
+                              <attribute name="weight" value="bold"/>
+                              <attribute name="scale" value="1.2"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <style>
+                          <class name="dim-label"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="name">no-devices</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="results">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">22</property>
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <child>
+                              <object class="GtkViewport">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="shadow_type">none</property>
+                                <child>
+                                  <object class="GtkListBox" id="devices_listbox">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
                         </child>
                       </object>
+                      <packing>
+                        <property name="name">results</property>
+                        <property name="position">1</property>
+                      </packing>
                     </child>
                   </object>
-                  <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
+                </child>
+                <child type="label_item">
+                  <placeholder/>
                 </child>
               </object>
               <packing>
-                <property name="name">results</property>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
                 <property name="position">1</property>
               </packing>
             </child>
