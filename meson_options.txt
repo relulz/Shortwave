@@ -6,5 +6,5 @@ option (
     'beta',
     'development'
   ],
-  value: 'default'
+  value: 'beta'
 )
