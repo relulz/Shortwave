@@ -5,6 +5,7 @@ target
 **/*.rs.bk
 _build
 build
+dist
 .buildconfig
 de.haeckerfelix.gradio.json~
 de.haeckerfelix.GradioDevel.json~
