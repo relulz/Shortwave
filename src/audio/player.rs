@@ -118,11 +118,14 @@ impl Player {
     }
 
     pub fn show(&self, leaflet: libhandy::Leaflet) {
-        let separator = gtk::Separator::new(gtk::Orientation::Vertical);
-        separator.set_visible(true);
-        leaflet.add(&separator);
+        // We don't have to add the widget again if it's already added
+        if leaflet.get_children().len() != 3 {
+            let separator = gtk::Separator::new(gtk::Orientation::Vertical);
+            separator.set_visible(true);
+            leaflet.add(&separator);
 
-        leaflet.add(&self.widget);
+            leaflet.add(&self.widget);
+        }
         leaflet.set_child_name(&self.widget, Some("player"));
 
         // Show a animation using a Gtk.Revealer. We need to add a timeout here,
