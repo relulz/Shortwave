@@ -67,7 +67,7 @@ If you need help to build Shortwave, please don't hesitate to ask [here](https:/
 This is what still needs to be done for the first release of Shortwave. There's probably much more.
 
 - [ ] Make application translatable
-- [x] Implement disover page
+- [x] Implement discover page
 - [ ] Implement UI selection mode (https://developer.gnome.org/hig/stable/selection-mode.html.en)
 - [x] Implement settings dialog
 - [x] Show station icons instead of placeholder icon
