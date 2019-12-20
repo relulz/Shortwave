@@ -1,5 +1,5 @@
+use futures_util::future::FutureExt;
 use gio::prelude::*;
-use glib::futures::FutureExt;
 use glib::Sender;
 use gtk::prelude::*;
 

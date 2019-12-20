@@ -1,8 +1,6 @@
 use gio::prelude::*;
 use gio::DataInputStream;
 use glib::GString;
-use soup::prelude::*;
-use soup::Session;
 use url::Url;
 
 use crate::api::*;
@@ -11,7 +9,7 @@ use crate::database::StationIdentifier;
 
 #[derive(Clone)]
 pub struct Client {
-    session: Session,
+    //session: Session,
     server: Url,
 }
 
@@ -19,11 +17,11 @@ impl Client {
     pub fn new(server: Url) -> Self {
         let user_agent = format!("{}/{}", config::NAME, config::VERSION);
 
-        let session = soup::Session::new();
-        session.set_property_user_agent(Some(&user_agent));
+        //let session = soup::Session::new();
+        //session.set_property_user_agent(Some(&user_agent));
         debug!("Initialized new soup session with user agent \"{}\"", user_agent);
 
-        Client { server, session }
+        Client { server }
     }
 
     pub async fn send_station_request(self, request: StationRequest) -> Result<Vec<Station>, Error> {
@@ -68,7 +66,7 @@ impl Client {
 
     // Create and send soup message, return the received data.
     async fn send_message(&self, url: Url) -> std::result::Result<GString, Error> {
-        // Create SOUP message
+        /*// Create SOUP message
         match soup::Message::new("GET", &url.to_string()) {
             Some(message) => {
                 // Send created message
@@ -83,7 +81,8 @@ impl Client {
             }
             // Return error when message cannot be created
             None => Err(Error::SoupMessageError),
-        }
+        }*/
+        Err(Error::SoupMessageError)
     }
 
     fn build_url(&self, param: &str, options: Option<&str>) -> Result<Url, Error> {

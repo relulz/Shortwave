@@ -1,8 +1,6 @@
 use gdk_pixbuf::Pixbuf;
 use gio::prelude::*;
 use gio::DataInputStream;
-use soup::prelude::*;
-use soup::Session;
 use url::Url;
 
 use std::collections::hash_map::DefaultHasher;
@@ -16,18 +14,18 @@ use crate::path;
 
 #[derive(Clone)]
 pub struct FaviconDownloader {
-    session: Session,
+    //session: Session,
 }
 
 impl FaviconDownloader {
     pub fn new() -> Self {
         let user_agent = format!("{}/{}", config::NAME, config::VERSION);
 
-        let session = soup::Session::new();
-        session.set_property_user_agent(Some(&user_agent));
+        //let session = soup::Session::new();
+        //session.set_property_user_agent(Some(&user_agent));
         debug!("Initialized new soup session with user agent \"{}\"", user_agent);
 
-        Self { session }
+        Self {}
     }
 
     pub async fn download(self, url: Url, size: i32) -> Result<Pixbuf, Error> {
@@ -36,7 +34,7 @@ impl FaviconDownloader {
             Err(_) => debug!("No cached favicon available for {:?}", url),
         }
 
-        // Download pixbuf
+        /*// Download pixbuf
         match soup::Message::new("GET", &url.to_string()) {
             Some(message) => {
                 // Send created message
@@ -61,7 +59,8 @@ impl FaviconDownloader {
             None => return Err(Error::SoupMessageError),
         }
 
-        Ok(self.get_cached_pixbuf(&url, &size).await?)
+        Ok(self.get_cached_pixbuf(&url, &size).await?)*/
+        Err(Error::CacheError)
     }
 
     async fn get_cached_pixbuf(&self, url: &Url, size: &i32) -> Result<Pixbuf, Error> {

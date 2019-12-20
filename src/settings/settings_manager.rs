@@ -29,7 +29,7 @@ impl SettingsManager {
 
         for key in keys {
             let name = key.to_string();
-            let value = self.settings.get_value(&name).unwrap();
+            let value = self.settings.get_value(&name);
             debug!("  \"{}\" -> {}", name, value);
         }
     }

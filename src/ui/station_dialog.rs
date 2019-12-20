@@ -1,4 +1,4 @@
-use glib::futures::FutureExt;
+use futures_util::future::FutureExt;
 use glib::Sender;
 use gtk::prelude::*;
 use libhandy::Dialog;

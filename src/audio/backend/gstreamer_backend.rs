@@ -142,7 +142,7 @@ impl GstreamerBackend {
         let old_volume = volume.clone();
         let v_s = volume_sender.clone();
         let volume_signal_id = pulsesink.connect_notify(Some("volume"), move |element, _| {
-            let new_volume: f64 = element.get_property("volume").unwrap().get().unwrap();
+            let new_volume: f64 = element.get_property("volume").unwrap().get().unwrap().unwrap();
 
             // We have to check if the values are the same. For some reason gstreamer sends us
             // slightly differents floats, so we round up here (only the the first two digits are
@@ -161,7 +161,7 @@ impl GstreamerBackend {
         let old_volume = volume.clone();
         let v_s = volume_sender.clone();
         pulsesink.connect_notify(Some("mute"), move |element, _| {
-            let mute: bool = element.get_property("mute").unwrap().get().unwrap();
+            let mute: bool = element.get_property("mute").unwrap().get().unwrap().unwrap();
             if mute && *old_volume.lock().unwrap() != 0.0 {
                 v_s.send(0.0).unwrap();
                 *old_volume.lock().unwrap() = 0.0;
@@ -318,7 +318,7 @@ impl GstreamerBackend {
             gstreamer::MessageView::Element(element) => {
                 let structure = element.get_structure().unwrap();
                 if structure.get_name() == "GstBinForwarded" {
-                    let message: gstreamer::message::Message = structure.get("message").unwrap();
+                    let message: gstreamer::message::Message = structure.get("message").unwrap().unwrap();
                     if let gstreamer::MessageView::Eos(_) = &message.view() {
                         // recorderbin got EOS which means the current song got successfully saved.
                         debug!("Recorderbin received EOS...");

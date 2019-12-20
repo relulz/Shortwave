@@ -1,5 +1,5 @@
 use cairo::Context;
-use gdk::ContextExt;
+use gdk::prelude::*;
 use gdk_pixbuf::Pixbuf;
 use gtk::prelude::*;
 
