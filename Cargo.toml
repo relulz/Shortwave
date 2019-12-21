@@ -28,7 +28,6 @@ strum = "0.16.0"
 strum_macros = "0.16.0"
 diesel_migrations = "1.4.0"
 diesel = { version = "1.4.3", features = ["sqlite", "r2d2"] }
-futures = "0.3.1"
 futures-util = "0.3.1"
 surf = "1.0.3"
 
