@@ -1,5 +1,4 @@
 use gio::prelude::*;
-use glib::prelude::*;
 
 use std::str::FromStr;
 

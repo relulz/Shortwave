@@ -18,8 +18,6 @@ pub struct SidebarController {
     station: Rc<RefCell<Option<Station>>>,
 
     station_favicon: Rc<StationFavicon>,
-    favicon_downloader: FaviconDownloader,
-
     title_label: gtk::Label,
     subtitle_label: gtk::Label,
     subtitle_revealer: gtk::Revealer,
@@ -54,7 +52,6 @@ impl SidebarController {
         get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = Rc::new(StationFavicon::new(FaviconSize::Big));
         favicon_box.add(&station_favicon.widget);
-        let favicon_downloader = FaviconDownloader::new();
 
         // volume_button | We need the volume_signal_id later to block the signal
         let s = sender.clone();
@@ -80,7 +77,6 @@ impl SidebarController {
             sender,
             station,
             station_favicon,
-            favicon_downloader,
             title_label,
             subtitle_label,
             action_revealer,
@@ -144,7 +140,7 @@ impl Controller for SidebarController {
         // Download & set icon
         let station_favicon = self.station_favicon.clone();
         station.favicon.map(|favicon| {
-            let fut = self.favicon_downloader.clone().download(favicon, FaviconSize::Big as i32).map(move |pixbuf| {
+            let fut = FaviconDownloader::download(favicon, FaviconSize::Big as i32).map(move |pixbuf| {
                 pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
             });
             let ctx = glib::MainContext::default();

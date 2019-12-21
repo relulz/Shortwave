@@ -47,9 +47,8 @@ impl StationDialog {
         get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = StationFavicon::new(FaviconSize::Big);
         favicon_box.add(&station_favicon.widget);
-        let favicon_downloader = FaviconDownloader::new();
         station.favicon.as_ref().map(|favicon| {
-            let fut = favicon_downloader.download(favicon.clone(), FaviconSize::Big as i32).map(move |pixbuf| {
+            let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Big as i32).map(move |pixbuf| {
                 pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
             });
             let ctx = glib::MainContext::default();

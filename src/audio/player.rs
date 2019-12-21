@@ -1,7 +1,6 @@
 use futures_util::future::FutureExt;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
-use libhandy::prelude::*;
 use libhandy::LeafletExt;
 use url::Url;
 

@@ -6,12 +6,12 @@ pub enum Error {
     UrlParseError(#[cause] url::ParseError),
     #[fail(display = "GLib Error: {}", _0)]
     GLibError(#[cause] glib::error::Error),
-    #[fail(display = "Could not create Soup message.")]
-    SoupMessageError,
     #[fail(display = "Input/Output error.")]
     IOError(#[cause] std::io::Error),
     #[fail(display = "Could not open cached image.")]
     CacheError,
+    #[fail(display = "Surf networking error.")]
+    SurfError,
 }
 
 // Maps a type to a variant of the Error enum

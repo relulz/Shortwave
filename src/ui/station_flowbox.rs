@@ -6,7 +6,7 @@ use std::cell::RefCell;
 use std::convert::TryInto;
 use std::rc::Rc;
 
-use crate::api::{FaviconDownloader, Station};
+use crate::api::Station;
 use crate::app::Action;
 use crate::ui::{StationDialog, StationRow};
 use crate::utils;
@@ -15,7 +15,6 @@ use crate::utils::{Order, Sorting};
 pub struct StationFlowBox {
     pub widget: gtk::FlowBox,
     stations: Rc<RefCell<IndexMap<i32, Station>>>,
-    favicon_downloader: FaviconDownloader,
 
     sorting: RefCell<Sorting>,
     order: RefCell<Order>,
@@ -29,15 +28,12 @@ impl StationFlowBox {
         get_widget!(builder, gtk::FlowBox, station_flowbox);
         let stations = Rc::new(RefCell::new(IndexMap::new()));
 
-        let favicon_downloader = FaviconDownloader::new();
-
         let sorting = RefCell::new(Sorting::Default);
         let order = RefCell::new(Order::Ascending);
 
         let flowbox = Self {
             widget: station_flowbox,
             stations,
-            favicon_downloader,
             sorting,
             order,
             sender,
@@ -115,9 +111,8 @@ impl StationFlowBox {
 
         let widget = self.widget.downgrade();
         let sender = self.sender.clone();
-        let favicon_downloader = self.favicon_downloader.clone();
         let stations = self.stations.borrow().clone();
-        let constructor = move |station: (i32, Station)| StationRow::new(sender.clone(), favicon_downloader.clone(), station.1).widget.clone();
+        let constructor = move |station: (i32, Station)| StationRow::new(sender.clone(), station.1).widget.clone();
 
         // Start lazy loading
         utils::lazy_load(stations.clone(), widget.clone(), constructor.clone());

@@ -9,61 +9,37 @@ use std::hash::Hasher;
 use std::path::PathBuf;
 
 use crate::api::Error;
-use crate::config;
 use crate::path;
 
-#[derive(Clone)]
-pub struct FaviconDownloader {
-    //session: Session,
-}
+pub struct FaviconDownloader {}
 
 impl FaviconDownloader {
-    pub fn new() -> Self {
-        let user_agent = format!("{}/{}", config::NAME, config::VERSION);
-
-        //let session = soup::Session::new();
-        //session.set_property_user_agent(Some(&user_agent));
-        debug!("Initialized new soup session with user agent \"{}\"", user_agent);
-
-        Self {}
-    }
-
-    pub async fn download(self, url: Url, size: i32) -> Result<Pixbuf, Error> {
-        match self.get_cached_pixbuf(&url, &size).await {
+    pub async fn download(url: Url, size: i32) -> Result<Pixbuf, Error> {
+        match Self::get_cached_pixbuf(&url, &size).await {
             Ok(pixbuf) => return Ok(pixbuf),
             Err(_) => debug!("No cached favicon available for {:?}", url),
         }
 
-        /*// Download pixbuf
-        match soup::Message::new("GET", &url.to_string()) {
-            Some(message) => {
-                // Send created message
-                let input_stream = self.session.send_async_future(&message).await?;
-
-                // Create DataInputStream and read read received data
-                let data_input_stream: DataInputStream = gio::DataInputStream::new(&input_stream);
-
-                // Create pixbuf
-                // We use 192px here, since that's the max size we're going to use
-                let pixbuf = Pixbuf::new_from_stream_at_scale_async_future(&data_input_stream, 192, 192, true).await?;
-
-                // Save pixbuf for caching
-                let file = Self::get_file(&url)?;
-                if !Self::exists(&file) {
-                    let ios = file.create_readwrite_async_future(gio::FileCreateFlags::REPLACE_DESTINATION, glib::PRIORITY_DEFAULT).await?;
-                    let data_output_stream = gio::DataOutputStream::new(&ios.get_output_stream().unwrap());
-                    pixbuf.save_to_streamv_async_future(&data_output_stream, "png", &[]).await?;
-                }
-            }
-            // Return error when message cannot be created
-            None => return Err(Error::SoupMessageError),
+        // We currently don't support "data:image/png" urls
+        if url.scheme() == "data" {
+            return Err(Error::CacheError);
         }
 
-        Ok(self.get_cached_pixbuf(&url, &size).await?)*/
-        Err(Error::CacheError)
+        // Download favicon
+        let mut response = surf::get(&url).await.map_err(|_| Error::SurfError)?;
+        let bytes = response.body_bytes().await.map_err(|_| Error::SurfError)?;
+
+        // Write downloaded bytes into file
+        let file = Self::get_file(&url)?;
+        file.replace_contents_async_future(bytes, None, false, gio::FileCreateFlags::NONE)
+            .await
+            .expect("Could not write favicon data");
+
+        // Open downloaded favicon as pixbuf
+        Ok(Self::get_cached_pixbuf(&url, &size).await?)
     }
 
-    async fn get_cached_pixbuf(&self, url: &Url, size: &i32) -> Result<Pixbuf, Error> {
+    async fn get_cached_pixbuf(url: &Url, size: &i32) -> Result<Pixbuf, Error> {
         let file = Self::get_file(&url)?;
         if Self::exists(&file) {
             let ios = file.open_readwrite_async_future(glib::PRIORITY_DEFAULT).await.expect("Could not open file");

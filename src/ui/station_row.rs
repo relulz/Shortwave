@@ -15,7 +15,7 @@ pub struct StationRow {
 }
 
 impl StationRow {
-    pub fn new(sender: Sender<Action>, favicon_downloader: FaviconDownloader, station: Station) -> Self {
+    pub fn new(sender: Sender<Action>, station: Station) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_row.ui");
         get_widget!(builder, gtk::FlowBoxChild, station_row);
 
@@ -30,7 +30,7 @@ impl StationRow {
         let station_favicon = StationFavicon::new(FaviconSize::Small);
         favicon_box.add(&station_favicon.widget);
         station.favicon.as_ref().map(|favicon| {
-            let fut = favicon_downloader.download(favicon.clone(), FaviconSize::Small as i32).map(move |pixbuf| {
+            let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Small as i32).map(move |pixbuf| {
                 pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
             });
             let ctx = glib::MainContext::default();

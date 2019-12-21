@@ -1,26 +1,15 @@
-use gio::prelude::*;
-use gio::DataInputStream;
-use glib::GString;
 use url::Url;
 
 use crate::api::*;
-use crate::config;
 use crate::database::StationIdentifier;
 
 #[derive(Clone)]
 pub struct Client {
-    //session: Session,
     server: Url,
 }
 
 impl Client {
     pub fn new(server: Url) -> Self {
-        let user_agent = format!("{}/{}", config::NAME, config::VERSION);
-
-        //let session = soup::Session::new();
-        //session.set_property_user_agent(Some(&user_agent));
-        debug!("Initialized new soup session with user agent \"{}\"", user_agent);
-
         Client { server }
     }
 
@@ -65,24 +54,9 @@ impl Client {
     }
 
     // Create and send soup message, return the received data.
-    async fn send_message(&self, url: Url) -> std::result::Result<GString, Error> {
-        /*// Create SOUP message
-        match soup::Message::new("GET", &url.to_string()) {
-            Some(message) => {
-                // Send created message
-                let input_stream = self.session.send_async_future(&message).await?;
-
-                // Create DataInputStream and read read received data
-                let data_input_stream: DataInputStream = gio::DataInputStream::new(&input_stream);
-                //TODO: Crash here, if stream is empty
-                let result = data_input_stream.read_upto_async_future("", glib::PRIORITY_LOW).await?;
-
-                Ok(result.0)
-            }
-            // Return error when message cannot be created
-            None => Err(Error::SoupMessageError),
-        }*/
-        Err(Error::SoupMessageError)
+    async fn send_message(&self, url: Url) -> std::result::Result<String, Error> {
+        let mut res = surf::get(url).await.map_err(|_| Error::SurfError)?;
+        Ok(res.body_string().await.map_err(|_| Error::SurfError)?)
     }
 
     fn build_url(&self, param: &str, options: Option<&str>) -> Result<Url, Error> {
