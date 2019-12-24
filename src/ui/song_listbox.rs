@@ -30,7 +30,7 @@ impl SongListBox {
 
     pub fn add_song(&mut self, song: Song) {
         let row = SongRow::new(self.sender.clone(), song.clone());
-        self.listbox.insert(&row.widget, 0);
+        self.listbox.insert(&row, 0);
 
         self.update_stack();
     }

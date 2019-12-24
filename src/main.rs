@@ -17,6 +17,8 @@ extern crate failure_derive;
 extern crate diesel_migrations;
 #[macro_use]
 extern crate strum_macros;
+#[macro_use]
+extern crate glib;
 
 use gettextrs::*;
 use std::env;
