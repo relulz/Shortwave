@@ -64,6 +64,8 @@ sources = files(
   'settings/settings_window.rs',
   'settings/settings_manager.rs',
 
+  'ui/about_dialog.rs',
+  'ui/import_dialog.rs',
   'ui/mod.rs',
   'ui/notification.rs',
   'ui/song_listbox.rs',

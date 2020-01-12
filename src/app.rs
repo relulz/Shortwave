@@ -1,22 +1,24 @@
-use futures_util::future::FutureExt;
-use gio::prelude::*;
+use gio::subclass::prelude::ApplicationImpl;
+use gio::{self, prelude::*, ApplicationFlags, SettingsExt};
+use glib::subclass;
+use glib::subclass::prelude::*;
+use glib::translate::*;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
+use gtk::subclass::application::GtkApplicationImpl;
 use libhandy::{ViewSwitcherBarExt, ViewSwitcherExt};
-use url::Url;
 
 use std::cell::RefCell;
 use std::env;
 use std::rc::Rc;
 use std::str::FromStr;
 
-use crate::api::{Client, Station, StationRequest};
+use crate::api::{Station, StationRequest};
 use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
-use crate::database::gradio_db;
 use crate::database::Library;
 use crate::discover::StoreFront;
-use crate::settings::{Key, SettingsManager, SettingsWindow};
+use crate::settings::{settings_manager, Key};
 use crate::ui::{Notification, View, Window};
 use crate::utils::{Order, Sorting};
 
@@ -25,7 +27,6 @@ pub enum Action {
     ViewShowDiscover,
     ViewShowLibrary,
     ViewShowPlayer,
-    ViewShowSettings,
     ViewRaise,
     ViewShowNotification(Rc<Notification>),
     PlaybackConnectGCastDevice(GCastDevice),
@@ -35,65 +36,44 @@ pub enum Action {
     PlaybackStop,
     PlaybackSetVolume(f64),
     PlaybackSaveSong(Song),
-    LibraryGradioImport,
     LibraryAddStations(Vec<Station>),
     LibraryRemoveStations(Vec<Station>),
     SearchFor(StationRequest), // TODO: is this neccessary?,
     SettingsKeyChanged(Key),
 }
 
-pub struct App {
-    gtk_app: gtk::Application,
-
+pub struct SwApplicationPrivate {
     sender: Sender<Action>,
     receiver: RefCell<Option<Receiver<Action>>>,
 
-    window: Window,
+    window: RefCell<Option<Window>>,
     player: Player,
     library: Library,
     storefront: StoreFront,
 
-    settings: SettingsManager,
+    settings: gio::Settings,
 }
 
-impl App {
-    pub fn new() -> Rc<Self> {
-        // Set custom style
-        let p = gtk::CssProvider::new();
-        gtk::CssProvider::load_from_resource(&p, "/de/haeckerfelix/Shortwave/gtk/style.css");
-        gtk::StyleContext::add_provider_for_screen(&gdk::Screen::get_default().unwrap(), &p, 500);
+impl ObjectSubclass for SwApplicationPrivate {
+    const NAME: &'static str = "SwApplication";
+    type ParentType = gtk::Application;
+    type Instance = subclass::simple::InstanceStruct<Self>;
+    type Class = subclass::simple::ClassStruct<Self>;
 
-        let gtk_app = gtk::Application::new(Some(config::APP_ID), gio::ApplicationFlags::FLAGS_NONE).unwrap();
+    glib_object_subclass!();
+
+    fn new() -> Self {
         let (sender, r) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
         let receiver = RefCell::new(Some(r));
 
-        let window = Window::new(sender.clone());
+        let window = RefCell::new(None);
         let player = Player::new(sender.clone());
         let library = Library::new(sender.clone());
         let storefront = StoreFront::new(sender.clone());
 
-        window.mini_controller_box.add(&player.mini_controller_widget);
-        window.library_box.add(&library.widget);
-        window.discover_box.add(&storefront.widget);
-        window.set_view(View::Library);
+        let settings = settings_manager::get_settings();
 
-        window.discover_header_switcher_wide.set_stack(Some(&storefront.storefront_stack));
-        window.discover_header_switcher_narrow.set_stack(Some(&storefront.storefront_stack));
-        window.discover_bottom_switcher.set_stack(Some(&storefront.storefront_stack));
-
-        // Create new SettingsManager which notifies about settings changes
-        let settings = SettingsManager::new(sender.clone());
-
-        // Help overlay
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
-        get_widget!(builder, gtk::ShortcutsWindow, shortcuts);
-        window.widget.set_help_overlay(Some(&shortcuts));
-
-        // Small workaround to update every view to the correct sorting/order.
-        sender.send(Action::SettingsKeyChanged(Key::ViewSorting)).unwrap();
-
-        let app = Rc::new(Self {
-            gtk_app,
+        Self {
             sender,
             receiver,
             window,
@@ -101,195 +81,153 @@ impl App {
             library,
             storefront,
             settings,
+        }
+    }
+}
+
+// Implement GLib.OBject for SwApplication
+impl ObjectImpl for SwApplicationPrivate {
+    glib_object_impl!();
+}
+
+// Implement Gtk.Application for SwApplication
+impl GtkApplicationImpl for SwApplicationPrivate {}
+
+// Implement Gio.Application for SwApplication
+impl ApplicationImpl for SwApplicationPrivate {
+    fn activate(&self, _app: &gio::Application) {
+        debug!("gio::Application -> activate()");
+
+        // If the window already exists,
+        // present it instead creating a new one again.
+        if let Some(ref window) = *self.window.borrow() {
+            window.widget.present();
+            info!("Application window presented.");
+            return;
+        }
+
+        // No window available -> we have to create one
+        let app = ObjectSubclass::get_instance(self).downcast::<SwApplication>().unwrap();
+        let window = app.create_window();
+        window.widget.present();
+        window.setup_gactions();
+        app.add_window(&window.widget);
+        self.window.replace(Some(window));
+        info!("Created application window.");
+
+        // Setup action channel
+        let receiver = self.receiver.borrow_mut().take().unwrap();
+        receiver.attach(None, move |action| app.process_action(action));
+
+        // Setup settings signal (we get notified when a key gets changed)
+        let sender = self.sender.clone();
+        self.settings.connect_changed(move |_, key_str| {
+            let key: Key = Key::from_str(key_str).unwrap();
+            sender.send(Action::SettingsKeyChanged(key)).unwrap();
         });
 
-        app.setup_gaction();
-        app.setup_signals();
-        app
-    }
+        // List all setting keys
+        settings_manager::list_keys();
 
-    pub fn run(&self, app: Rc<Self>) {
+        // Small workaround to update every view to the correct sorting/order.
+        self.sender.send(Action::SettingsKeyChanged(Key::ViewSorting)).unwrap();
+    }
+}
+
+// Wrap the SwApplicationPrivate into a usable gtk-rs object
+glib_wrapper! {
+    pub struct SwApplication(
+        Object<subclass::simple::InstanceStruct<SwApplicationPrivate>,
+        subclass::simple::ClassStruct<SwApplicationPrivate>,
+        SwApplicationClass>)
+        @extends gio::Application, gtk::Application;
+
+    match fn {
+        get_type => || SwApplicationPrivate::get_type().to_glib(),
+    }
+}
+
+// SwApplication implementation itself
+impl SwApplication {
+    pub fn run() {
         info!("{} ({}) ({})", config::NAME, config::APP_ID, config::VCS_TAG);
         info!("Version: {} ({})", config::VERSION, config::PROFILE);
 
-        self.settings.list_keys();
+        // Create new GObject and downcast it into SwApplication
+        let app = glib::Object::new(SwApplication::static_type(), &[("application-id", &Some(config::APP_ID)), ("flags", &ApplicationFlags::empty())])
+            .unwrap()
+            .downcast::<SwApplication>()
+            .unwrap();
 
-        let a = app.clone();
-        let receiver = self.receiver.borrow_mut().take().unwrap();
-        receiver.attach(None, move |action| a.process_action(action));
-
+        // Start running gtk::Application
         let args: Vec<String> = env::args().collect();
-        self.gtk_app.run(&args);
+        ApplicationExtManual::run(&app, &args);
     }
 
-    fn setup_gaction(&self) {
-        // Quit
-        let gtk_app = self.gtk_app.clone();
-        self.add_gaction("quit", move |_, _| gtk_app.quit());
-        self.gtk_app.set_accels_for_action("app.quit", &["<primary>q"]);
+    fn create_window(&self) -> Window {
+        let self_ = SwApplicationPrivate::from_instance(self);
+        let window = Window::new(self_.sender.clone(), self.clone());
 
-        // About
-        let window = self.window.widget.clone();
-        self.add_gaction("about", move |_, _| {
-            Self::show_about_dialog(window.clone());
-        });
+        // Load custom styling
+        let p = gtk::CssProvider::new();
+        gtk::CssProvider::load_from_resource(&p, "/de/haeckerfelix/Shortwave/gtk/style.css");
+        gtk::StyleContext::add_provider_for_screen(&gdk::Screen::get_default().unwrap(), &p, 500);
 
-        // Preferences
-        let sender = self.sender.clone();
-        self.add_gaction("preferences", move |_, _| {
-            sender.send(Action::ViewShowSettings).unwrap();
-        });
+        // Add widgets of several components to the window
+        window.mini_controller_box.add(&self_.player.mini_controller_widget);
+        window.library_box.add(&self_.library.widget);
+        window.discover_box.add(&self_.storefront.widget);
 
-        // Search / Discover / add stations
-        let sender = self.sender.clone();
-        self.add_gaction("discover", move |_, _| {
-            sender.send(Action::ViewShowDiscover).unwrap();
-        });
-        self.gtk_app.set_accels_for_action("app.discover", &["<primary>f"]);
+        // Wire everything up
+        window.discover_header_switcher_wide.set_stack(Some(&self_.storefront.storefront_stack));
+        window.discover_header_switcher_narrow.set_stack(Some(&self_.storefront.storefront_stack));
+        window.discover_bottom_switcher.set_stack(Some(&self_.storefront.storefront_stack));
 
-        // Import library
-        let sender = self.sender.clone();
-        self.add_gaction("import-gradio-library", move |_, _| {
-            sender.send(Action::LibraryGradioImport).unwrap();
-        });
+        // Set initial view
+        window.set_view(View::Library);
 
-        // Sort / Order menu
-        let sorting_action = self.settings.create_action(Key::ViewSorting);
-        self.gtk_app.add_action(&sorting_action);
+        // Setup help overlay
+        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
+        get_widget!(builder, gtk::ShortcutsWindow, shortcuts);
+        window.widget.set_help_overlay(Some(&shortcuts));
 
-        let order_action = self.settings.create_action(Key::ViewOrder);
-        self.gtk_app.add_action(&order_action);
-    }
-
-    fn add_gaction<F>(&self, name: &str, action: F)
-    where
-        for<'r, 's> F: Fn(&'r gio::SimpleAction, Option<&'s glib::Variant>) + 'static,
-    {
-        let simple_action = gio::SimpleAction::new(name, None);
-        simple_action.connect_activate(action);
-        self.gtk_app.add_action(&simple_action);
-    }
-
-    fn setup_signals(&self) {
-        let window = self.window.widget.clone();
-        self.gtk_app.connect_activate(move |app| {
-            app.add_window(&window);
-            window.present();
-        });
+        window
     }
 
     fn process_action(&self, action: Action) -> glib::Continue {
+        let self_ = SwApplicationPrivate::from_instance(self);
+
         match action {
-            Action::ViewShowDiscover => self.window.set_view(View::Discover),
-            Action::ViewShowLibrary => self.window.set_view(View::Library),
-            Action::ViewShowPlayer => self.window.set_view(View::Player),
-            Action::ViewShowSettings => self.show_settings_window(),
-            Action::ViewRaise => self.window.widget.present_with_time((glib::get_monotonic_time() / 1000) as u32),
-            Action::ViewShowNotification(notification) => self.window.show_notification(notification),
-            Action::PlaybackConnectGCastDevice(device) => self.player.connect_to_gcast_device(device),
-            Action::PlaybackDisconnectGCastDevice => self.player.disconnect_from_gcast_device(),
+            Action::ViewShowDiscover => self_.window.borrow().as_ref().unwrap().set_view(View::Discover),
+            Action::ViewShowLibrary => self_.window.borrow().as_ref().unwrap().set_view(View::Library),
+            Action::ViewShowPlayer => self_.window.borrow().as_ref().unwrap().set_view(View::Player),
+            Action::ViewRaise => self_.window.borrow().as_ref().unwrap().widget.present_with_time((glib::get_monotonic_time() / 1000) as u32),
+            Action::ViewShowNotification(notification) => self_.window.borrow().as_ref().unwrap().show_notification(notification),
+            Action::PlaybackConnectGCastDevice(device) => self_.player.connect_to_gcast_device(device),
+            Action::PlaybackDisconnectGCastDevice => self_.player.disconnect_from_gcast_device(),
             Action::PlaybackSetStation(station) => {
-                self.player.set_station(station.clone());
-                self.player.show(self.window.leaflet.clone());
+                self_.player.set_station(station.clone());
+                self_.player.show(self_.window.borrow().as_ref().unwrap().leaflet.clone());
             }
-            Action::PlaybackStart => self.player.set_playback(PlaybackState::Playing),
-            Action::PlaybackStop => self.player.set_playback(PlaybackState::Stopped),
-            Action::PlaybackSetVolume(volume) => self.player.set_volume(volume),
-            Action::PlaybackSaveSong(song) => self.player.save_song(song),
-            Action::LibraryGradioImport => self.import_gradio_library(),
-            Action::LibraryAddStations(stations) => self.library.add_stations(stations),
-            Action::LibraryRemoveStations(stations) => self.library.remove_stations(stations),
-            Action::SearchFor(data) => self.storefront.search_for(data),
-            Action::SettingsKeyChanged(key) => match key {
-                Key::ViewSorting | Key::ViewOrder => {
-                    let sorting: Sorting = Sorting::from_str(&SettingsManager::get_string(Key::ViewSorting)).unwrap();
-                    let order: Order = Order::from_str(&SettingsManager::get_string(Key::ViewOrder)).unwrap();
-                    self.library.set_sorting(sorting, order);
+            Action::PlaybackStart => self_.player.set_playback(PlaybackState::Playing),
+            Action::PlaybackStop => self_.player.set_playback(PlaybackState::Stopped),
+            Action::PlaybackSetVolume(volume) => self_.player.set_volume(volume),
+            Action::PlaybackSaveSong(song) => self_.player.save_song(song),
+            Action::LibraryAddStations(stations) => self_.library.add_stations(stations),
+            Action::LibraryRemoveStations(stations) => self_.library.remove_stations(stations),
+            Action::SearchFor(data) => self_.storefront.search_for(data),
+            Action::SettingsKeyChanged(key) => {
+                debug!("Settings key changed: {:?}", &key);
+                match key {
+                    Key::ViewSorting | Key::ViewOrder => {
+                        let sorting: Sorting = Sorting::from_str(&settings_manager::get_string(Key::ViewSorting)).unwrap();
+                        let order: Order = Order::from_str(&settings_manager::get_string(Key::ViewOrder)).unwrap();
+                        self_.library.set_sorting(sorting, order);
+                    }
+                    _ => (),
                 }
-                _ => (),
-            },
+            }
         }
         glib::Continue(true)
-    }
-
-    fn show_settings_window(&self) {
-        let settings_window = SettingsWindow::new(&self.window.widget);
-        settings_window.show();
-    }
-
-    fn show_about_dialog(window: gtk::ApplicationWindow) {
-        let vcs_tag = config::VCS_TAG;
-        let version: String = match config::PROFILE {
-            "development" => format!("{} \n(Development Commit {})", config::VERSION, vcs_tag).to_string(),
-            "beta" => format!("Beta {}", config::VERSION.split_at(4).1).to_string(),
-            _ => "".to_string(),
-        };
-
-        let dialog = gtk::AboutDialog::new();
-        dialog.set_program_name(config::NAME);
-        dialog.set_logo_icon_name(Some(config::APP_ID));
-        dialog.set_comments(Some("Listen to internet radio"));
-        dialog.set_copyright(Some("© 2019 Felix Häcker"));
-        dialog.set_license_type(gtk::License::Gpl30);
-        dialog.set_version(Some(version.as_str()));
-        dialog.set_transient_for(Some(&window));
-        dialog.set_modal(true);
-
-        dialog.set_authors(&["Felix Häcker"]);
-        dialog.set_artists(&["Tobias Bernard"]);
-
-        dialog.connect_response(|dialog, _| dialog.destroy());
-        dialog.show();
-    }
-
-    fn import_gradio_library(&self) {
-        let import_dialog = gtk::FileChooserNative::new(
-            Some("Select database to import"),
-            Some(&self.window.widget),
-            gtk::FileChooserAction::Open,
-            Some("Import"),
-            Some("Cancel"),
-        );
-
-        // Set filechooser filters
-        let filter = gtk::FileFilter::new();
-        import_dialog.set_filter(&filter);
-        filter.add_mime_type("application/x-sqlite3");
-        filter.add_mime_type("application/vnd.sqlite3");
-
-        if gtk::ResponseType::from(import_dialog.run()) == gtk::ResponseType::Accept {
-            let path = import_dialog.get_file().unwrap().get_path().unwrap();
-            debug!("Import path: {:?}", path);
-
-            // Get station identifiers
-            let ids = gradio_db::read_database(path);
-            let message = format!("Importing {} stations...", ids.len());
-            let spinner_notification = Notification::new_spinner(&message);
-            self.sender.send(Action::ViewShowNotification(spinner_notification.clone())).unwrap();
-
-            // Get actual stations from identifiers
-            let client = Client::new(Url::parse(&SettingsManager::get_string(Key::ApiServer)).unwrap());
-            let sender = self.sender.clone();
-            let fut = client.get_stations_by_identifiers(ids).map(move |stations| {
-                spinner_notification.hide();
-                match stations {
-                    Ok(stations) => {
-                        sender.send(Action::LibraryAddStations(stations.clone())).unwrap();
-
-                        let message = format!("Imported {} stations!", stations.len());
-                        let notification = Notification::new_info(&message);
-                        sender.send(Action::ViewShowNotification(notification)).unwrap();
-                    }
-                    Err(err) => {
-                        let notification = Notification::new_error("Could not receive station data.", &err.to_string());
-                        sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
-                    }
-                }
-            });
-
-            let ctx = glib::MainContext::default();
-            ctx.spawn_local(fut);
-        }
-        import_dialog.destroy();
     }
 }

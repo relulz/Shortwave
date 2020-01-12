@@ -17,7 +17,7 @@ use crate::audio::backend::*;
 use crate::audio::controller::{Controller, GCastController, MiniController, MprisController, SidebarController};
 use crate::audio::{GCastDevice, Song};
 use crate::path;
-use crate::settings::{Key, SettingsManager};
+use crate::settings::{settings_manager, Key};
 use crate::ui::Notification;
 use crate::utils;
 
@@ -90,7 +90,7 @@ impl Player {
         controller.push(Box::new(gcast_controller.clone()));
 
         // Song backend + Widget
-        let save_count: usize = SettingsManager::get_integer(Key::RecorderSaveCount).try_into().unwrap();
+        let save_count: usize = settings_manager::get_integer(Key::RecorderSaveCount).try_into().unwrap();
         let song_backend = Rc::new(RefCell::new(SongBackend::new(sender.clone(), save_count)));
         song_backend.borrow().delete_songs(); // Delete old songs
         player_box.add(&song_backend.borrow().listbox.widget);
@@ -153,7 +153,7 @@ impl Player {
 
         let gst_backend = self.gst_backend.clone();
         let sender = self.sender.clone();
-        let client = Client::new(Url::parse(&SettingsManager::get_string(Key::ApiServer)).unwrap());
+        let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
         // get asynchronously the stream url and play it
         let fut = client.get_stream_url(station).map(move |station_url| match station_url {
             Ok(station_url) => {

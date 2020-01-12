@@ -37,7 +37,7 @@ mod app;
 mod config;
 mod path;
 
-use crate::app::App;
+use crate::app::SwApplication;
 
 fn main() {
     // Initialize logger
@@ -66,6 +66,5 @@ fn main() {
     gio::resources_register(&res);
 
     // Run app itself
-    let app = App::new();
-    app.run(app.clone());
+    SwApplication::run();
 }

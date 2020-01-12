@@ -8,7 +8,7 @@ use std::rc::Rc;
 
 use crate::api::{Client, StationRequest};
 use crate::app::Action;
-use crate::settings::{Key, SettingsManager};
+use crate::settings::{settings_manager, Key};
 use crate::ui::{Notification, StationFlowBox};
 
 pub struct Search {
@@ -27,7 +27,7 @@ impl Search {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/search.ui");
         get_widget!(builder, gtk::Box, search);
 
-        let client = Client::new(Url::parse(&SettingsManager::get_string(Key::ApiServer)).unwrap());
+        let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
 
         get_widget!(builder, gtk::Box, results_box);
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));

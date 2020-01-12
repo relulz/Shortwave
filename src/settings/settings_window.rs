@@ -1,7 +1,7 @@
 use gtk::prelude::*;
 use libhandy::PreferencesWindow;
 
-use crate::settings::{Key, SettingsManager};
+use crate::settings::{settings_manager, Key};
 
 pub struct SettingsWindow {
     pub widget: PreferencesWindow,
@@ -28,6 +28,6 @@ impl SettingsWindow {
 
     fn setup_signals(&self) {
         get_widget!(self.builder, gtk::Switch, dark_mode_button);
-        SettingsManager::bind_property(Key::DarkMode, &dark_mode_button, "active");
+        settings_manager::bind_property(Key::DarkMode, &dark_mode_button, "active");
     }
 }

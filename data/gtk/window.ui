@@ -21,6 +21,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="action_name">win.show-discover</property>
             <child>
               <object class="GtkImage">
                 <property name="visible">True</property>
@@ -38,6 +39,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="action_name">win.show-library</property>
             <child>
               <object class="GtkImage">
                 <property name="visible">True</property>
@@ -60,7 +62,8 @@
             <child>
               <object class="HdySqueezer">
                 <property name="visible">True</property>
-                <property name="transition-type">crossfade</property>
+                <property name="can_focus">False</property>
+                <property name="transition_type">crossfade</property>
                 <child>
                   <object class="HdyViewSwitcher" id="discover_header_switcher_wide">
                     <property name="visible">True</property>
@@ -244,4 +247,3 @@
     </child>
   </object>
 </interface>
-

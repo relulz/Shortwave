@@ -12,7 +12,7 @@ use crate::config;
 use crate::database::connection;
 use crate::database::queries;
 use crate::database::StationIdentifier;
-use crate::settings::{Key, SettingsManager};
+use crate::settings::{settings_manager, Key};
 use crate::ui::{Notification, StationFlowBox};
 use crate::utils::{Order, Sorting};
 
@@ -20,9 +20,6 @@ pub struct Library {
     pub widget: gtk::Box,
     flowbox: Rc<StationFlowBox>,
     library_stack: gtk::Stack,
-
-    discover_button: gtk::Button,
-    import_button: gtk::Button,
 
     client: Client,
     sender: Sender<Action>,
@@ -34,8 +31,6 @@ impl Library {
         get_widget!(builder, gtk::Box, library);
         get_widget!(builder, gtk::Box, content_box);
         get_widget!(builder, gtk::Stack, library_stack);
-        get_widget!(builder, gtk::Button, discover_button);
-        get_widget!(builder, gtk::Button, import_button);
 
         get_widget!(builder, gtk::Image, logo_image);
         logo_image.set_from_icon_name(Some(config::APP_ID), gtk::IconSize::__Unknown(256));
@@ -45,33 +40,18 @@ impl Library {
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
         content_box.add(&flowbox.widget);
 
-        let client = Client::new(Url::parse(&SettingsManager::get_string(Key::ApiServer)).unwrap());
+        let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
 
         let library = Self {
             widget: library,
             flowbox,
             library_stack,
-            discover_button,
-            import_button,
             client,
             sender,
         };
 
-        library.setup_signals();
         library.load_stations();
         library
-    }
-
-    fn setup_signals(&self) {
-        let sender = self.sender.clone();
-        self.discover_button.connect_clicked(move |_| {
-            sender.send(Action::ViewShowDiscover).unwrap();
-        });
-
-        let sender = self.sender.clone();
-        self.import_button.connect_clicked(move |_| {
-            sender.send(Action::LibraryGradioImport).unwrap();
-        });
     }
 
     pub fn add_stations(&self, stations: Vec<Station>) {

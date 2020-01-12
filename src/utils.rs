@@ -1,4 +1,5 @@
-use glib::{self, object::WeakRef};
+use gio::{self, ActionMapExt};
+use glib::{self, object::WeakRef, Variant};
 use gtk::prelude::*;
 
 use crate::api::Station;
@@ -100,4 +101,20 @@ pub fn simplify_string(s: String) -> String {
     string = string.replace("*", "");
     string = string.replace(".", "");
     string
+}
+
+// Creates an action named `name` in the action map `T with the handler `F`
+// Stolen from gnome-podcasts
+// https://gitlab.gnome.org/World/podcasts/blob/master/podcasts-gtk/src/window.rs
+pub fn action<T, F>(thing: &T, name: &str, action: F)
+where
+    T: ActionMapExt,
+    for<'r, 's> F: Fn(&'r gio::SimpleAction, Option<&Variant>) + 'static,
+{
+    // Create a stateless, parameterless action
+    let act = gio::SimpleAction::new(name, None);
+    // Connect the handler
+    act.connect_activate(action);
+    // Add it to the map
+    thing.add_action(&act);
 }

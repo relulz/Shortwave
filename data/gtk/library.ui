@@ -141,6 +141,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="action_name">win.show-discover</property>
                                 <child>
                                   <object class="GtkLabel">
                                     <property name="visible">True</property>
@@ -165,6 +166,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="action_name">win.import-gradio-library</property>
                                 <child>
                                   <object class="GtkLabel">
                                     <property name="visible">True</property>

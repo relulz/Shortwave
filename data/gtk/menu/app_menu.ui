@@ -53,7 +53,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="receives_default">False</property>
-            <property name="action_name">app.preferences</property>
+            <property name="action_name">win.show-preferences</property>
             <property name="text" translatable="yes">Preferences</property>
           </object>
           <packing>
@@ -81,7 +81,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="receives_default">False</property>
-            <property name="action_name">app.about</property>
+            <property name="action_name">win.about</property>
             <property name="text" translatable="yes">About Shortwave</property>
           </object>
           <packing>
@@ -123,7 +123,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="receives_default">False</property>
-            <property name="action_name">app.import-gradio-library</property>
+            <property name="action_name">win.import-gradio-library</property>
             <property name="text" translatable="yes">Import from Gradio</property>
           </object>
           <packing>
@@ -165,7 +165,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.view-sorting</property>
+            <property name="action_name">win.view-sorting</property>
             <property name="action_target">'Name'</property>
             <property name="text" translatable="yes">Name</property>
           </object>
@@ -180,7 +180,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.view-sorting</property>
+            <property name="action_name">win.view-sorting</property>
             <property name="action_target">'Language'</property>
             <property name="text" translatable="yes">Language</property>
           </object>
@@ -195,7 +195,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.view-sorting</property>
+            <property name="action_name">win.view-sorting</property>
             <property name="action_target">'Country'</property>
             <property name="text" translatable="yes">Country</property>
           </object>
@@ -210,7 +210,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.view-sorting</property>
+            <property name="action_name">win.view-sorting</property>
             <property name="action_target">'State'</property>
             <property name="text" translatable="yes">State</property>
           </object>
@@ -225,7 +225,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.view-sorting</property>
+            <property name="action_name">win.view-sorting</property>
             <property name="action_target">'Votes'</property>
             <property name="text" translatable="yes">Votes</property>
           </object>
@@ -251,7 +251,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.view-order</property>
+            <property name="action_name">win.view-order</property>
             <property name="action_target">'Ascending'</property>
             <property name="text" translatable="yes">Ascending</property>
           </object>
@@ -266,7 +266,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="action_name">app.view-order</property>
+            <property name="action_name">win.view-order</property>
             <property name="action_target">'Descending'</property>
             <property name="text" translatable="yes">Descending</property>
           </object>

@@ -1,4 +1,4 @@
-use gio::prelude::SettingsExt;
+use gio::prelude::*;
 use glib::Sender;
 use gtk::prelude::*;
 use libhandy::LeafletExt;
@@ -6,10 +6,11 @@ use libhandy::LeafletExt;
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::app::Action;
+use crate::app::{Action, SwApplication};
 use crate::config;
-use crate::settings::{Key, SettingsManager};
-use crate::ui::Notification;
+use crate::settings::{settings_manager, Key, SettingsWindow};
+use crate::ui::{about_dialog, import_dialog, Notification};
+use crate::utils;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum View {
@@ -19,6 +20,8 @@ pub enum View {
 }
 
 pub struct Window {
+    app: SwApplication,
+
     pub widget: gtk::ApplicationWindow,
     pub leaflet: libhandy::Leaflet,
     pub mini_controller_box: gtk::Box,
@@ -37,7 +40,7 @@ pub struct Window {
 }
 
 impl Window {
-    pub fn new(sender: Sender<Action>) -> Self {
+    pub fn new(sender: Sender<Action>, app: SwApplication) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/window.ui");
         let menu_builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/menu/app_menu.ui");
 
@@ -58,6 +61,7 @@ impl Window {
         let current_view = Rc::new(RefCell::new(View::Library));
 
         let window = Self {
+            app,
             widget: window,
             leaflet,
             mini_controller_box,
@@ -78,14 +82,14 @@ impl Window {
         appmenu_button.set_popover(Some(&popover_menu));
 
         // Devel style class
-        if config::PROFILE == "devel" || config::PROFILE == "beta" {
+        if config::PROFILE == "development" || config::PROFILE == "beta" {
             let ctx = window.widget.get_style_context();
             ctx.add_class("devel");
         }
 
         // Restore window geometry
-        let width = SettingsManager::get_integer(Key::WindowWidth);
-        let height = SettingsManager::get_integer(Key::WindowHeight);
+        let width = settings_manager::get_integer(Key::WindowWidth);
+        let height = settings_manager::get_integer(Key::WindowHeight);
         window.widget.resize(width, height);
 
         window.setup_signals();
@@ -94,23 +98,9 @@ impl Window {
 
     fn setup_signals(&self) {
         // dark mode
-        let s = SettingsManager::get_settings();
+        let s = settings_manager::get_settings();
         let gtk_s = gtk::Settings::get_default().unwrap();
         s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme", gio::SettingsBindFlags::GET);
-
-        // add_button
-        get_widget!(self.builder, gtk::Button, add_button);
-        let sender = self.sender.clone();
-        add_button.connect_clicked(move |_| {
-            sender.send(Action::ViewShowDiscover).unwrap();
-        });
-
-        // back_button
-        get_widget!(self.builder, gtk::Button, back_button);
-        let sender = self.sender.clone();
-        back_button.connect_clicked(move |_| {
-            sender.send(Action::ViewShowLibrary).unwrap();
-        });
 
         // leaflet
         get_widget!(self.builder, gtk::Stack, view_stack);
@@ -138,10 +128,60 @@ impl Window {
             let width = window.get_size().0;
             let height = window.get_size().1;
 
-            SettingsManager::set_integer(Key::WindowWidth, width);
-            SettingsManager::set_integer(Key::WindowHeight, height);
+            settings_manager::set_integer(Key::WindowWidth, width);
+            settings_manager::set_integer(Key::WindowHeight, height);
             Inhibit(false)
         });
+    }
+
+    pub fn setup_gactions(&self) {
+        // win.quit
+        let window = self.widget.clone();
+        utils::action(&self.widget, "quit", move |_, _| {
+            let app = window.get_application().unwrap();
+            app.quit();
+        });
+        self.app.set_accels_for_action("win.quit", &["<primary>q"]);
+
+        // win.about
+        let window = self.widget.clone();
+        utils::action(&self.widget, "about", move |_, _| {
+            about_dialog::show_about_dialog(window.clone());
+        });
+
+        // win.show-preferences
+        let window = self.widget.clone();
+        utils::action(&self.widget, "show-preferences", move |_, _| {
+            let settings_window = SettingsWindow::new(&window);
+            settings_window.show();
+        });
+
+        // win.show-discover
+        let sender = self.sender.clone();
+        utils::action(&self.widget, "show-discover", move |_, _| {
+            sender.send(Action::ViewShowDiscover).unwrap();
+        });
+        self.app.set_accels_for_action("win.show-discover", &["<primary>f"]);
+
+        // win.show-library
+        let sender = self.sender.clone();
+        utils::action(&self.widget, "show-library", move |_, _| {
+            sender.send(Action::ViewShowLibrary).unwrap();
+        });
+
+        // win.import-gradio-library
+        let sender = self.sender.clone();
+        let window = self.widget.clone();
+        utils::action(&self.widget, "import-gradio-library", move |_, _| {
+            import_dialog::import_gradio_db(sender.clone(), window.clone());
+        });
+
+        // Sort / Order menu
+        let sorting_action = settings_manager::create_action(Key::ViewSorting);
+        self.widget.add_action(&sorting_action);
+
+        let order_action = settings_manager::create_action(Key::ViewOrder);
+        self.widget.add_action(&order_action);
     }
 
     pub fn show_notification(&self, notification: Rc<Notification>) {
