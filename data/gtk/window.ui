@@ -3,247 +3,237 @@
 <interface>
   <requires lib="gtk+" version="3.22"/>
   <requires lib="libhandy" version="0.0"/>
-  <object class="GtkApplicationWindow" id="window">
+  <object class="GtkOverlay" id="content">
+    <property name="width_request">350</property>
+    <property name="height_request">100</property>
+    <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="default_width">1000</property>
-    <property name="default_height">550</property>
-    <property name="icon_name">de.haeckerfelix.Shortwave</property>
-    <child type="titlebar">
-      <object class="HdyHeaderBar" id="view_headerbar">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="hexpand">True</property>
-        <property name="show_close_button">True</property>
-        <property name="centering_policy">loose</property>
-        <property name="interpolate_size">True</property>
-        <child>
-          <object class="GtkButton" id="add_button">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="action_name">win.show-discover</property>
-            <child>
-              <object class="GtkImage">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="icon_name">list-add-symbolic</property>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton" id="back_button">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="action_name">win.show-library</property>
-            <child>
-              <object class="GtkImage">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="icon_name">go-previous-symbolic</property>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="position">2</property>
-          </packing>
-        </child>
-        <child type="title">
-          <object class="GtkStack" id="header_switcher_stack">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="hhomogeneous">False</property>
-            <property name="vhomogeneous">False</property>
-            <property name="interpolate_size">True</property>
-            <child>
-              <object class="HdySqueezer">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="transition_type">crossfade</property>
-                <child>
-                  <object class="HdyViewSwitcher" id="discover_header_switcher_wide">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="policy">wide</property>
-                    <property name="narrow_ellipsize">end</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="HdyViewSwitcher" id="discover_header_switcher_narrow">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="policy">narrow</property>
-                    <property name="narrow_ellipsize">end</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="name">discover</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="app_label">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">center</property>
-                <property name="label">Shortwave</property>
-                <style>
-                  <class name="title"/>
-                </style>
-              </object>
-              <packing>
-                <property name="name">main</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="position">3</property>
-          </packing>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <object class="GtkMenuButton" id="appmenu_button">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <child>
-              <object class="GtkImage">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="icon_name">open-menu-symbolic</property>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="pack_type">end</property>
-            <property name="position">2</property>
-          </packing>
-        </child>
-      </object>
-    </child>
     <child>
-      <object class="GtkOverlay" id="overlay">
-        <property name="width_request">350</property>
-        <property name="height_request">100</property>
+      <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
         <child>
-          <object class="GtkBox">
+          <object class="HdyLeaflet" id="leaflet">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
+            <property name="mode_transition_type">slide</property>
+            <property name="child_transition_type">over</property>
             <child>
-              <object class="HdyLeaflet" id="leaflet">
+              <object class="GtkStack" id="view_stack">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="mode_transition_type">slide</property>
-                <property name="child_transition_type">over</property>
+                <property name="hhomogeneous">False</property>
+                <property name="vhomogeneous">False</property>
+                <property name="transition_type">crossfade</property>
+                <property name="interpolate_size">True</property>
                 <child>
-                  <object class="GtkStack" id="view_stack">
+                  <object class="GtkBox" id="library_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="hhomogeneous">False</property>
-                    <property name="vhomogeneous">False</property>
-                    <property name="transition_type">crossfade</property>
-                    <property name="interpolate_size">True</property>
+                    <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkBox" id="library_box">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="name">library</property>
-                        <property name="title" translatable="yes">Library</property>
-                        <property name="icon_name">emblem-documents-symbolic</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkBox" id="discover_box">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="name">discover</property>
-                        <property name="position">1</property>
-                      </packing>
+                      <placeholder/>
                     </child>
                   </object>
                   <packing>
-                    <property name="name">content</property>
+                    <property name="name">library</property>
+                    <property name="title" translatable="yes">Library</property>
+                    <property name="icon_name">emblem-documents-symbolic</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="discover_box">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="name">discover</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
               </object>
               <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkRevealer" id="bottom_switcher_revealer">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="transition_type">slide-up</property>
-                <child>
-                  <object class="GtkStack" id="bottom_switcher_stack">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="transition_type">crossfade</property>
-                    <child>
-                      <object class="HdyViewSwitcherBar" id="discover_bottom_switcher">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="reveal">True</property>
-                      </object>
-                      <packing>
-                        <property name="name">discover</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkBox" id="mini_controller_box">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <style>
-                          <class name="minicontroller"/>
-                        </style>
-                      </object>
-                      <packing>
-                        <property name="name">main</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="name">content</property>
               </packing>
             </child>
           </object>
           <packing>
-            <property name="index">-1</property>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkRevealer" id="bottom_switcher_revealer">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="transition_type">slide-up</property>
+            <child>
+              <object class="GtkStack" id="bottom_switcher_stack">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="transition_type">crossfade</property>
+                <child>
+                  <object class="HdyViewSwitcherBar" id="discover_bottom_switcher">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="reveal">True</property>
+                  </object>
+                  <packing>
+                    <property name="name">discover</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="mini_controller_box">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <style>
+                      <class name="minicontroller"/>
+                    </style>
+                  </object>
+                  <packing>
+                    <property name="name">main</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </object>
+      <packing>
+        <property name="index">-1</property>
+      </packing>
+    </child>
+  </object>
+  <object class="HdyHeaderBar" id="headerbar">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="hexpand">True</property>
+    <property name="show_close_button">True</property>
+    <property name="interpolate_size">True</property>
+    <property name="centering_policy">loose</property>
+    <child>
+      <object class="GtkButton" id="add_button">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <property name="action_name">win.show-discover</property>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="icon_name">list-add-symbolic</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="back_button">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <property name="action_name">win.show-library</property>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="icon_name">go-previous-symbolic</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="position">2</property>
+      </packing>
+    </child>
+    <child type="title">
+      <object class="GtkStack" id="header_switcher_stack">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="hhomogeneous">False</property>
+        <property name="vhomogeneous">False</property>
+        <property name="interpolate_size">True</property>
+        <child>
+          <object class="HdySqueezer">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="transition_type">crossfade</property>
+            <child>
+              <object class="HdyViewSwitcher" id="discover_header_switcher_wide">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">center</property>
+                <property name="policy">wide</property>
+                <property name="narrow_ellipsize">end</property>
+              </object>
+            </child>
+            <child>
+              <object class="HdyViewSwitcher" id="discover_header_switcher_narrow">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">center</property>
+                <property name="policy">narrow</property>
+                <property name="narrow_ellipsize">end</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="name">discover</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="app_label">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">center</property>
+            <property name="label">Shortwave</property>
+            <style>
+              <class name="title"/>
+            </style>
+          </object>
+          <packing>
+            <property name="name">main</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="position">3</property>
+      </packing>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <object class="GtkMenuButton" id="appmenu_button">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="icon_name">open-menu-symbolic</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="pack_type">end</property>
+        <property name="position">2</property>
+      </packing>
     </child>
   </object>
 </interface>

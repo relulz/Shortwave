@@ -6,7 +6,6 @@ use glib::translate::*;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
 use gtk::subclass::application::GtkApplicationImpl;
-use libhandy::{ViewSwitcherBarExt, ViewSwitcherExt};
 
 use std::cell::RefCell;
 use std::env;
@@ -19,7 +18,7 @@ use crate::config;
 use crate::database::Library;
 use crate::discover::StoreFront;
 use crate::settings::{settings_manager, Key};
-use crate::ui::{Notification, View, Window};
+use crate::ui::{Notification, SwApplicationWindow, View};
 use crate::utils::{Order, Sorting};
 
 #[derive(Debug, Clone)]
@@ -46,10 +45,10 @@ pub struct SwApplicationPrivate {
     sender: Sender<Action>,
     receiver: RefCell<Option<Receiver<Action>>>,
 
-    window: RefCell<Option<Window>>,
-    player: Player,
-    library: Library,
-    storefront: StoreFront,
+    window: RefCell<Option<SwApplicationWindow>>,
+    pub player: Player,
+    pub library: Library,
+    pub storefront: StoreFront,
 
     settings: gio::Settings,
 }
@@ -101,7 +100,7 @@ impl ApplicationImpl for SwApplicationPrivate {
         // If the window already exists,
         // present it instead creating a new one again.
         if let Some(ref window) = *self.window.borrow() {
-            window.widget.present();
+            window.present();
             info!("Application window presented.");
             return;
         }
@@ -109,9 +108,7 @@ impl ApplicationImpl for SwApplicationPrivate {
         // No window available -> we have to create one
         let app = ObjectSubclass::get_instance(self).downcast::<SwApplication>().unwrap();
         let window = app.create_window();
-        window.widget.present();
-        window.setup_gactions();
-        app.add_window(&window.widget);
+        window.present();
         self.window.replace(Some(window));
         info!("Created application window.");
 
@@ -134,7 +131,7 @@ impl ApplicationImpl for SwApplicationPrivate {
     }
 }
 
-// Wrap the SwApplicationPrivate into a usable gtk-rs object
+// Wrap SwApplicationPrivate into a usable gtk-rs object
 glib_wrapper! {
     pub struct SwApplication(
         Object<subclass::simple::InstanceStruct<SwApplicationPrivate>,
@@ -164,24 +161,14 @@ impl SwApplication {
         ApplicationExtManual::run(&app, &args);
     }
 
-    fn create_window(&self) -> Window {
+    fn create_window(&self) -> SwApplicationWindow {
         let self_ = SwApplicationPrivate::from_instance(self);
-        let window = Window::new(self_.sender.clone(), self.clone());
+        let window = SwApplicationWindow::new(self_.sender.clone(), self.clone());
 
         // Load custom styling
         let p = gtk::CssProvider::new();
         gtk::CssProvider::load_from_resource(&p, "/de/haeckerfelix/Shortwave/gtk/style.css");
         gtk::StyleContext::add_provider_for_screen(&gdk::Screen::get_default().unwrap(), &p, 500);
-
-        // Add widgets of several components to the window
-        window.mini_controller_box.add(&self_.player.mini_controller_widget);
-        window.library_box.add(&self_.library.widget);
-        window.discover_box.add(&self_.storefront.widget);
-
-        // Wire everything up
-        window.discover_header_switcher_wide.set_stack(Some(&self_.storefront.storefront_stack));
-        window.discover_header_switcher_narrow.set_stack(Some(&self_.storefront.storefront_stack));
-        window.discover_bottom_switcher.set_stack(Some(&self_.storefront.storefront_stack));
 
         // Set initial view
         window.set_view(View::Library);
@@ -189,7 +176,7 @@ impl SwApplication {
         // Setup help overlay
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
         get_widget!(builder, gtk::ShortcutsWindow, shortcuts);
-        window.widget.set_help_overlay(Some(&shortcuts));
+        window.set_help_overlay(Some(&shortcuts));
 
         window
     }
@@ -201,13 +188,13 @@ impl SwApplication {
             Action::ViewShowDiscover => self_.window.borrow().as_ref().unwrap().set_view(View::Discover),
             Action::ViewShowLibrary => self_.window.borrow().as_ref().unwrap().set_view(View::Library),
             Action::ViewShowPlayer => self_.window.borrow().as_ref().unwrap().set_view(View::Player),
-            Action::ViewRaise => self_.window.borrow().as_ref().unwrap().widget.present_with_time((glib::get_monotonic_time() / 1000) as u32),
+            Action::ViewRaise => self_.window.borrow().as_ref().unwrap().present_with_time((glib::get_monotonic_time() / 1000) as u32),
             Action::ViewShowNotification(notification) => self_.window.borrow().as_ref().unwrap().show_notification(notification),
             Action::PlaybackConnectGCastDevice(device) => self_.player.connect_to_gcast_device(device),
             Action::PlaybackDisconnectGCastDevice => self_.player.disconnect_from_gcast_device(),
             Action::PlaybackSetStation(station) => {
                 self_.player.set_station(station.clone());
-                self_.player.show(self_.window.borrow().as_ref().unwrap().leaflet.clone());
+                self_.window.borrow().as_ref().unwrap().show_player_widget(self_.player.widget.clone());
             }
             Action::PlaybackStart => self_.player.set_playback(PlaybackState::Playing),
             Action::PlaybackStop => self_.player.set_playback(PlaybackState::Stopped),

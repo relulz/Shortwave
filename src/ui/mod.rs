@@ -19,5 +19,5 @@ pub use station_favicon::StationFavicon;
 pub use station_flowbox::StationFlowBox;
 pub use station_row::StationRow;
 pub use streaming_dialog::StreamingDialog;
+pub use window::SwApplicationWindow;
 pub use window::View;
-pub use window::Window;
