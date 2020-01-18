@@ -8,7 +8,7 @@ variables:
     GIT_SUBMODULE_STRATEGY: recursive
 
 flatpak:
-    image: "docker.io/bilelmoussaoui/rust-nightly:master"
+    image: "docker.io/bilelmoussaoui/rust-stable:master"
     stage: "test"
     variables:
         MANIFEST_PATH: "build-aux/de.haeckerfelix.Shortwave.Devel.json"
