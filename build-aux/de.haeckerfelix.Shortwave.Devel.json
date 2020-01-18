@@ -4,7 +4,7 @@
     "runtime-version" : "master",
     "sdk" : "org.gnome.Sdk",
     "sdk-extensions" : [
-        "org.freedesktop.Sdk.Extension.rust-nightly"
+        "org.freedesktop.Sdk.Extension.rust-stable"
     ],
     "command" : "shortwave",
     "tags" : [
@@ -24,7 +24,7 @@
         "--env=DCONF_USER_CONFIG_DIR=.config/dconf"
     ],
     "build-options" : {
-        "append-path" : "/usr/lib/sdk/rust-nightly/bin",
+        "append-path" : "/usr/lib/sdk/rust-stable/bin",
         "build-args" : [
             "--share=network"
         ],
@@ -32,7 +32,7 @@
             "RUSTFLAGS" : "--remap-path-prefix =../",
             "CARGO_HOME" : "/run/build/Shortwave/cargo",
             "RUST_BACKTRACE" : "1",
-            "RUST_LOG" : "shortwave=debug",
+            "RUST_LOG" : "debug",
             "G_MESSAGES_DEBUG" : "none"
         }
     },
