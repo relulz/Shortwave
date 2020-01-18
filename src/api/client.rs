@@ -29,7 +29,7 @@ impl Client {
         let mut stations = Vec::new();
 
         for identifier in identifiers {
-            let url = self.build_url(&format!("{}{}", STATION_BY_ID, identifier.station_id), None)?;
+            let url = self.build_url(&format!("{}{}", STATION_BY_ID, identifier.stationuuid), None)?;
             debug!("Request station by ID URL: {}", url);
             let data = self.send_message(url).await?;
 
@@ -43,7 +43,7 @@ impl Client {
     }
 
     pub async fn get_stream_url(self, station: Station) -> Result<StationUrl, Error> {
-        let url = self.build_url(&format!("{}{}", PLAYABLE_STATION_URL, station.id), None)?;
+        let url = self.build_url(&format!("{}{}", PLAYABLE_STATION_URL, station.stationuuid), None)?;
         debug!("Request playable URL: {}", url);
         let data = self.send_message(url).await?;
 

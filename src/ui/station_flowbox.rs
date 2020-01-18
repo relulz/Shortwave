@@ -14,7 +14,7 @@ use crate::utils::{Order, Sorting};
 
 pub struct StationFlowBox {
     pub widget: gtk::FlowBox,
-    stations: Rc<RefCell<IndexMap<i32, Station>>>,
+    stations: Rc<RefCell<IndexMap<String, Station>>>,
 
     sorting: RefCell<Sorting>,
     order: RefCell<Order>,
@@ -58,10 +58,10 @@ impl StationFlowBox {
 
     pub fn add_stations(&self, stations: Vec<Station>) {
         for station in stations {
-            if self.stations.borrow().contains_key(&station.id) {
+            if self.stations.borrow().contains_key(&station.stationuuid) {
                 warn!("Station \"{}\" is already added to flowbox.", station.name);
             } else {
-                self.stations.borrow_mut().insert(station.id.clone(), station);
+                self.stations.borrow_mut().insert(station.stationuuid.clone(), station);
             }
         }
 
@@ -72,14 +72,14 @@ impl StationFlowBox {
     pub fn remove_stations(&self, stations: Vec<Station>) {
         for station in stations {
             // Get the corresponding widget to the index, remove and destroy it
-            let index: usize = self.stations.borrow_mut().entry(station.id.clone()).index();
+            let index: usize = self.stations.borrow_mut().entry(station.stationuuid.clone()).index();
             dbg!(index);
             let widget = self.widget.get_child_at_index(index.try_into().unwrap()).unwrap();
             self.widget.remove(&widget);
             widget.destroy();
 
             // Remove the station from the indexmap itself
-            self.stations.borrow_mut().shift_remove(&station.id);
+            self.stations.borrow_mut().shift_remove(&station.stationuuid);
         }
     }
 
@@ -112,7 +112,7 @@ impl StationFlowBox {
         let widget = self.widget.downgrade();
         let sender = self.sender.clone();
         let stations = self.stations.borrow().clone();
-        let constructor = move |station: (i32, Station)| StationRow::new(sender.clone(), station.1).widget.clone();
+        let constructor = move |station: (String, Station)| StationRow::new(sender.clone(), station.1).widget.clone();
 
         // Start lazy loading
         utils::lazy_load(stations.clone(), widget.clone(), constructor.clone());

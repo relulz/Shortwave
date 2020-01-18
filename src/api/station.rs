@@ -4,8 +4,6 @@ use url::Url;
 
 #[derive(Deserialize, Debug, Clone, Eq, Hash)]
 pub struct Station {
-    #[serde(deserialize_with = "str_to_i32")]
-    pub id: i32,
     pub changeuuid: String,
     pub stationuuid: String,
     pub name: String,
@@ -40,7 +38,7 @@ pub struct Station {
 
 impl PartialEq for Station {
     fn eq(&self, other: &Station) -> bool {
-        self.id == other.id
+        self.stationuuid == other.stationuuid
     }
 }
 

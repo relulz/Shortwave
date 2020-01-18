@@ -1,7 +1,7 @@
 table! {
     library (id) {
         id -> Nullable<Integer>,
-        station_id -> Integer,
+        stationuuid -> Text,
     }
 }
 

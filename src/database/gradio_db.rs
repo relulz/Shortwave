@@ -25,6 +25,7 @@ pub fn read_database(path: PathBuf) -> Vec<StationIdentifier> {
 
     // Convert GradioIdentifier to Shortwave StationIdentifier
     let mut result = Vec::new();
+    /* TODO: Migrate this to UUIDs
     for id in ids {
         let sid = StationIdentifier {
             id: None,
@@ -32,5 +33,6 @@ pub fn read_database(path: PathBuf) -> Vec<StationIdentifier> {
         };
         result.push(sid);
     }
+    */
     result
 }

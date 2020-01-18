@@ -26,5 +26,5 @@ pub fn delete_station_identifier(identifier: StationIdentifier) -> Result<(), di
     use crate::database::schema::library::dsl::*;
     let con = connect_db!();
 
-    diesel::delete(library.filter(station_id.eq(identifier.station_id))).execute(&*con).map_err(From::from).map(|_| ())
+    diesel::delete(library.filter(stationuuid.eq(identifier.stationuuid))).execute(&*con).map_err(From::from).map(|_| ())
 }
