@@ -1,5 +1,5 @@
 static STATION_SEARCH: &'static str = "json/stations/search";
-static STATION_BY_ID: &'static str = "json/stations/byid/";
+static STATION_BY_UUID: &'static str = "json/stations/byuuid/";
 static PLAYABLE_STATION_URL: &'static str = "json/url/";
 
 mod client;

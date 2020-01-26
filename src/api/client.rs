@@ -29,8 +29,8 @@ impl Client {
         let mut stations = Vec::new();
 
         for identifier in identifiers {
-            let url = self.build_url(&format!("{}{}", STATION_BY_ID, identifier.stationuuid), None)?;
-            debug!("Request station by ID URL: {}", url);
+            let url = self.build_url(&format!("{}{}", STATION_BY_UUID, identifier.stationuuid), None)?;
+            debug!("Request station by UUID URL: {}", url);
             let data = self.send_message(url).await?;
 
             // Parse text to Vec<Station>

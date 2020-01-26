@@ -120,7 +120,7 @@ impl Player {
         self.set_playback(PlaybackState::Stopped);
 
         // Station is broken, we refuse to play it
-        if !station.lastcheckok {
+        if station.lastcheckok != 1 {
             let notification = Notification::new_info("This station cannot be played because the stream is offline.");
             self.sender.send(Action::ViewShowNotification(notification)).unwrap();
             return;

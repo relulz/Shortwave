@@ -123,27 +123,3 @@ impl Library {
         ctx.spawn_local(fut);
     }
 }
-
-quick_error! {
-    #[derive(Debug)]
-    pub enum LibraryError {
-        Io(err: io::Error) {
-            from()
-            description("io error")
-            display("I/O error: {}", err)
-            cause(err)
-        }
-        Restson(err: restson::Error) {
-            from()
-            description("restson error")
-            display("Network error: {}", err)
-            cause(err)
-        }
-        Serde(err: serde_json::error::Error) {
-            from()
-            description("serde error")
-            display("Parser error: {}", err)
-            cause(err)
-        }
-    }
-}

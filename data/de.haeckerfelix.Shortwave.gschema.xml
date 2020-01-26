@@ -2,7 +2,7 @@
 <schemalist>
   <schema path="/de/haeckerfelix/Shortwave/" id="de.haeckerfelix.Shortwave" gettext-domain="shortwave">
     <key name="api-server" type="s">
-      <default>"https://www.radio-browser.info/webservice/"</default>
+      <default>"https://de1.api.radio-browser.info/"</default>
     </key>
     <key name="dark-mode" type="b">
       <default>false</default>

@@ -1,7 +1,7 @@
 use super::schema::*;
 use crate::api::Station;
 
-#[derive(Queryable, Insertable, Debug)]
+#[derive(Queryable, Insertable, Debug, Clone)]
 #[table_name = "library"]
 pub struct StationIdentifier {
     pub id: Option<i32>,     // Database ID
