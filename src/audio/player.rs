@@ -130,23 +130,16 @@ impl Player {
             con.set_station(station.clone());
         }
 
-        let gst_backend = self.gst_backend.clone();
-        let sender = self.sender.clone();
-        let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
-        // get asynchronously the stream url and play it
-        let fut = client.get_stream_url(station).map(move |station_url| match station_url {
-            Ok(station_url) => {
-                debug!("new source uri to record: {}", station_url.url);
-                gst_backend.lock().unwrap().new_source_uri(&station_url.url);
+        match station.url_resolved {
+            Some(url) => {
+                self.gst_backend.lock().unwrap().new_source_uri(&url.to_string());
+                debug!("new source uri to record: {}", url.to_string());
             }
-            Err(err) => {
-                let notification = Notification::new_error("Could not play station", &err.to_string());
-                sender.send(Action::ViewShowNotification(notification)).unwrap();
+            None => {
+                let notification = Notification::new_error("Cannot play station", "Station URL is not valid.");
+                self.sender.send(Action::ViewShowNotification(notification)).unwrap();
             }
-        });
-
-        let ctx = glib::MainContext::default();
-        ctx.spawn_local(fut);
+        }
     }
 
     pub fn set_playback(&self, playback: PlaybackState) {
