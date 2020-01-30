@@ -120,32 +120,3 @@ where
     // Add it to the map
     thing.add_action(&act);
 }
-
-// Converts from deprecated IDs to the new UUIDs
-pub async fn convert_to_uuid(identifiers: &Vec<StationIdentifier>) -> Result<Vec<StationIdentifier>, Error> {
-    let mut converted = Vec::new();
-
-    for identifier in identifiers {
-        let url = &format!("https://www.radio-browser.info/webservice/json/stations/byid/{}", identifier.stationuuid);
-        debug!("Request station by ID URL: {}", url);
-
-        let mut res = surf::get(url).await.map_err(|_| Error::SurfError)?;
-        let data = res.body_string().await.map_err(|_| Error::SurfError)?;
-
-        let s: Vec<Station> = serde_json::from_str(data.as_str())?;
-        let station = s[0].clone();
-
-        debug!("Station with ID {:?} -> UUID {:?}", identifier.stationuuid, station.stationuuid);
-        let id = StationIdentifier {
-            id: identifier.id,
-            stationuuid: station.stationuuid,
-        };
-        converted.insert(0, id);
-    }
-
-    Ok(converted)
-}
-
-pub fn is_uuid(ids: &Vec<StationIdentifier>) -> bool {
-    ids[0].stationuuid.contains("-")
-}

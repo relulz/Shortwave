@@ -4,10 +4,40 @@ use diesel::sql_types::Integer;
 
 use std::path::PathBuf;
 
+use crate::api::Error;
+use crate::api::Station;
 use crate::database::models::StationIdentifier;
 
-// We're still using the old Gradio DB format for importing / exporting stations.
-// So we can ensure that we can transfer data from Gradio to Shortwave, and and vice versa.
+// It is possible to import Gradio stations in Shortwave.
+// Gradio uses the deprecated radio-browser.info API, so we need to convert it first.
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct GradioStation {
+    pub id: String,
+    pub changeuuid: String,
+    pub stationuuid: String,
+    pub name: String,
+    pub url: String,
+    pub homepage: String,
+    pub favicon: String,
+    pub tags: String,
+    pub country: String,
+    pub state: String,
+    pub language: String,
+    pub votes: String,
+    pub negativevotes: String,
+    pub lastchangetime: String,
+    pub ip: String,
+    pub codec: String,
+    pub bitrate: String,
+    pub hls: String,
+    pub lastcheckok: String,
+    pub lastchecktime: String,
+    pub lastcheckoktime: String,
+    pub clicktimestamp: String,
+    pub clickcount: String,
+    pub clicktrend: String,
+}
 
 #[derive(QueryableByName, Debug)]
 pub struct GradioStationID {
@@ -15,24 +45,53 @@ pub struct GradioStationID {
     pub station_id: i32,
 }
 
-pub fn read_database(path: PathBuf) -> Vec<StationIdentifier> {
+pub fn is_gradio_db(ids: &Vec<StationIdentifier>) -> bool {
+    ids.len() != 0 && !ids[0].stationuuid.contains("-")
+}
+
+pub async fn read_database(path: PathBuf) -> Result<Vec<StationIdentifier>, Error> {
     // Establish connection to database
-    let connection: diesel::SqliteConnection = Connection::establish(path.to_str().unwrap()).unwrap(); //TODO: don't unwrap
+    let connection: diesel::SqliteConnection = Connection::establish(path.to_str().unwrap()).unwrap();
 
     // Read data from 'library' table
-    let ids = diesel::sql_query("SELECT station_id FROM library;").load::<GradioStationID>(&connection).unwrap();
-    dbg!(&ids);
+    let ids: Vec<GradioStationID> = diesel::sql_query("SELECT station_id FROM library;").load::<GradioStationID>(&connection).unwrap();
 
-    // Convert GradioIdentifier to Shortwave StationIdentifier
     let mut result = Vec::new();
-    /* TODO: Migrate this to UUIDs
     for id in ids {
-        let sid = StationIdentifier {
+        // Convert GradioIdentifier to Shortwave StationIdentifier
+        let shortwave_id = StationIdentifier {
             id: None,
-            station_id: id.station_id.clone(),
+            stationuuid: id.station_id.clone().to_string(),
         };
-        result.push(sid);
+
+        // We need to convert the StationIdentifier to UUID
+        // For more details check
+        // https://gitlab.gnome.org/World/Shortwave/issues/418
+        match id2uuid(shortwave_id).await? {
+            Some(shortwave_uuid) => result.push(shortwave_uuid),
+            None => warn!("No UUID for ID \"{}\" found.", id.station_id.clone().to_string(),),
+        };
     }
-    */
-    result
+    Ok(result)
+}
+
+async fn id2uuid(identifier: StationIdentifier) -> Result<Option<StationIdentifier>, Error> {
+    // We're going to use the old radio-browser.info API address here
+    // to fetch the new UUID for a station.
+    let url = &format!("https://www.radio-browser.info/webservice/json/stations/byid/{}", identifier.stationuuid);
+    let mut res = surf::get(url).await.map_err(|_| Error::SurfError)?;
+    let data = res.body_string().await.map_err(|_| Error::SurfError)?;
+
+    let s: Vec<GradioStation> = serde_json::from_str(data.as_str())?;
+    if s.len() == 0 {
+        return Ok(None);
+    }
+    let station = s[0].clone();
+
+    debug!("Station ID {:?} -> UUID {:?}", identifier.stationuuid, station.stationuuid);
+    let uuid = StationIdentifier {
+        id: identifier.id,
+        stationuuid: station.stationuuid,
+    };
+    Ok(Some(uuid))
 }

@@ -1,3 +1,4 @@
+use futures_util::future::FutureExt;
 use gio::prelude::*;
 use glib::subclass;
 use glib::subclass::prelude::*;
@@ -231,7 +232,18 @@ impl SwApplicationWindow {
             &window,
             "import-gradio-library",
             clone!(@strong sender, @strong window => move |_, _| {
-                import_dialog::import_gradio_db(sender.clone(), window.clone());
+                let sender = sender.clone();
+                let future = import_dialog::import_gradio_db(sender.clone(), window.clone()).map(move|result|{
+                    match result{
+                        Ok(_) => (),
+                        Err(err) => {
+                            let notification = Notification::new_error("Could not import library.", &err.to_string());
+                            sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
+                        }
+                    }
+                });
+                let ctx = glib::MainContext::default();
+                ctx.spawn_local(future);
             }),
         );
 

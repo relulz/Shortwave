@@ -10,6 +10,7 @@ use crate::api::{Client, Station};
 use crate::app::Action;
 use crate::config;
 use crate::database::connection;
+use crate::database::gradio_db;
 use crate::database::queries;
 use crate::database::StationIdentifier;
 use crate::settings::{settings_manager, Key};
@@ -107,9 +108,18 @@ impl Library {
 
         let flowbox = self.flowbox.clone();
         let library_stack = self.library_stack.clone();
+        let client = self.client.clone();
         let sender = self.sender.clone();
-        let fut = self.client.clone().get_stations_by_identifiers(identifiers).map(move |stations| {
-            Self::update_stack_page(&library_stack);
+
+        let future = async move {
+            if gradio_db::is_gradio_db(&identifiers) {
+                info!("Found old database type...");
+                // TODO: Automatically convert database...
+            }
+
+            let stations = client.clone().get_stations_by_identifiers(identifiers).await;
+            Self::update_stack_page(&library_stack.clone());
+
             match stations {
                 Ok(stations) => {
                     flowbox.add_stations(stations);
@@ -119,7 +129,8 @@ impl Library {
                     sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
                 }
             }
-        });
-        ctx.spawn_local(fut);
+        };
+
+        ctx.spawn_local(future);
     }
 }
