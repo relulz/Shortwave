@@ -1,7 +1,5 @@
-use futures_util::future::FutureExt;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
-use url::Url;
 
 use std::cell::RefCell;
 use std::convert::TryInto;
@@ -10,7 +8,7 @@ use std::path::PathBuf;
 use std::rc::Rc;
 use std::sync::{Arc, Mutex};
 
-use crate::api::{Client, Station};
+use crate::api::Station;
 use crate::app::Action;
 use crate::audio::backend::*;
 use crate::audio::controller::{Controller, GCastController, MiniController, MprisController, SidebarController};

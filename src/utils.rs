@@ -2,9 +2,7 @@ use gio::{self, ActionMapExt};
 use glib::{self, object::WeakRef, Variant};
 use gtk::prelude::*;
 
-use crate::api::Error;
 use crate::api::Station;
-use crate::database::StationIdentifier;
 
 macro_rules! get_widget {
     ($builder:expr, $wtype:ty, $name:ident) => {

@@ -1,4 +1,3 @@
-use futures_util::future::FutureExt;
 use gio::FileExt;
 use glib::Sender;
 use gtk::prelude::*;

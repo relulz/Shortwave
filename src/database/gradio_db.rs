@@ -5,7 +5,6 @@ use diesel::sql_types::Integer;
 use std::path::PathBuf;
 
 use crate::api::Error;
-use crate::api::Station;
 use crate::database::models::StationIdentifier;
 
 // It is possible to import Gradio stations in Shortwave.
@@ -45,7 +44,7 @@ pub struct GradioStationID {
     pub station_id: i32,
 }
 
-pub fn is_gradio_db(ids: &Vec<StationIdentifier>) -> bool {
+pub fn is_id_db(ids: &Vec<StationIdentifier>) -> bool {
     ids.len() != 0 && !ids[0].stationuuid.contains("-")
 }
 
@@ -75,7 +74,7 @@ pub async fn read_database(path: PathBuf) -> Result<Vec<StationIdentifier>, Erro
     Ok(result)
 }
 
-async fn id2uuid(identifier: StationIdentifier) -> Result<Option<StationIdentifier>, Error> {
+pub async fn id2uuid(identifier: StationIdentifier) -> Result<Option<StationIdentifier>, Error> {
     // We're going to use the old radio-browser.info API address here
     // to fetch the new UUID for a station.
     let url = &format!("https://www.radio-browser.info/webservice/json/stations/byid/{}", identifier.stationuuid);
