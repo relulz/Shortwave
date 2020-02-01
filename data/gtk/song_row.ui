@@ -9,7 +9,6 @@
       <object class="GtkStack" id="button_stack">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="margin_right">6</property>
         <child>
           <object class="GtkButton" id="save_button">
             <property name="visible">True</property>
@@ -53,7 +52,6 @@
       <packing>
         <property name="expand">False</property>
         <property name="fill">True</property>
-        <property name="pack_type">end</property>
         <property name="position">0</property>
       </packing>
     </child>

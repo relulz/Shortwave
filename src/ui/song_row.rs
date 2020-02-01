@@ -78,7 +78,7 @@ impl SongRow {
         title_label.set_tooltip_text(Some(song.title.as_str()));
         duration_label.set_text(&Self::format_duration(song.duration.as_secs()));
         duration_label.set_tooltip_text(Some(Self::format_duration(song.duration.as_secs()).as_str()));
-        song_row.set_hexpand(true);
+        song_row.set_hexpand(false);
 
         self.add(&song_row);
         self.show_all();
