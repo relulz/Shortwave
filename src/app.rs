@@ -149,6 +149,7 @@ impl SwApplication {
     pub fn run() {
         info!("{} ({}) ({})", config::NAME, config::APP_ID, config::VCS_TAG);
         info!("Version: {} ({})", config::VERSION, config::PROFILE);
+        info!("Isahc version: {}", isahc::version());
 
         // Create new GObject and downcast it into SwApplication
         let app = glib::Object::new(SwApplication::static_type(), &[("application-id", &Some(config::APP_ID)), ("flags", &ApplicationFlags::empty())])
