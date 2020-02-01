@@ -1,6 +1,7 @@
 use gdk_pixbuf::Pixbuf;
 use gio::prelude::*;
 use gio::DataInputStream;
+use isahc::prelude::*;
 use url::Url;
 
 use std::collections::hash_map::DefaultHasher;
@@ -26,8 +27,8 @@ impl FaviconDownloader {
         }
 
         // Download favicon
-        let mut response = surf::get(&url).await.map_err(|_| Error::SurfError)?;
-        let bytes = response.body_bytes().await.map_err(|_| Error::SurfError)?;
+        let response = isahc::get_async(url.to_string()).await?.text_async().await?;
+        let bytes: Vec<u8> = response.into_bytes().into();
 
         // Write downloaded bytes into file
         let file = Self::get_file(&url)?;

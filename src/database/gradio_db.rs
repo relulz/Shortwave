@@ -1,6 +1,7 @@
 use diesel::connection::Connection;
 use diesel::prelude::*;
 use diesel::sql_types::Integer;
+use isahc::prelude::*;
 
 use std::path::PathBuf;
 
@@ -78,8 +79,7 @@ pub async fn id2uuid(identifier: StationIdentifier) -> Result<Option<StationIden
     // We're going to use the old radio-browser.info API address here
     // to fetch the new UUID for a station.
     let url = &format!("https://www.radio-browser.info/webservice/json/stations/byid/{}", identifier.stationuuid);
-    let mut res = surf::get(url).await.map_err(|_| Error::SurfError)?;
-    let data = res.body_string().await.map_err(|_| Error::SurfError)?;
+    let data = isahc::get_async(url.to_string()).await?.text_async().await?;
 
     let s: Vec<GradioStation> = serde_json::from_str(data.as_str())?;
     if s.len() == 0 {

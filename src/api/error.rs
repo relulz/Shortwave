@@ -8,10 +8,10 @@ pub enum Error {
     GLibError(#[cause] glib::error::Error),
     #[fail(display = "Input/Output error.")]
     IOError(#[cause] std::io::Error),
-    #[fail(display = "Could not open cached image.")]
+    #[fail(display = "Network error: {}", _0)]
+    NetworkError(#[cause] isahc::Error),
+    #[fail(display = "Cache error")]
     CacheError,
-    #[fail(display = "Surf networking error.")]
-    SurfError,
 }
 
 // Maps a type to a variant of the Error enum
@@ -35,5 +35,6 @@ easy_from_impl!(
     serde_json::error::Error => Error::SerdeError,
     glib::error::Error       => Error::GLibError,
     url::ParseError          => Error::UrlParseError,
-    std::io::Error           => Error::IOError
+    std::io::Error           => Error::IOError,
+    isahc::Error             => Error::NetworkError
 );

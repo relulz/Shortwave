@@ -1,3 +1,4 @@
+use isahc::prelude::*;
 use url::Url;
 
 use crate::api::*;
@@ -42,10 +43,10 @@ impl Client {
         Ok(stations)
     }
 
-    // Create and send soup message, return the received data.
-    async fn send_message(&self, url: Url) -> std::result::Result<String, Error> {
-        let mut res = surf::get(url).await.map_err(|_| Error::SurfError)?;
-        Ok(res.body_string().await.map_err(|_| Error::SurfError)?)
+    // Create and send message, return the received data.
+    async fn send_message(&self, url: Url) -> Result<String, Error> {
+        let response = isahc::get_async(url.to_string()).await?.text_async().await?;
+        Ok(response)
     }
 
     fn build_url(&self, param: &str, options: Option<&str>) -> Result<Url, Error> {
