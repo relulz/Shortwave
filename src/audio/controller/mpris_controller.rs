@@ -1,3 +1,4 @@
+use gio::prelude::*;
 use glib::Sender;
 use mpris_player::{Metadata, MprisPlayer, OrgMprisMediaPlayer2Player, PlaybackStatus};
 
@@ -5,6 +6,7 @@ use std::cell::{Cell, RefCell};
 use std::rc::Rc;
 use std::sync::Arc;
 
+use crate::api::FaviconDownloader;
 use crate::api::Station;
 use crate::app::Action;
 use crate::audio::Controller;
@@ -51,7 +53,10 @@ impl MprisController {
 
         station.clone().map(|station| {
             station.favicon.map(|favicon| {
-                metadata.art_url = Some(favicon.to_string());
+                FaviconDownloader::get_file(&favicon).map(|file| {
+                    let path = format!("file://{}", file.get_path().unwrap().to_str().unwrap().to_owned());
+                    metadata.art_url = Some(path);
+                })
             });
             metadata.artist = Some(vec![station.name]);
         });

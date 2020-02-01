@@ -52,7 +52,7 @@ impl FaviconDownloader {
         }
     }
 
-    fn get_file(url: &Url) -> Result<gio::File, Error> {
+    pub fn get_file(url: &Url) -> Result<gio::File, Error> {
         let mut hasher = DefaultHasher::new();
         url.hash(&mut hasher);
         let hash = hasher.finish();
