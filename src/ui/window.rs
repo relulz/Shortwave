@@ -179,6 +179,11 @@ impl SwApplicationWindow {
         let window = self.clone().upcast::<gtk::ApplicationWindow>();
         let app = window.get_application().unwrap();
 
+        // win.create-new-station
+        utils::action(&window, "create-new-station", |_, _| {
+            open::that("http://www.radio-browser.info/gui/#!/add").expect("Could not open webpage.");
+        });
+
         // win.quit
         utils::action(
             &window,
