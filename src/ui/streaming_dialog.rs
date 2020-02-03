@@ -89,7 +89,7 @@ impl StreamingDialog {
 
             // Very hackish way to get the selected ip address
             let box1: gtk::Box = active_row.get_children()[0].clone().downcast().unwrap();
-            let box2: gtk::Box = box1.get_children()[1].clone().downcast().unwrap();
+            let box2: gtk::Box = box1.get_children()[0].clone().downcast().unwrap();
             let ip_label: gtk::Label = box2.get_children()[1].clone().downcast().unwrap();
             let ip_addr: IpAddr = IpAddr::from_str(ip_label.get_text().unwrap().to_string().as_str()).unwrap();
 
