@@ -1,9 +1,11 @@
+use rust_cast::channels::connection::ConnectionResponse;
+use rust_cast::channels::heartbeat::HeartbeatResponse;
 use rust_cast::channels::media::GenericMediaMetadata;
 use rust_cast::channels::media::Image;
 use rust_cast::channels::media::{Media, StreamType};
 use rust_cast::channels::receiver::Application;
 use rust_cast::channels::receiver::CastDeviceApp;
-use rust_cast::CastDevice;
+use rust_cast::{CastDevice, ChannelMessage};
 use std::str::FromStr;
 
 use std::rc::Rc;
@@ -17,13 +19,13 @@ use crate::audio::{Controller, GCastDevice, PlaybackState};
 enum GCastAction {
     Connect,
     SetStation,
+    HeartBeat,
     Disconnect,
 }
 
 pub struct GCastController {
     station: Arc<Mutex<Option<Station>>>,
     device_ip: Arc<Mutex<String>>,
-
     gcast_sender: Sender<GCastAction>,
 }
 
@@ -43,13 +45,13 @@ impl GCastController {
     fn start_thread(&self, receiver: Receiver<GCastAction>) {
         let station = self.station.clone();
         let device_ip = self.device_ip.clone();
-
         let gcast_sender = self.gcast_sender.clone();
 
         thread::spawn(move || {
             let mut device: Option<CastDevice> = None;
             let mut app: Option<Application> = None;
             let mut media_session_id: i32 = 0;
+            let mut connected = false;
 
             loop {
                 if let Ok(action) = receiver.recv() {
@@ -68,6 +70,7 @@ impl GCastController {
                                     debug!("Connected to gcast device!");
                                     device = Some(d);
                                     app = Some(a);
+                                    connected = true;
 
                                     // We need to set the station, since it already got set before.
                                     gcast_sender.send(GCastAction::SetStation).unwrap();
@@ -76,6 +79,11 @@ impl GCastController {
                             }
                         }
                         GCastAction::SetStation => {
+                            if !connected {
+                                // We need to re-connect first
+                                gcast_sender.send(GCastAction::Connect).unwrap();
+                                continue;
+                            }
                             device.as_ref().map(|d| {
                                 let s = station.lock().unwrap().as_ref().unwrap().clone();
                                 debug!("Transfer media information to gcast device...");
@@ -111,16 +119,48 @@ impl GCastController {
                                     }
                                     _ => warn!("Unable to transfer media information to gcast device."),
                                 }
+                                gcast_sender.send(GCastAction::HeartBeat).unwrap();
                             });
+                        }
+                        GCastAction::HeartBeat => {
+                            if !connected {
+                                continue;
+                            }
+                            device.as_ref().map(|d| match d.receive() {
+                                Ok(ChannelMessage::Heartbeat(response)) => {
+                                    debug!("GCast [Heartbeat] {:?}", response);
+                                    if let HeartbeatResponse::Ping = response {
+                                        d.heartbeat.pong().unwrap();
+                                    }
+                                }
+                                Ok(ChannelMessage::Connection(response)) => {
+                                    debug!("GCast [Connection] {:?}", response);
+                                    if let ConnectionResponse::Close = response {
+                                        connected = false;
+                                        warn!("GCast [Connection] Closed remotely");
+                                    }
+                                }
+                                Ok(ChannelMessage::Media(response)) => {
+                                    debug!("GCast [Media] {:?}", response);
+                                }
+                                Ok(ChannelMessage::Receiver(response)) => {
+                                    debug!("GCast [Receiver] {:?}", response);
+                                }
+                                Ok(ChannelMessage::Raw(response)) => {
+                                    debug!("GCast [Raw] {:?}", response);
+                                }
+                                Err(error) => error!("Error occurred while receiving message {}", error),
+                            });
+                            gcast_sender.send(GCastAction::HeartBeat).unwrap();
                         }
                         GCastAction::Disconnect => {
                             device.as_ref().map(|d| {
                                 debug!("Disconnect from gcast device...");
-
                                 match d.receiver.stop_app(app.as_ref().unwrap().session_id.as_str()) {
-                                    Ok(_) => (),
+                                    Ok(_) => connected = false,
                                     _ => warn!("Unable to disconnect from gcast device."),
                                 }
+                                gcast_sender.send(GCastAction::HeartBeat).unwrap();
                             });
                         }
                     }
@@ -130,18 +170,20 @@ impl GCastController {
     }
 
     pub fn connect_to_device(&self, device: GCastDevice) {
+        debug!("Called to connect to gcast device...");
         *self.device_ip.lock().unwrap() = device.ip.to_string();
         self.gcast_sender.send(GCastAction::Connect).unwrap();
     }
 
     pub fn disconnect_from_device(&self) {
+        debug!("Called to disconnect to gcast device...");
         self.gcast_sender.send(GCastAction::Disconnect).unwrap();
     }
 }
 
 impl Controller for Rc<GCastController> {
     fn set_station(&self, station: Station) {
-        self.gcast_sender.send(GCastAction::Disconnect).unwrap();
+        debug!("Called to switch stations on gcast device...");
         *self.station.lock().unwrap() = Some(station);
         self.gcast_sender.send(GCastAction::SetStation).unwrap();
     }
