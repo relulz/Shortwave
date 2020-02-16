@@ -113,7 +113,6 @@ impl Controller for MiniController {
         match playback_state {
             PlaybackState::Playing => self.playback_button_stack.set_visible_child_name("stop_playback"),
             PlaybackState::Stopped => self.playback_button_stack.set_visible_child_name("start_playback"),
-            PlaybackState::Loading => self.playback_button_stack.set_visible_child_name("loading"),
             PlaybackState::Failure(_) => self.playback_button_stack.set_visible_child_name("start_playback"),
         };
     }

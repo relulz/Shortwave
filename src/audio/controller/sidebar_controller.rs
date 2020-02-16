@@ -157,7 +157,6 @@ impl Controller for SidebarController {
         match playback_state {
             PlaybackState::Playing => self.playback_button_stack.set_visible_child_name("stop_playback"),
             PlaybackState::Stopped => self.playback_button_stack.set_visible_child_name("start_playback"),
-            PlaybackState::Loading => self.playback_button_stack.set_visible_child_name("loading"),
             PlaybackState::Failure(msg) => {
                 self.playback_button_stack.set_visible_child_name("error");
                 let mut text = self.error_label.get_text().unwrap().to_string();
