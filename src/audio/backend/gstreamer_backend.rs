@@ -69,7 +69,7 @@ impl GstreamerBackend {
         let audioconvert = ElementFactory::make("audioconvert", Some("audioconvert")).unwrap();
         let tee = ElementFactory::make("tee", Some("tee")).unwrap();
         let audio_queue = ElementFactory::make("queue", Some("audio_queue")).unwrap();
-        let pulsesink = ElementFactory::make("pulsesink", Some("pulsesink")).unwrap();
+        let pulsesink = ElementFactory::make("pulsesink", Some("pulsesink")).expect("Could not find PulseAudio (Cannot create gstreamer `pulsesink` element).");
         let file_queue = ElementFactory::make("queue", Some("file_queue")).unwrap();
         let file_srcpad = file_queue.get_static_pad("src").unwrap();
 
