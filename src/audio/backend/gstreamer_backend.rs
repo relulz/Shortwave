@@ -2,6 +2,7 @@ use glib::Sender;
 use gstreamer::prelude::*;
 use gstreamer::{Bin, Element, ElementFactory, GhostPad, Pad, PadProbeId, Pipeline, State};
 
+use std::convert::TryInto;
 use std::fs;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
@@ -10,6 +11,7 @@ use std::time::SystemTime;
 use crate::app::Action;
 use crate::audio::PlaybackState;
 use crate::audio::Song;
+use crate::settings::{settings_manager, Key};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                //
@@ -309,10 +311,11 @@ impl GstreamerBackend {
                 let song = self.recorderbin.lock().unwrap().clone().unwrap().stop();
 
                 // Check song duration
-                // Few stations are using the song metadata field as newstracker,
+                // Few stations are using the song metadata field as newsticker,
                 // which means the text changes every few seconds.
                 // Because of this reason, we shouldn't record songs with a too low duration.
-                if song.duration > std::time::Duration::from_secs(20) {
+                let threshold: u64 = settings_manager::get_integer(Key::RecorderSongDurationThreshold).try_into().unwrap();
+                if song.duration > std::time::Duration::from_secs(threshold) {
                     return Some(song);
                 } else {
                     info!("Ignore song \"{}\". Duration is not long enough.", song.title);

@@ -13,4 +13,5 @@ pub enum Key {
 
     /* Audio */
     RecorderSaveCount,
+    RecorderSongDurationThreshold,
 }
