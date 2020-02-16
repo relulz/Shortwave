@@ -14,13 +14,19 @@ pub struct GCastDevice {
     pub name: String,
 }
 
+pub enum GCastDiscovererMessage {
+    DiscoverStarted,
+    DiscoverEnded,
+    FoundDevice(GCastDevice),
+}
+
 pub struct GCastDiscoverer {
-    sender: Sender<GCastDevice>,
+    sender: Sender<GCastDiscovererMessage>,
     known_devices: Arc<Mutex<Vec<GCastDevice>>>,
 }
 
 impl GCastDiscoverer {
-    pub fn new() -> (Self, Receiver<GCastDevice>) {
+    pub fn new() -> (Self, Receiver<GCastDiscovererMessage>) {
         let (sender, receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
         let known_devices = Arc::new(Mutex::new(Vec::new()));
 
@@ -33,9 +39,14 @@ impl GCastDiscoverer {
         let sender = self.sender.clone();
 
         thread::spawn(move || {
+            // Reset previous found devices
+            known_devices.lock().unwrap().clear();
+
             debug!("Start discovering for google cast devices...");
+            sender.send(GCastDiscovererMessage::DiscoverStarted).unwrap();
+
             let discovery = mdns::discover::all("_googlecast._tcp.local").unwrap();
-            let discovery = discovery.timeout(std::time::Duration::from_secs(15));
+            let discovery = discovery.timeout(std::time::Duration::from_secs(10));
 
             for response in discovery {
                 let response = response.unwrap();
@@ -47,10 +58,12 @@ impl GCastDiscoverer {
                         debug!("Found new google cast device!");
                         debug!("{:?}", device);
                         known_devices.lock().unwrap().insert(0, device.clone());
-                        sender.send(device).unwrap();
+                        sender.send(GCastDiscovererMessage::FoundDevice(device)).unwrap();
                     }
                 });
             }
+
+            sender.send(GCastDiscovererMessage::DiscoverEnded).unwrap();
             debug!("GCast discovery ended.")
         });
     }

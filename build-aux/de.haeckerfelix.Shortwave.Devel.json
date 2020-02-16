@@ -32,7 +32,7 @@
             "RUSTFLAGS" : "--remap-path-prefix =../",
             "CARGO_HOME" : "/run/build/Shortwave/cargo",
             "RUST_BACKTRACE" : "1",
-            "RUST_LOG" : "shortwave=debug",
+            "RUST_LOG" : "debug",
             "G_MESSAGES_DEBUG" : "none"
         }
     },

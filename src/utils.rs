@@ -118,3 +118,15 @@ where
     // Add it to the map
     thing.add_action(&act);
 }
+
+// Removes all child items
+pub fn remove_all_items<T>(container: &T)
+where
+    T: IsA<gtk::Container> + gtk::ContainerExt,
+{
+    let children = container.get_children();
+    for widget in children {
+        container.remove(&widget);
+        widget.destroy();
+    }
+}

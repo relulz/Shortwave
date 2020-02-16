@@ -94,20 +94,11 @@ impl StationFlowBox {
     // Clears everything
     pub fn clear(&self) {
         self.stations.borrow_mut().clear();
-        self.clear_rows();
-    }
-
-    // Only destroy all rows, but don't clear the indexmap itself
-    fn clear_rows(&self) {
-        let children = self.widget.get_children();
-        for widget in children {
-            self.widget.remove(&widget);
-            widget.destroy();
-        }
+        utils::remove_all_items(&self.widget);
     }
 
     fn update_rows(&self) {
-        self.clear_rows();
+        utils::remove_all_items(&self.widget);
 
         let widget = self.widget.downgrade();
         let sender = self.sender.clone();
