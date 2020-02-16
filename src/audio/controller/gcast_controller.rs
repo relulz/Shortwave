@@ -183,9 +183,11 @@ impl GCastController {
 
 impl Controller for Rc<GCastController> {
     fn set_station(&self, station: Station) {
-        debug!("Called to switch stations on gcast device...");
-        *self.station.lock().unwrap() = Some(station);
-        self.gcast_sender.send(GCastAction::SetStation).unwrap();
+        if self.station.lock().unwrap().is_some() {
+            debug!("Called to switch stations on gcast device...");
+            *self.station.lock().unwrap() = Some(station);
+            self.gcast_sender.send(GCastAction::SetStation).unwrap();
+        }
     }
 
     fn set_playback_state(&self, _playback_state: &PlaybackState) {
