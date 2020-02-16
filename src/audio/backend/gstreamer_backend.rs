@@ -307,10 +307,19 @@ impl GstreamerBackend {
 
                 // Create song and return it
                 let song = self.recorderbin.lock().unwrap().clone().unwrap().stop();
-                return Some(song);
 
-            // Discard recorded data
+                // Check song duration
+                // Few stations are using the song metadata field as newstracker,
+                // which means the text changes every few seconds.
+                // Because of this reason, we shouldn't record songs with a too low duration.
+                if song.duration > std::time::Duration::from_secs(20) {
+                    return Some(song);
+                } else {
+                    info!("Ignore song \"{}\". Duration is not long enough.", song.title);
+                    return None;
+                }
             } else {
+                // Discard recorded data
                 debug!("Discard recorded data.");
                 let recorderbin = self.recorderbin.lock().unwrap().take().unwrap();
                 fs::remove_file(&recorderbin.song_path).expect("Could not delete recorded data");

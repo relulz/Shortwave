@@ -205,9 +205,11 @@ impl Player {
                 if gst_backend.lock().unwrap().is_recording() {
                     // If we're already recording something, we need to stop it first.
                     // We cannot start recording the new song immediately.
-
-                    let song = gst_backend.lock().unwrap().stop_recording(true).unwrap();
-                    song_backend.borrow_mut().add_song(song);
+                    gst_backend.lock().unwrap().stop_recording(true).map(|song| {
+                        // Add the recorded song to the song backend,
+                        // which is responsible for the file management.
+                        song_backend.borrow_mut().add_song(song);
+                    });
                 } else {
                     // If we don't record anything, we can start recording the new song
                     // immediately.
