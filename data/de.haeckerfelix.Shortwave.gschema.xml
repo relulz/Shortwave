@@ -25,6 +25,9 @@
     <key name="recorder-song-duration-threshold" type="i">
       <default>30</default>
     </key>
+    <key name="recorder-song-save-path" type="s">
+      <default>""</default>
+    </key>
   </schema>
 </schemalist>
 
