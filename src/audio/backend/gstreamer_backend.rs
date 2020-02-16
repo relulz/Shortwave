@@ -27,6 +27,39 @@ use crate::audio::Song;
 //  We use the the file_srcpad[1] to block the dataflow, so we can change the recorderbin.        //
 //  The dataflow gets blocked when the song changes.                                              //
 //                                                                                                //
+//                                                                                                //
+//  But how does recording work in detail?                                                        //
+//                                                                                                //
+//  1) We start recording a new song, when...                                                     //
+//     a) The song title changed, and there's no current recording running                        //
+//        [ player.rs -> process_gst_message() -> GstreamerMessage::SongTitleChanged ]            //
+//     b) The song title changed, and the old recording stopped                                   //
+//        [ player.rs -> process_gst_message() -> GstreamerMessage::RecordingStopped ]            //
+//                                                                                                //
+//  2) Before we can start recording, we need to ensure that the old recording is stopped.        //
+//     This is usually not the case, except it's the first song we record.                        //
+//     The recording gets stopped by calling "stop_recording()"                                   //
+//     [ player.rs -> process_gst_message() -> GstreamerMessage::SongTitleChanged ]               //
+//                                                                                                //
+//  3) First of all, we have to make sure the old recorderbin gets destroyed. So we have          //
+//     to block the pipeline first at [1], by using a block probe.                                //
+//                                                                                                //
+//  4) After the pipeline is blocked, we push a EOS event into the recorderbin sinkpad.           //
+//     We need the EOS event, otherwise we cannot remove the old recorderbin from the             //
+//     running pipeline. Without the EOS event, we would have to stop the whole pipeline.         //
+//     With it we can dynamically add/remove recorderbins from the pipeline.                      //
+//                                                                                                //
+//  5) We detect the EOS event by listening to the pipeline bus. We confirm this by sending       //
+//     the "GstreamerMessage::RecordingStopped" message.                                          //
+//     [ gstreamer_backend.rs -> parse_bus_message() -> gstreamer::MessageView::Element() ]       //
+//                                                                                                //
+//  6) After we get this message, we can start recording the new song, by creating a new          //
+//     recorderbin with "start_recording()"                                                       //
+//     [ player.rs -> process_gst_message() -> GstreamerMessage::RecordingStopped() ]             //
+//                                                                                                //
+//  7) The recorderbin gets created and appendend to the pipeline. Now the stream gets            //
+//     forwarded into a new file again.                                                           //
+//                                                                                                //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone)]
@@ -208,7 +241,7 @@ impl GstreamerBackend {
         debug!("Stop pipeline...");
         let _ = self.pipeline.set_state(State::Null);
 
-        debug!("Set new source uri...");
+        debug!("Set new source URI...");
         self.uridecodebin.set_property("uri", &source).unwrap();
 
         debug!("Start pipeline...");
@@ -216,41 +249,45 @@ impl GstreamerBackend {
     }
 
     pub fn start_recording(&mut self, path: PathBuf) {
-        debug!("Start recording to \"{:?}\"...", path);
+        debug!("Start recording to {:?}", path);
 
         // We need to set an offset, otherwise the length of the recorded song would be wrong.
         // Get current clock time and calculate offset
         let clock = self.pipeline.get_clock().expect("Could not get gstreamer pipeline clock");
-        debug!("Clock time: {}", clock.get_time());
+        debug!("( Clock time: {} )", clock.get_time());
         let offset = -(clock.get_time().nseconds().unwrap() as i64);
         self.file_srcpad.set_offset(offset);
 
-        debug!("Destroy old recorderbin...");
         if self.recorderbin.lock().unwrap().is_some() {
+            debug!("Destroyed old recorderbin.");
             self.recorderbin.lock().unwrap().take().unwrap().destroy();
         } else {
-            debug!("No recorderbin available - nothing to destroy");
+            debug!("No recorderbin available - nothing to destroy.");
         }
 
-        debug!("Create new recorderbin");
+        debug!("Create new recorderbin.");
         let recorderbin = RecorderBin::new(self.get_current_song_title(), path, self.pipeline.clone(), &self.file_srcpad);
         *self.recorderbin.lock().unwrap() = Some(recorderbin);
 
         // Remove block probe id, if available
-        debug!("Remove block probe...");
         match self.file_blockprobe_id.take() {
-            Some(id) => self.file_srcpad.remove_probe(id),
-            None => (),
+            Some(id) => {
+                self.file_srcpad.remove_probe(id);
+                debug!("Removed block probe.");
+            }
+            None => debug!("No block probe to remove."),
         }
-
-        debug!("Everything ok.");
     }
 
     pub fn stop_recording(&mut self, save_song: bool) -> Option<Song> {
-        debug!("Stop recording... (save song: {})", save_song);
+        debug!("Stop recording... (Save song: {})", save_song);
 
+        // Check if recorderbin is available
         if self.recorderbin.lock().unwrap().is_some() {
             let rbin = self.recorderbin.clone();
+
+            // Check if we want to save the recorded data
+            // Sometimes we can discard it as is got interrupted / not completely recorded
             if save_song {
                 let file_id = self
                     .file_srcpad
@@ -271,15 +308,17 @@ impl GstreamerBackend {
                 // Create song and return it
                 let song = self.recorderbin.lock().unwrap().clone().unwrap().stop();
                 return Some(song);
+
+            // Discard recorded data
             } else {
-                debug!("Discard recorded data");
+                debug!("Discard recorded data.");
                 let recorderbin = self.recorderbin.lock().unwrap().take().unwrap();
                 fs::remove_file(&recorderbin.song_path).expect("Could not delete recorded data");
                 recorderbin.destroy();
                 return None;
             }
         } else {
-            debug!("No recorderbin available - nothing to stop");
+            debug!("No recorderbin available - nothing to stop.");
             return None;
         }
     }
@@ -321,7 +360,7 @@ impl GstreamerBackend {
                     let message: gstreamer::message::Message = structure.get("message").unwrap().unwrap();
                     if let gstreamer::MessageView::Eos(_) = &message.view() {
                         // recorderbin got EOS which means the current song got successfully saved.
-                        debug!("Recorderbin received EOS...");
+                        debug!("Recorderbin received EOS event.");
                         sender.send(GstreamerMessage::RecordingStopped).unwrap();
                     }
                 }

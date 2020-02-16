@@ -129,8 +129,8 @@ impl Player {
 
         match station.url_resolved {
             Some(url) => {
+                debug!("Start playing new URI: {}", url.to_string());
                 self.gst_backend.lock().unwrap().new_source_uri(&url.to_string());
-                debug!("new source uri to record: {}", url.to_string());
             }
             None => {
                 let notification = Notification::new_error("Cannot play station", "Station URL is not valid.");
@@ -196,17 +196,22 @@ impl Player {
     fn process_gst_message(message: GstreamerMessage, controller: Rc<Vec<Box<dyn Controller>>>, song_backend: Rc<RefCell<SongBackend>>, gst_backend: Arc<Mutex<GstreamerBackend>>) -> glib::Continue {
         match message {
             GstreamerMessage::SongTitleChanged(title) => {
-                debug!("Song title has changed: \"{}\"", title);
+                debug!("Song title has changed to: \"{}\"", title);
 
                 for con in &*controller {
                     con.set_song_title(&title);
                 }
 
-                // Song have changed -> stop recording
                 if gst_backend.lock().unwrap().is_recording() {
+                    // If we're already recording something, we need to stop it first.
+                    // We cannot start recording the new song immediately.
+
                     let song = gst_backend.lock().unwrap().stop_recording(true).unwrap();
                     song_backend.borrow_mut().add_song(song);
                 } else {
+                    // If we don't record anything, we can start recording the new song
+                    // immediately.
+
                     // Get current/new song title
                     let title = gst_backend.lock().unwrap().get_current_song_title();
 
@@ -215,8 +220,9 @@ impl Player {
                 }
             }
             GstreamerMessage::RecordingStopped => {
-                // Recording successfully stopped.
-                debug!("Recording stopped.");
+                // We got the confirmation that the old recording stopped,
+                // so we can start recording the new one now.
+                debug!("Recording is stopped.");
 
                 // Get current/new song title
                 let title = gst_backend.lock().unwrap().get_current_song_title();
