@@ -148,16 +148,14 @@ impl SwApplicationWindow {
         get_widget!(self_.window_builder, gtk::Stack, view_stack);
         get_widget!(self_.window_builder, libhandy::Leaflet, leaflet);
         leaflet.connect_property_fold_notify(clone!(@strong self as this => move |leaflet| {
-            let mut current_view = View::Library;
-            if leaflet.get_property_folded() && leaflet.get_visible_child_name().unwrap() == "player" {
-                current_view = View::Player;
+            let current_view = if leaflet.get_property_folded() && leaflet.get_visible_child_name().unwrap() == "player" {
+                View::Player
             } else {
-                let view = match view_stack.get_visible_child_name().unwrap().as_str() {
+                match view_stack.get_visible_child_name().unwrap().as_str() {
                     "discover" => View::Discover,
                     _ => View::Library,
-                };
-                current_view = view;
-            }
+                }
+            };
             this.update_view(current_view);
         }));
 
