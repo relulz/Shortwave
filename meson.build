@@ -4,6 +4,24 @@ project('shortwave',
           license: 'GPLv3',
 )
 
+# Dependencies
+dependency('sqlite3', version: '>= 3.20')
+dependency('openssl', version: '>= 1.0')
+dependency('dbus-1')
+
+dependency('glib-2.0', version: '>= 2.56')
+dependency('gio-2.0', version: '>= 2.56')
+dependency('gdk-pixbuf-2.0')
+dependency('gtk+-3.0', version: '>= 3.24.11')
+dependency('libhandy-0.0', version: '>= 0.0.13')
+
+dependency('gstreamer-1.0', version: '>= 1.16')
+dependency('gstreamer-base-1.0', version: '>= 1.16')
+dependency('gstreamer-audio-1.0', version: '>= 1.16')
+dependency('gstreamer-plugins-base-1.0', version: '>= 1.16')
+dependency('gstreamer-plugins-bad-1.0', version: '>= 1.16')
+dependency('gstreamer-bad-audio-1.0', version: '>= 1.16')
+
 # Initialize project variables
 name       = 'Shortwave'
 app_id     = 'de.haeckerfelix.Shortwave'
