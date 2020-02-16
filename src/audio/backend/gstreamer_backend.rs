@@ -308,6 +308,8 @@ impl GstreamerBackend {
             gstreamer::MessageView::StateChanged(sc) => {
                 let playback_state = match sc.get_current() {
                     gstreamer::State::Playing => PlaybackState::Playing,
+                    gstreamer::State::Paused => PlaybackState::Playing,
+                    gstreamer::State::Ready => PlaybackState::Playing,
                     _ => PlaybackState::Stopped,
                 };
 
