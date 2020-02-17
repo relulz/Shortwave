@@ -21,7 +21,7 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
     The edit feature is disabled because of vandalism. I cannot change this. [More information here](http://www.radio-browser.info/gui/#/) and [here](https://github.com/segler-alex/radiobrowser-api/issues/39)
 
-- **Will Shortwave compatible with the Librem 5?**
+- **Is Shortwave compatible with the Librem 5?**
 
     Yes! We use the awesome [libhandy](https://source.puri.sm/Librem5/libhandy) library to make the interface adaptive.
 
@@ -64,21 +64,6 @@ You need following dependencies to build Shortwave:
 - [Meson Buildsystem](https://mesonbuild.com/)
 
 If you need help to build Shortwave, please don't hesitate to ask [here](https://matrix.to/#/#shortwave:matrix.org)!
-
-## To-Do
-This is what still needs to be done for the first release of Shortwave. There's probably much more.
-
-- [ ] Make application translatable
-- [x] Implement discover page
-- [ ] Implement UI selection mode (https://developer.gnome.org/hig/stable/selection-mode.html.en)
-- [x] Implement settings dialog
-- [x] Show station icons instead of placeholder icon
-- [ ] Add ability to vote for stations
-- [ ] Improve stream recorder (Add several record modes, automatically ignore songs that are shorter than 30 seconds, ...)
-- [ ] Implement GNOME Search Provider (https://gitlab.gnome.org/World/Rust/search-provider)
-- [x] Rewrite library backend using diesel crate / using a database instead of a plain json file
-- [x] radio-browser.info API: Implement async backend for discover features
-- ...
 
 ## Code Of Conduct
 We follow the [GNOME Code of Conduct](/CODE_OF_CONDUCT.mdmd).
