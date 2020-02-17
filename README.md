@@ -1,7 +1,7 @@
 # Shortwave
 Find and listen to internet radio stations
 
-![alt text](https://gitlab.gnome.org/World/Shortwave/raw/master/data/icons/hicolor/scalable/apps/de.haeckerfelix.Shortwave.svg "Logo")
+![Logo](https://gitlab.gnome.org/World/Shortwave/raw/master/data/icons/hicolor/scalable/apps/de.haeckerfelix.Shortwave.svg)
 
 ## Getting in Touch
 If you have any questions regarding the use or development of Shortwave,
@@ -29,9 +29,20 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
     [radio-browser.info](http://www.radio-browser.info/gui/#/). It's a community database. Everybody can add/edit information.
 
-## Development builds
+## Flatpak builds
 
-#### Flatpak nightly builds
+#### Beta builds
+You can install beta builds of Shortwave from the Flathub Beta repository by using this command:
+
+`flatpak install https://flathub.org/beta-repo/appstream/de.haeckerfelix.Shortwave.flatpakref`
+
+<a href="https://flathub.org/beta-repo/appstream/de.haeckerfelix.Shortwave.flatpakref"><img src="https://flathub.org/assets/badges/flathub-badge-en.png" width="200"/></a>
+
+You can get more information about beta builds [here](https://blogs.gnome.org/haeckerfelix/).
+If you haven't installed Flatpak yet, you can download it from [here](https://flatpak.org/setup/).
+
+
+#### Nightly builds
 You can install nightly builds of Shortwave by using this command:
 
 `flatpak install https://haeckerfelix.de/~repo/shortwave.flatpakref`
