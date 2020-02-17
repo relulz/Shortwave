@@ -1,5 +1,5 @@
 project('shortwave',
-          version: '0.0.1',
+          version: '0.0.2',
     meson_version: '>= 0.50.0',
           license: 'GPLv3',
 )
@@ -57,4 +57,3 @@ meson.add_dist_script(
   meson.source_root(),
   join_paths(meson.build_root(), 'meson-dist', meson.project_name() + '-' + meson.project_version())
 )
-
