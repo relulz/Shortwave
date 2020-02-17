@@ -182,13 +182,13 @@ impl GstreamerBackend {
             // We have to check if the values are the same. For some reason gstreamer sends us
             // slightly differents floats, so we round up here (only the the first two digits are
             // important for use here).
-            let mut locked = old_volume.lock().unwrap();
-            let new_val = format!("{:.2}", new_volume);
-            let old_val = format!("{:.2}", locked);
+            let mut old_volume_locked = old_volume.lock().unwrap();
+            let new_val = format!("{:.2}", old_volume_locked);
+            let old_val = format!("{:.2}", old_volume_locked);
 
             if new_val != old_val {
                 v_s.send(new_volume).unwrap();
-                *locked = new_volume;
+                *old_volume_locked = new_volume;
             }
         });
 
@@ -198,10 +198,10 @@ impl GstreamerBackend {
         let v_s = volume_sender.clone();
         pulsesink.connect_notify(Some("mute"), move |element, _| {
             let mute: bool = element.get_property("mute").unwrap().get().unwrap().unwrap();
-            let mut locked = old_volume.lock().unwrap();
-            if mute && *locked != 0.0 {
+            let mut old_volume_locked = old_volume.lock().unwrap();
+            if mute && *old_volume_locked != 0.0 {
                 v_s.send(0.0).unwrap();
-                *locked = 0.0;
+                *old_volume_locked = 0.0;
             }
         });
 
@@ -262,8 +262,8 @@ impl GstreamerBackend {
         let offset = -(clock.get_time().nseconds().unwrap() as i64);
         self.file_srcpad.set_offset(offset);
 
-        let mut locked = self.recorderbin.lock().unwrap();
-        if let Some(x) = &*locked {
+        let mut recorderbin_locked = self.recorderbin.lock().unwrap();
+        if let Some(x) = &*recorderbin_locked {
             debug!("Destroyed old recorderbin.");
             x.destroy();
         } else {
@@ -272,7 +272,7 @@ impl GstreamerBackend {
 
         debug!("Create new recorderbin.");
         let recorderbin = RecorderBin::new(self.get_current_song_title(), path, self.pipeline.clone(), &self.file_srcpad);
-        *locked = Some(recorderbin);
+        *recorderbin_locked = Some(recorderbin);
 
         // Remove block probe id, if available
         match self.file_blockprobe_id.take() {
@@ -287,8 +287,8 @@ impl GstreamerBackend {
     pub fn stop_recording(&mut self, save_song: bool) -> Option<Song> {
         debug!("Stop recording... (save song: {})", save_song);
         // Check if recorderbin is available
-        let locked = self.recorderbin.lock().unwrap();
-        if let Some(recorderbin) = &*locked {
+        let recorderbin_locked = self.recorderbin.lock().unwrap();
+        if let Some(recorderbin) = &*recorderbin_locked {
             // Check if we want to save the recorded data
             // Sometimes we can discard it as is got interrupted / not completely recorded
             if save_song {
@@ -296,8 +296,8 @@ impl GstreamerBackend {
                 let file_id = self.file_srcpad.add_probe(gstreamer::PadProbeType::BLOCK_DOWNSTREAM, move |_, _| {
                     // Dataflow is blocked
                     debug!("Push EOS into recorderbin sinkpad...");
-                    let locked = rbin.lock().unwrap();
-                    if let Some(r) = &*locked {
+                    let rbin_locked = rbin.lock().unwrap();
+                    if let Some(r) = &*rbin_locked {
                         if let Some(sinkpad) = r.gstbin.get_static_pad("sink") {
                             sinkpad.send_event(gstreamer::Event::new_eos().build());
                         }
@@ -327,7 +327,7 @@ impl GstreamerBackend {
                 // Discard recorded data
                 debug!("Discard recorded data.");
                 if let Err(err) = fs::remove_file(&recorderbin.song_path) {
-                    warn!("Could not delete recorded data:{}", err);
+                    warn!("Could not delete recorded data: {}", err);
                 }
                 recorderbin.destroy();
                 return None;
@@ -353,9 +353,9 @@ impl GstreamerBackend {
                     let new_title = t.get().unwrap().to_string();
 
                     // only send message if song title really have changed.
-                    let mut locked = current_title.lock().unwrap();
-                    if *locked != new_title {
-                        *locked = new_title.clone();
+                    let mut current_title_locked = current_title.lock().unwrap();
+                    if *current_title_locked != new_title {
+                        *current_title_locked = new_title.clone();
                         sender.send(GstreamerMessage::SongTitleChanged(new_title)).unwrap();
                     }
                 });
