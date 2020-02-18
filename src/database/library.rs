@@ -39,6 +39,10 @@ impl Library {
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
         content_box.add(&flowbox.widget);
 
+        // keyboard focus
+        get_widget!(builder, gtk::ScrolledWindow, scrolledwindow);
+        flowbox.widget.set_focus_vadjustment(&scrolledwindow.get_vadjustment().unwrap());
+
         let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
 
         let library = Self {

@@ -40,6 +40,10 @@ impl Discover {
         let clicked_flowbox = Rc::new(StationFlowBox::new(sender.clone()));
         clicked_box.add(&clicked_flowbox.widget);
 
+        // keyboard focus
+        get_widget!(builder, gtk::ScrolledWindow, scrolledwindow);
+        discover.set_focus_vadjustment(&scrolledwindow.get_vadjustment().unwrap());
+
         let search = Self {
             widget: discover,
             client,
