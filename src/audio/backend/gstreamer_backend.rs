@@ -471,7 +471,11 @@ impl RecorderBin {
     }
 
     pub fn destroy(&self) {
-        self.pipeline.remove(&self.gstbin).unwrap();
+        // TODO: Properly handle recorder create/destroy when clicking the play button too fast
+        match self.pipeline.remove(&self.gstbin) {
+            Ok(_) => (),
+            Err(_) => warn!("Could not remove recorderbin from pipeline."),
+        }
         self.gstbin.set_state(State::Null).unwrap();
     }
 }
