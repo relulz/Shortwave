@@ -73,7 +73,6 @@ impl StationFlowBox {
         for station in stations {
             // Get the corresponding widget to the index, remove and destroy it
             let index: usize = self.stations.borrow_mut().entry(station.stationuuid.clone()).index();
-            dbg!(index);
             let widget = self.widget.get_child_at_index(index.try_into().unwrap()).unwrap();
             self.widget.remove(&widget);
             widget.destroy();

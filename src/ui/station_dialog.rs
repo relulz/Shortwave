@@ -125,23 +125,25 @@ impl StationDialog {
 
     fn setup_signals(&self) {
         // remove_button
-        get_widget!(self.builder, gtk::Stack, library_action_stack);
         get_widget!(self.builder, gtk::Button, remove_button);
         let sender = self.sender.clone();
         let station = self.station.clone();
+        let widget = self.widget.clone();
         remove_button.connect_clicked(move |_| {
             sender.send(Action::LibraryRemoveStations(vec![station.clone()])).unwrap();
-            library_action_stack.set_visible_child_name("library-add");
+            widget.hide();
+            widget.destroy();
         });
 
         // add_button
-        get_widget!(self.builder, gtk::Stack, library_action_stack);
         get_widget!(self.builder, gtk::Button, add_button);
         let sender = self.sender.clone();
         let station = self.station.clone();
+        let widget = self.widget.clone();
         add_button.connect_clicked(move |_| {
             sender.send(Action::LibraryAddStations(vec![station.clone()])).unwrap();
-            library_action_stack.set_visible_child_name("library-remove");
+            widget.hide();
+            widget.destroy();
         });
     }
 }
