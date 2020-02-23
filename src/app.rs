@@ -120,14 +120,14 @@ impl ApplicationImpl for SwApplicationPrivate {
         let sender = self.sender.clone();
         self.settings.connect_changed(move |_, key_str| {
             let key: Key = Key::from_str(key_str).unwrap();
-            sender.send(Action::SettingsKeyChanged(key)).unwrap();
+            send!(sender, Action::SettingsKeyChanged(key));
         });
 
         // List all setting keys
         settings_manager::list_keys();
 
         // Small workaround to update every view to the correct sorting/order.
-        self.sender.send(Action::SettingsKeyChanged(Key::ViewSorting)).unwrap();
+        send!(self.sender, Action::SettingsKeyChanged(Key::ViewSorting));
     }
 }
 

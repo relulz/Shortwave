@@ -81,13 +81,11 @@ impl Search {
                 }
                 Err(err) => {
                     let notification = Notification::new_error("Could not receive station data.", &err.to_string());
-                    sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
+                    send!(sender, Action::ViewShowNotification(notification.clone()));
                 }
             });
 
-            let ctx = glib::MainContext::default();
-            ctx.spawn_local(fut);
-
+            spawn!(fut);
             glib::Continue(false)
         });
         *self.timeout_id.borrow_mut() = Some(id);
@@ -98,7 +96,7 @@ impl Search {
         let sender = self.sender.clone();
         search_entry.connect_search_changed(move |entry| {
             let request = StationRequest::search_for_name(&entry.get_text().unwrap(), 250);
-            sender.send(Action::SearchFor(request)).unwrap();
+            send!(sender, Action::SearchFor(request));
         });
     }
 }

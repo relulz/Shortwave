@@ -121,7 +121,7 @@ impl StreamingDialog {
 
                 // Get GCastDevice
                 let device = gcd.get_device_by_ip_addr(ip_addr).unwrap();
-                sender.send(Action::PlaybackConnectGCastDevice(device)).unwrap();
+                send!(sender, Action::PlaybackConnectGCastDevice(device));
                 widget.set_visible(false);
                 widget.hide();
             });

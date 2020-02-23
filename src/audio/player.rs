@@ -119,7 +119,7 @@ impl Player {
         // Station is broken, we refuse to play it
         if station.lastcheckok != 1 {
             let notification = Notification::new_info("This station cannot be played because the stream is offline.");
-            self.sender.send(Action::ViewShowNotification(notification)).unwrap();
+            send!(self.sender, Action::ViewShowNotification(notification));
             return;
         }
 
@@ -134,7 +134,7 @@ impl Player {
             }
             None => {
                 let notification = Notification::new_error("Cannot play station", "Station URL is not valid.");
-                self.sender.send(Action::ViewShowNotification(notification)).unwrap();
+                send!(self.sender, Action::ViewShowNotification(notification));
             }
         }
     }
@@ -189,7 +189,7 @@ impl Player {
         let sender = self.sender.clone();
         get_widget!(self.builder, gtk::Button, disconnect_button);
         disconnect_button.connect_clicked(move |_| {
-            sender.send(Action::PlaybackDisconnectGCastDevice).unwrap();
+            send!(sender, Action::PlaybackDisconnectGCastDevice);
         });
     }
 

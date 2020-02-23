@@ -51,8 +51,7 @@ impl StationDialog {
             let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Big as i32).map(move |pixbuf| {
                 pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
             });
-            let ctx = glib::MainContext::default();
-            ctx.spawn_local(fut);
+            spawn!(fut);
         });
 
         // Show correct library action
@@ -130,7 +129,7 @@ impl StationDialog {
         let station = self.station.clone();
         let widget = self.widget.clone();
         remove_button.connect_clicked(move |_| {
-            sender.send(Action::LibraryRemoveStations(vec![station.clone()])).unwrap();
+            send!(sender, Action::LibraryRemoveStations(vec![station.clone()]));
             widget.hide();
             widget.destroy();
         });
@@ -141,7 +140,7 @@ impl StationDialog {
         let station = self.station.clone();
         let widget = self.widget.clone();
         add_button.connect_clicked(move |_| {
-            sender.send(Action::LibraryAddStations(vec![station.clone()])).unwrap();
+            send!(sender, Action::LibraryAddStations(vec![station.clone()]));
             widget.hide();
             widget.destroy();
         });

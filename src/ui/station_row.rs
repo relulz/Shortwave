@@ -33,8 +33,7 @@ impl StationRow {
             let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Small as i32).map(move |pixbuf| {
                 pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
             });
-            let ctx = glib::MainContext::default();
-            ctx.spawn_local(fut);
+            spawn!(fut);
         });
 
         let stationrow = Self {
@@ -54,7 +53,7 @@ impl StationRow {
         let sender = self.sender.clone();
         let station = self.station.clone();
         play_button.connect_clicked(move |_| {
-            sender.send(Action::PlaybackSetStation(station.clone())).unwrap();
+            send!(sender, Action::PlaybackSetStation(station.clone()));
         });
     }
 }

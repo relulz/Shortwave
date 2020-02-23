@@ -169,7 +169,7 @@ impl GstreamerBackend {
         // coming from a other thread (and app::Action enum is not thread safe).
         let a_s = app_sender.clone();
         volume_receiver.attach(None, move |volume| {
-            a_s.send(Action::PlaybackSetVolume(volume)).unwrap();
+            send!(a_s, Action::PlaybackSetVolume(volume));
             glib::Continue(true)
         });
 
@@ -187,7 +187,7 @@ impl GstreamerBackend {
             let old_val = format!("{:.2}", old_volume_locked);
 
             if new_val != old_val {
-                v_s.send(new_volume).unwrap();
+                send!(v_s, new_volume);
                 *old_volume_locked = new_volume;
             }
         });
@@ -200,7 +200,7 @@ impl GstreamerBackend {
             let mute: bool = element.get_property("mute").unwrap().get().unwrap().unwrap();
             let mut old_volume_locked = old_volume.lock().unwrap();
             if mute && *old_volume_locked != 0.0 {
-                v_s.send(0.0).unwrap();
+                send!(v_s, 0.0);
                 *old_volume_locked = 0.0;
             }
         });
@@ -227,7 +227,7 @@ impl GstreamerBackend {
 
     pub fn set_state(&mut self, state: gstreamer::State) {
         if state == gstreamer::State::Null {
-            self.sender.send(GstreamerMessage::PlaybackStateChanged(PlaybackState::Stopped)).unwrap();
+            send!(self.sender, GstreamerMessage::PlaybackStateChanged(PlaybackState::Stopped));
         }
 
         let _ = self.pipeline.set_state(state);
@@ -357,7 +357,7 @@ impl GstreamerBackend {
                     let mut current_title_locked = current_title.lock().unwrap();
                     if *current_title_locked != new_title {
                         *current_title_locked = new_title.clone();
-                        sender.send(GstreamerMessage::SongTitleChanged(new_title)).unwrap();
+                        send!(sender, GstreamerMessage::SongTitleChanged(new_title));
                     }
                 });
             }
@@ -369,7 +369,7 @@ impl GstreamerBackend {
                     _ => PlaybackState::Stopped,
                 };
 
-                sender.send(GstreamerMessage::PlaybackStateChanged(playback_state)).unwrap();
+                send!(sender, GstreamerMessage::PlaybackStateChanged(playback_state));
             }
             gstreamer::MessageView::Element(element) => {
                 let structure = element.get_structure().unwrap();
@@ -378,14 +378,14 @@ impl GstreamerBackend {
                     if let gstreamer::MessageView::Eos(_) = &message.view() {
                         // recorderbin got EOS which means the current song got successfully saved.
                         debug!("Recorderbin received EOS event.");
-                        sender.send(GstreamerMessage::RecordingStopped).unwrap();
+                        send!(sender, GstreamerMessage::RecordingStopped);
                     }
                 }
             }
             gstreamer::MessageView::Error(err) => {
                 let msg = err.get_error().to_string();
                 warn!("Gstreamer Error: {:?}", msg);
-                sender.send(GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(msg))).unwrap();
+                send!(sender, GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(msg)));
             }
             _ => (),
         };

@@ -45,7 +45,7 @@ impl SongRow {
         get_widget!(self.builder, gtk::Stack, button_stack);
         get_widget!(self.builder, gtk::Button, save_button);
         save_button.connect_clicked(move |_| {
-            sender.send(Action::PlaybackSaveSong(song.clone())).unwrap();
+            send!(sender, Action::PlaybackSaveSong(song.clone()));
 
             // Show open button
             button_stack.set_visible_child_name("open");

@@ -43,7 +43,7 @@ impl GCastDiscoverer {
             known_devices.lock().unwrap().clear();
 
             debug!("Start discovering for google cast devices...");
-            sender.send(GCastDiscovererMessage::DiscoverStarted).unwrap();
+            send!(sender, GCastDiscovererMessage::DiscoverStarted);
 
             let discovery = mdns::discover::all("_googlecast._tcp.local").unwrap();
             let discovery = discovery.timeout(std::time::Duration::from_secs(10));
@@ -58,12 +58,12 @@ impl GCastDiscoverer {
                         debug!("Found new google cast device!");
                         debug!("{:?}", device);
                         known_devices.lock().unwrap().insert(0, device.clone());
-                        sender.send(GCastDiscovererMessage::FoundDevice(device)).unwrap();
+                        send!(sender, GCastDiscovererMessage::FoundDevice(device));
                     }
                 });
             }
 
-            sender.send(GCastDiscovererMessage::DiscoverEnded).unwrap();
+            send!(sender, GCastDiscovererMessage::DiscoverEnded);
             debug!("GCast discovery ended.")
         });
     }

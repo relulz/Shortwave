@@ -89,11 +89,10 @@ impl Discover {
             }
             Err(err) => {
                 let notification = Notification::new_error("Could not receive station data.", &err.to_string());
-                sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
+                send!(sender, Action::ViewShowNotification(notification.clone()));
             }
         });
 
-        let ctx = glib::MainContext::default();
-        ctx.spawn_local(fut);
+        spawn!(fut);
     }
 }

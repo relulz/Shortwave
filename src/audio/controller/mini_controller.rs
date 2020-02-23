@@ -69,19 +69,19 @@ impl MiniController {
         // start_playback_button
         let sender = self.sender.clone();
         self.start_playback_button.connect_clicked(move |_| {
-            sender.send(Action::PlaybackStart).unwrap();
+            send!(sender, Action::PlaybackStart);
         });
 
         // stop_playback_button
         let sender = self.sender.clone();
         self.stop_playback_button.connect_clicked(move |_| {
-            sender.send(Action::PlaybackStop).unwrap();
+            send!(sender, Action::PlaybackStop);
         });
 
         // show_player_button
         let sender = self.sender.clone();
         self.eventbox.connect_button_release_event(move |_, _| {
-            sender.send(Action::ViewShowPlayer).unwrap();
+            send!(sender, Action::ViewShowPlayer);
             glib::signal::Inhibit(false)
         });
     }
@@ -100,8 +100,7 @@ impl Controller for MiniController {
             let fut = FaviconDownloader::download(favicon, FaviconSize::Mini as i32).map(move |pixbuf| {
                 pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
             });
-            let ctx = glib::MainContext::default();
-            ctx.spawn_local(fut);
+            spawn!(fut);
         });
 
         // reset everything else

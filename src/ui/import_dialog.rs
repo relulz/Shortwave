@@ -26,14 +26,14 @@ pub async fn import_gradio_db(sender: Sender<Action>, window: gtk::ApplicationWi
         // Get station identifiers
         let message = format!("Converting data...");
         let spinner_notification = Notification::new_spinner(&message);
-        sender.send(Action::ViewShowNotification(spinner_notification.clone())).unwrap();
+        send!(sender, Action::ViewShowNotification(spinner_notification.clone()));
         let ids = gradio_db::read_database(path).await?;
         spinner_notification.hide();
 
         // Get actual stations from identifiers
         let message = format!("Importing {} stations...", ids.len());
         let spinner_notification = Notification::new_spinner(&message);
-        sender.send(Action::ViewShowNotification(spinner_notification.clone())).unwrap();
+        send!(sender, Action::ViewShowNotification(spinner_notification.clone()));
 
         let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
         let sender = sender.clone();
@@ -44,10 +44,10 @@ pub async fn import_gradio_db(sender: Sender<Action>, window: gtk::ApplicationWi
         }
 
         spinner_notification.hide();
-        sender.send(Action::LibraryAddStations(stations.clone())).unwrap();
+        send!(sender, Action::LibraryAddStations(stations.clone()));
         let message = format!("Imported {} stations!", stations.len());
         let notification = Notification::new_info(&message);
-        sender.send(Action::ViewShowNotification(notification)).unwrap();
+        send!(sender, Action::ViewShowNotification(notification));
     }
 
     import_dialog.destroy();

@@ -1,14 +1,7 @@
-use gio::{self, ActionMapExt};
-use glib::{self, object::WeakRef, Variant};
+use glib::{self, object::WeakRef};
 use gtk::prelude::*;
 
 use crate::api::Station;
-
-macro_rules! get_widget {
-    ($builder:expr, $wtype:ty, $name:ident) => {
-        let $name: $wtype = $builder.get_object(stringify!($name)).expect(&format!("Could not find widget \"{}\"", stringify!($name)));
-    };
-}
 
 #[derive(Display, Debug, Clone, EnumString, PartialEq)]
 pub enum Sorting {
@@ -103,22 +96,6 @@ pub fn simplify_string(s: String) -> String {
     string
 }
 
-// Creates an action named `name` in the action map `T with the handler `F`
-// Stolen from gnome-podcasts
-// https://gitlab.gnome.org/World/podcasts/blob/master/podcasts-gtk/src/window.rs
-pub fn action<T, F>(thing: &T, name: &str, action: F)
-where
-    T: ActionMapExt,
-    for<'r, 's> F: Fn(&'r gio::SimpleAction, Option<&Variant>) + 'static,
-{
-    // Create a stateless, parameterless action
-    let act = gio::SimpleAction::new(name, None);
-    // Connect the handler
-    act.connect_activate(action);
-    // Add it to the map
-    thing.add_action(&act);
-}
-
 // Removes all child items
 pub fn remove_all_items<T>(container: &T)
 where
@@ -129,4 +106,40 @@ where
         container.remove(&widget);
         widget.destroy();
     }
+}
+
+//
+// Macros
+//
+
+macro_rules! get_widget {
+    ($builder:expr, $wtype:ty, $name:ident) => {
+        let $name: $wtype = $builder.get_object(stringify!($name)).expect(&format!("Could not find widget \"{}\"", stringify!($name)));
+    };
+}
+
+// Stolen from Read-It-Later
+macro_rules! spawn {
+    ($future:expr) => {
+        let ctx = glib::MainContext::default();
+        ctx.spawn_local($future);
+    };
+}
+
+// Stolen from Read-It-Later
+macro_rules! send {
+    ($sender:expr, $action:expr) => {
+        if let Err(err) = $sender.send($action) {
+            error!("Failed to send \"{}\" action due to {}", stringify!($action), err);
+        }
+    };
+}
+
+// Stolen from Read-It-Later
+macro_rules! action {
+    ($actions_group:expr, $name:expr, $callback:expr) => {
+        let simple_action = gio::SimpleAction::new($name, None);
+        simple_action.connect_activate($callback);
+        $actions_group.add_action(&simple_action);
+    };
 }

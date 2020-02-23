@@ -73,7 +73,7 @@ impl GCastController {
                                     connected = true;
 
                                     // We need to set the station, since it already got set before.
-                                    gcast_sender.send(GCastAction::SetStation).unwrap();
+                                    send!(gcast_sender, GCastAction::SetStation);
                                 }
                                 Err(_) => warn!("Could not connect to gcast device."),
                             }
@@ -81,7 +81,7 @@ impl GCastController {
                         GCastAction::SetStation => {
                             if !connected {
                                 // We need to re-connect first
-                                gcast_sender.send(GCastAction::Connect).unwrap();
+                                send!(gcast_sender, GCastAction::Connect);
                                 continue;
                             }
                             device.as_ref().map(|d| {
@@ -119,7 +119,7 @@ impl GCastController {
                                     }
                                     _ => warn!("Unable to transfer media information to gcast device."),
                                 }
-                                gcast_sender.send(GCastAction::HeartBeat).unwrap();
+                                send!(gcast_sender, GCastAction::HeartBeat);
                             });
                         }
                         GCastAction::HeartBeat => {
@@ -151,7 +151,7 @@ impl GCastController {
                                 }
                                 Err(error) => error!("Error occurred while receiving message {}", error),
                             });
-                            gcast_sender.send(GCastAction::HeartBeat).unwrap();
+                            send!(gcast_sender, GCastAction::HeartBeat);
                         }
                         GCastAction::Disconnect => {
                             device.as_ref().map(|d| {
@@ -160,7 +160,7 @@ impl GCastController {
                                     Ok(_) => connected = false,
                                     _ => warn!("Unable to disconnect from gcast device."),
                                 }
-                                gcast_sender.send(GCastAction::HeartBeat).unwrap();
+                                send!(gcast_sender, GCastAction::HeartBeat);
                             });
                         }
                     }
@@ -172,12 +172,12 @@ impl GCastController {
     pub fn connect_to_device(&self, device: GCastDevice) {
         debug!("Called to connect to gcast device...");
         *self.device_ip.lock().unwrap() = device.ip.to_string();
-        self.gcast_sender.send(GCastAction::Connect).unwrap();
+        send!(self.gcast_sender, GCastAction::Connect);
     }
 
     pub fn disconnect_from_device(&self) {
         debug!("Called to disconnect to gcast device...");
-        self.gcast_sender.send(GCastAction::Disconnect).unwrap();
+        send!(self.gcast_sender, GCastAction::Disconnect);
     }
 }
 
@@ -186,7 +186,7 @@ impl Controller for Rc<GCastController> {
         if self.station.lock().unwrap().is_some() {
             debug!("Called to switch stations on gcast device...");
             *self.station.lock().unwrap() = Some(station);
-            self.gcast_sender.send(GCastAction::SetStation).unwrap();
+            send!(self.gcast_sender, GCastAction::SetStation);
         }
     }
 

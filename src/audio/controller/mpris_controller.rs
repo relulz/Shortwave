@@ -74,7 +74,7 @@ impl MprisController {
         // mpris raise
         let sender = self.sender.clone();
         self.mpris.connect_raise(move || {
-            sender.send(Action::ViewRaise).unwrap();
+            send!(sender, Action::ViewRaise);
         });
 
         // mpris play / pause
@@ -82,28 +82,28 @@ impl MprisController {
         let mpris = self.mpris.clone();
         self.mpris.connect_play_pause(move || {
             match mpris.get_playback_status().unwrap().as_ref() {
-                "Paused" => sender.send(Action::PlaybackStart).unwrap(),
-                "Stopped" => sender.send(Action::PlaybackStart).unwrap(),
-                _ => sender.send(Action::PlaybackStop).unwrap(),
+                "Paused" => send!(sender, Action::PlaybackStart),
+                "Stopped" => send!(sender, Action::PlaybackStart),
+                _ => send!(sender, Action::PlaybackStop),
             };
         });
 
         // mpris play
         let sender = self.sender.clone();
         self.mpris.connect_play(move || {
-            sender.send(Action::PlaybackStart).unwrap();
+            send!(sender, Action::PlaybackStart);
         });
 
         // mpris stop
         let sender = self.sender.clone();
         self.mpris.connect_stop(move || {
-            sender.send(Action::PlaybackStop).unwrap();
+            send!(sender, Action::PlaybackStop);
         });
 
         // mpris pause
         let sender = self.sender.clone();
         self.mpris.connect_pause(move || {
-            sender.send(Action::PlaybackStop).unwrap();
+            send!(sender, Action::PlaybackStop);
         });
 
         // mpris volume
@@ -111,7 +111,7 @@ impl MprisController {
         let old_volume = self.volume.clone();
         self.mpris.connect_volume(move |new_volume| {
             if *old_volume.borrow() != new_volume {
-                sender.send(Action::PlaybackSetVolume(new_volume.clone())).unwrap();
+                send!(sender, Action::PlaybackSetVolume(new_volume.clone()));
                 *old_volume.borrow_mut() = new_volume;
             }
         });

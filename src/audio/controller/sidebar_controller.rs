@@ -56,7 +56,7 @@ impl SidebarController {
         // volume_button | We need the volume_signal_id later to block the signal
         let s = sender.clone();
         let volume_signal_id = volume_button.connect_value_changed(move |_, value| {
-            s.send(Action::PlaybackSetVolume(value)).unwrap();
+            send!(s, Action::PlaybackSetVolume(value));
         });
 
         // menu button
@@ -99,34 +99,29 @@ impl SidebarController {
         // start_playback_button
         let sender = self.sender.clone();
         self.start_playback_button.connect_clicked(move |_| {
-            sender.send(Action::PlaybackStart).unwrap();
+            send!(sender, Action::PlaybackStart);
         });
 
         // stop_playback_button
         let sender = self.sender.clone();
         self.stop_playback_button.connect_clicked(move |_| {
-            sender.send(Action::PlaybackStop).unwrap();
+            send!(sender, Action::PlaybackStop);
         });
 
         // details button
         let station = self.station.clone();
         let sender = self.sender.clone();
-        let details_action = gio::SimpleAction::new("show-details", None);
-        details_action.connect_activate(move |_, _| {
+        action!(self.action_group, "show-details", move |_, _| {
             let s = station.borrow().clone().unwrap();
-
             let station_dialog = StationDialog::new(sender.clone(), s);
             station_dialog.show();
         });
-        self.action_group.add_action(&details_action);
 
         // stream button
         let streaming_dialog = self.streaming_dialog.clone();
-        let stream_action = gio::SimpleAction::new("stream-audio", None);
-        stream_action.connect_activate(move |_, _| {
+        action!(self.action_group, "stream-audio", move |_, _| {
             streaming_dialog.show();
         });
-        self.action_group.add_action(&stream_action);
     }
 }
 
@@ -143,8 +138,7 @@ impl Controller for SidebarController {
             let fut = FaviconDownloader::download(favicon, FaviconSize::Big as i32).map(move |pixbuf| {
                 pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
             });
-            let ctx = glib::MainContext::default();
-            ctx.spawn_local(fut);
+            spawn!(fut);
         });
 
         // reset everything else

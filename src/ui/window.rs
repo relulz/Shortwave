@@ -15,7 +15,6 @@ use crate::app::{Action, SwApplication, SwApplicationPrivate};
 use crate::config;
 use crate::settings::{settings_manager, Key, SettingsWindow};
 use crate::ui::{about_dialog, import_dialog, Notification};
-use crate::utils;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum View {
@@ -178,61 +177,61 @@ impl SwApplicationWindow {
         let app = window.get_application().unwrap();
 
         // win.create-new-station
-        utils::action(&window, "create-new-station", |_, _| {
+        action!(window, "create-new-station", |_, _| {
             open::that("http://www.radio-browser.info/gui/#!/add").expect("Could not open webpage.");
         });
 
         // win.quit
-        utils::action(
-            &window,
+        action!(
+            window,
             "quit",
             clone!(@strong app => move |_, _| {
                 app.quit();
-            }),
+            })
         );
         app.set_accels_for_action("win.quit", &["<primary>q"]);
 
         // win.about
-        utils::action(
-            &window,
+        action!(
+            window,
             "about",
             clone!(@strong window => move |_, _| {
                 about_dialog::show_about_dialog(window.clone());
-            }),
+            })
         );
 
         // win.show-preferences
-        utils::action(
-            &window,
+        action!(
+            window,
             "show-preferences",
             clone!(@strong window => move |_, _| {
                 let settings_window = SettingsWindow::new(&window);
                 settings_window.show();
-            }),
+            })
         );
 
         // win.show-discover
-        utils::action(
-            &window,
+        action!(
+            window,
             "show-discover",
             clone!(@strong sender => move |_, _| {
-                sender.send(Action::ViewShowDiscover).unwrap();
-            }),
+                send!(sender, Action::ViewShowDiscover);
+            })
         );
         app.set_accels_for_action("win.show-discover", &["<primary>f"]);
 
         // win.show-library
-        utils::action(
-            &window,
+        action!(
+            window,
             "show-library",
             clone!(@strong sender => move |_, _| {
-                sender.send(Action::ViewShowLibrary).unwrap();
-            }),
+                send!(sender, Action::ViewShowLibrary);
+            })
         );
 
         // win.import-gradio-library
-        utils::action(
-            &window,
+        action!(
+            window,
             "import-gradio-library",
             clone!(@strong sender, @strong window => move |_, _| {
                 let sender = sender.clone();
@@ -241,13 +240,12 @@ impl SwApplicationWindow {
                         Ok(_) => (),
                         Err(err) => {
                             let notification = Notification::new_error("Could not import library.", &err.to_string());
-                            sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
+                            send!(sender, Action::ViewShowNotification(notification.clone()));
                         }
                     }
                 });
-                let ctx = glib::MainContext::default();
-                ctx.spawn_local(future);
-            }),
+                spawn!(future);
+            })
         );
 
         // Sort / Order menu
