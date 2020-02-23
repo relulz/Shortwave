@@ -29,6 +29,9 @@ pub struct GCastController {
     gcast_sender: Sender<GCastAction>,
 }
 
+// TODO: Re-structure this mess. Code cleanup is necessary.
+// Even clippy starts to complain: "warning: the function has a cognitive complexity of (36/25)"
+// Oops.
 impl GCastController {
     pub fn new() -> Rc<Self> {
         let station = Arc::new(Mutex::new(None));
@@ -50,7 +53,6 @@ impl GCastController {
         thread::spawn(move || {
             let mut device: Option<CastDevice> = None;
             let mut app: Option<Application> = None;
-            let mut media_session_id: i32 = 0;
             let mut connected = false;
 
             loop {
@@ -84,7 +86,7 @@ impl GCastController {
                                 send!(gcast_sender, GCastAction::Connect);
                                 continue;
                             }
-                            device.as_ref().map(|d| {
+                            if let Some(d) = device.as_ref() {
                                 let s = station.lock().unwrap().as_ref().unwrap().clone();
                                 debug!("Transfer media information to gcast device...");
 
@@ -100,68 +102,64 @@ impl GCastController {
                                     release_date: None,
                                 };
 
-                                let result = d.media.load(
-                                    app.as_ref().unwrap().transport_id.as_str(),
-                                    app.as_ref().unwrap().session_id.as_str(),
-                                    &Media {
-                                        content_id: s.url.clone().unwrap().to_string(),
-                                        content_type: "".to_string(),
-                                        stream_type: StreamType::Live,
-                                        duration: None,
-                                        metadata: Some(rust_cast::channels::media::Metadata::Generic(metadata)),
-                                    },
-                                );
-
-                                match result {
-                                    Ok(status) => {
-                                        let status = status.entries.first().unwrap();
-                                        media_session_id = status.media_session_id;
-                                    }
-                                    _ => warn!("Unable to transfer media information to gcast device."),
-                                }
+                                d.media
+                                    .load(
+                                        app.as_ref().unwrap().transport_id.as_str(),
+                                        app.as_ref().unwrap().session_id.as_str(),
+                                        &Media {
+                                            content_id: s.url.unwrap().to_string(),
+                                            content_type: "".to_string(),
+                                            stream_type: StreamType::Live,
+                                            duration: None,
+                                            metadata: Some(rust_cast::channels::media::Metadata::Generic(metadata)),
+                                        },
+                                    )
+                                    .unwrap();
                                 send!(gcast_sender, GCastAction::HeartBeat);
-                            });
+                            };
                         }
                         GCastAction::HeartBeat => {
                             if !connected {
                                 continue;
                             }
-                            device.as_ref().map(|d| match d.receive() {
-                                Ok(ChannelMessage::Heartbeat(response)) => {
-                                    debug!("GCast [Heartbeat] {:?}", response);
-                                    if let HeartbeatResponse::Ping = response {
-                                        d.heartbeat.pong().unwrap();
+                            if let Some(d) = device.as_ref() {
+                                match d.receive() {
+                                    Ok(ChannelMessage::Heartbeat(response)) => {
+                                        debug!("GCast [Heartbeat] {:?}", response);
+                                        if let HeartbeatResponse::Ping = response {
+                                            d.heartbeat.pong().unwrap();
+                                        }
                                     }
-                                }
-                                Ok(ChannelMessage::Connection(response)) => {
-                                    debug!("GCast [Connection] {:?}", response);
-                                    if let ConnectionResponse::Close = response {
-                                        connected = false;
-                                        warn!("GCast [Connection] Closed remotely");
+                                    Ok(ChannelMessage::Connection(response)) => {
+                                        debug!("GCast [Connection] {:?}", response);
+                                        if let ConnectionResponse::Close = response {
+                                            connected = false;
+                                            warn!("GCast [Connection] Closed remotely");
+                                        }
                                     }
-                                }
-                                Ok(ChannelMessage::Media(response)) => {
-                                    debug!("GCast [Media] {:?}", response);
-                                }
-                                Ok(ChannelMessage::Receiver(response)) => {
-                                    debug!("GCast [Receiver] {:?}", response);
-                                }
-                                Ok(ChannelMessage::Raw(response)) => {
-                                    debug!("GCast [Raw] {:?}", response);
-                                }
-                                Err(error) => error!("Error occurred while receiving message {}", error),
-                            });
-                            send!(gcast_sender, GCastAction::HeartBeat);
+                                    Ok(ChannelMessage::Media(response)) => {
+                                        debug!("GCast [Media] {:?}", response);
+                                    }
+                                    Ok(ChannelMessage::Receiver(response)) => {
+                                        debug!("GCast [Receiver] {:?}", response);
+                                    }
+                                    Ok(ChannelMessage::Raw(response)) => {
+                                        debug!("GCast [Raw] {:?}", response);
+                                    }
+                                    Err(error) => error!("Error occurred while receiving message {}", error),
+                                };
+                                send!(gcast_sender, GCastAction::HeartBeat);
+                            }
                         }
                         GCastAction::Disconnect => {
-                            device.as_ref().map(|d| {
+                            if let Some(d) = device.as_ref() {
                                 debug!("Disconnect from gcast device...");
                                 match d.receiver.stop_app(app.as_ref().unwrap().session_id.as_str()) {
                                     Ok(_) => connected = false,
                                     _ => warn!("Unable to disconnect from gcast device."),
                                 }
                                 send!(gcast_sender, GCastAction::HeartBeat);
-                            });
+                            }
                         }
                     }
                 }

@@ -78,7 +78,7 @@ pub async fn id2uuid(identifier: StationIdentifier) -> Result<Option<StationIden
     let data = isahc::get_async(url.to_string()).await?.text_async().await?;
 
     let s: Vec<GradioStation> = serde_json::from_str(data.as_str())?;
-    if s.len() == 0 {
+    if s.is_empty() {
         return Ok(None);
     }
     let station = s[0].clone();

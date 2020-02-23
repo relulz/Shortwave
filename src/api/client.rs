@@ -34,15 +34,13 @@ impl Client {
 
         // Parse text to Vec<Station>
         let mut s: Vec<Station> = serde_json::from_str(data.as_str())?;
-        let station = match s.pop() {
+        match s.pop() {
             Some(station) => Ok(station),
             None => {
                 warn!("API: No station for identifier \"{}\" found", identifier.stationuuid);
-                return Err(Error::ApiError);
+                Err(Error::ApiError)
             }
-        };
-
-        station
+        }
     }
 
     // Create and send message, return the received data.
@@ -53,7 +51,9 @@ impl Client {
 
     fn build_url(&self, param: &str, options: Option<&str>) -> Result<Url, Error> {
         let mut url = self.server.join(param)?;
-        options.map(|options| url.set_query(Some(options)));
+        if let Some(options) = options {
+            url.set_query(Some(options))
+        }
         Ok(url)
     }
 }

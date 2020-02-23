@@ -152,10 +152,9 @@ impl GstreamerBackend {
         let s = gst_sender.clone();
         gtk::timeout_add(250, move || {
             while bus.have_pending() {
-                bus.pop().map(|message| {
-                    //debug!("new message {:?}", message);
+                if let Some(message) = bus.pop() {
                     Self::parse_bus_message(&message, s.clone(), ct.clone());
-                });
+                }
             }
             Continue(true)
         });
@@ -167,7 +166,7 @@ impl GstreamerBackend {
 
         // We need to do message passing (sender/receiver) here, because gstreamer messages are
         // coming from a other thread (and app::Action enum is not thread safe).
-        let a_s = app_sender.clone();
+        let a_s = app_sender;
         volume_receiver.attach(None, move |volume| {
             send!(a_s, Action::PlaybackSetVolume(volume));
             glib::Continue(true)
@@ -195,7 +194,7 @@ impl GstreamerBackend {
         // It's possible to mute the audio (!= 0.0) from pulseaudio side, so we should handle
         // this too by setting the volume to 0.0
         let old_volume = volume.clone();
-        let v_s = volume_sender.clone();
+        let v_s = volume_sender;
         pulsesink.connect_notify(Some("mute"), move |element, _| {
             let mute: bool = element.get_property("mute").unwrap().get().unwrap().unwrap();
             let mut old_volume_locked = old_volume.lock().unwrap();
@@ -205,7 +204,7 @@ impl GstreamerBackend {
             }
         });
 
-        let pipeline = Self {
+        Self {
             pipeline,
             uridecodebin,
             audioconvert,
@@ -220,9 +219,7 @@ impl GstreamerBackend {
             volume,
             volume_signal_id,
             sender: gst_sender,
-        };
-
-        pipeline
+        }
     }
 
     pub fn set_state(&mut self, state: gstreamer::State) {
@@ -315,10 +312,10 @@ impl GstreamerBackend {
                 // Because of this reason, we shouldn't record songs with a too low duration.
                 let threshold: u64 = settings_manager::get_integer(Key::RecorderSongDurationThreshold).try_into().unwrap();
                 if song.duration > std::time::Duration::from_secs(threshold) {
-                    return Some(song);
+                    Some(song)
                 } else {
                     info!("Ignore song \"{}\". Duration is not long enough.", song.title);
-                    return None;
+                    None
                 }
             } else {
                 // Discard recorded data
@@ -331,11 +328,11 @@ impl GstreamerBackend {
                 // Recorderbin got destroyed, so make out of the Option<RecorderBin> a None!
                 self.recorderbin.lock().unwrap().take().unwrap();
 
-                return None;
+                None
             }
         } else {
             debug!("No recorderbin available - nothing to stop.");
-            return None;
+            None
         }
     }
 
@@ -350,7 +347,7 @@ impl GstreamerBackend {
     fn parse_bus_message(message: &gstreamer::Message, sender: Sender<GstreamerMessage>, current_title: Arc<Mutex<String>>) {
         match message.view() {
             gstreamer::MessageView::Tag(tag) => {
-                tag.get_tags().get::<gstreamer::tags::Title>().map(|t| {
+                if let Some(t) = tag.get_tags().get::<gstreamer::tags::Title>() {
                     let new_title = t.get().unwrap().to_string();
 
                     // only send message if song title really have changed.
@@ -359,7 +356,7 @@ impl GstreamerBackend {
                         *current_title_locked = new_title.clone();
                         send!(sender, GstreamerMessage::SongTitleChanged(new_title));
                     }
-                });
+                }
             }
             gstreamer::MessageView::StateChanged(sc) => {
                 let playback_state = match sc.get_current() {

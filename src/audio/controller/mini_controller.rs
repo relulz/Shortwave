@@ -96,12 +96,14 @@ impl Controller for MiniController {
 
         // Download & set icon
         let station_favicon = self.station_favicon.clone();
-        station.favicon.map(|favicon| {
+        if let Some(favicon) = station.favicon {
             let fut = FaviconDownloader::download(favicon, FaviconSize::Mini as i32).map(move |pixbuf| {
-                pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
+                if let Ok(pixbuf) = pixbuf {
+                    station_favicon.set_pixbuf(pixbuf)
+                }
             });
             spawn!(fut);
-        });
+        }
 
         // reset everything else
         self.station_favicon.reset();

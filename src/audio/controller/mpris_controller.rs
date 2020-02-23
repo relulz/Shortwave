@@ -51,7 +51,7 @@ impl MprisController {
         let station = self.station.take();
         let song_title = self.song_title.take();
 
-        station.clone().map(|station| {
+        if let Some(station) = station.clone() {
             station.favicon.map(|favicon| {
                 FaviconDownloader::get_file(&favicon).map(|file| {
                     let path = format!("file://{}", file.get_path().unwrap().to_str().unwrap().to_owned());
@@ -59,10 +59,10 @@ impl MprisController {
                 })
             });
             metadata.artist = Some(vec![station.name]);
-        });
-        song_title.clone().map(|song_title| {
+        }
+        if let Some(song_title) = song_title.clone() {
             metadata.title = Some(song_title);
-        });
+        }
 
         self.station.set(station);
         self.song_title.set(song_title);
@@ -110,8 +110,9 @@ impl MprisController {
         let sender = self.sender.clone();
         let old_volume = self.volume.clone();
         self.mpris.connect_volume(move |new_volume| {
-            if *old_volume.borrow() != new_volume {
-                send!(sender, Action::PlaybackSetVolume(new_volume.clone()));
+            // if *old_volume.borrow() != new_volume {
+            if (*old_volume.borrow() - new_volume).abs() > std::f64::EPSILON {
+                send!(sender, Action::PlaybackSetVolume(new_volume));
                 *old_volume.borrow_mut() = new_volume;
             }
         });

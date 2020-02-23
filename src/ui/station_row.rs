@@ -29,12 +29,14 @@ impl StationRow {
         get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = StationFavicon::new(FaviconSize::Small);
         favicon_box.add(&station_favicon.widget);
-        station.favicon.as_ref().map(|favicon| {
+        if let Some(favicon) = station.favicon.as_ref() {
             let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Small as i32).map(move |pixbuf| {
-                pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
+                if let Ok(pixbuf) = pixbuf {
+                    station_favicon.set_pixbuf(pixbuf)
+                }
             });
             spawn!(fut);
-        });
+        }
 
         let stationrow = Self {
             widget: station_row,
@@ -53,7 +55,7 @@ impl StationRow {
         let sender = self.sender.clone();
         let station = self.station.clone();
         play_button.connect_clicked(move |_| {
-            send!(sender, Action::PlaybackSetStation(station.clone()));
+            send!(sender, Action::PlaybackSetStation(Box::new(station.clone())));
         });
     }
 }

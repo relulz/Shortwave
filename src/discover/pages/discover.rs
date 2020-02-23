@@ -80,7 +80,7 @@ impl Discover {
 
     fn fill_flowbox(&self, fb: Rc<StationFlowBox>, request: StationRequest) {
         let client = self.client.clone();
-        let flowbox = fb.clone();
+        let flowbox = fb;
         let sender = self.sender.clone();
         let fut = client.send_station_request(request).map(move |stations| match stations {
             Ok(s) => {
@@ -89,7 +89,7 @@ impl Discover {
             }
             Err(err) => {
                 let notification = Notification::new_error("Could not receive station data.", &err.to_string());
-                send!(sender, Action::ViewShowNotification(notification.clone()));
+                send!(sender, Action::ViewShowNotification(notification));
             }
         });
 

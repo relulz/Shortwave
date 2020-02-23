@@ -92,7 +92,7 @@ impl Library {
 
     fn update_stack_page(library_stack: &gtk::Stack) {
         let ids = queries::get_station_identifiers().unwrap();
-        if ids.len() == 0 {
+        if ids.is_empty() {
             library_stack.set_visible_child_name("empty");
         } else {
             library_stack.set_visible_child_name("content");
@@ -125,7 +125,7 @@ impl Library {
                     Ok(station) => stations.insert(0, station),
                     Err(err) => {
                         let notification = Notification::new_error("Could not receive station data.", &err.to_string());
-                        send!(sender, Action::ViewShowNotification(notification.clone()));
+                        send!(sender, Action::ViewShowNotification(notification));
                         break;
                     }
                 }

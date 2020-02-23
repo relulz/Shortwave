@@ -142,10 +142,10 @@ impl Player {
     pub fn set_playback(&self, playback: PlaybackState) {
         match playback {
             PlaybackState::Playing => {
-                let _ = self.gst_backend.lock().unwrap().set_state(gstreamer::State::Playing);
+                self.gst_backend.lock().unwrap().set_state(gstreamer::State::Playing);
             }
             PlaybackState::Stopped => {
-                let _ = self.gst_backend.lock().unwrap().set_state(gstreamer::State::Null);
+                self.gst_backend.lock().unwrap().set_state(gstreamer::State::Null);
             }
             _ => (),
         }
@@ -205,11 +205,12 @@ impl Player {
                 if gst_backend.lock().unwrap().is_recording() {
                     // If we're already recording something, we need to stop it first.
                     // We cannot start recording the new song immediately.
-                    gst_backend.lock().unwrap().stop_recording(true).map(|song| {
+
+                    if let Some(song) = gst_backend.lock().unwrap().stop_recording(true) {
                         // Add the recorded song to the song backend,
                         // which is responsible for the file management.
                         song_backend.borrow_mut().add_song(song);
-                    });
+                    }
                 } else {
                     // If we don't record anything, we can start recording the new song
                     // immediately.

@@ -30,7 +30,7 @@ pub enum Action {
     ViewShowNotification(Rc<Notification>),
     PlaybackConnectGCastDevice(GCastDevice),
     PlaybackDisconnectGCastDevice,
-    PlaybackSetStation(Station),
+    PlaybackSetStation(Box<Station>),
     PlaybackStart,
     PlaybackStop,
     PlaybackSetVolume(f64),
@@ -194,7 +194,7 @@ impl SwApplication {
             Action::PlaybackConnectGCastDevice(device) => self_.player.connect_to_gcast_device(device),
             Action::PlaybackDisconnectGCastDevice => self_.player.disconnect_from_gcast_device(),
             Action::PlaybackSetStation(station) => {
-                self_.player.set_station(station.clone());
+                self_.player.set_station(*station);
                 self_.window.borrow().as_ref().unwrap().show_player_widget(self_.player.widget.clone());
             }
             Action::PlaybackStart => self_.player.set_playback(PlaybackState::Playing),

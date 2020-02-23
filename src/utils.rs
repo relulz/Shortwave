@@ -26,9 +26,7 @@ pub fn station_cmp(a: &Station, b: &Station, sorting: Sorting, order: Order) -> 
     let mut station_b = b.clone();
 
     if order == Order::Descending {
-        let tmp = station_a;
-        station_a = station_b;
-        station_b = tmp;
+        std::mem::swap(&mut station_a, &mut station_b);
     }
 
     match sorting {

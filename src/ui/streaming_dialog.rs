@@ -47,7 +47,7 @@ impl StreamingDialog {
                     loading_revealer.set_reveal_child(true);
                 }
                 GCastDiscovererMessage::DiscoverEnded => {
-                    if devices_listbox.get_children().len() == 0 {
+                    if devices_listbox.get_children().is_empty() {
                         stream_stack.set_visible_child_name("no-devices");
                     } else {
                         stream_stack.set_visible_child_name("results");
@@ -112,7 +112,7 @@ impl StreamingDialog {
         let gcd = self.gcd.clone();
         let sender = self.sender.clone();
         connect_button.connect_clicked(move |_| {
-            devices_listbox.get_selected_row().map(|active_row| {
+            if let Some(active_row) = devices_listbox.get_selected_row() {
                 // Very hackish way to get the selected ip address
                 let box1: gtk::Box = active_row.get_children()[0].clone().downcast().unwrap();
                 let box2: gtk::Box = box1.get_children()[0].clone().downcast().unwrap();
@@ -124,7 +124,7 @@ impl StreamingDialog {
                 send!(sender, Action::PlaybackConnectGCastDevice(device));
                 widget.set_visible(false);
                 widget.hide();
-            });
+            }
         });
 
         // hide on delete

@@ -2,7 +2,6 @@ use glib::Sender;
 use indexmap::IndexMap;
 
 use std::fs;
-use std::path::PathBuf;
 
 use crate::app::Action;
 use crate::audio::Song;
@@ -26,11 +25,10 @@ pub struct SongBackend {
 
 impl SongBackend {
     pub fn new(sender: Sender<Action>, save_count: usize) -> Self {
-        let listbox = SongListBox::new(sender.clone());
+        let listbox = SongListBox::new(sender);
         let songs = IndexMap::new();
 
-        let song_backend = Self { listbox, songs, save_count };
-        song_backend
+        Self { listbox, songs, save_count }
     }
 
     pub fn add_song(&mut self, song: Song) {
@@ -40,7 +38,7 @@ impl SongBackend {
             if self.songs.len() >= self.save_count {
                 // Get oldest song to remove
                 let song = self.songs.get_index(0).unwrap().1.clone();
-                self.remove_song(song.clone());
+                self.remove_song(song);
             }
 
             // Add song to indexmap & listbox
@@ -63,7 +61,7 @@ impl SongBackend {
     }
 
     pub fn save_song(&self, song: Song) {
-        let mut dest_path = PathBuf::from(glib::get_user_special_dir(glib::UserDirectory::Music).unwrap());
+        let mut dest_path = glib::get_user_special_dir(glib::UserDirectory::Music).unwrap();
         dest_path.push(song.path.file_name().unwrap());
 
         let custom_path = settings_manager::get_string(Key::RecorderSongSavePath);

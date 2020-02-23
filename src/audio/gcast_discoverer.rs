@@ -53,14 +53,14 @@ impl GCastDiscoverer {
 
                 let known_devices = known_devices.clone();
                 let sender = sender.clone();
-                Self::get_device(response).map(move |device| {
+                if let Some(device) = Self::get_device(response) {
                     if !known_devices.lock().unwrap().contains(&device) {
                         debug!("Found new google cast device!");
                         debug!("{:?}", device);
                         known_devices.lock().unwrap().insert(0, device.clone());
                         send!(sender, GCastDiscovererMessage::FoundDevice(device));
                     }
-                });
+                }
             }
 
             send!(sender, GCastDiscovererMessage::DiscoverEnded);
@@ -80,7 +80,7 @@ impl GCastDiscoverer {
     fn get_device(response: mdns::Response) -> Option<GCastDevice> {
         let mut values: HashMap<String, String> = HashMap::new();
 
-        let addr = response.records().filter_map(Self::to_ip_addr).next();
+        let addr = response.records().filter_map(Self::record_to_ip_addr).next();
         if addr == None {
             debug!("Cast device does not advertise address.");
             return None;
@@ -92,7 +92,7 @@ impl GCastDiscoverer {
             if let mdns::RecordKind::TXT(v) = record.kind {
                 // Iterate TXT values
                 for value in v {
-                    let tmp = value.split("=").collect::<Vec<&str>>();
+                    let tmp = value.split('=').collect::<Vec<&str>>();
                     values.insert(tmp[0].to_string(), tmp[1].to_string());
                 }
                 break;
@@ -108,7 +108,7 @@ impl GCastDiscoverer {
         Some(device)
     }
 
-    fn to_ip_addr(record: &Record) -> Option<IpAddr> {
+    fn record_to_ip_addr(record: &Record) -> Option<IpAddr> {
         match record.kind {
             RecordKind::A(addr) => Some(addr.into()),
             RecordKind::AAAA(addr) => Some(addr.into()),

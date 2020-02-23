@@ -29,7 +29,7 @@ impl StoreFront {
 
         // Search
         get_widget!(builder, gtk::Box, search_box);
-        let search = Search::new(sender.clone());
+        let search = Search::new(sender);
         search_box.add(&search.widget);
 
         let storefront = Self {

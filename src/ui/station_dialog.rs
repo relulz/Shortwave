@@ -47,12 +47,14 @@ impl StationDialog {
         get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = StationFavicon::new(FaviconSize::Big);
         favicon_box.add(&station_favicon.widget);
-        station.favicon.as_ref().map(|favicon| {
+        if let Some(favicon) = station.favicon.as_ref() {
             let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Big as i32).map(move |pixbuf| {
-                pixbuf.ok().map(|pixbuf| station_favicon.set_pixbuf(pixbuf));
+                if let Ok(pixbuf) = pixbuf {
+                    station_favicon.set_pixbuf(pixbuf)
+                }
             });
             spawn!(fut);
-        });
+        }
 
         // Show correct library action
         get_widget!(builder, gtk::Stack, library_action_stack);

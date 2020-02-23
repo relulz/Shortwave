@@ -55,9 +55,8 @@ impl Search {
     pub fn search_for(&self, request: StationRequest) {
         // Reset previous timeout
         let id: Option<glib::source::SourceId> = self.timeout_id.borrow_mut().take();
-        match id {
-            Some(id) => glib::source::source_remove(id),
-            None => (),
+        if let Some(id) = id {
+            glib::source::source_remove(id)
         }
 
         // Start new timeout
@@ -81,7 +80,7 @@ impl Search {
                 }
                 Err(err) => {
                     let notification = Notification::new_error("Could not receive station data.", &err.to_string());
-                    send!(sender, Action::ViewShowNotification(notification.clone()));
+                    send!(sender, Action::ViewShowNotification(notification));
                 }
             });
 

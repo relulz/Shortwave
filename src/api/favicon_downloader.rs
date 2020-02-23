@@ -6,7 +6,6 @@ use url::Url;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hash;
 use std::hash::Hasher;
-use std::path::PathBuf;
 
 use crate::api::Error;
 use crate::path;
@@ -15,7 +14,7 @@ pub struct FaviconDownloader {}
 
 impl FaviconDownloader {
     pub async fn download(url: Url, size: i32) -> Result<Pixbuf, Error> {
-        match Self::get_cached_pixbuf(&url, &size).await {
+        match Self::get_cached_pixbuf(&url, size).await {
             Ok(pixbuf) => return Ok(pixbuf),
             Err(_) => debug!("No cached favicon available for {:?}", url),
         }
@@ -38,16 +37,16 @@ impl FaviconDownloader {
             .expect("Could not write favicon data");
 
         // Open downloaded favicon as pixbuf
-        Ok(Self::get_cached_pixbuf(&url, &size).await?)
+        Ok(Self::get_cached_pixbuf(&url, size).await?)
     }
 
-    async fn get_cached_pixbuf(url: &Url, size: &i32) -> Result<Pixbuf, Error> {
+    async fn get_cached_pixbuf(url: &Url, size: i32) -> Result<Pixbuf, Error> {
         let file = Self::get_file(&url)?;
         if Self::exists(&file) {
             let ios = file.open_readwrite_async_future(glib::PRIORITY_DEFAULT).await.expect("Could not open file");
             let data_input_stream = DataInputStream::new(&ios.get_input_stream().unwrap());
 
-            Ok(Pixbuf::new_from_stream_at_scale_async_future(&data_input_stream, *size, *size, true).await?)
+            Ok(Pixbuf::new_from_stream_at_scale_async_future(&data_input_stream, size, size, true).await?)
         } else {
             Err(Error::CacheError)
         }
@@ -68,7 +67,7 @@ impl FaviconDownloader {
     }
 
     fn exists(file: &gio::File) -> bool {
-        let path = PathBuf::from(file.get_path().unwrap());
+        let path = file.get_path().unwrap();
         path.exists()
     }
 }

@@ -86,7 +86,7 @@ impl StationFavicon {
                 cr.save();
                 cr.scale(1.0 / scale_factor, 1.0 / scale_factor);
 
-                let mask = Self::get_mask(image.clone(), size.clone());
+                let mask = Self::get_mask(image.clone(), size);
                 let x_offset = (width as f64 * scale_factor - pixbuf.get_width() as f64) / 2.0;
                 let y_offset = (height as f64 * scale_factor - pixbuf.get_height() as f64) / 2.0;
 
@@ -95,7 +95,7 @@ impl StationFavicon {
                 cr.restore();
                 gtk::Inhibit(false)
             }
-            None => return gtk::Inhibit(false),
+            None => gtk::Inhibit(false),
         }
     }
 
@@ -106,17 +106,14 @@ impl StationFavicon {
 
         let mask = cairo::ImageSurface::create(cairo::Format::A8, (width * scale_factor) as i32, (height * scale_factor) as i32).unwrap();
 
-        let mut border_radius = 8.0;
-        if size == FaviconSize::Mini {
-            border_radius = 0.0;
-        }
+        let border_radius = if size == FaviconSize::Mini { 0.0 } else { 8.0 };
 
         let cr = Context::new(&mask);
-        cr.scale(scale_factor.into(), scale_factor.into());
-        Self::rounded_rectangle(cr.clone(), 0.0, 0.0, width, height, border_radius, size.clone());
+        cr.scale(scale_factor, scale_factor);
+        Self::rounded_rectangle(cr.clone(), 0.0, 0.0, width, height, border_radius, size);
         cr.fill();
 
-        return mask;
+        mask
     }
 
     fn rounded_rectangle(cr: Context, x: f64, y: f64, width: f64, height: f64, radius: f64, size: FaviconSize) {
@@ -143,7 +140,7 @@ impl StationFavicon {
 
     fn setup_signals(&self) {
         let pixbuf = self.pixbuf.clone();
-        let size = self.size.clone();
-        self.image.connect_draw(move |dr, ctx| Self::draw_image(dr, ctx, pixbuf.clone(), size.clone()));
+        let size = self.size;
+        self.image.connect_draw(move |dr, ctx| Self::draw_image(dr, ctx, pixbuf.clone(), size));
     }
 }

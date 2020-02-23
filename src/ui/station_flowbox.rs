@@ -51,7 +51,7 @@ impl StationFlowBox {
             let index = child.get_index();
             let station = stations.borrow().get_index(index.try_into().unwrap()).unwrap().1.clone();
 
-            let station_dialog = StationDialog::new(sender.clone(), station.clone());
+            let station_dialog = StationDialog::new(sender.clone(), station);
             station_dialog.show();
         });
     }
@@ -83,8 +83,8 @@ impl StationFlowBox {
     }
 
     pub fn set_sorting(&self, sorting: Sorting, order: Order) {
-        *self.sorting.borrow_mut() = sorting.clone();
-        *self.order.borrow_mut() = order.clone();
+        *self.sorting.borrow_mut() = sorting;
+        *self.order.borrow_mut() = order;
 
         self.sort();
         self.update_rows();
@@ -102,10 +102,10 @@ impl StationFlowBox {
         let widget = self.widget.downgrade();
         let sender = self.sender.clone();
         let stations = self.stations.borrow().clone();
-        let constructor = move |station: (String, Station)| StationRow::new(sender.clone(), station.1).widget.clone();
+        let constructor = move |station: (String, Station)| StationRow::new(sender.clone(), station.1).widget;
 
         // Start lazy loading
-        utils::lazy_load(stations.clone(), widget.clone(), constructor.clone());
+        utils::lazy_load(stations, widget, constructor);
     }
 
     fn sort(&self) {

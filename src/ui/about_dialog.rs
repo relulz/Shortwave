@@ -4,8 +4,8 @@ use gtk::prelude::*;
 pub fn show_about_dialog(window: gtk::ApplicationWindow) {
     let vcs_tag = config::VCS_TAG;
     let version: String = match config::PROFILE {
-        "development" => format!("{} \n(Development Commit {})", config::VERSION, vcs_tag).to_string(),
-        "beta" => format!("Beta {}", config::VERSION.split_at(4).1).to_string(),
+        "development" => format!("{} \n(Development Commit {})", config::VERSION, vcs_tag),
+        "beta" => format!("Beta {}", config::VERSION.split_at(4).1),
         _ => "".to_string(),
     };
 

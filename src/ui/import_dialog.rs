@@ -19,13 +19,12 @@ pub async fn import_gradio_db(sender: Sender<Action>, window: gtk::ApplicationWi
     filter.add_mime_type("application/x-sqlite3");
     filter.add_mime_type("application/vnd.sqlite3");
 
-    if gtk::ResponseType::from(import_dialog.run()) == gtk::ResponseType::Accept {
+    if import_dialog.run() == gtk::ResponseType::Accept {
         let path = import_dialog.get_file().unwrap().get_path().unwrap();
         debug!("Import path: {:?}", path);
 
         // Get station identifiers
-        let message = format!("Converting data...");
-        let spinner_notification = Notification::new_spinner(&message);
+        let spinner_notification = Notification::new_spinner("Converting data...");
         send!(sender, Action::ViewShowNotification(spinner_notification.clone()));
         let ids = gradio_db::read_database(path).await?;
         spinner_notification.hide();

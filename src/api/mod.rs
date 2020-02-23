@@ -1,5 +1,5 @@
-static STATION_SEARCH: &'static str = "json/stations/search";
-static STATION_BY_UUID: &'static str = "json/stations/byuuid/";
+static STATION_SEARCH: &str = "json/stations/search";
+static STATION_BY_UUID: &str = "json/stations/byuuid/";
 
 mod client;
 mod error;

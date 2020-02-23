@@ -240,7 +240,7 @@ impl SwApplicationWindow {
                         Ok(_) => (),
                         Err(err) => {
                             let notification = Notification::new_error("Could not import library.", &err.to_string());
-                            send!(sender, Action::ViewShowNotification(notification.clone()));
+                            send!(sender, Action::ViewShowNotification(notification));
                         }
                     }
                 });

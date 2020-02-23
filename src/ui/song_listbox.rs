@@ -29,7 +29,7 @@ impl SongListBox {
     }
 
     pub fn add_song(&mut self, song: Song) {
-        let row = SongRow::new(self.sender.clone(), song.clone());
+        let row = SongRow::new(self.sender.clone(), song);
         self.listbox.insert(&row.widget, 0);
 
         self.update_stack();
@@ -50,7 +50,7 @@ impl SongListBox {
     }
 
     fn update_stack(&self) {
-        if self.listbox.get_children().len() != 0 {
+        if !self.listbox.get_children().is_empty() {
             self.stack.set_visible_child_name("content");
         } else {
             self.stack.set_visible_child_name("empty");
