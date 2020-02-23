@@ -45,10 +45,6 @@ pub struct GradioStationID {
     pub station_id: i32,
 }
 
-pub fn is_id_db(ids: &Vec<StationIdentifier>) -> bool {
-    ids.len() != 0 && !ids[0].stationuuid.contains("-")
-}
-
 pub async fn read_database(path: PathBuf) -> Result<Vec<StationIdentifier>, Error> {
     // Establish connection to database
     let connection: diesel::SqliteConnection = Connection::establish(path.to_str().unwrap()).unwrap();

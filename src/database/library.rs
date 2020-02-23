@@ -1,3 +1,4 @@
+use futures_util::future::FutureExt;
 use glib::Sender;
 use gtk::prelude::*;
 use url::Url;
@@ -8,7 +9,6 @@ use crate::api::{Client, Station};
 use crate::app::Action;
 use crate::config;
 use crate::database::connection;
-use crate::database::gradio_db;
 use crate::database::queries;
 use crate::database::StationIdentifier;
 use crate::settings::{settings_manager, Key};
@@ -105,65 +105,14 @@ impl Library {
         info!("Stations: {}", queries::get_station_identifiers().unwrap().len());
 
         // Load database async
-        let mut identifiers = queries::get_station_identifiers().unwrap();
+        let identifiers = queries::get_station_identifiers().unwrap();
         let ctx = glib::MainContext::default();
 
         let flowbox = self.flowbox.clone();
         let library_stack = self.library_stack.clone();
         let client = self.client.clone();
         let sender = self.sender.clone();
-
-        let future = async move {
-            // Shortwave Beta 1 or older saves the library data by using simple IDs.
-            // Since January 2020 Shortwaves is using the new radio-browser.info API,
-            // which is using UUIDs instead of IDs.
-            // Instead of wiping the library data (that would be the easiest way), we're
-            // migrating the data to UUIDs, so Shortwave Beta 1 users are keeping their
-            // data. That also means, after Shortwave Beta 2 releases, we can remove that part
-            // again.
-
-            if gradio_db::is_id_db(&identifiers) {
-                info!("Found old database type...");
-                let old_identifiers = identifiers.clone();
-                let mut new_identifiers = Vec::new();
-
-                let spinner_notification = Notification::new_spinner("Migrating library data...");
-                sender.send(Action::ViewShowNotification(spinner_notification.clone())).unwrap();
-                info!("Start migration library data...");
-
-                // Convert IDs to UUIDs
-                for old_id in old_identifiers {
-                    match gradio_db::id2uuid(old_id.clone()).await {
-                        Ok(new_uuid) => match new_uuid {
-                            Some(new_uuid) => new_identifiers.insert(0, new_uuid),
-                            None => warn!("No UUID for ID \"{}\" found.", old_id.stationuuid),
-                        },
-                        Err(err) => {
-                            let notification = Notification::new_error("Could not migrate library data to UUIDs.", &err.to_string());
-                            sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
-                            spinner_notification.hide();
-                            return;
-                        }
-                    };
-                }
-
-                // Remove everything old
-                for old_id in identifiers.clone() {
-                    queries::delete_station_identifier(old_id).unwrap();
-                }
-
-                // Add new UUIDs identifiers
-                for new_id in new_identifiers {
-                    queries::insert_station_identifier(new_id.clone()).unwrap();
-                    identifiers.insert(0, new_id);
-                }
-
-                info!("Migration done.");
-                spinner_notification.hide();
-            }
-            // End of migration part //////////////////////////////////////
-
-            let stations = client.clone().get_stations_by_identifiers(identifiers).await;
+        let future = client.clone().get_stations_by_identifiers(identifiers).map(move |stations| {
             Self::update_stack_page(&library_stack.clone());
 
             match stations {
@@ -175,8 +124,7 @@ impl Library {
                     sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
                 }
             }
-        };
-
+        });
         ctx.spawn_local(future);
     }
 }
