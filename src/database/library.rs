@@ -1,8 +1,8 @@
-use futures_util::future::FutureExt;
 use glib::Sender;
 use gtk::prelude::*;
 use url::Url;
 
+use futures::future::join_all;
 use std::rc::Rc;
 
 use crate::api::{Client, Station};
@@ -106,25 +106,36 @@ impl Library {
 
         // Load database async
         let identifiers = queries::get_station_identifiers().unwrap();
-        let ctx = glib::MainContext::default();
-
         let flowbox = self.flowbox.clone();
         let library_stack = self.library_stack.clone();
         let client = self.client.clone();
         let sender = self.sender.clone();
-        let future = client.clone().get_stations_by_identifiers(identifiers).map(move |stations| {
-            Self::update_stack_page(&library_stack.clone());
+        let future = async move {
+            let mut stations = Vec::new();
+            let mut futures = Vec::new();
 
-            match stations {
-                Ok(stations) => {
-                    flowbox.add_stations(stations);
-                }
-                Err(err) => {
-                    let notification = Notification::new_error("Could not receive station data.", &err.to_string());
-                    sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
+            for id in identifiers {
+                let future = client.clone().get_station_by_identifier(id);
+                futures.insert(0, future);
+            }
+            let results = join_all(futures).await;
+
+            for result in results {
+                match result {
+                    Ok(station) => stations.insert(0, station),
+                    Err(err) => {
+                        let notification = Notification::new_error("Could not receive station data.", &err.to_string());
+                        sender.send(Action::ViewShowNotification(notification.clone())).unwrap();
+                        break;
+                    }
                 }
             }
-        });
+
+            Self::update_stack_page(&library_stack.clone());
+            flowbox.add_stations(stations);
+        };
+
+        let ctx = glib::MainContext::default();
         ctx.spawn_local(future);
     }
 }

@@ -37,7 +37,11 @@ pub async fn import_gradio_db(sender: Sender<Action>, window: gtk::ApplicationWi
 
         let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
         let sender = sender.clone();
-        let stations = client.get_stations_by_identifiers(ids).await?;
+        let mut stations = Vec::new();
+        for id in ids {
+            let station = client.clone().get_station_by_identifier(id).await?;
+            stations.insert(0, station);
+        }
 
         spinner_notification.hide();
         sender.send(Action::LibraryAddStations(stations.clone())).unwrap();
