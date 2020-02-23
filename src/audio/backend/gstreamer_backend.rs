@@ -264,10 +264,9 @@ impl GstreamerBackend {
 
         let mut recorderbin_locked = self.recorderbin.lock().unwrap();
         if let Some(x) = &*recorderbin_locked {
-            debug!("Destroyed old recorderbin.");
             x.destroy();
         } else {
-            debug!("No recorderbin available - nothing to destroy.");
+            debug!("No old recorderbin available - nothing to destroy.");
         }
 
         debug!("Create new recorderbin.");
@@ -286,23 +285,21 @@ impl GstreamerBackend {
 
     pub fn stop_recording(&mut self, save_song: bool) -> Option<Song> {
         debug!("Stop recording... (save song: {})", save_song);
+        let recorderbin = self.recorderbin.lock().unwrap().clone();
+
         // Check if recorderbin is available
-        let recorderbin_locked = self.recorderbin.lock().unwrap();
-        if let Some(recorderbin) = &*recorderbin_locked {
+        if let Some(recorderbin) = recorderbin {
             // Check if we want to save the recorded data
             // Sometimes we can discard it as is got interrupted / not completely recorded
             if save_song {
-                let rbin = self.recorderbin.clone();
+                // Add a block probe to the file source pad to block the data flow in the pipeline
+                let rbin = recorderbin.clone();
                 let file_id = self.file_srcpad.add_probe(gstreamer::PadProbeType::BLOCK_DOWNSTREAM, move |_, _| {
                     // Dataflow is blocked
                     debug!("Push EOS into recorderbin sinkpad...");
-                    let rbin_locked = rbin.lock().unwrap();
-                    if let Some(r) = &*rbin_locked {
-                        if let Some(sinkpad) = r.gstbin.get_static_pad("sink") {
-                            sinkpad.send_event(gstreamer::Event::new_eos().build());
-                        }
+                    if let Some(sinkpad) = rbin.gstbin.get_static_pad("sink") {
+                        sinkpad.send_event(gstreamer::Event::new_eos().build());
                     }
-
                     gstreamer::PadProbeReturn::Ok
                 });
 
@@ -330,6 +327,10 @@ impl GstreamerBackend {
                     warn!("Could not delete recorded data: {}", err);
                 }
                 recorderbin.destroy();
+
+                // Recorderbin got destroyed, so make out of the Option<RecorderBin> a None!
+                self.recorderbin.lock().unwrap().take().unwrap();
+
                 return None;
             }
         } else {
@@ -471,11 +472,11 @@ impl RecorderBin {
     }
 
     pub fn destroy(&self) {
-        // TODO: Properly handle recorder create/destroy when clicking the play button too fast
         match self.pipeline.remove(&self.gstbin) {
             Ok(_) => (),
             Err(_) => warn!("Could not remove recorderbin from pipeline."),
         }
         self.gstbin.set_state(State::Null).unwrap();
+        debug!("Destroyed recorderbin.");
     }
 }
