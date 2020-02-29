@@ -1,3 +1,19 @@
+// Shortwave - connection.rs
+// Copyright (C) 2020  Felix Häcker <haeckerfelix@gnome.org>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 // Based on gnome-podcasts by Jordan Petridis
 // https://gitlab.gnome.org/World/podcasts/blob/cf644d508d8d7dab3c9357d12b1262ae6b44c8e8/podcasts-data/src/database.rs
 

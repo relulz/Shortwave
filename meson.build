@@ -1,7 +1,7 @@
 project('shortwave',
           version: '0.0.2',
     meson_version: '>= 0.50.0',
-          license: 'GPLv3',
+          license: 'GPL-3.0-or-later',
 )
 
 # Dependencies
