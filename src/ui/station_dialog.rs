@@ -127,24 +127,18 @@ impl StationDialog {
     fn setup_signals(&self) {
         // remove_button
         get_widget!(self.builder, gtk::Button, remove_button);
-        let sender = self.sender.clone();
-        let station = self.station.clone();
-        let widget = self.widget.clone();
-        remove_button.connect_clicked(move |_| {
+        remove_button.connect_clicked(clone!(@weak self.widget as widget, @strong self.station as station, @strong self.sender as sender => move |_| {
             send!(sender, Action::LibraryRemoveStations(vec![station.clone()]));
             widget.hide();
             widget.destroy();
-        });
+        }));
 
         // add_button
         get_widget!(self.builder, gtk::Button, add_button);
-        let sender = self.sender.clone();
-        let station = self.station.clone();
-        let widget = self.widget.clone();
-        add_button.connect_clicked(move |_| {
+        add_button.connect_clicked(clone!(@weak self.widget as widget, @strong self.station as station, @strong self.sender as sender => move |_| {
             send!(sender, Action::LibraryAddStations(vec![station.clone()]));
             widget.hide();
             widget.destroy();
-        });
+        }));
     }
 }

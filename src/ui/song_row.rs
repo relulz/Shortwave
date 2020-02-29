@@ -39,27 +39,27 @@ impl SongRow {
     }
 
     fn setup_signals(&self) {
-        let sender = self.sender.clone();
-        let song = self.song.clone();
-        let widget = self.widget.clone();
-        get_widget!(self.builder, gtk::Stack, button_stack);
+        // save_button
         get_widget!(self.builder, gtk::Button, save_button);
-        save_button.connect_clicked(move |_| {
-            send!(sender, Action::PlaybackSaveSong(song.clone()));
+        save_button.connect_clicked(
+            clone!(@weak self.widget as widget, @weak self.builder as builder, @strong self.song as song, @strong self.sender as sender => move |_| {
+                get_widget!(builder, gtk::Stack, button_stack);
+                send!(sender, Action::PlaybackSaveSong(song.clone()));
 
-            // Show open button
-            button_stack.set_visible_child_name("open");
+                // Show open button
+                button_stack.set_visible_child_name("open");
 
-            // Dim row
-            let ctx = widget.get_style_context();
-            ctx.add_class("dim-label");
-        });
+                // Dim row
+                let ctx = widget.get_style_context();
+                ctx.add_class("dim-label");
+            }),
+        );
 
-        let song = self.song.clone();
+        // open_button
         get_widget!(self.builder, gtk::Button, open_button);
-        open_button.connect_clicked(move |_| {
+        open_button.connect_clicked(clone!(@strong self.song as song => move |_| {
             open::that(song.path.clone()).expect("Could not play song");
-        });
+        }));
     }
 
     // stolen from gnome-podcasts

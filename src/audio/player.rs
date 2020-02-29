@@ -186,11 +186,10 @@ impl Player {
         receiver.attach(None, move |message| Self::process_gst_message(message, controller.clone(), song_backend.clone(), gst_backend.clone()));
 
         // Disconnect from gcast device
-        let sender = self.sender.clone();
         get_widget!(self.builder, gtk::Button, disconnect_button);
-        disconnect_button.connect_clicked(move |_| {
+        disconnect_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
             send!(sender, Action::PlaybackDisconnectGCastDevice);
-        });
+        }));
     }
 
     fn process_gst_message(message: GstreamerMessage, controller: Rc<Vec<Box<dyn Controller>>>, song_backend: Rc<RefCell<SongBackend>>, gst_backend: Arc<Mutex<GstreamerBackend>>) -> glib::Continue {

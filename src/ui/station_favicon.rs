@@ -139,8 +139,7 @@ impl StationFavicon {
     }
 
     fn setup_signals(&self) {
-        let pixbuf = self.pixbuf.clone();
-        let size = self.size;
-        self.image.connect_draw(move |dr, ctx| Self::draw_image(dr, ctx, pixbuf.clone(), size));
+        self.image
+            .connect_draw(clone!(@strong self.pixbuf as pixbuf, @strong self.size as size => @default-panic, move |dr, ctx| {Self::draw_image(dr, ctx, pixbuf.clone(), size)}));
     }
 }

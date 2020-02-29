@@ -125,9 +125,8 @@ impl GstreamerBackend {
         let recorderbin = Arc::new(Mutex::new(None));
 
         // dynamically link uridecodebin element with audioconvert element
-        let convert = audioconvert.clone();
-        uridecodebin.connect_pad_added(move |_, src_pad| {
-            let sink_pad = convert.get_static_pad("sink").expect("Failed to get static sink pad from convert");
+        uridecodebin.connect_pad_added(clone!(@weak audioconvert => move |_, src_pad| {
+            let sink_pad = audioconvert.get_static_pad("sink").expect("Failed to get static sink pad from audioconvert");
             if sink_pad.is_linked() {
                 return; // We are already linked. Ignoring.
             }
@@ -141,7 +140,7 @@ impl GstreamerBackend {
                 let _ = src_pad.link(&sink_pad);
                 return;
             }
-        });
+        }));
 
         // Current song title. We need this variable to check if the title have changed.
         let current_title = Arc::new(Mutex::new(String::new()));
@@ -166,43 +165,47 @@ impl GstreamerBackend {
 
         // We need to do message passing (sender/receiver) here, because gstreamer messages are
         // coming from a other thread (and app::Action enum is not thread safe).
-        let a_s = app_sender;
-        volume_receiver.attach(None, move |volume| {
-            send!(a_s, Action::PlaybackSetVolume(volume));
-            glib::Continue(true)
-        });
+        volume_receiver.attach(
+            None,
+            clone!(@strong app_sender => move |volume| {
+                send!(app_sender, Action::PlaybackSetVolume(volume));
+                glib::Continue(true)
+            }),
+        );
 
         // Update volume coming from pulseaudio / pulsesink
-        let old_volume = volume.clone();
-        let v_s = volume_sender.clone();
-        let volume_signal_id = pulsesink.connect_notify(Some("volume"), move |element, _| {
-            let new_volume: f64 = element.get_property("volume").unwrap().get().unwrap().unwrap();
+        let volume_signal_id = pulsesink.connect_notify(
+            Some("volume"),
+            clone!(@weak volume as old_volume, @strong volume_sender => move |element, _| {
+                let new_volume: f64 = element.get_property("volume").unwrap().get().unwrap().unwrap();
 
-            // We have to check if the values are the same. For some reason gstreamer sends us
-            // slightly differents floats, so we round up here (only the the first two digits are
-            // important for use here).
-            let mut old_volume_locked = old_volume.lock().unwrap();
-            let new_val = format!("{:.2}", old_volume_locked);
-            let old_val = format!("{:.2}", old_volume_locked);
+                // We have to check if the values are the same. For some reason gstreamer sends us
+                // slightly differents floats, so we round up here (only the the first two digits are
+                // important for use here).
+                let mut old_volume_locked = old_volume.lock().unwrap();
+                let new_val = format!("{:.2}", old_volume_locked);
+                let old_val = format!("{:.2}", old_volume_locked);
 
-            if new_val != old_val {
-                send!(v_s, new_volume);
-                *old_volume_locked = new_volume;
-            }
-        });
+                if new_val != old_val {
+                    send!(volume_sender, new_volume);
+                    *old_volume_locked = new_volume;
+                }
+            }),
+        );
 
         // It's possible to mute the audio (!= 0.0) from pulseaudio side, so we should handle
         // this too by setting the volume to 0.0
-        let old_volume = volume.clone();
-        let v_s = volume_sender;
-        pulsesink.connect_notify(Some("mute"), move |element, _| {
-            let mute: bool = element.get_property("mute").unwrap().get().unwrap().unwrap();
-            let mut old_volume_locked = old_volume.lock().unwrap();
-            if mute && *old_volume_locked != 0.0 {
-                send!(v_s, 0.0);
-                *old_volume_locked = 0.0;
-            }
-        });
+        pulsesink.connect_notify(
+            Some("mute"),
+            clone!(@weak volume as old_volume, @strong volume_sender => move |element, _| {
+                let mute: bool = element.get_property("mute").unwrap().get().unwrap().unwrap();
+                let mut old_volume_locked = old_volume.lock().unwrap();
+                if mute && *old_volume_locked != 0.0 {
+                    send!(volume_sender, 0.0);
+                    *old_volume_locked = 0.0;
+                }
+            }),
+        );
 
         Self {
             pipeline,

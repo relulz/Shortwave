@@ -45,15 +45,14 @@ impl StationFlowBox {
 
     fn setup_signals(&self) {
         // Show StationDialog when row gets clicked
-        let stations = self.stations.clone();
-        let sender = self.sender.clone();
-        self.widget.connect_child_activated(move |_, child| {
-            let index = child.get_index();
-            let station = stations.borrow().get_index(index.try_into().unwrap()).unwrap().1.clone();
+        self.widget
+            .connect_child_activated(clone!(@weak self.stations as stations, @strong self.sender as sender => move |_, child| {
+                let index = child.get_index();
+                let station = stations.borrow().get_index(index.try_into().unwrap()).unwrap().1.clone();
 
-            let station_dialog = StationDialog::new(sender.clone(), station);
-            station_dialog.show();
-        });
+                let station_dialog = StationDialog::new(sender.clone(), station);
+                station_dialog.show();
+            }));
     }
 
     pub fn add_stations(&self, stations: Vec<Station>) {

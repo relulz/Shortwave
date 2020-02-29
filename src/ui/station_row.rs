@@ -52,10 +52,8 @@ impl StationRow {
     fn setup_signals(&self) {
         // play_button
         get_widget!(self.builder, gtk::Button, play_button);
-        let sender = self.sender.clone();
-        let station = self.station.clone();
-        play_button.connect_clicked(move |_| {
+        play_button.connect_clicked(clone!(@strong self.sender as sender, @strong self.station as station => move |_| {
             send!(sender, Action::PlaybackSetStation(Box::new(station.clone())));
-        });
+        }));
     }
 }

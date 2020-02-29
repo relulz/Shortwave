@@ -36,11 +36,7 @@ impl SongListBox {
     }
 
     pub fn remove_last_row(&self) {
-        println!("\n\nRemove latest........\n\n");
         let mut children = self.listbox.get_children();
-        println!("Listbox len: ");
-        dbg!(children.len());
-
         let widget = children.pop().unwrap();
 
         self.listbox.remove(&widget);

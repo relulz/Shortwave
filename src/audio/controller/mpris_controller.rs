@@ -72,50 +72,42 @@ impl MprisController {
 
     fn setup_signals(&self) {
         // mpris raise
-        let sender = self.sender.clone();
-        self.mpris.connect_raise(move || {
+        self.mpris.connect_raise(clone!(@strong self.sender as sender => move || {
             send!(sender, Action::ViewRaise);
-        });
+        }));
 
         // mpris play / pause
-        let sender = self.sender.clone();
-        let mpris = self.mpris.clone();
-        self.mpris.connect_play_pause(move || {
+        self.mpris.connect_play_pause(clone!(@weak self.mpris as mpris, @strong self.sender as sender => move || {
             match mpris.get_playback_status().unwrap().as_ref() {
                 "Paused" => send!(sender, Action::PlaybackStart),
                 "Stopped" => send!(sender, Action::PlaybackStart),
                 _ => send!(sender, Action::PlaybackStop),
             };
-        });
+        }));
 
         // mpris play
-        let sender = self.sender.clone();
-        self.mpris.connect_play(move || {
+        self.mpris.connect_play(clone!(@strong self.sender as sender => move || {
             send!(sender, Action::PlaybackStart);
-        });
+        }));
 
         // mpris stop
-        let sender = self.sender.clone();
-        self.mpris.connect_stop(move || {
+        self.mpris.connect_stop(clone!(@strong self.sender as sender => move || {
             send!(sender, Action::PlaybackStop);
-        });
+        }));
 
         // mpris pause
-        let sender = self.sender.clone();
-        self.mpris.connect_pause(move || {
+        self.mpris.connect_pause(clone!(@strong self.sender as sender => move || {
             send!(sender, Action::PlaybackStop);
-        });
+        }));
 
         // mpris volume
-        let sender = self.sender.clone();
-        let old_volume = self.volume.clone();
-        self.mpris.connect_volume(move |new_volume| {
+        self.mpris.connect_volume(clone!(@strong self.sender as sender, @weak self.volume as old_volume => move |new_volume| {
             // if *old_volume.borrow() != new_volume {
             if (*old_volume.borrow() - new_volume).abs() > std::f64::EPSILON {
                 send!(sender, Action::PlaybackSetVolume(new_volume));
                 *old_volume.borrow_mut() = new_volume;
             }
-        });
+        }));
     }
 }
 

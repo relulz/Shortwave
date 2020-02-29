@@ -67,23 +67,20 @@ impl MiniController {
 
     fn setup_signals(&self) {
         // start_playback_button
-        let sender = self.sender.clone();
-        self.start_playback_button.connect_clicked(move |_| {
+        self.start_playback_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
             send!(sender, Action::PlaybackStart);
-        });
+        }));
 
         // stop_playback_button
-        let sender = self.sender.clone();
-        self.stop_playback_button.connect_clicked(move |_| {
+        self.stop_playback_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
             send!(sender, Action::PlaybackStop);
-        });
+        }));
 
         // show_player_button
-        let sender = self.sender.clone();
-        self.eventbox.connect_button_release_event(move |_, _| {
+        self.eventbox.connect_button_release_event(clone!(@strong self.sender as sender => move |_, _| {
             send!(sender, Action::ViewShowPlayer);
             glib::signal::Inhibit(false)
-        });
+        }));
     }
 }
 

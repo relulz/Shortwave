@@ -117,11 +117,10 @@ impl ApplicationImpl for SwApplicationPrivate {
         receiver.attach(None, move |action| app.process_action(action));
 
         // Setup settings signal (we get notified when a key gets changed)
-        let sender = self.sender.clone();
-        self.settings.connect_changed(move |_, key_str| {
+        self.settings.connect_changed(clone!(@strong self.sender as sender => move |_, key_str| {
             let key: Key = Key::from_str(key_str).unwrap();
             send!(sender, Action::SettingsKeyChanged(key));
-        });
+        }));
 
         // List all setting keys
         settings_manager::list_keys();

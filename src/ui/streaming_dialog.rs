@@ -35,44 +35,48 @@ impl StreamingDialog {
             sender,
         };
 
-        get_widget!(sd.builder, gtk::Stack, stream_stack);
-        get_widget!(sd.builder, gtk::ListBox, devices_listbox);
-        get_widget!(sd.builder, gtk::Button, connect_button);
-        get_widget!(sd.builder, gtk::Revealer, loading_revealer);
-        gcd_receiver.attach(None, move |message| {
-            match message {
-                GCastDiscovererMessage::DiscoverStarted => {
-                    utils::remove_all_items(&devices_listbox);
-                    stream_stack.set_visible_child_name("loading");
-                    loading_revealer.set_reveal_child(true);
-                }
-                GCastDiscovererMessage::DiscoverEnded => {
-                    if devices_listbox.get_children().is_empty() {
-                        stream_stack.set_visible_child_name("no-devices");
-                    } else {
-                        stream_stack.set_visible_child_name("results");
+        gcd_receiver.attach(
+            None,
+            clone!(@weak sd.builder as builder => @default-panic, move |message| {
+                get_widget!(builder, gtk::Stack, stream_stack);
+                get_widget!(builder, gtk::ListBox, devices_listbox);
+                get_widget!(builder, gtk::Button, connect_button);
+                get_widget!(builder, gtk::Revealer, loading_revealer);
+
+                match message {
+                    GCastDiscovererMessage::DiscoverStarted => {
+                        utils::remove_all_items(&devices_listbox);
+                        stream_stack.set_visible_child_name("loading");
+                        loading_revealer.set_reveal_child(true);
                     }
-                    loading_revealer.set_reveal_child(false);
+                    GCastDiscovererMessage::DiscoverEnded => {
+                        if devices_listbox.get_children().is_empty() {
+                            stream_stack.set_visible_child_name("no-devices");
+                        } else {
+                            stream_stack.set_visible_child_name("results");
+                        }
+                        loading_revealer.set_reveal_child(false);
+                    }
+                    GCastDiscovererMessage::FoundDevice(device) => {
+                        stream_stack.set_visible_child_name("results");
+                        connect_button.set_sensitive(true);
+
+                        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/streaming_dialog.ui");
+                        get_widget!(builder, gtk::ListBoxRow, device_row);
+                        get_widget!(builder, gtk::Label, name_label);
+                        get_widget!(builder, gtk::Label, ip_label);
+
+                        name_label.set_text(&device.name);
+                        ip_label.set_text(&device.ip.to_string());
+                        device_row.show_all();
+
+                        devices_listbox.add(&device_row);
+                    }
                 }
-                GCastDiscovererMessage::FoundDevice(device) => {
-                    stream_stack.set_visible_child_name("results");
-                    connect_button.set_sensitive(true);
 
-                    let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/streaming_dialog.ui");
-                    get_widget!(builder, gtk::ListBoxRow, device_row);
-                    get_widget!(builder, gtk::Label, name_label);
-                    get_widget!(builder, gtk::Label, ip_label);
-
-                    name_label.set_text(&device.name);
-                    ip_label.set_text(&device.ip.to_string());
-                    device_row.show_all();
-
-                    devices_listbox.add(&device_row);
-                }
-            }
-
-            glib::source::Continue(true)
-        });
+                glib::source::Continue(true)
+            }),
+        );
 
         sd.setup_signals();
         sd
@@ -91,27 +95,24 @@ impl StreamingDialog {
 
     fn setup_signals(&self) {
         // retry_button
-        let gcd = self.gcd.clone();
         get_widget!(self.builder, gtk::Button, retry_button);
-        retry_button.connect_clicked(move |_| {
+        retry_button.connect_clicked(clone!(@weak self.gcd as gcd => move |_| {
             gcd.start_discover();
-        });
+        }));
 
         // cancel_button
-        let widget = self.widget.clone();
         get_widget!(self.builder, gtk::Button, cancel_button);
-        cancel_button.connect_clicked(move |_| {
+        cancel_button.connect_clicked(clone!(@weak self.widget as widget => move |_| {
             widget.set_visible(false);
             widget.hide();
-        });
+        }));
 
         // connect_button
-        get_widget!(self.builder, gtk::ListBox, devices_listbox);
         get_widget!(self.builder, gtk::Button, connect_button);
-        let widget = self.widget.clone();
-        let gcd = self.gcd.clone();
-        let sender = self.sender.clone();
-        connect_button.connect_clicked(move |_| {
+        connect_button.connect_clicked(clone!(@weak self.builder as builder, @weak self.gcd as gcd, @strong self.sender as sender => move |_| {
+            get_widget!(builder, gtk::ListBox, devices_listbox);
+            get_widget!(builder, libhandy::Dialog, streaming_dialog);
+
             if let Some(active_row) = devices_listbox.get_selected_row() {
                 // Very hackish way to get the selected ip address
                 let box1: gtk::Box = active_row.get_children()[0].clone().downcast().unwrap();
@@ -122,10 +123,10 @@ impl StreamingDialog {
                 // Get GCastDevice
                 let device = gcd.get_device_by_ip_addr(ip_addr).unwrap();
                 send!(sender, Action::PlaybackConnectGCastDevice(device));
-                widget.set_visible(false);
-                widget.hide();
+                streaming_dialog.set_visible(false);
+                streaming_dialog.hide();
             }
-        });
+        }));
 
         // hide on delete
         self.widget.connect_delete_event(|widget, _| {

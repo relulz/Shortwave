@@ -22,11 +22,10 @@ impl Default for Notification {
         get_widget!(builder, gtk::Box, error_box);
 
         // Hide notification when close button gets clicked
-        let r = revealer.clone();
-        close_button.connect_clicked(move |_| {
-            r.set_reveal_child(false);
-            Self::destroy(r.clone());
-        });
+        close_button.connect_clicked(clone!(@weak revealer => move |_| {
+            revealer.set_reveal_child(false);
+            Self::destroy(revealer);
+        }));
 
         Self {
             revealer,

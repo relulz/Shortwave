@@ -144,9 +144,9 @@ impl SwApplicationWindow {
         s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme", gio::SettingsBindFlags::GET);
 
         // leaflet
-        get_widget!(self_.window_builder, gtk::Stack, view_stack);
         get_widget!(self_.window_builder, libhandy::Leaflet, leaflet);
-        leaflet.connect_property_fold_notify(clone!(@strong self as this => move |leaflet| {
+        leaflet.connect_property_fold_notify(clone!(@strong self as this, @weak self_.window_builder as window_builder => move |leaflet| {
+            get_widget!(window_builder, gtk::Stack, view_stack);
             let current_view = if leaflet.get_property_folded() && leaflet.get_visible_child_name().unwrap() == "player" {
                 View::Player
             } else {
@@ -185,7 +185,7 @@ impl SwApplicationWindow {
         action!(
             window,
             "quit",
-            clone!(@strong app => move |_, _| {
+            clone!(@weak app => move |_, _| {
                 app.quit();
             })
         );
@@ -195,8 +195,8 @@ impl SwApplicationWindow {
         action!(
             window,
             "about",
-            clone!(@strong window => move |_, _| {
-                about_dialog::show_about_dialog(window.clone());
+            clone!(@weak window => move |_, _| {
+                about_dialog::show_about_dialog(window);
             })
         );
 
@@ -204,7 +204,7 @@ impl SwApplicationWindow {
         action!(
             window,
             "show-preferences",
-            clone!(@strong window => move |_, _| {
+            clone!(@weak window => move |_, _| {
                 let settings_window = SettingsWindow::new(&window);
                 settings_window.show();
             })
@@ -233,9 +233,9 @@ impl SwApplicationWindow {
         action!(
             window,
             "import-gradio-library",
-            clone!(@strong sender, @strong window => move |_, _| {
+            clone!(@strong sender, @weak window => move |_, _| {
                 let sender = sender.clone();
-                let future = import_dialog::import_gradio_db(sender.clone(), window.clone()).map(move|result|{
+                let future = import_dialog::import_gradio_db(sender.clone(), window).map(move|result|{
                     match result{
                         Ok(_) => (),
                         Err(err) => {

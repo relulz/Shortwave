@@ -54,10 +54,9 @@ impl SidebarController {
         favicon_box.add(&station_favicon.widget);
 
         // volume_button | We need the volume_signal_id later to block the signal
-        let s = sender.clone();
-        let volume_signal_id = volume_button.connect_value_changed(move |_, value| {
-            send!(s, Action::PlaybackSetVolume(value));
-        });
+        let volume_signal_id = volume_button.connect_value_changed(clone!(@strong sender => move |_, value| {
+            send!(sender, Action::PlaybackSetVolume(value));
+        }));
 
         // menu button
         let menu_builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/menu/player_menu.ui");
@@ -97,31 +96,34 @@ impl SidebarController {
 
     fn setup_signals(&self) {
         // start_playback_button
-        let sender = self.sender.clone();
-        self.start_playback_button.connect_clicked(move |_| {
+        self.start_playback_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
             send!(sender, Action::PlaybackStart);
-        });
+        }));
 
         // stop_playback_button
-        let sender = self.sender.clone();
-        self.stop_playback_button.connect_clicked(move |_| {
+        self.stop_playback_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
             send!(sender, Action::PlaybackStop);
-        });
+        }));
 
         // details button
-        let station = self.station.clone();
-        let sender = self.sender.clone();
-        action!(self.action_group, "show-details", move |_, _| {
-            let s = station.borrow().clone().unwrap();
-            let station_dialog = StationDialog::new(sender.clone(), s);
-            station_dialog.show();
-        });
+        action!(
+            self.action_group,
+            "show-details",
+            clone!(@strong self.sender as sender, @strong self.station as station => move |_, _| {
+                let s = station.borrow().clone().unwrap();
+                let station_dialog = StationDialog::new(sender.clone(), s);
+                station_dialog.show();
+            })
+        );
 
         // stream button
-        let streaming_dialog = self.streaming_dialog.clone();
-        action!(self.action_group, "stream-audio", move |_, _| {
-            streaming_dialog.show();
-        });
+        action!(
+            self.action_group,
+            "stream-audio",
+            clone!(@weak self.streaming_dialog as streaming_dialog => move |_, _| {
+                streaming_dialog.show();
+            })
+        );
     }
 }
 
