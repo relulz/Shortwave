@@ -8,7 +8,7 @@ desktop_conf = configuration_data()
 desktop_conf.set('icon', app_id)
 desktop_file = i18n.merge_file(
   input: configure_file(
-    input: files('de.haeckerfelix.Shortwave.desktop.in'),
+    input: files('de.haeckerfelix.Shortwave.desktop.in.in'),
     output: 'de.haeckerfelix.Shortwave.desktop.in',
     configuration: desktop_conf
   ),
@@ -33,7 +33,7 @@ appdata_conf = configuration_data()
 appdata_conf.set('appid', app_id)
 appstream_file = i18n.merge_file(
   input: configure_file(
-    input: files('de.haeckerfelix.Shortwave.appdata.xml.in'),
+    input: files('de.haeckerfelix.Shortwave.appdata.xml.in.in'),
     output: 'de.haeckerfelix.Shortwave.appdata.xml.in',
     configuration: appdata_conf
   ),

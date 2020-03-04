@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use crate::config;
+use crate::i18n::*;
 use gtk::prelude::*;
 
 pub fn show_about_dialog(window: gtk::ApplicationWindow) {
@@ -28,7 +29,7 @@ pub fn show_about_dialog(window: gtk::ApplicationWindow) {
     let dialog = gtk::AboutDialog::new();
     dialog.set_program_name(config::NAME);
     dialog.set_logo_icon_name(Some(config::APP_ID));
-    dialog.set_comments(Some("Listen to internet radio"));
+    dialog.set_comments(Some(&i18n("Listen to internet radio")));
     dialog.set_copyright(Some("© 2020 Felix Häcker"));
     dialog.set_license_type(gtk::License::Gpl30);
     dialog.set_version(Some(version.as_str()));

@@ -1,0 +1,9 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+
+data/gtk/library.ui
+
+src/ui/about_dialog.rs
+
+data/de.haeckerfelix.Shortwave.appdata.xml.in.in
+data/de.haeckerfelix.Shortwave.desktop.in.in

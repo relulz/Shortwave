@@ -51,6 +51,7 @@ mod ui;
 
 mod app;
 mod config;
+mod i18n;
 mod path;
 
 use crate::app::SwApplication;

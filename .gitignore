@@ -38,3 +38,4 @@ src/static_resource.rs
 **/tags.*
 .flatpak-builder
 shortwave.db
+shortwave.pot

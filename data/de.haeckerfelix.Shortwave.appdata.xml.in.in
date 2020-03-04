@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2019 Felix Häcker -->
+<!-- Copyright 2020 Felix Häcker -->
 <component type="desktop">
   <id>@appid@.desktop</id>
   <name>Shortwave</name>
@@ -13,8 +13,17 @@
 
   <description>
     <p>
-      With Shortwave you can browse, search and of course play radio stations.
+      Shortwave is an internet radio player that provides access to a station database with over 25,000 stations.
     </p>
+    <p>Features:</p>
+    <ul>
+      <li>Create your own library where you can add your favourite stations</li>
+      <li>Easily search and discover new radio stations</li>
+      <li>Automatic recognition of songs, with the possibility to save them individually</li>
+      <li>Responsive application layout, compatible for small and large screens</li>
+      <li>Play audio on supported network devices (e.g. Google Chromecasts)</li>
+      <li>Seamless integration into the GNOME desktop environment</li>
+    </ul>
   </description>
 
   <screenshots>
