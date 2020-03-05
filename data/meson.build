@@ -33,11 +33,11 @@ appdata_conf = configuration_data()
 appdata_conf.set('appid', app_id)
 appstream_file = i18n.merge_file(
   input: configure_file(
-    input: files('de.haeckerfelix.Shortwave.appdata.xml.in.in'),
-    output: 'de.haeckerfelix.Shortwave.appdata.xml.in',
+    input: files('de.haeckerfelix.Shortwave.metainfo.xml.in.in'),
+    output: 'de.haeckerfelix.Shortwave.metainfo.xml.in',
     configuration: appdata_conf
   ),
-  output: '@0@.appdata.xml'.format(app_id),
+  output: '@0@.metainfo.xml'.format(app_id),
   po_dir: '../po',
   install: true,
   install_dir: join_paths(datadir, 'metainfo')
