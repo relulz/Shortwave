@@ -1,9 +1,33 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 
+data/gtk/station_dialog.ui
+data/gtk/discover.ui
+data/gtk/song_row.ui
+data/gtk/streaming_dialog.ui
+data/gtk/notification.ui
+data/gtk/sidebar_controller.ui
+data/gtk/menu/app_menu.ui
+data/gtk/menu/player_menu.ui
+data/gtk/search.ui
+data/gtk/station_row.ui
+data/gtk/settings_window.ui
+data/gtk/shortcuts.ui
+data/gtk/storefront.ui
 data/gtk/library.ui
+data/gtk/mini_controller.ui
+data/gtk/song_listbox.ui
+data/gtk/player.ui
+data/gtk/window.ui
 
+src/audio/player.rs
+src/database/library.rs
+src/discover/pages/discover.rs
+src/discover/pages/search.rs
 src/ui/about_dialog.rs
+src/ui/import_dialog.rs
+src/ui/station_row.rs
+src/ui/window.rs
 
-data/de.haeckerfelix.Shortwave.appdata.xml.in.in
+data/de.haeckerfelix.Shortwave.metainfo.xml.in.in
 data/de.haeckerfelix.Shortwave.desktop.in.in

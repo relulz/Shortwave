@@ -78,7 +78,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
-                        <property name="label" translatable="yes">subtitle</property>
+                        <property name="label">subtitle</property>
                         <property name="justify">center</property>
                         <property name="wrap">True</property>
                         <property name="ellipsize">end</property>
@@ -152,7 +152,7 @@
               </object>
               <packing>
                 <property name="name">start_playback</property>
-                <property name="position">2</property>
+                <property name="position">1</property>
               </packing>
             </child>
           </object>

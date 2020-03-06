@@ -21,7 +21,7 @@
               <object class="GtkLabel" id="name_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">label</property>
+                <property name="label">label</property>
                 <property name="xalign">0</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
@@ -37,7 +37,7 @@
               <object class="GtkLabel" id="ip_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">label</property>
+                <property name="label">label</property>
                 <property name="xalign">0</property>
                 <style>
                   <class name="dim-label"/>
@@ -371,9 +371,6 @@
                         <property name="name">loading</property>
                         <property name="position">2</property>
                       </packing>
-                    </child>
-                    <child>
-                      <placeholder/>
                     </child>
                   </object>
                 </child>

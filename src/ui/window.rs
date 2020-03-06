@@ -29,6 +29,7 @@ use std::rc::Rc;
 
 use crate::app::{Action, SwApplication, SwApplicationPrivate};
 use crate::config;
+use crate::i18n::*;
 use crate::settings::{settings_manager, Key, SettingsWindow};
 use crate::ui::{about_dialog, import_dialog, Notification};
 
@@ -255,7 +256,7 @@ impl SwApplicationWindow {
                     match result{
                         Ok(_) => (),
                         Err(err) => {
-                            let notification = Notification::new_error("Could not import library.", &err.to_string());
+                            let notification = Notification::new_error(&i18n("Could not import library."), &err.to_string());
                             send!(sender, Action::ViewShowNotification(notification));
                         }
                     }

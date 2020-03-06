@@ -18,7 +18,6 @@
       <file compressed="true" preprocess="xml-stripblanks">gtk/song_row.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/sidebar_controller.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/mini_controller.ui</file>
-      <file compressed="true" preprocess="xml-stripblanks">gtk/tile_button.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/search.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/settings_window.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/discover.ui</file>

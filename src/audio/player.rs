@@ -29,6 +29,7 @@ use crate::app::Action;
 use crate::audio::backend::*;
 use crate::audio::controller::{Controller, GCastController, MiniController, MprisController, SidebarController};
 use crate::audio::{GCastDevice, Song};
+use crate::i18n::*;
 use crate::path;
 use crate::settings::{settings_manager, Key};
 use crate::ui::Notification;
@@ -134,7 +135,7 @@ impl Player {
 
         // Station is broken, we refuse to play it
         if station.lastcheckok != 1 {
-            let notification = Notification::new_info("This station cannot be played because the stream is offline.");
+            let notification = Notification::new_info(&i18n("This station cannot be played because the stream is offline."));
             send!(self.sender, Action::ViewShowNotification(notification));
             return;
         }
@@ -149,7 +150,7 @@ impl Player {
                 self.gst_backend.lock().unwrap().new_source_uri(&url.to_string());
             }
             None => {
-                let notification = Notification::new_error("Cannot play station", "Station URL is not valid.");
+                let notification = Notification::new_error(&i18n("Station cannot be streamed."), &i18n("URL is not valid."));
                 send!(self.sender, Action::ViewShowNotification(notification));
             }
         }

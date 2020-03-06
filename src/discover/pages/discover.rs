@@ -23,6 +23,7 @@ use std::rc::Rc;
 
 use crate::api::{Client, StationRequest};
 use crate::app::Action;
+use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
 use crate::ui::{Notification, StationFlowBox};
 
@@ -104,7 +105,7 @@ impl Discover {
                 flowbox.add_stations(s);
             }
             Err(err) => {
-                let notification = Notification::new_error("Could not receive station data.", &err.to_string());
+                let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
                 send!(sender, Action::ViewShowNotification(notification));
             }
         });

@@ -23,11 +23,18 @@ use crate::api::Client;
 use crate::api::Error;
 use crate::app::Action;
 use crate::database::gradio_db;
+use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
 use crate::ui::Notification;
 
 pub async fn import_gradio_db(sender: Sender<Action>, window: gtk::ApplicationWindow) -> Result<(), Error> {
-    let import_dialog = gtk::FileChooserNative::new(Some("Select database to import"), Some(&window), gtk::FileChooserAction::Open, Some("Import"), Some("Cancel"));
+    let import_dialog = gtk::FileChooserNative::new(
+        Some(&i18n("Select database to import")),
+        Some(&window),
+        gtk::FileChooserAction::Open,
+        Some(&i18n("Import")),
+        Some(&i18n("Cancel")),
+    );
 
     // Set filechooser filters
     let filter = gtk::FileFilter::new();
@@ -40,13 +47,13 @@ pub async fn import_gradio_db(sender: Sender<Action>, window: gtk::ApplicationWi
         debug!("Import path: {:?}", path);
 
         // Get station identifiers
-        let spinner_notification = Notification::new_spinner("Converting data...");
+        let spinner_notification = Notification::new_spinner(&i18n("Converting data…"));
         send!(sender, Action::ViewShowNotification(spinner_notification.clone()));
         let ids = gradio_db::read_database(path).await?;
         spinner_notification.hide();
 
         // Get actual stations from identifiers
-        let message = format!("Importing {} stations...", ids.len());
+        let message = i18n_f("Importing {} stations…", &[&ids.len().to_string()]);
         let spinner_notification = Notification::new_spinner(&message);
         send!(sender, Action::ViewShowNotification(spinner_notification.clone()));
 
@@ -60,7 +67,7 @@ pub async fn import_gradio_db(sender: Sender<Action>, window: gtk::ApplicationWi
 
         spinner_notification.hide();
         send!(sender, Action::LibraryAddStations(stations.clone()));
-        let message = format!("Imported {} stations!", stations.len());
+        let message = i18n_f("Imported {} stations!", &[&stations.len().to_string()]);
         let notification = Notification::new_info(&message);
         send!(sender, Action::ViewShowNotification(notification));
     }

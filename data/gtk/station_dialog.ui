@@ -125,7 +125,7 @@
                           <object class="GtkLabel" id="title_label">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">label</property>
+                            <property name="label">label</property>
                             <property name="justify">center</property>
                             <property name="wrap">True</property>
                             <property name="selectable">True</property>
@@ -146,7 +146,7 @@
                             <property name="can_focus">False</property>
                             <property name="margin_top">6</property>
                             <property name="margin_bottom">22</property>
-                            <property name="label" translatable="yes">subtitle</property>
+                            <property name="label">subtitle</property>
                             <property name="justify">center</property>
                             <property name="wrap">True</property>
                             <property name="selectable">True</property>
@@ -184,7 +184,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="label" translatable="yes">—</property>
+                                <property name="label">—</property>
                                 <property name="use_markup">True</property>
                                 <property name="wrap">True</property>
                                 <property name="wrap_mode">char</property>
@@ -247,7 +247,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="label" translatable="yes">—</property>
+                                <property name="label">—</property>
                                 <property name="wrap">True</property>
                                 <property name="wrap_mode">char</property>
                                 <property name="selectable">True</property>
@@ -263,7 +263,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="label" translatable="yes">—</property>
+                                <property name="label">—</property>
                                 <property name="wrap">True</property>
                                 <property name="wrap_mode">char</property>
                                 <property name="selectable">True</property>
@@ -278,7 +278,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="label" translatable="yes">—</property>
+                                <property name="label">—</property>
                                 <property name="use_markup">True</property>
                                 <property name="wrap">True</property>
                                 <property name="wrap_mode">char</property>

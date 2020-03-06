@@ -27,6 +27,7 @@ use crate::config;
 use crate::database::connection;
 use crate::database::queries;
 use crate::database::StationIdentifier;
+use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
 use crate::ui::{Notification, StationFlowBox};
 use crate::utils::{Order, Sorting};
@@ -50,7 +51,7 @@ impl Library {
         get_widget!(builder, gtk::Image, logo_image);
         logo_image.set_from_icon_name(Some(config::APP_ID), gtk::IconSize::__Unknown(256));
         get_widget!(builder, gtk::Label, welcome_text);
-        welcome_text.set_text(format!("Welcome to {}", config::NAME).as_str());
+        welcome_text.set_text(i18n_f("Welcome to {}", &[config::NAME]).as_str());
 
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
         content_box.add(&flowbox.widget);
@@ -140,7 +141,7 @@ impl Library {
                 match result {
                     Ok(station) => stations.insert(0, station),
                     Err(err) => {
-                        let notification = Notification::new_error("Could not receive station data.", &err.to_string());
+                        let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
                         send!(sender, Action::ViewShowNotification(notification));
                         break;
                     }
