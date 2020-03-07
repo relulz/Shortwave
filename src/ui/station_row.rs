@@ -40,7 +40,12 @@ impl StationRow {
         get_widget!(builder, gtk::Label, station_label);
         get_widget!(builder, gtk::Label, subtitle_label);
         station_label.set_text(&station.name);
-        subtitle_label.set_text(&i18n_f("{} {} · {} Votes", &[&station.country, &station.state, &station.votes.to_string()]));
+        subtitle_label.set_text(&ni18n_f(
+            "{} {} · {} Vote",
+            "{} {} · {} Votes",
+            station.votes as u32,
+            &[&station.country, &station.state, &station.votes.to_string()],
+        ));
 
         // Download & set station favicon
         get_widget!(builder, gtk::Box, favicon_box);

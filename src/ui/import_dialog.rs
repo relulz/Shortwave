@@ -53,7 +53,7 @@ pub async fn import_gradio_db(sender: Sender<Action>, window: gtk::ApplicationWi
         spinner_notification.hide();
 
         // Get actual stations from identifiers
-        let message = i18n_f("Importing {} stations…", &[&ids.len().to_string()]);
+        let message = ni18n_f("Importing {} station…", "Importing {} stations…", ids.len() as u32, &[&ids.len().to_string()]);
         let spinner_notification = Notification::new_spinner(&message);
         send!(sender, Action::ViewShowNotification(spinner_notification.clone()));
 
@@ -67,7 +67,7 @@ pub async fn import_gradio_db(sender: Sender<Action>, window: gtk::ApplicationWi
 
         spinner_notification.hide();
         send!(sender, Action::LibraryAddStations(stations.clone()));
-        let message = i18n_f("Imported {} stations!", &[&stations.len().to_string()]);
+        let message = ni18n_f("Imported {} station!", "Imported {} stations!", stations.len() as u32, &[&stations.len().to_string()]);
         let notification = Notification::new_info(&message);
         send!(sender, Action::ViewShowNotification(notification));
     }
