@@ -25,6 +25,7 @@ use gtk::subclass::prelude::{ApplicationWindowImpl, BinImpl, ContainerImpl, Widg
 use libhandy::prelude::*;
 use libhandy::LeafletExt;
 
+use std::cell::RefCell;
 use std::rc::Rc;
 
 use crate::app::{Action, SwApplication, SwApplicationPrivate};
@@ -43,6 +44,8 @@ pub enum View {
 pub struct SwApplicationWindowPrivate {
     window_builder: gtk::Builder,
     menu_builder: gtk::Builder,
+
+    current_notification: RefCell<Option<Rc<Notification>>>,
 }
 
 impl ObjectSubclass for SwApplicationWindowPrivate {
@@ -57,7 +60,13 @@ impl ObjectSubclass for SwApplicationWindowPrivate {
         let window_builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/window.ui");
         let menu_builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/menu/app_menu.ui");
 
-        Self { window_builder, menu_builder }
+        let current_notification = RefCell::new(None);
+
+        Self {
+            window_builder,
+            menu_builder,
+            current_notification,
+        }
     }
 }
 
@@ -293,7 +302,14 @@ impl SwApplicationWindow {
     pub fn show_notification(&self, notification: Rc<Notification>) {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
         get_widget!(self_.window_builder, gtk::Overlay, content);
+
+        // Remove previous notification
+        if let Some(notification) = self_.current_notification.borrow_mut().take() {
+            notification.hide();
+        }
+
         notification.show(&content);
+        *self_.current_notification.borrow_mut() = Some(notification);
     }
 
     pub fn set_view(&self, view: View) {

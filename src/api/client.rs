@@ -53,8 +53,8 @@ impl Client {
         match s.pop() {
             Some(station) => Ok(station),
             None => {
-                warn!("API: No station for identifier \"{}\" found", identifier.stationuuid);
-                Err(Error::ApiError)
+                warn!("API: No station for identifier \"{}\" found", &identifier.stationuuid);
+                Err(Error::InvalidStationError(identifier.stationuuid))
             }
         }
     }

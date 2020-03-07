@@ -26,8 +26,8 @@ pub enum Error {
     IOError(#[cause] std::io::Error),
     #[fail(display = "Network error: {}", _0)]
     NetworkError(#[cause] isahc::Error),
-    #[fail(display = "API error")]
-    ApiError,
+    #[fail(display = "Invalid station UUID")]
+    InvalidStationError(String),
     #[fail(display = "Cache error")]
     CacheError,
 }

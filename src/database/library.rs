@@ -144,7 +144,6 @@ impl Library {
                     Err(err) => {
                         let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
                         send!(sender, Action::ViewShowNotification(notification));
-                        break;
                     }
                 }
             }
