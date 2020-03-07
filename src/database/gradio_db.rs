@@ -66,7 +66,7 @@ pub async fn read_database(path: PathBuf) -> Result<Vec<StationIdentifier>, Erro
     let connection: diesel::SqliteConnection = Connection::establish(path.to_str().unwrap()).unwrap();
 
     // Read data from 'library' table
-    let ids: Vec<GradioStationID> = diesel::sql_query("SELECT station_id FROM library;").load::<GradioStationID>(&connection).unwrap();
+    let ids: Vec<GradioStationID> = diesel::sql_query("SELECT station_id FROM library;").load::<GradioStationID>(&connection)?;
 
     let mut result = Vec::new();
     for id in ids {

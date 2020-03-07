@@ -18,16 +18,25 @@
 pub enum Error {
     #[fail(display = "Serde error: {}", _0)]
     SerdeError(#[cause] serde_json::error::Error),
+
     #[fail(display = "URL parser error: {}", _0)]
     UrlParseError(#[cause] url::ParseError),
+
     #[fail(display = "GLib Error: {}", _0)]
     GLibError(#[cause] glib::error::Error),
+
     #[fail(display = "Input/Output error.")]
     IOError(#[cause] std::io::Error),
+
     #[fail(display = "Network error: {}", _0)]
     NetworkError(#[cause] isahc::Error),
+
+    #[fail(display = "Database error: {}", _0)]
+    DieselError(#[cause] diesel::result::Error),
+
     #[fail(display = "Invalid station UUID")]
     InvalidStationError(String),
+
     #[fail(display = "Cache error")]
     CacheError,
 }
@@ -54,5 +63,6 @@ easy_from_impl!(
     glib::error::Error       => Error::GLibError,
     url::ParseError          => Error::UrlParseError,
     std::io::Error           => Error::IOError,
-    isahc::Error             => Error::NetworkError
+    isahc::Error             => Error::NetworkError,
+    diesel::result::Error    => Error::DieselError
 );
