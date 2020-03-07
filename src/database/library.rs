@@ -51,7 +51,7 @@ impl Library {
         get_widget!(builder, gtk::Image, logo_image);
         logo_image.set_from_icon_name(Some(config::APP_ID), gtk::IconSize::__Unknown(256));
         get_widget!(builder, gtk::Label, welcome_text);
-        // Welcome text which gets displayed when the library is empty
+        // Welcome text which gets displayed when the library is empty. "{}" is the application name.
         welcome_text.set_text(i18n_f("Welcome to {}", &[config::NAME]).as_str());
 
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
