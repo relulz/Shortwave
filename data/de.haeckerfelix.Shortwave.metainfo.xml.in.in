@@ -49,6 +49,11 @@
   </kudos>
 
   <releases>
+    <release version="0.0.3" date="2020-03-08">
+      <description>
+        <p>Third beta release.</p>
+      </description>
+    </release>
     <release version="0.0.2" date="2020-02-17">
       <description>
         <p>Second beta release.</p>
