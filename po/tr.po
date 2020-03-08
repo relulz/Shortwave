@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-03-08 11:45+0000\n"
-"PO-Revision-Date: 2020-03-08 16:36+0300\n"
+"POT-Creation-Date: 2020-03-08 16:05+0000\n"
+"PO-Revision-Date: 2020-03-08 19:35+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 
 #: data/gtk/station_dialog.ui:10
 msgid "Station details"
@@ -258,14 +258,22 @@ msgid "Imported {} station!"
 msgid_plural "Imported {} stations!"
 msgstr[0] "{} istasyon içe aktarıldı!"
 
-#: src/ui/station_row.rs:44
-msgid "{} {} · {} Vote"
-msgid_plural "{} {} · {} Votes"
-msgstr[0] "{} {} · {} Oy"
-
 #: src/ui/window.rs:268
 msgid "Could not import library."
 msgstr "Kitaplık içe aktarılamadı."
+
+#: src/utils.rs:122
+#| msgid "Votes"
+msgid "{} Vote"
+msgid_plural "{} Votes"
+msgstr[0] "{} Oy"
+
+#: src/utils.rs:124
+#| msgid "{} {} · {} Vote"
+#| msgid_plural "{} {} · {} Votes"
+msgid "{} · {} Vote"
+msgid_plural "{} · {} Votes"
+msgstr[0] "{} · {} Oy"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
@@ -281,8 +289,8 @@ msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 25,000 stations."
 msgstr ""
-"Kısa dalga, 25.000’i aşkın istasyon barındıran veri tabanına "
-"erişmenizi sağlayan internet radyo oynatıcısıdır."
+"Kısa dalga, 25.000’i aşkın istasyon barındıran veri tabanına erişmenizi "
+"sağlayan internet radyo oynatıcısıdır."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
 msgid "Features:"
