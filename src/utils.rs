@@ -18,6 +18,7 @@ use glib::{self, object::WeakRef};
 use gtk::prelude::*;
 
 use crate::api::Station;
+use crate::i18n::*;
 
 #[derive(Display, Debug, Clone, EnumString, PartialEq)]
 pub enum Sorting {
@@ -107,6 +108,22 @@ pub fn simplify_string(s: String) -> String {
     string = string.replace("?", "");
     string = string.replace("*", "");
     string = string.replace(".", "");
+    string
+}
+
+pub fn station_subtitle(country: &str, state: &str, votes: i32) -> String {
+    let mut string = if country != "" { country.to_string() } else { "".to_string() };
+
+    if state != "" {
+        string = format!("{} {}", string, state);
+    }
+
+    if string == "" {
+        string = ni18n_f("{} Vote", "{} Votes", votes as u32, &[&votes.to_string()]);
+    } else {
+        string = ni18n_f("{} · {} Vote", "{} · {} Votes", votes as u32, &[&string, &votes.to_string()]);
+    }
+
     string
 }
 

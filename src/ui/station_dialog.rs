@@ -23,6 +23,7 @@ use crate::api::{FaviconDownloader, Station};
 use crate::app::Action;
 use crate::database::Library;
 use crate::ui::{FaviconSize, StationFavicon};
+use crate::utils;
 
 pub struct StationDialog {
     pub widget: Dialog,
@@ -104,8 +105,8 @@ impl StationDialog {
 
     fn setup(&self) {
         self.title_label.set_text(&self.station.name);
-        let subtitle_text = &format!("{} {} · {} Votes", self.station.country, self.station.state, self.station.votes);
-        self.subtitle_label.set_text(subtitle_text);
+        let subtitle = utils::station_subtitle(&self.station.country, &self.station.state, self.station.votes);
+        self.subtitle_label.set_text(&subtitle);
 
         if self.station.codec != "" {
             self.codec_label.set_text(&self.station.codec);

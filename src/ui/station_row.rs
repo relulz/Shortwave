@@ -20,8 +20,8 @@ use gtk::prelude::*;
 
 use crate::api::{FaviconDownloader, Station};
 use crate::app::Action;
-use crate::i18n::*;
 use crate::ui::{FaviconSize, StationFavicon};
+use crate::utils;
 
 pub struct StationRow {
     pub widget: gtk::FlowBoxChild,
@@ -40,12 +40,8 @@ impl StationRow {
         get_widget!(builder, gtk::Label, station_label);
         get_widget!(builder, gtk::Label, subtitle_label);
         station_label.set_text(&station.name);
-        subtitle_label.set_text(&ni18n_f(
-            "{} {} · {} Vote",
-            "{} {} · {} Votes",
-            station.votes as u32,
-            &[&station.country, &station.state, &station.votes.to_string()],
-        ));
+        let subtitle = utils::station_subtitle(&station.country, &station.state, station.votes);
+        subtitle_label.set_text(&subtitle);
 
         // Download & set station favicon
         get_widget!(builder, gtk::Box, favicon_box);
