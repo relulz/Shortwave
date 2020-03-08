@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-03-07 21:34+0000\n"
-"PO-Revision-Date: 2020-03-08 12:42+0100\n"
+"POT-Creation-Date: 2020-03-08 16:05+0000\n"
+"PO-Revision-Date: 2020-03-08 19:55+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -261,16 +261,23 @@ msgstr[0] "Zaimportowano {} stację."
 msgstr[1] "Zaimportowano {} stacje."
 msgstr[2] "Zaimportowano {} stacji."
 
-#: src/ui/station_row.rs:44
-msgid "{} {} · {} Vote"
-msgid_plural "{} {} · {} Votes"
-msgstr[0] "{} {} · {} głos"
-msgstr[1] "{} {} · {} głosy"
-msgstr[2] "{} {} · {} głosów"
-
 #: src/ui/window.rs:268
 msgid "Could not import library."
 msgstr "Nie można zaimportować kolekcji."
+
+#: src/utils.rs:122
+msgid "{} Vote"
+msgid_plural "{} Votes"
+msgstr[0] "{} głos"
+msgstr[1] "{} głosy"
+msgstr[2] "{} głosów"
+
+#: src/utils.rs:124
+msgid "{} · {} Vote"
+msgid_plural "{} · {} Votes"
+msgstr[0] "{} · {} głos"
+msgstr[1] "{} · {} głosy"
+msgstr[2] "{} · {} głosów"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
