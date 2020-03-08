@@ -103,6 +103,7 @@ impl GCastController {
                                 continue;
                             }
                             if let Some(d) = device.as_ref() {
+                                // TODO
                                 let s = station.lock().unwrap().as_ref().unwrap().clone();
                                 debug!("Transfer media information to gcast device...");
 
@@ -130,7 +131,7 @@ impl GCastController {
                                             metadata: Some(rust_cast::channels::media::Metadata::Generic(metadata)),
                                         },
                                     )
-                                    .unwrap();
+                                    .expect("Could not transer media information to gcast device.");
                                 send!(gcast_sender, GCastAction::HeartBeat);
                             };
                         }
@@ -191,16 +192,20 @@ impl GCastController {
 
     pub fn disconnect_from_device(&self) {
         debug!("Called to disconnect to gcast device...");
+        *self.device_ip.lock().unwrap() = "".to_string();
         send!(self.gcast_sender, GCastAction::Disconnect);
     }
 }
 
 impl Controller for Rc<GCastController> {
     fn set_station(&self, station: Station) {
-        if self.station.lock().unwrap().is_some() {
-            debug!("Called to switch stations on gcast device...");
-            *self.station.lock().unwrap() = Some(station);
+        *self.station.lock().unwrap() = Some(station);
+
+        if !self.device_ip.lock().unwrap().is_empty() {
+            debug!("Set new station on gcast device...");
             send!(self.gcast_sender, GCastAction::SetStation);
+        } else {
+            debug!("No device ip available, don't set station. ")
         }
     }
 
