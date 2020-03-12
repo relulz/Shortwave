@@ -28,6 +28,9 @@
     <key name="recorder-song-save-path" type="s">
       <default>""</default>
     </key>
+    <key name="playback-volume" type="d">
+      <default>1.0</default>
+    </key>
   </schema>
 </schemalist>
 

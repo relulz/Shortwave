@@ -126,6 +126,10 @@ impl Player {
             sender,
         };
 
+        // Set volume
+        let volume = settings_manager::get_double(Key::PlaybackVolume);
+        player.set_volume(volume);
+
         player.setup_signals(gst_receiver);
         player
     }
@@ -169,11 +173,14 @@ impl Player {
     }
 
     pub fn set_volume(&self, volume: f64) {
+        debug!("Set volume: {}", &volume);
         self.gst_backend.lock().unwrap().set_volume(volume.clone());
 
         for con in &*self.controller {
             con.set_volume(volume);
         }
+
+        settings_manager::set_double(Key::PlaybackVolume, volume);
     }
 
     pub fn save_song(&self, song: Song) {

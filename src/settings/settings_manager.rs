@@ -82,3 +82,15 @@ pub fn set_integer(key: Key, value: i32) {
     let settings = get_settings();
     settings.set_int(&key.to_string(), value).unwrap();
 }
+
+#[allow(dead_code)]
+pub fn get_double(key: Key) -> f64 {
+    let settings = get_settings();
+    settings.get_double(&key.to_string())
+}
+
+#[allow(dead_code)]
+pub fn set_double(key: Key, value: f64) {
+    let settings = get_settings();
+    settings.set_double(&key.to_string(), value).unwrap();
+}

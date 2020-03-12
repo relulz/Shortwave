@@ -31,4 +31,5 @@ pub enum Key {
     RecorderSaveCount,
     RecorderSongDurationThreshold,
     RecorderSongSavePath,
+    PlaybackVolume,
 }
