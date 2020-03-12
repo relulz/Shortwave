@@ -77,6 +77,8 @@ impl SongBackend {
     }
 
     pub fn save_song(&self, song: Song) {
+        debug!("Save song \"{}\"", &song.title);
+
         let mut dest_path = glib::get_user_special_dir(glib::UserDirectory::Music).unwrap();
         dest_path.push(song.path.file_name().unwrap());
 

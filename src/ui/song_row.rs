@@ -57,9 +57,9 @@ impl SongRow {
     fn setup_signals(&self) {
         // save_button
         get_widget!(self.builder, gtk::Button, save_button);
+        get_widget!(self.builder, gtk::Stack, button_stack);
         save_button.connect_clicked(
-            clone!(@weak self.widget as widget, @weak self.builder as builder, @strong self.song as song, @strong self.sender as sender => move |_| {
-                get_widget!(builder, gtk::Stack, button_stack);
+            clone!(@weak self.widget as widget, @weak button_stack, @strong self.song as song, @strong self.sender as sender => move |_| {
                 send!(sender, Action::PlaybackSaveSong(song.clone()));
 
                 // Show open button
