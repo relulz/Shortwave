@@ -31,6 +31,9 @@ impl StationIdentifier {
             stationuuid: station.stationuuid.clone(),
         }
     }
+    pub fn from_uuid(uuid: String) -> Self {
+        StationIdentifier { id: None, stationuuid: uuid }
+    }
 }
 
 impl PartialEq for StationIdentifier {

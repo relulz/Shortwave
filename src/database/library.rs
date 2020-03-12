@@ -21,7 +21,7 @@ use url::Url;
 use futures::future::join_all;
 use std::rc::Rc;
 
-use crate::api::{Client, Station};
+use crate::api::{Client, Error, Station};
 use crate::app::Action;
 use crate::config;
 use crate::database::connection;
@@ -141,10 +141,19 @@ impl Library {
             for result in results {
                 match result {
                     Ok(station) => stations.insert(0, station),
-                    Err(err) => {
-                        let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
-                        send!(sender, Action::ViewShowNotification(notification));
-                    }
+                    Err(err) => match err {
+                        Error::InvalidStationError(uuid) => {
+                            let id = StationIdentifier::from_uuid(uuid);
+                            queries::delete_station_identifier(id).unwrap();
+
+                            let notification = Notification::new_info(&i18n("No longer existing station removed from library."));
+                            send!(sender, Action::ViewShowNotification(notification));
+                        }
+                        _ => {
+                            let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
+                            send!(sender, Action::ViewShowNotification(notification));
+                        }
+                    },
                 }
             }
 
