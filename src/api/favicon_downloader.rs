@@ -17,6 +17,8 @@
 use gdk_pixbuf::Pixbuf;
 use gio::prelude::*;
 use gio::DataInputStream;
+use isahc::config::RedirectPolicy;
+use isahc::prelude::*;
 use url::Url;
 
 use std::collections::hash_map::DefaultHasher;
@@ -37,11 +39,12 @@ impl FaviconDownloader {
 
         // We currently don't support "data:image/png" urls
         if url.scheme() == "data" {
+            debug!("Unsupported favicon type for {:?}", url);
             return Err(Error::CacheError);
         }
 
         // Download favicon
-        let mut response = isahc::get_async(url.to_string()).await?;
+        let mut response = Request::get(url.to_string()).redirect_policy(RedirectPolicy::Follow).body(()).unwrap().send_async().await?;
         let mut body = response.body_mut();
         let mut bytes = vec![];
         async_std::io::copy(&mut body, &mut bytes).await.unwrap();
