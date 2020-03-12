@@ -16,7 +16,10 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="icon_name">emblem-music-symbolic</property>
-            <property name="icon_size">5</property>
+            <property name="icon_size">6</property>
+            <style>
+              <class name="dim-label"/>
+            </style>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -28,7 +31,9 @@
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Songs are automatically recognized using the stream metadata. If the station does not send any metadata, no songs can be recognized.</property>
+            <property name="label" translatable="yes">Songs are automatically recognized using the stream metadata. 
+
+If the station does not send any metadata, no songs can be recognized.</property>
             <property name="justify">center</property>
             <property name="wrap">True</property>
             <property name="max_width_chars">20</property>
