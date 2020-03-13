@@ -16,6 +16,7 @@
 
 use glib::Sender;
 use gtk::prelude::*;
+use open;
 
 use crate::app::Action;
 use crate::audio::Song;
@@ -26,6 +27,7 @@ pub struct SongListBox {
     listbox: gtk::ListBox,
     stack: gtk::Stack,
 
+    builder: gtk::Builder,
     sender: Sender<Action>,
 }
 
@@ -36,12 +38,23 @@ impl SongListBox {
         get_widget!(builder, gtk::ListBox, listbox);
         get_widget!(builder, gtk::Stack, stack);
 
-        Self {
+        let listbox = Self {
             widget: song_listbox,
             listbox,
             stack,
+            builder,
             sender,
-        }
+        };
+
+        listbox.setup_signals();
+        listbox
+    }
+
+    fn setup_signals(&self) {
+        get_widget!(self.builder, gtk::Button, open_music_folder_button);
+        open_music_folder_button.connect_clicked(|_| {
+            open::that(glib::get_user_special_dir(glib::UserDirectory::Music).unwrap()).expect("Unable to open music folder");
+        });
     }
 
     pub fn add_song(&mut self, song: Song) {
