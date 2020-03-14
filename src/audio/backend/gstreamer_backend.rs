@@ -104,6 +104,7 @@ pub struct GstreamerBackend {
     file_blockprobe_id: Option<PadProbeId>,
 
     current_title: Arc<Mutex<String>>,
+    is_in_song_change: Arc<Mutex<bool>>,
 
     volume: Arc<Mutex<f64>>,
     volume_signal_id: glib::signal::SignalHandlerId,
@@ -161,14 +162,20 @@ impl GstreamerBackend {
         // Current song title. We need this variable to check if the title have changed.
         let current_title = Arc::new(Mutex::new(String::new()));
 
+        // When the stream title changes too quickly, there's a possibility
+        // that the pipeline is going to hang. With this we're going to avoid
+        // processing a another "song change", while the old one is still running.
+        let is_in_song_change = Arc::new(Mutex::new(false));
+
         // listen for new pipeline / bus messages
         let ct = current_title.clone();
         let bus = pipeline.get_bus().expect("Unable to get pipeline bus");
         let s = gst_sender.clone();
+        let sc = is_in_song_change.clone();
         gtk::timeout_add(250, move || {
             while bus.have_pending() {
                 if let Some(message) = bus.pop() {
-                    Self::parse_bus_message(&message, s.clone(), ct.clone());
+                    Self::parse_bus_message(&message, s.clone(), ct.clone(), sc.clone());
                 }
             }
             Continue(true)
@@ -235,6 +242,7 @@ impl GstreamerBackend {
             file_srcpad,
             file_blockprobe_id: None,
             current_title,
+            is_in_song_change,
             volume,
             volume_signal_id,
             sender: gst_sender,
@@ -300,7 +308,14 @@ impl GstreamerBackend {
     }
 
     pub fn stop_recording(&mut self, save_song: bool) -> Option<Song> {
+        if *self.is_in_song_change.lock().unwrap() {
+            warn!("Another recorderbin/song change is still running, cannot stop recording.");
+            return None;
+        }
+
         debug!("Stop recording... (save song: {})", save_song);
+        *self.is_in_song_change.lock().unwrap() = true;
+
         let recorderbin = self.recorderbin.lock().unwrap().clone();
 
         // Check if recorderbin is available
@@ -347,10 +362,17 @@ impl GstreamerBackend {
                 // Recorderbin got destroyed, so make out of the Option<RecorderBin> a None!
                 self.recorderbin.lock().unwrap().take().unwrap();
 
+                // Song/Recorderbin change is over.
+                *self.is_in_song_change.lock().unwrap() = false;
+
                 None
             }
         } else {
             debug!("No recorderbin available - nothing to stop.");
+
+            // Song/Recorderbin change is over.
+            *self.is_in_song_change.lock().unwrap() = false;
+
             None
         }
     }
@@ -363,7 +385,7 @@ impl GstreamerBackend {
         self.current_title.lock().unwrap().clone()
     }
 
-    fn parse_bus_message(message: &gstreamer::Message, sender: Sender<GstreamerMessage>, current_title: Arc<Mutex<String>>) {
+    fn parse_bus_message(message: &gstreamer::Message, sender: Sender<GstreamerMessage>, current_title: Arc<Mutex<String>>, is_in_song_change: Arc<Mutex<bool>>) {
         match message.view() {
             gstreamer::MessageView::Tag(tag) => {
                 if let Some(t) = tag.get_tags().get::<gstreamer::tags::Title>() {
@@ -394,6 +416,8 @@ impl GstreamerBackend {
                     if let gstreamer::MessageView::Eos(_) = &message.view() {
                         // recorderbin got EOS which means the current song got successfully saved.
                         debug!("Recorderbin received EOS event.");
+                        *is_in_song_change.lock().unwrap() = false;
+
                         send!(sender, GstreamerMessage::RecordingStopped);
                     }
                 }
@@ -461,7 +485,7 @@ impl RecorderBin {
         let vorbisenc_sinkpad = vorbisenc.get_static_pad("sink").unwrap();
         let ghostpad = gstreamer::GhostPad::new(Some("sink"), &vorbisenc_sinkpad).unwrap();
         bin.add_pad(&ghostpad).unwrap();
-        bin.sync_state_with_parent().unwrap();
+        bin.sync_state_with_parent().expect("Unable to sync recorderbin state with pipeline");
         srcpad.link(&ghostpad).expect("Queue src pad cannot linked to vorbisenc sinkpad");
 
         // Set song timestamp so we can check the duration later
