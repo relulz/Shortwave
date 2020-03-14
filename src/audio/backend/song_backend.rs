@@ -70,7 +70,7 @@ impl SongBackend {
         self.songs.shift_remove(&song.title);
 
         // Remove recorded data from disk
-        fs::remove_file(&song.path).unwrap();
+        fs::remove_file(&song.path).expect("Could not delete old song from disk.");
 
         // Removes the last row in song listbox
         self.listbox.remove_last_row();
@@ -88,7 +88,7 @@ impl SongBackend {
             dest_path.push(song.path.file_name().unwrap());
         }
 
-        fs::copy(song.path, dest_path).unwrap();
+        fs::copy(song.path, dest_path).expect("Could not copy song to music folder.");
     }
 
     pub fn delete_songs(&self) {
@@ -98,7 +98,7 @@ impl SongBackend {
         // Just delete the whole recording dir.
         // It gets recreated automatically
         if path.exists() {
-            fs::remove_dir_all(path).unwrap();
+            fs::remove_dir_all(path).expect("Could not delete recording dir.");
         }
     }
 }
