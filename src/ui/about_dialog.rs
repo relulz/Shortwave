@@ -23,7 +23,7 @@ pub fn show_about_dialog(window: gtk::ApplicationWindow) {
     let version: String = match config::PROFILE {
         "development" => format!("{} \n(Development Commit {})", config::VERSION, vcs_tag),
         "beta" => format!("Beta {}", config::VERSION.split_at(4).1),
-        _ => "".to_string(),
+        _ => format!("{}-stable", config::VERSION),
     };
 
     let dialog = gtk::AboutDialog::new();
