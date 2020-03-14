@@ -30,6 +30,7 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 
 use crate::api::Station;
+use crate::app::Action;
 use crate::audio::{Controller, GCastDevice, PlaybackState};
 
 enum GCastAction {
@@ -43,18 +44,24 @@ pub struct GCastController {
     station: Arc<Mutex<Option<Station>>>,
     device_ip: Arc<Mutex<String>>,
     gcast_sender: Sender<GCastAction>,
+    app_sender: glib::Sender<Action>,
 }
 
 // TODO: Re-structure this mess. Code cleanup is necessary.
 // Even clippy starts to complain: "warning: the function has a cognitive complexity of (36/25)"
 // Oops.
 impl GCastController {
-    pub fn new() -> Rc<Self> {
+    pub fn new(app_sender: glib::Sender<Action>) -> Rc<Self> {
         let station = Arc::new(Mutex::new(None));
         let device_ip = Arc::new(Mutex::new("".to_string()));
 
         let (gcast_sender, gcast_receiver) = channel();
-        let gcast_controller = Self { station, device_ip, gcast_sender };
+        let gcast_controller = Self {
+            station,
+            device_ip,
+            gcast_sender,
+            app_sender,
+        };
 
         let gcc = Rc::new(gcast_controller);
         gcc.start_thread(gcast_receiver);
@@ -188,6 +195,9 @@ impl GCastController {
         debug!("Called to connect to gcast device...");
         *self.device_ip.lock().unwrap() = device.ip.to_string();
         send!(self.gcast_sender, GCastAction::Connect);
+
+        // Stop audio playback
+        send!(self.app_sender, Action::PlaybackStop);
     }
 
     pub fn disconnect_from_device(&self) {
@@ -204,6 +214,9 @@ impl Controller for Rc<GCastController> {
         if !self.device_ip.lock().unwrap().is_empty() {
             debug!("Set new station on gcast device...");
             send!(self.gcast_sender, GCastAction::SetStation);
+
+            // Stop audio playback
+            send!(self.app_sender, Action::PlaybackStop);
         } else {
             debug!("No device ip available, don't set station. ")
         }
