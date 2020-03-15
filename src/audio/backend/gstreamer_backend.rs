@@ -346,9 +346,15 @@ impl GstreamerBackend {
                 // Because of this reason, we shouldn't record songs with a too low duration.
                 let threshold: u64 = settings_manager::get_integer(Key::RecorderSongDurationThreshold).try_into().unwrap();
                 if song.duration > std::time::Duration::from_secs(threshold) {
+                    // Song/Recorderbin change is over.
+                    *self.is_in_song_change.lock().unwrap() = false;
+
                     Some(song)
                 } else {
                     info!("Ignore song \"{}\". Duration is not long enough.", song.title);
+                    // Song/Recorderbin change is over.
+                    *self.is_in_song_change.lock().unwrap() = false;
+
                     None
                 }
             } else {
@@ -369,7 +375,6 @@ impl GstreamerBackend {
             }
         } else {
             debug!("No recorderbin available - nothing to stop.");
-
             // Song/Recorderbin change is over.
             *self.is_in_song_change.lock().unwrap() = false;
 
