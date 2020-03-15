@@ -50,10 +50,6 @@ impl Search {
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
         results_box.add(&flowbox.widget);
 
-        // keyboard focus
-        get_widget!(builder, gtk::ScrolledWindow, scrolledwindow);
-        search.set_focus_vadjustment(&scrolledwindow.get_vadjustment().unwrap());
-
         let timeout_id = Rc::new(RefCell::new(None));
 
         let search = Self {
