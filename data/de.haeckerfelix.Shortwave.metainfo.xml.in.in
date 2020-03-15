@@ -53,6 +53,12 @@
   </kudos>
 
   <releases>
+    <release version="1.0.1" date="2020-03-15">
+      <description>
+        <p>Fixes a bug that no songs can be saved.</p>
+        <p>Add Finnish translation.</p>
+      </description>
+    </release>
     <release version="1.0.0" date="2020-03-14">
       <description>
         <p>First stable release.</p>
