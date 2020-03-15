@@ -705,8 +705,8 @@ dependencies = [
 
 [[package]]
 name = "gtk-macros"
-version = "0.1.0"
-source = "git+https://gitlab.gnome.org/haecker-felix/gtk-macros#87d54fd04f10109fcac03643ec40de1228bc500f"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "gtk-sys"
@@ -1501,7 +1501,7 @@ dependencies = [
  "glib 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "gstreamer 0.15.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "gtk 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "gtk-macros 0.1.0 (git+https://gitlab.gnome.org/haecker-felix/gtk-macros)",
+ "gtk-macros 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "indexmap 1.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "isahc 0.8.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1805,7 +1805,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum gstreamer 0.15.0 (registry+https://github.com/rust-lang/crates.io-index)" = "08d9ea04f6e746e90d979eaf5b55a9125fd159e58959f203a2f3fbc4b2a93b77"
 "checksum gstreamer-sys 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)" = "1d18da01b97d0ab5896acd5151e4c155acefd0e6c03c3dd24dd133ba054053db"
 "checksum gtk 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7cd1d646cc9a2cb795f33b538779a3f22e71dc172f2aba08a41e84a2f72c0dec"
-"checksum gtk-macros 0.1.0 (git+https://gitlab.gnome.org/haecker-felix/gtk-macros)" = "<none>"
+"checksum gtk-macros 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "1874c48e670519ce192093ac906c08a6dde7cb2d18b28722ef237726a39c3a63"
 "checksum gtk-sys 0.9.2 (registry+https://github.com/rust-lang/crates.io-index)" = "53def660c7b48b00b510c81ef2d2fbd3c570f1527081d8d7947f471513e1a4c1"
 "checksum heck 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "20564e78d53d2bb135c343b3f47714a56af2061f1c928fdb541dc7b9fdd94205"
 "checksum hermit-abi 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)" = "eff2656d88f158ce120947499e971d743c05dbcbed62e5bd2f38f1698bbc3772"

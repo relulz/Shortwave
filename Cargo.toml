@@ -44,4 +44,4 @@ gio = { version = "0.8.0", features = ["v2_46"] }
 gdk-pixbuf = { version = "0.8.0", features = ["v2_36"] }
 gettext-rs = { version = "0.4.4", features = ["gettext-system"] }
 libhandy = { git="https://gitlab.gnome.org/World/Rust/libhandy-rs.git" }
-gtk-macros = { git = "https://gitlab.gnome.org/haecker-felix/gtk-macros" }
+gtk-macros = "0.2.0"
