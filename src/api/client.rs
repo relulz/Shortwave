@@ -18,6 +18,7 @@ use isahc::prelude::*;
 use url::Url;
 
 use crate::api::*;
+use crate::config;
 use crate::database::StationIdentifier;
 
 #[derive(Clone)]
@@ -61,7 +62,12 @@ impl Client {
 
     // Create and send message, return the received data.
     async fn send_message(&self, url: Url) -> Result<String, Error> {
-        let response = isahc::get_async(url.to_string()).await?.text_async().await?;
+        let useragent = format!("{}/{}-{}", config::PKGNAME, config::VERSION, config::PROFILE);
+
+        let mut request = Request::builder();
+        request.uri(url.to_string()).header("User-Agent", useragent);
+
+        let response = isahc::send_async(request.body(()).unwrap()).await?.text_async().await?;
         Ok(response)
     }
 
