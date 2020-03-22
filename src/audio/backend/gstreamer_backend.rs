@@ -267,9 +267,10 @@ impl GstreamerBackend {
 
         // We need to set an offset, otherwise the length of the recorded song would be wrong.
         // Get current clock time and calculate offset
-        let clock = self.pipeline.get_clock().expect("Could not get gstreamer pipeline clock");
-        debug!("( Clock time: {} )", clock.get_time());
-        let offset = -(clock.get_time().nseconds().unwrap() as i64);
+        let clock_time = self.pipeline.get_clock().expect("Could not get pipeline clock").get_time().nseconds().unwrap() as i64;
+        let base_time = self.pipeline.get_base_time().nseconds().expect("Could not get pipeline base time") as i64;
+        let offset = -(clock_time - base_time);
+        debug!("[Clock time: {} | Base time: {} | Offset: {}]", clock_time, base_time, offset);
         self.file_srcpad.set_offset(offset);
 
         let mut recorderbin_locked = self.recorderbin.lock().unwrap();
