@@ -285,6 +285,6 @@ impl Player {
             path.push(title);
             path.set_extension("ogg");
         }
-        path.to_path_buf()
+        path
     }
 }
