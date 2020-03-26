@@ -29,7 +29,23 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
     [radio-browser.info](http://www.radio-browser.info/gui/#/). It's a community database. Everybody can add/edit information.
 
+## Translations
+Translation of this project takes place on the GNOME translation platform,
+[Damned Lies](https://l10n.gnome.org/module/shortwave). For further
+information on how to join a language team, or even to create one, please see
+[GNOME Translation Project wiki page](https://wiki.gnome.org/TranslationProject).
+
 ## Flatpak builds
+
+#### Stable builds
+You can install stable builds of Shortwave from Flathub by using this command:
+
+`flatpak install https://flathub.org/repo/appstream/de.haeckerfelix.Shortwave.flatpakref`
+
+<a href="https://flathub.org/apps/details/de.haeckerfelix.Shortwave"><img src="https://flathub.org/assets/badges/flathub-badge-en.png" width="200"/></a>
+
+If you haven't installed Flatpak yet, you can download it from [here](https://flatpak.org/setup/).
+
 
 #### Beta builds
 You can install beta builds of Shortwave from the Flathub Beta repository by using this command:
