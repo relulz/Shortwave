@@ -1,0 +1,368 @@
+# German translation for shortwave.
+# Copyright (C) 2020 shortwave's COPYRIGHT HOLDER
+# This file is distributed under the same license as the shortwave package.
+# Peter Sonntag <peter@sonniger-tag.eu>, 2020.
+# Christian Kirbach <christian.kirbach@gmail.com>, 2020.
+# Wolfgang Stoeggl <c72578@yahoo.de>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: shortwave master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
+"POT-Creation-Date: 2020-03-26 17:05+0000\n"
+"PO-Revision-Date: 2020-03-29 03:23+0200\n"
+"Last-Translator: Wolfgang Stoeggl <c72578@yahoo.de>\n"
+"Language-Team: German <gnome-de@gnome.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3\n"
+
+#: data/gtk/station_dialog.ui:10
+msgid "Station details"
+msgstr "Senderdetails"
+
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:210
+msgid "Language"
+msgstr "Sprache"
+
+#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:119
+msgid "Tags"
+msgstr "Stichworte"
+
+#: data/gtk/station_dialog.ui:220
+msgid "Codec"
+msgstr "Codec"
+
+#: data/gtk/station_dialog.ui:235
+msgid "Homepage"
+msgstr "Internetseite"
+
+#: data/gtk/discover.ui:39
+msgid "Most voted stations"
+msgstr "Beliebteste Sender"
+
+#: data/gtk/discover.ui:73
+msgid "Trending"
+msgstr "Im Trend"
+
+#: data/gtk/discover.ui:107
+msgid "Other users are listening to…"
+msgstr "Andere Nutzer hören gerade …"
+
+#: data/gtk/song_row.ui:17
+msgid "Save recorded song"
+msgstr "Aufgenommenen Titel speichern"
+
+#: data/gtk/streaming_dialog.ui:75 data/gtk/menu/player_menu.ui:33
+msgid "Stream to a device"
+msgstr "Auf ein Gerät streamen"
+
+#: data/gtk/streaming_dialog.ui:154
+msgid "Devices which implement the Google Cast protocol are supported."
+msgstr ""
+"Geräte, die das Google Cast Protokoll unterstützen, können verwendet werden."
+
+#: data/gtk/streaming_dialog.ui:209
+msgid "No devices found"
+msgstr "Es wurden keine Geräte gefunden"
+
+#: data/gtk/streaming_dialog.ui:224
+msgid "Retry search"
+msgstr "Suche wiederholen"
+
+#: data/gtk/streaming_dialog.ui:302 data/gtk/streaming_dialog.ui:353
+msgid "Searching for devices…"
+msgstr "Geräte suchen …"
+
+#: data/gtk/notification.ui:142
+msgid "Error details"
+msgstr "Fehlerdetails"
+
+#: data/gtk/sidebar_controller.ui:33
+msgid "An error occurred"
+msgstr "Es ist ein Fehler aufgetreten"
+
+#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:57
+msgid "No playback"
+msgstr "Keine Wiedergabe"
+
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:177
+msgid "Sorting"
+msgstr "Sortierung"
+
+#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:135
+#: data/gtk/window.ui:41
+msgid "Library"
+msgstr "Bibliothek"
+
+#: data/gtk/menu/app_menu.ui:57
+msgid "Create new station"
+msgstr "Neuen Sender anlegen"
+
+#: data/gtk/menu/app_menu.ui:82
+msgid "Preferences"
+msgstr "Einstellungen"
+
+#: data/gtk/menu/app_menu.ui:96
+msgid "Keyboard Shortcuts"
+msgstr "Tastenkürzel"
+
+#: data/gtk/menu/app_menu.ui:110
+msgid "About Shortwave"
+msgstr "Info zu Kurzwelle"
+
+#: data/gtk/menu/app_menu.ui:152
+msgid "Import from Gradio"
+msgstr "Von Gradio importieren"
+
+#: data/gtk/menu/app_menu.ui:195
+msgid "Name"
+msgstr "Name"
+
+#: data/gtk/menu/app_menu.ui:225
+msgid "Country"
+msgstr "Land"
+
+#: data/gtk/menu/app_menu.ui:240
+msgid "State"
+msgstr "Status"
+
+#: data/gtk/menu/app_menu.ui:255
+msgid "Votes"
+msgstr "Stimmen"
+
+#: data/gtk/menu/app_menu.ui:281
+msgid "Ascending"
+msgstr "Aufsteigend"
+
+#: data/gtk/menu/app_menu.ui:296
+msgid "Descending"
+msgstr "Absteigend"
+
+#: data/gtk/menu/player_menu.ui:19
+msgid "Show station details"
+msgstr "Senderdetails anzeigen"
+
+#: data/gtk/settings_window.ui:15
+msgid "Appearance"
+msgstr "Erscheinungsbild"
+
+#: data/gtk/settings_window.ui:19
+msgid "Enable dark mode"
+msgstr "Dunklen Modus aktivieren"
+
+#: data/gtk/shortcuts.ui:12
+msgid "General"
+msgstr "Allgemein"
+
+#: data/gtk/shortcuts.ui:18
+msgctxt "shortcut window"
+msgid "Quit the application"
+msgstr "Die Anwendung beenden"
+
+#: data/gtk/shortcuts.ui:25
+msgctxt "shortcut window"
+msgid "Search for stations"
+msgstr "Sender suchen"
+
+#: data/gtk/storefront.ui:29
+msgid "Discover"
+msgstr "Entdecken"
+
+#: data/gtk/storefront.ui:44
+msgid "Search"
+msgstr "Suchen"
+
+#: data/gtk/storefront.ui:69
+msgid "Locations"
+msgstr "Orte"
+
+#: data/gtk/storefront.ui:94
+msgid "Languages"
+msgstr "Sprachen"
+
+#: data/gtk/library.ui:53
+msgid "Receiving station data…"
+msgstr "Empfangen der Senderdaten …"
+
+#: data/gtk/library.ui:151
+msgid "Discover new stations"
+msgstr "Neue Sender entdecken"
+
+#: data/gtk/library.ui:176
+msgid "Import stations from Gradio"
+msgstr "Sender von Gradio importieren"
+
+#: data/gtk/song_listbox.ui:34
+msgid ""
+"Songs are automatically recognized using the stream metadata.\n"
+"\n"
+"If the station does not send any metadata, no songs can be recognized."
+msgstr ""
+"Titel werden automatisch anhand der Stream-Metadaten erkannt.\n"
+"\n"
+"Wenn der Sender keine Metadaten sendet, können keine Titel erkannt werden."
+
+#: data/gtk/song_listbox.ui:93
+msgid "No songs detected"
+msgstr "Keine Titel erkannt"
+
+#: data/gtk/song_listbox.ui:110
+msgid "Detected songs will appear here."
+msgstr "Erkannte Titel erscheinen hier."
+
+#: data/gtk/song_listbox.ui:131
+msgid "How does this work?"
+msgstr "Wie funktioniert das?"
+
+#: data/gtk/song_listbox.ui:205
+msgid "Saved songs are located in your Music folder."
+msgstr "Gespeicherte Titel befinden sich in Ihrem Musik-Ordner."
+
+#: data/gtk/song_listbox.ui:223
+msgid "Open"
+msgstr "Öffnen"
+
+#: data/gtk/player.ui:97
+msgid "Connected with"
+msgstr "Verbunden mit"
+
+#: src/audio/player.rs:142
+msgid "This station cannot be played because the stream is offline."
+msgstr ""
+"Dieser Sender kann nicht abgespielt werden, weil die Quelle außer Betrieb "
+"ist."
+
+#: src/audio/player.rs:157
+msgid "Station cannot be streamed."
+msgstr "Sender kann nicht abgespielt werden."
+
+#: src/audio/player.rs:157
+msgid "URL is not valid."
+msgstr "Die Adresse ist ungültig."
+
+#. Welcome text which gets displayed when the library is empty. "{}" is the application name.
+#: src/database/library.rs:55
+msgid "Welcome to {}"
+msgstr "Willkommen zu {}"
+
+#: src/database/library.rs:145
+msgid "No longer existing station removed from library."
+msgstr "Nicht mehr existierender Sender wurde aus der Bibliothek entfernt."
+
+#: src/database/library.rs:149 src/discover/pages/discover.rs:104
+#: src/discover/pages/search.rs:95
+msgid "Station data could not be received."
+msgstr "Senderdaten konnten nicht empfangen werden."
+
+#: src/ui/about_dialog.rs:32
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
+msgid "Listen to internet radio"
+msgstr "Internet-Radio hören"
+
+#: src/ui/import_dialog.rs:32
+msgid "Select database to import"
+msgstr "Zu importierende Datenbank auswählen"
+
+#: src/ui/import_dialog.rs:35
+msgid "Import"
+msgstr "Importieren"
+
+#: src/ui/import_dialog.rs:36
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. Get station identifiers
+#: src/ui/import_dialog.rs:50
+msgid "Converting data…"
+msgstr "Umwandeln der Daten …"
+
+#. Get actual stations from identifiers
+#: src/ui/import_dialog.rs:56
+msgid "Importing {} station…"
+msgid_plural "Importing {} stations…"
+msgstr[0] "Importieren von {} Sender …"
+msgstr[1] "Importieren von {} Sendern …"
+
+#: src/ui/import_dialog.rs:70
+msgid "Imported {} station!"
+msgid_plural "Imported {} stations!"
+msgstr[0] "{} Sender wurde importiert!"
+msgstr[1] "{} Sender wurden importiert!"
+
+#: src/ui/window.rs:268
+msgid "Could not import library."
+msgstr "Bibliothek konnte nicht importiert werden."
+
+#: src/utils.rs:122
+msgid "{} Vote"
+msgid_plural "{} Votes"
+msgstr[0] "{} Stimme"
+msgstr[1] "{} Stimmen"
+
+#: src/utils.rs:124
+msgid "{} · {} Vote"
+msgid_plural "{} · {} Votes"
+msgstr[0] "{} · {} Stimme"
+msgstr[1] "{} · {} Stimmen"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Kurzwelle"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
+msgid "Felix Häcker"
+msgstr "Felix Häcker"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
+msgid ""
+"Shortwave is an internet radio player that provides access to a station "
+"database with over 25,000 stations."
+msgstr ""
+"Kurzwelle ist eine Internet-Radiowiedergabe, die Zugang zu einer "
+"Senderdatenbank mit über 25.000 Sendern bietet."
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+msgid "Features:"
+msgstr "Funktionen:"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+msgid "Create your own library where you can add your favourite stations"
+msgstr ""
+"Erstellen Sie Ihre eigene Bibliothek, in der Sie Ihre Lieblingssender "
+"hinzufügen"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+msgid "Easily search and discover new radio stations"
+msgstr "Einfaches Suchen und Entdecken neuer Radiosender"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+msgid ""
+"Automatic recognition of songs, with the possibility to save them "
+"individually"
+msgstr ""
+"Automatische Erkennung von Titeln, mit der Möglichkeit, sie einzeln zu "
+"speichern"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
+msgid "Responsive application layout, compatible for small and large screens"
+msgstr ""
+"Dynamisches Anwendungslayout, kompatibel mit kleinen und großen Bildschirmen"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
+msgstr ""
+"Tonwiedergabe auf unterstützten Netzwerkgeräten (z.B. Google Chromecasts)"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
+msgid "Seamless integration into the GNOME desktop environment"
+msgstr "Nahtlose Integration in die GNOME-Arbeitsumgebung"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Radio;Stream;Welle;"
