@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-03-08 21:35+0000\n"
-"PO-Revision-Date: 2020-03-09 13:09+0100\n"
+"POT-Creation-Date: 2020-03-13 14:24+0000\n"
+"PO-Revision-Date: 2020-04-01 12:18+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 3.34.0\n"
+"X-Generator: Gtranslator 3.36.0\n"
 
 #: data/gtk/station_dialog.ui:10
 msgid "Station details"
@@ -51,6 +51,10 @@ msgstr "Tendencia"
 msgid "Other users are listening to…"
 msgstr "Otros usuarios escuchan…"
 
+#: data/gtk/song_row.ui:17
+msgid "Save recorded song"
+msgstr "Guardar canción grabada"
+
 #: data/gtk/streaming_dialog.ui:75 data/gtk/menu/player_menu.ui:33
 msgid "Stream to a device"
 msgstr "Reproducir en un dispositivo"
@@ -61,8 +65,9 @@ msgstr ""
 "Los dispositivos que implementan el protocolo Google Cast están soportados."
 
 #: data/gtk/streaming_dialog.ui:209
-msgid "No devices found "
-msgstr "No se han encontrado dispositivos "
+#| msgid "No devices found "
+msgid "No devices found"
+msgstr "No se han encontrado dispositivos"
 
 #: data/gtk/streaming_dialog.ui:224
 msgid "Retry search"
@@ -191,27 +196,49 @@ msgstr "Descubrir emisoras nuevas"
 msgid "Import stations from Gradio"
 msgstr "Importar emisoras de Gradio"
 
-#: data/gtk/song_listbox.ui:46
+#: data/gtk/song_listbox.ui:34
+msgid ""
+"Songs are automatically recognized using the stream metadata.\n"
+"\n"
+"If the station does not send any metadata, no songs can be recognized."
+msgstr ""
+"Las canciones se reconoce automáticamente usando los metadatos del flujo.\n"
+"\n"
+"Si la emisora no envía ningún metadato no se pueden reconocer las canciones."
+
+#: data/gtk/song_listbox.ui:93
 msgid "No songs detected"
 msgstr "No se han detectado canciones"
 
-#: data/gtk/song_listbox.ui:63
+#: data/gtk/song_listbox.ui:110
 msgid "Detected songs will appear here."
 msgstr "Las canciones detectadas aparecerán aquí."
+
+#: data/gtk/song_listbox.ui:131
+msgid "How does this work?"
+msgstr "¿Cómo funciona?"
+
+#: data/gtk/song_listbox.ui:205
+msgid "Saved songs are located in your Music folder."
+msgstr "Las canciones guardadas están en su carpeta Música"
+
+#: data/gtk/song_listbox.ui:223
+msgid "Open"
+msgstr "Abierta"
 
 #: data/gtk/player.ui:97
 msgid "Connected with"
 msgstr "Conectado con"
 
-#: src/audio/player.rs:138
+#: src/audio/player.rs:142
 msgid "This station cannot be played because the stream is offline."
 msgstr "No se puede reproducir esta emisora porque el flujo está desconectado."
 
-#: src/audio/player.rs:153
+#: src/audio/player.rs:157
 msgid "Station cannot be streamed."
 msgstr "No se puede reproducir la emisora."
 
-#: src/audio/player.rs:153
+#: src/audio/player.rs:157
 msgid "URL is not valid."
 msgstr "El URL no es válido."
 
@@ -220,7 +247,11 @@ msgstr "El URL no es válido."
 msgid "Welcome to {}"
 msgstr "Bienvenido a {}"
 
-#: src/database/library.rs:145 src/discover/pages/discover.rs:108
+#: src/database/library.rs:149
+msgid "No longer existing station removed from library."
+msgstr "Emisora que ya no existe eliminada de la biblioteca"
+
+#: src/database/library.rs:153 src/discover/pages/discover.rs:108
 #: src/discover/pages/search.rs:99
 msgid "Station data could not be received."
 msgstr "No se han podido recibir los datos de la emisora."
@@ -285,7 +316,7 @@ msgstr "Shortwave"
 msgid "Felix Häcker"
 msgstr "Felix Häcker"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 25,000 stations."
@@ -293,19 +324,19 @@ msgstr ""
 "Shortwave es un reproductor de radio por Internet que proporciona acceso a "
 "una base de datos con más de 25.000 emisoras."
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid "Features:"
 msgstr "Características:"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
 msgid "Create your own library where you can add your favourite stations"
 msgstr "Crear su propia biblioteca donde puede añadir sus emisoras favoritas"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Easily search and discover new radio stations"
 msgstr "Buscar y descubrir nuevas emisoras de radio fácilmente"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
 msgid ""
 "Automatic recognition of songs, with the possibility to save them "
 "individually"
@@ -313,16 +344,16 @@ msgstr ""
 "Reconocimiento automático de las canciones, con la posibilidad de guardarlas "
 "individualmente"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr "Diseño adaptativo, compatible con pantallas grandes y pequeñas"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
 msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
 msgstr ""
 "Reproducir sonido en dispositivos de red soportados (Ej. Google Chromecast)"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
 msgid "Seamless integration into the GNOME desktop environment"
 msgstr "Integración sin fisuras con el entorno de escritorio GNOME"
 
