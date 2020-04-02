@@ -1,0 +1,372 @@
+# Ukrainian translation for shortwave.
+# Copyright (C) 2020 shortwave's COPYRIGHT HOLDER
+# This file is distributed under the same license as the shortwave package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: shortwave master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
+"POT-Creation-Date: 2020-04-01 10:18+0000\n"
+"PO-Revision-Date: 2020-04-02 10:24+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 20.07.70\n"
+
+#: data/gtk/station_dialog.ui:10
+msgid "Station details"
+msgstr "Параметри станції"
+
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:210
+msgid "Language"
+msgstr "Мова"
+
+#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:119
+msgid "Tags"
+msgstr "Мітки"
+
+#: data/gtk/station_dialog.ui:220
+msgid "Codec"
+msgstr "Кодек"
+
+#: data/gtk/station_dialog.ui:235
+msgid "Homepage"
+msgstr "Домашня сторінка"
+
+#: data/gtk/discover.ui:39
+msgid "Most voted stations"
+msgstr "Станції із найвищим рейтингом"
+
+#: data/gtk/discover.ui:73
+msgid "Trending"
+msgstr "Тренди"
+
+#: data/gtk/discover.ui:107
+msgid "Other users are listening to…"
+msgstr "Інші користувачі слухають…"
+
+#: data/gtk/song_row.ui:17
+msgid "Save recorded song"
+msgstr "Зберегти записану пісню"
+
+#: data/gtk/streaming_dialog.ui:75 data/gtk/menu/player_menu.ui:33
+msgid "Stream to a device"
+msgstr "Трансляція на пристрій"
+
+#: data/gtk/streaming_dialog.ui:154
+msgid "Devices which implement the Google Cast protocol are supported."
+msgstr ""
+"Передбачено підтримку пристроїв, у яких реалізовано протокол Google Cast."
+
+#: data/gtk/streaming_dialog.ui:209
+msgid "No devices found"
+msgstr "Пристроїв не знайдено"
+
+#: data/gtk/streaming_dialog.ui:224
+msgid "Retry search"
+msgstr "Повторити пошук"
+
+#: data/gtk/streaming_dialog.ui:302 data/gtk/streaming_dialog.ui:353
+msgid "Searching for devices…"
+msgstr "Пошук пристроїв…"
+
+#: data/gtk/notification.ui:142
+msgid "Error details"
+msgstr "Подробиці щодо помилки"
+
+#: data/gtk/sidebar_controller.ui:33
+msgid "An error occurred"
+msgstr "Сталася помилка"
+
+#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:57
+msgid "No playback"
+msgstr "Немає відтворення"
+
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:177
+msgid "Sorting"
+msgstr "Впорядкування"
+
+#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:135
+#: data/gtk/window.ui:41
+msgid "Library"
+msgstr "Бібліотека"
+
+#: data/gtk/menu/app_menu.ui:57
+msgid "Create new station"
+msgstr "Створити станцію"
+
+#: data/gtk/menu/app_menu.ui:82
+msgid "Preferences"
+msgstr "Налаштування"
+
+#: data/gtk/menu/app_menu.ui:96
+msgid "Keyboard Shortcuts"
+msgstr "Клавіатурні скорочення"
+
+#: data/gtk/menu/app_menu.ui:110
+msgid "About Shortwave"
+msgstr "Про «Shortwave»"
+
+#: data/gtk/menu/app_menu.ui:152
+msgid "Import from Gradio"
+msgstr "Імпортувати з Gradio"
+
+#: data/gtk/menu/app_menu.ui:195
+msgid "Name"
+msgstr "Назва"
+
+#: data/gtk/menu/app_menu.ui:225
+msgid "Country"
+msgstr "Країна"
+
+#: data/gtk/menu/app_menu.ui:240
+msgid "State"
+msgstr "Штат"
+
+#: data/gtk/menu/app_menu.ui:255
+msgid "Votes"
+msgstr "Голоси"
+
+#: data/gtk/menu/app_menu.ui:281
+msgid "Ascending"
+msgstr "За зростанням"
+
+#: data/gtk/menu/app_menu.ui:296
+msgid "Descending"
+msgstr "За спаданням"
+
+#: data/gtk/menu/player_menu.ui:19
+msgid "Show station details"
+msgstr "Показати параметри станції"
+
+#: data/gtk/settings_window.ui:15
+msgid "Appearance"
+msgstr "Вигляд"
+
+#: data/gtk/settings_window.ui:19
+msgid "Enable dark mode"
+msgstr "Увімкнути темний режим"
+
+#: data/gtk/shortcuts.ui:12
+msgid "General"
+msgstr "Загальні"
+
+#: data/gtk/shortcuts.ui:18
+msgctxt "shortcut window"
+msgid "Quit the application"
+msgstr "Вийти з програми"
+
+#: data/gtk/shortcuts.ui:25
+msgctxt "shortcut window"
+msgid "Search for stations"
+msgstr "Пошук станцій"
+
+#: data/gtk/storefront.ui:29
+msgid "Discover"
+msgstr "Виявлення"
+
+#: data/gtk/storefront.ui:44
+msgid "Search"
+msgstr "Пошук"
+
+#: data/gtk/storefront.ui:69
+msgid "Locations"
+msgstr "Місця"
+
+#: data/gtk/storefront.ui:94
+msgid "Languages"
+msgstr "Мови"
+
+#: data/gtk/library.ui:53
+msgid "Receiving station data…"
+msgstr "Отримання даних щодо станції…"
+
+#: data/gtk/library.ui:151
+msgid "Discover new stations"
+msgstr "Виявити нові станції"
+
+#: data/gtk/library.ui:176
+msgid "Import stations from Gradio"
+msgstr "Імпортувати станції з Gradio"
+
+#: data/gtk/song_listbox.ui:34
+msgid ""
+"Songs are automatically recognized using the stream metadata.\n"
+"\n"
+"If the station does not send any metadata, no songs can be recognized."
+msgstr ""
+"Пісні автоматично визначатимуться за метаданими потоку даних.\n"
+"\n"
+"Якщо станція не надсилає метаданих, пісні розпізнано не буде."
+
+#: data/gtk/song_listbox.ui:93
+msgid "No songs detected"
+msgstr "Не виявлено жодної пісні"
+
+#: data/gtk/song_listbox.ui:110
+msgid "Detected songs will appear here."
+msgstr "Виявлені пісні буде показано тут."
+
+#: data/gtk/song_listbox.ui:131
+msgid "How does this work?"
+msgstr "Як це працює?"
+
+#: data/gtk/song_listbox.ui:205
+msgid "Saved songs are located in your Music folder."
+msgstr "Збережені пісні можна буде знайти у теці «Музика»."
+
+#: data/gtk/song_listbox.ui:223
+msgid "Open"
+msgstr "Відкрити"
+
+#: data/gtk/player.ui:97
+msgid "Connected with"
+msgstr "З'єднано з"
+
+#: src/audio/player.rs:142
+msgid "This station cannot be played because the stream is offline."
+msgstr ""
+"Відтворення цієї станції неможливе, оскільки потік даних від неї не надходить."
+
+#: src/audio/player.rs:157
+msgid "Station cannot be streamed."
+msgstr "Станцію не можна транслювати."
+
+#: src/audio/player.rs:157
+msgid "URL is not valid."
+msgstr "Некоректна адреса."
+
+#. Welcome text which gets displayed when the library is empty. "{}" is the application name.
+#: src/database/library.rs:55
+msgid "Welcome to {}"
+msgstr "Вітаємо у {}"
+
+#: src/database/library.rs:145
+msgid "No longer existing station removed from library."
+msgstr "Запис станції, якої вже не існує, вилучено з бібліотеки."
+
+#: src/database/library.rs:149 src/discover/pages/discover.rs:104
+#: src/discover/pages/search.rs:95
+msgid "Station data could not be received."
+msgstr "Не вдалося отримати дані станції."
+
+#: src/ui/about_dialog.rs:32
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
+msgid "Listen to internet radio"
+msgstr "Прослуховування інтернет-радіо"
+
+#: src/ui/import_dialog.rs:32
+msgid "Select database to import"
+msgstr "Виберіть базу даних для імпортування"
+
+#: src/ui/import_dialog.rs:35
+msgid "Import"
+msgstr "Імпортувати"
+
+#: src/ui/import_dialog.rs:36
+msgid "Cancel"
+msgstr "Скасувати"
+
+#. Get station identifiers
+#: src/ui/import_dialog.rs:50
+msgid "Converting data…"
+msgstr "Перетворюємо дані…"
+
+#. Get actual stations from identifiers
+#: src/ui/import_dialog.rs:56
+msgid "Importing {} station…"
+msgid_plural "Importing {} stations…"
+msgstr[0] "Імпортуємо {} станцію…"
+msgstr[1] "Імпортуємо {} станції…"
+msgstr[2] "Імпортуємо {} станцій…"
+msgstr[3] "Імпортуємо {} станцію…"
+
+#: src/ui/import_dialog.rs:70
+msgid "Imported {} station!"
+msgid_plural "Imported {} stations!"
+msgstr[0] "Імпортовано {} станцію!"
+msgstr[1] "Імпортовано {} станції!"
+msgstr[2] "Імпортовано {} станцій!"
+msgstr[3] "Імпортовано {} станцію!"
+
+#: src/ui/window.rs:268
+msgid "Could not import library."
+msgstr "Не вдалося імпортувати бібліотеку."
+
+#: src/utils.rs:122
+msgid "{} Vote"
+msgid_plural "{} Votes"
+msgstr[0] "{} голос"
+msgstr[1] "{} голоси"
+msgstr[2] "{} голосів"
+msgstr[3] "{} голос"
+
+#: src/utils.rs:124
+msgid "{} · {} Vote"
+msgid_plural "{} · {} Votes"
+msgstr[0] "{} · {} голос"
+msgstr[1] "{} · {} голоси"
+msgstr[2] "{} · {} голосів"
+msgstr[3] "{} · {} голос"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Коротка хвиля"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
+msgid "Felix Häcker"
+msgstr "Felix Häcker"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
+msgid ""
+"Shortwave is an internet radio player that provides access to a station "
+"database with over 25,000 stations."
+msgstr ""
+"«Коротка хвиля» — програвач інтернет-радіостанцій, який надає доступ до бази"
+" з понад 25000 станцій."
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+msgid "Features:"
+msgstr "Можливості:"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+msgid "Create your own library where you can add your favourite stations"
+msgstr ""
+"Створіть власну бібліотеку, до якої ви зможете додавати улюблені станції"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+msgid "Easily search and discover new radio stations"
+msgstr "Простий пошук і виявлення нових радіостанцій"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+msgid ""
+"Automatic recognition of songs, with the possibility to save them "
+"individually"
+msgstr "Автоматичне виявлення пісень із можливістю їхнього збереження окремо"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
+msgid "Responsive application layout, compatible for small and large screens"
+msgstr ""
+"Якісне компонування вікна програми, яке сумісне із малими і великими екранами"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
+msgstr ""
+"Відтворення звукових даних на підтримуваних пристроях у мережі (наприклад,"
+" Google Chromecast)"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
+msgid "Seamless integration into the GNOME desktop environment"
+msgstr "Безшовна інтеграція до стільничного середовища GNOME"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Radio;Stream;Wave;градіо;жрадіо;радіо;потік;трансляція;хвиля;"
