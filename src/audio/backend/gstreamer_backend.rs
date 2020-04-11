@@ -135,6 +135,26 @@ impl GstreamerBackend {
             }),
         );
 
+        // dynamically link uridecodebin element with audioconvert element
+        let uridecodebin = self.pipeline.get_by_name("uridecodebin").unwrap();
+        let audioconvert = self.pipeline.get_by_name("audioconvert").unwrap();
+        uridecodebin.connect_pad_added(clone!(@weak audioconvert => move |_, src_pad| {
+            let sink_pad = audioconvert.get_static_pad("sink").expect("Failed to get static sink pad from audioconvert");
+            if sink_pad.is_linked() {
+                return; // We are already linked. Ignoring.
+            }
+
+            let new_pad_caps = src_pad.get_current_caps().expect("Failed to get caps of new pad.");
+            let new_pad_struct = new_pad_caps.get_structure(0).expect("Failed to get first structure of caps.");
+            let new_pad_type = new_pad_struct.get_name();
+
+            if new_pad_type.starts_with("audio/x-raw") {
+                // check if new_pad is audio
+                let _ = src_pad.link(&sink_pad);
+                return;
+            }
+        }));
+
         // listen for new pipeline / bus messages
         let bus = self.pipeline.get_bus().expect("Unable to get pipeline bus");
         bus.add_watch_local(
