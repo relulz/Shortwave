@@ -26,7 +26,7 @@ pub struct Song {
 
 impl Song {
     pub fn new(title: &str, path: PathBuf, duration: Duration) -> Self {
-        debug!("New song: \"{}\", {:?}", title, path);
+        debug!("Created new song: \"{}\", {:?}", title, path);
 
         Self {
             title: title.to_string(),

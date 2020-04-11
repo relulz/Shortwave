@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use glib::{Receiver, Sender};
+use glib::Sender;
 use gtk::prelude::*;
 
 use std::cell::RefCell;
@@ -23,6 +23,7 @@ use std::fs;
 use std::path::PathBuf;
 use std::rc::Rc;
 use std::sync::{Arc, Mutex};
+use std::time::Duration;
 
 use crate::api::Station;
 use crate::app::Action;
@@ -45,11 +46,16 @@ use crate::utils;
 //            |                        |                   |                      |            //
 //            \-------------------------------------------------------------------/            //
 //                                     |                                                       //
-//                           ------------     -------------------     --------------           //
-//                          | Controller |   | Gstreamer Backend |   | Song Backend |          //
-//                           ------------     -------------------     --------------           //
-//                                     \______ | _______________________/                      //
-//                                            \|/                                              //
+//                              ------------       -----------    ------                       //
+//                             | Controller |     | Gstreamer |  | Song |                      //
+//                              ------------       -----------    ------                       //
+//                                    |                   \       /                            //
+//                                    |                   ---------                            //
+//                                    |                  | Backend |                           //
+//                                    |                   ---------                            //
+//                                    |                     |                                  //
+//                                    \---           -------/                                  //
+//                                        \         /                                          //
 //                                        -----------                                          //
 //                                       |  Player   |                                         //
 //                                        -----------                                          //
@@ -69,8 +75,8 @@ pub struct Player {
     controller: Rc<Vec<Box<dyn Controller>>>,
     gcast_controller: Rc<GCastController>,
 
-    gst_backend: Arc<Mutex<GstreamerBackend>>,
-    song_backend: Rc<RefCell<SongBackend>>,
+    backend: Arc<Mutex<Backend>>,
+    song_title: Rc<RefCell<SongTitle>>,
 
     builder: gtk::Builder,
     sender: Sender<Action>,
@@ -102,26 +108,24 @@ impl Player {
         let gcast_controller = GCastController::new(sender.clone());
         controller.push(Box::new(gcast_controller.clone()));
 
-        // Song backend + Widget
-        let save_count: usize = settings_manager::get_integer(Key::RecorderSaveCount).try_into().unwrap();
-        let song_backend = Rc::new(RefCell::new(SongBackend::new(sender.clone(), save_count)));
-        song_backend.borrow().delete_songs(); // Delete old songs
-        player_box.add(&song_backend.borrow().listbox.widget);
-        player_box.reorder_child(&song_backend.borrow().listbox.widget, 3);
-
-        // Gstreamer backend
-        let (gst_sender, gst_receiver) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
-        let gst_backend = Arc::new(Mutex::new(GstreamerBackend::new(gst_sender, sender.clone())));
-
         let controller: Rc<Vec<Box<dyn Controller>>> = Rc::new(controller);
+
+        // Backend
+        let backend = Backend::new(sender.clone());
+        player_box.add(&backend.song.listbox.widget);
+        player_box.reorder_child(&backend.song.listbox.widget, 3);
+        let backend = Arc::new(Mutex::new(backend));
+
+        // Song title -> [Current Song] - [Previous Song]
+        let song_title = Rc::new(RefCell::new(SongTitle::new()));
 
         let player = Self {
             widget: player,
             mini_controller_widget,
             controller,
             gcast_controller,
-            gst_backend,
-            song_backend,
+            backend,
+            song_title,
             builder,
             sender,
         };
@@ -130,7 +134,7 @@ impl Player {
         let volume = settings_manager::get_double(Key::PlaybackVolume);
         player.set_volume(volume);
 
-        player.setup_signals(gst_receiver);
+        player.setup_signals();
         player
     }
 
@@ -148,10 +152,13 @@ impl Player {
             con.set_station(station.clone());
         }
 
+        // Reset song title
+        self.song_title.borrow_mut().reset();
+
         match station.url_resolved {
             Some(url) => {
                 debug!("Start playing new URI: {}", url.to_string());
-                self.gst_backend.lock().unwrap().new_source_uri(&url.to_string());
+                self.backend.lock().unwrap().gstreamer.new_source_uri(&url.to_string());
             }
             None => {
                 let notification = Notification::new_error(&i18n("Station cannot be streamed."), &i18n("URL is not valid."));
@@ -163,10 +170,20 @@ impl Player {
     pub fn set_playback(&self, playback: PlaybackState) {
         match playback {
             PlaybackState::Playing => {
-                self.gst_backend.lock().unwrap().set_state(gstreamer::State::Playing);
+                self.backend.lock().unwrap().gstreamer.set_state(gstreamer::State::Playing);
             }
             PlaybackState::Stopped => {
-                self.gst_backend.lock().unwrap().set_state(gstreamer::State::Null);
+                let mut backend = self.backend.lock().unwrap();
+
+                // Discard recorded data when the stream stops
+                if backend.gstreamer.is_recording() {
+                    backend.gstreamer.stop_recording(true);
+                }
+
+                // Reset song title
+                self.song_title.borrow_mut().reset();
+
+                backend.gstreamer.set_state(gstreamer::State::Null);
             }
             _ => (),
         }
@@ -174,7 +191,7 @@ impl Player {
 
     pub fn set_volume(&self, volume: f64) {
         debug!("Set volume: {}", &volume);
-        self.gst_backend.lock().unwrap().set_volume(volume.clone());
+        self.backend.lock().unwrap().gstreamer.set_volume(volume.clone());
 
         for con in &*self.controller {
             con.set_volume(volume);
@@ -184,7 +201,7 @@ impl Player {
     }
 
     pub fn save_song(&self, song: Song) {
-        self.song_backend.borrow().save_song(song);
+        self.backend.lock().unwrap().song.save_song(song);
     }
 
     pub fn connect_to_gcast_device(&self, device: GCastDevice) {
@@ -202,12 +219,13 @@ impl Player {
         self.gcast_controller.disconnect_from_device();
     }
 
-    fn setup_signals(&self, receiver: Receiver<GstreamerMessage>) {
+    fn setup_signals(&self) {
         // Wait for new messages from the Gstreamer backend
+        let song_title = self.song_title.clone();
         let controller = self.controller.clone();
-        let song_backend = self.song_backend.clone();
-        let gst_backend = self.gst_backend.clone();
-        receiver.attach(None, move |message| Self::process_gst_message(message, controller.clone(), song_backend.clone(), gst_backend.clone()));
+        let backend = self.backend.clone();
+        let receiver = self.backend.clone().lock().unwrap().gstreamer_receiver.take().unwrap();
+        receiver.attach(None, move |message| Self::process_gst_message(message, song_title.clone(), controller.clone(), backend.clone()));
 
         // Disconnect from gcast device
         get_widget!(self.builder, gtk::Button, disconnect_button);
@@ -216,46 +234,41 @@ impl Player {
         }));
     }
 
-    fn process_gst_message(message: GstreamerMessage, controller: Rc<Vec<Box<dyn Controller>>>, song_backend: Rc<RefCell<SongBackend>>, gst_backend: Arc<Mutex<GstreamerBackend>>) -> glib::Continue {
+    fn process_gst_message(message: GstreamerMessage, song_title: Rc<RefCell<SongTitle>>, controller: Rc<Vec<Box<dyn Controller>>>, backend: Arc<Mutex<Backend>>) -> glib::Continue {
         match message {
             GstreamerMessage::SongTitleChanged(title) => {
+                let backend = &mut backend.lock().unwrap();
                 debug!("Song title has changed to: \"{}\"", title);
 
+                // If we're already recording something, we need to stop it first.
+                if backend.gstreamer.is_recording() {
+                    let threshold: i64 = settings_manager::get_integer(Key::RecorderSongDurationThreshold).try_into().unwrap();
+                    let duration: i64 = backend.gstreamer.get_current_recording_duration();
+                    if duration > threshold {
+                        backend.gstreamer.stop_recording(false);
+
+                        let duration = Duration::from_secs(duration.try_into().unwrap());
+                        let song = song_title.borrow().create_song(duration).expect("Unable to create new song");
+
+                        backend.song.add_song(song);
+                    } else {
+                        debug!("Discard recorded data, song duration ({} sec) is below threshold ({} sec).", duration, threshold);
+                        backend.gstreamer.stop_recording(true);
+                    }
+                }
+
+                // Set new song title
+                song_title.borrow_mut().set_current_title(title.clone());
                 for con in &*controller {
                     con.set_song_title(&title);
                 }
 
-                if gst_backend.lock().unwrap().is_recording() {
-                    // If we're already recording something, we need to stop it first.
-                    // We cannot start recording the new song immediately.
-
-                    if let Some(song) = gst_backend.lock().unwrap().stop_recording(true) {
-                        // Add the recorded song to the song backend,
-                        // which is responsible for the file management.
-                        song_backend.borrow_mut().add_song(song);
-                    }
-                } else {
-                    // If we don't record anything, we can start recording the new song
-                    // immediately.
-
-                    // Get current/new song title
-                    let title = gst_backend.lock().unwrap().get_current_song_title();
-
-                    // Nothing needs to be stopped, so we can start directly recording.
-                    gst_backend.lock().unwrap().start_recording(Self::get_song_path(title));
-                }
-            }
-            GstreamerMessage::RecordingStopped => {
-                // We got the confirmation that the old recording stopped,
-                // so we can start recording the new one now.
-                debug!("Recording is stopped.");
-
-                // Get current/new song title
-                let title = gst_backend.lock().unwrap().get_current_song_title();
-
                 // Start recording new song
-                if title != "" {
-                    gst_backend.lock().unwrap().start_recording(Self::get_song_path(title));
+                // We don't start recording the "first" detected song, since it is going to be incomplete
+                if !song_title.borrow().is_first_song() {
+                    backend.gstreamer.start_recording(song_title.borrow().get_path().expect("Unable to get song path"));
+                } else {
+                    debug!("Song will not be recorded because it may be incomplete (first song for this station).")
                 }
             }
             GstreamerMessage::PlaybackStateChanged(state) => {
@@ -263,28 +276,75 @@ impl Player {
                     con.set_playback_state(&state);
                 }
 
-                if matches!(state, PlaybackState::Failure(_)) || matches!(state, PlaybackState::Stopped) {
-                    // Discard current recording because the song has not yet been completely recorded.
-                    gst_backend.lock().unwrap().stop_recording(false);
+                // Discard recorded data when a failure occurs,
+                // since the song has not been recorded completely.
+                if backend.lock().unwrap().gstreamer.is_recording() && matches!(state, PlaybackState::Failure(_)) {
+                    backend.lock().unwrap().gstreamer.stop_recording(true);
                 }
             }
         }
         glib::Continue(true)
     }
+}
 
-    fn get_song_path(title: String) -> PathBuf {
-        let title = utils::simplify_string(title);
+pub struct SongTitle {
+    current_title: Option<String>,
+    previous_title: Option<String>,
+}
 
-        let mut path = path::CACHE.clone();
-        path.push("recording");
-
-        // Make sure that the path exists
-        fs::create_dir_all(path.clone()).expect("Could not create path for recording");
-
-        if title != "" {
-            path.push(title);
-            path.set_extension("ogg");
+impl SongTitle {
+    pub fn new() -> Self {
+        Self {
+            current_title: None,
+            previous_title: None,
         }
-        path
+    }
+
+    pub fn set_current_title(&mut self, title: String) {
+        if self.current_title.is_none() {
+            self.current_title = Some(title);
+        } else {
+            self.previous_title = self.current_title.take();
+            self.current_title = Some(title);
+        }
+    }
+
+    /// Returns song for current title
+    pub fn create_song(&self, duration: Duration) -> Option<Song> {
+        if let Some(title) = &self.current_title {
+            let path = self.get_path().expect("Unable to get path for current song");
+            return Some(Song::new(&title, path, duration));
+        }
+        None
+    }
+
+    /// Returns path for current title
+    fn get_path(&self) -> Option<PathBuf> {
+        if let Some(title) = &self.current_title {
+            let title = utils::simplify_string(title.to_string());
+
+            let mut path = path::CACHE.clone();
+            path.push("recording");
+
+            // Make sure that the path exists
+            fs::create_dir_all(path.clone()).expect("Could not create path for recording");
+
+            if title != "" {
+                path.push(title);
+                path.set_extension("ogg");
+            }
+            return Some(path);
+        }
+        None
+    }
+
+    pub fn is_first_song(&self) -> bool {
+        self.previous_title.is_none()
+    }
+
+    pub fn reset(&mut self) {
+        debug!("Cleared song title queue.");
+        self.current_title = None;
+        self.previous_title = None;
     }
 }

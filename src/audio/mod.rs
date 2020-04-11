@@ -17,8 +17,6 @@
 mod backend;
 mod controller;
 
-pub use backend::GstreamerBackend;
-pub use backend::SongBackend;
 pub use controller::Controller;
 pub use controller::GCastController;
 
