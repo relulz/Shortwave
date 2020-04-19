@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
   <requires lib="libhandy" version="0.0"/>
@@ -128,6 +128,7 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">True</property>
+        <property name="valign">center</property>
         <property name="action_name">win.show-discover</property>
         <child>
           <object class="GtkImage">
@@ -136,6 +137,9 @@
             <property name="icon_name">list-add-symbolic</property>
           </object>
         </child>
+        <style>
+          <class name="image-button"/>
+        </style>
       </object>
       <packing>
         <property name="position">1</property>
@@ -146,6 +150,7 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">True</property>
+        <property name="valign">center</property>
         <property name="action_name">win.show-library</property>
         <child>
           <object class="GtkImage">
@@ -154,6 +159,9 @@
             <property name="icon_name">go-previous-symbolic</property>
           </object>
         </child>
+        <style>
+          <class name="image-button"/>
+        </style>
       </object>
       <packing>
         <property name="position">2</property>
@@ -222,6 +230,7 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">True</property>
+        <property name="valign">center</property>
         <child>
           <object class="GtkImage">
             <property name="visible">True</property>
@@ -229,6 +238,9 @@
             <property name="icon_name">open-menu-symbolic</property>
           </object>
         </child>
+        <style>
+          <class name="image-button"/>
+        </style>
       </object>
       <packing>
         <property name="pack_type">end</property>
