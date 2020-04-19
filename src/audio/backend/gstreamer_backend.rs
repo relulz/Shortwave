@@ -379,6 +379,17 @@ impl GstreamerBackend {
                     }
                 }
             }
+            MessageView::Buffering(buffering) => {
+                let percent = buffering.get_percent();
+                info!("Buffering ({}%)\r", percent);
+
+                // Wait until buffering is complete before start/resume playing
+                if percent < 100 {
+                    let _ = pipeline.set_state(State::Paused);
+                } else {
+                    let _ = pipeline.set_state(State::Playing);
+                }
+            }
             MessageView::Error(err) => {
                 let msg = err.get_error().to_string();
                 warn!("Gstreamer Error: {:?}", msg);
