@@ -25,16 +25,20 @@ use crate::api::{Client, StationRequest};
 use crate::app::Action;
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
-use crate::ui::{Notification, StationFlowBox};
+use crate::ui::featured_carousel;
+use crate::ui::{FeaturedCarousel, Notification, StationFlowBox};
 
+#[allow(dead_code)]
 pub struct Discover {
     pub widget: gtk::Box,
     client: Client,
 
+    carousel: FeaturedCarousel,
     votes_flowbox: Rc<StationFlowBox>,
     trending_flowbox: Rc<StationFlowBox>,
     clicked_flowbox: Rc<StationFlowBox>,
 
+    builder: gtk::Builder,
     sender: Sender<Action>,
 }
 
@@ -45,46 +49,65 @@ impl Discover {
 
         let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
 
+        // Featured Carousel
+        let carousel = FeaturedCarousel::new();
+        get_widget!(builder, gtk::Box, carousel_box);
+        carousel_box.add(&carousel.widget);
+
+        let _action = featured_carousel::Action::new("win.show-server-stats", &i18n("Show statistics"));
+        carousel.add_page(&i18n("Browse over 25.500 stations"), "26,95,180", None);
+
+        let action = featured_carousel::Action::new("win.create-new-station", &i18n("Add new station"));
+        carousel.add_page(&i18n("Your favourite station is missing?"), "229,165,10", Some(action));
+
+        let action = featured_carousel::Action::new("win.open-radio-browser-info", &i18n("Open website"));
+        carousel.add_page(&i18n("Powered by radio-browser.info"), "38,162,105", Some(action));
+
+        // Most voted stations
         get_widget!(builder, gtk::Box, votes_box);
         let votes_flowbox = Rc::new(StationFlowBox::new(sender.clone()));
         votes_box.add(&votes_flowbox.widget);
 
+        // Trending
         get_widget!(builder, gtk::Box, trending_box);
         let trending_flowbox = Rc::new(StationFlowBox::new(sender.clone()));
         trending_box.add(&trending_flowbox.widget);
 
+        // Other users are listening to...
         get_widget!(builder, gtk::Box, clicked_box);
         let clicked_flowbox = Rc::new(StationFlowBox::new(sender.clone()));
         clicked_box.add(&clicked_flowbox.widget);
 
-        let search = Self {
+        let discover = Self {
             widget: discover,
             client,
+            carousel,
             votes_flowbox,
             trending_flowbox,
             clicked_flowbox,
+            builder,
             sender,
         };
 
-        search.fetch_data();
-        search
+        discover.fetch_data();
+        discover
     }
 
     fn fetch_data(&self) {
-        // Stations with the most votes
+        // Most voted stations (stations with the most votes)
         let mut votes_request = StationRequest::default();
         votes_request.order = Some("votes".to_string());
         votes_request.limit = Some(12);
         votes_request.reverse = Some(true);
         self.fill_flowbox(self.votes_flowbox.clone(), votes_request);
 
-        // Stations with the highest clicktrend
+        // Trending (stations with the highest clicktrend)
         let mut trending_request = StationRequest::default();
         trending_request.order = Some("clicktrend".to_string());
         trending_request.limit = Some(12);
         self.fill_flowbox(self.trending_flowbox.clone(), trending_request);
 
-        // Stations which got recently clicked
+        // Other users are listening to... (stations which got recently clicked)
         let mut clicked_request = StationRequest::default();
         clicked_request.order = Some("clicktimestamp".to_string());
         clicked_request.limit = Some(12);

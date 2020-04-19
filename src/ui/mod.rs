@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 pub mod about_dialog;
+pub mod featured_carousel;
 pub mod import_dialog;
 mod notification;
 mod song_listbox;
@@ -26,6 +27,7 @@ mod station_row;
 mod streaming_dialog;
 mod window;
 
+pub use featured_carousel::FeaturedCarousel;
 pub use notification::Notification;
 pub use song_listbox::SongListBox;
 pub use song_row::SongRow;

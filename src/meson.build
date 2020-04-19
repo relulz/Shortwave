@@ -65,6 +65,7 @@ sources = files(
   'settings/settings_manager.rs',
 
   'ui/about_dialog.rs',
+  'ui/featured_carousel.rs',
   'ui/import_dialog.rs',
   'ui/mod.rs',
   'ui/notification.rs',
