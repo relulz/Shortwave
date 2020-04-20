@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-04-01 10:18+0000\n"
-"PO-Revision-Date: 2020-04-02 10:24+0300\n"
+"POT-Creation-Date: 2020-04-19 10:22+0000\n"
+"PO-Revision-Date: 2020-04-20 12:54+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Station details"
 msgstr "Параметри станції"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:210
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:225
 msgid "Language"
 msgstr "Мова"
 
@@ -39,15 +39,15 @@ msgstr "Кодек"
 msgid "Homepage"
 msgstr "Домашня сторінка"
 
-#: data/gtk/discover.ui:39
+#: data/gtk/discover.ui:55
 msgid "Most voted stations"
 msgstr "Станції із найвищим рейтингом"
 
-#: data/gtk/discover.ui:73
+#: data/gtk/discover.ui:89
 msgid "Trending"
 msgstr "Тренди"
 
-#: data/gtk/discover.ui:107
+#: data/gtk/discover.ui:123
 msgid "Other users are listening to…"
 msgstr "Інші користувачі слухають…"
 
@@ -88,56 +88,60 @@ msgstr "Сталася помилка"
 msgid "No playback"
 msgstr "Немає відтворення"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:177
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:192
 msgid "Sorting"
 msgstr "Впорядкування"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:135
+#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:150
 #: data/gtk/window.ui:41
 msgid "Library"
 msgstr "Бібліотека"
 
 #: data/gtk/menu/app_menu.ui:57
+msgid "Open radio-browser.info <sup>↗</sup>"
+msgstr "Відкрити radio-browser.info <sup>↗</sup>"
+
+#: data/gtk/menu/app_menu.ui:72
 msgid "Create new station"
 msgstr "Створити станцію"
 
-#: data/gtk/menu/app_menu.ui:82
+#: data/gtk/menu/app_menu.ui:97
 msgid "Preferences"
 msgstr "Налаштування"
 
-#: data/gtk/menu/app_menu.ui:96
+#: data/gtk/menu/app_menu.ui:111
 msgid "Keyboard Shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: data/gtk/menu/app_menu.ui:110
+#: data/gtk/menu/app_menu.ui:125
 msgid "About Shortwave"
 msgstr "Про «Shortwave»"
 
-#: data/gtk/menu/app_menu.ui:152
+#: data/gtk/menu/app_menu.ui:167
 msgid "Import from Gradio"
 msgstr "Імпортувати з Gradio"
 
-#: data/gtk/menu/app_menu.ui:195
+#: data/gtk/menu/app_menu.ui:210
 msgid "Name"
 msgstr "Назва"
 
-#: data/gtk/menu/app_menu.ui:225
+#: data/gtk/menu/app_menu.ui:240
 msgid "Country"
 msgstr "Країна"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:255
 msgid "State"
 msgstr "Штат"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:270
 msgid "Votes"
 msgstr "Голоси"
 
-#: data/gtk/menu/app_menu.ui:281
+#: data/gtk/menu/app_menu.ui:296
 msgid "Ascending"
 msgstr "За зростанням"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:311
 msgid "Descending"
 msgstr "За спаданням"
 
@@ -229,16 +233,17 @@ msgstr "Відкрити"
 msgid "Connected with"
 msgstr "З'єднано з"
 
-#: src/audio/player.rs:142
+#: src/audio/player.rs:146
 msgid "This station cannot be played because the stream is offline."
 msgstr ""
-"Відтворення цієї станції неможливе, оскільки потік даних від неї не надходить."
+"Відтворення цієї станції неможливе, оскільки потік даних від неї не "
+"надходить."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:164
 msgid "Station cannot be streamed."
 msgstr "Станцію не можна транслювати."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:164
 msgid "URL is not valid."
 msgstr "Некоректна адреса."
 
@@ -251,10 +256,37 @@ msgstr "Вітаємо у {}"
 msgid "No longer existing station removed from library."
 msgstr "Запис станції, якої вже не існує, вилучено з бібліотеки."
 
-#: src/database/library.rs:149 src/discover/pages/discover.rs:104
+#: src/database/library.rs:149 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Не вдалося отримати дані станції."
+
+#: src/discover/pages/discover.rs:57
+#| msgid "Show station details"
+msgid "Show statistics"
+msgstr "Показати статистику"
+
+#: src/discover/pages/discover.rs:58
+#| msgid "Discover new stations"
+msgid "Browse over 25.500 stations"
+msgstr "Навігація списком із понад 25500 станцій"
+
+#: src/discover/pages/discover.rs:60
+#| msgid "Create new station"
+msgid "Add new station"
+msgstr "Додати нову станцію"
+
+#: src/discover/pages/discover.rs:61
+msgid "Your favourite station is missing?"
+msgstr "Немає вашої улюбленої радіостанції?"
+
+#: src/discover/pages/discover.rs:63
+msgid "Open website"
+msgstr "Відкрити сайт"
+
+#: src/discover/pages/discover.rs:64
+msgid "Powered by radio-browser.info"
+msgstr "На основі radio-browser.info"
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -295,7 +327,7 @@ msgstr[1] "Імпортовано {} станції!"
 msgstr[2] "Імпортовано {} станцій!"
 msgstr[3] "Імпортовано {} станцію!"
 
-#: src/ui/window.rs:268
+#: src/ui/window.rs:273
 msgid "Could not import library."
 msgstr "Не вдалося імпортувати бібліотеку."
 
@@ -329,8 +361,8 @@ msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 25,000 stations."
 msgstr ""
-"«Коротка хвиля» — програвач інтернет-радіостанцій, який надає доступ до бази"
-" з понад 25000 станцій."
+"«Коротка хвиля» — програвач інтернет-радіостанцій, який надає доступ до бази "
+"з понад 25000 станцій."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid "Features:"
@@ -359,8 +391,8 @@ msgstr ""
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
 msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
 msgstr ""
-"Відтворення звукових даних на підтримуваних пристроях у мережі (наприклад,"
-" Google Chromecast)"
+"Відтворення звукових даних на підтримуваних пристроях у мережі (наприклад, "
+"Google Chromecast)"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
 msgid "Seamless integration into the GNOME desktop environment"
