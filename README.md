@@ -28,6 +28,9 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 - **Which database does Shortwave use?**
 
     [radio-browser.info](http://www.radio-browser.info/gui/#/). It's a community database. Everybody can add/edit information.
+    
+- **How I can get debug information?**
+    Run Shortwave using `RUST_BACKTRACE=1 RUST_LOG=shortwave=debug flatpak run de.haeckerfelix.Shortwave` (`.Devel`).
 
 ## Translations
 Translation of this project takes place on the GNOME translation platform,
