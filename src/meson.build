@@ -53,6 +53,7 @@ sources = files(
   'database/mod.rs',
   'database/queries.rs',
   'database/schema.rs',
+
   'discover/pages/discover.rs',
   'discover/pages/mod.rs',
   'discover/pages/search.rs',
