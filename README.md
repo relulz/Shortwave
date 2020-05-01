@@ -87,7 +87,7 @@ You can get Builder from [here](https://wiki.gnome.org/Apps/Builder/Downloads), 
 You need following dependencies to build Shortwave:
 - Rust 1.39 or later
 - GTK 3.24 or later
-- Gstreamer 1.12 or later
+- Gstreamer 1.16 or later
 - Sqlite3
 - OpenSSL
 - [libhandy](https://source.puri.sm/Librem5/libhandy)
