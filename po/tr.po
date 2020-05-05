@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-03-13 14:24+0000\n"
-"PO-Revision-Date: 2020-03-25 09:35+0300\n"
+"POT-Creation-Date: 2020-04-19 10:22+0000\n"
+"PO-Revision-Date: 2020-05-05 16:52+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Station details"
 msgstr "İstasyon ayrıntıları"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:210
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:225
 msgid "Language"
 msgstr "Dil"
 
@@ -40,15 +40,15 @@ msgstr "Kodlayıcı"
 msgid "Homepage"
 msgstr "Başlangıç sayfası"
 
-#: data/gtk/discover.ui:39
+#: data/gtk/discover.ui:55
 msgid "Most voted stations"
 msgstr "En çok oylanan istasyonlar"
 
-#: data/gtk/discover.ui:73
+#: data/gtk/discover.ui:89
 msgid "Trending"
 msgstr "Gündemdekiler"
 
-#: data/gtk/discover.ui:107
+#: data/gtk/discover.ui:123
 msgid "Other users are listening to…"
 msgstr "Diğer kullanıcılar dinliyor…"
 
@@ -88,56 +88,60 @@ msgstr "Hata oluştu"
 msgid "No playback"
 msgstr "Kayıttan yürütme yok"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:177
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:192
 msgid "Sorting"
 msgstr "Sıralama"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:135
+#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:150
 #: data/gtk/window.ui:41
 msgid "Library"
 msgstr "Kitaplık"
 
 #: data/gtk/menu/app_menu.ui:57
+msgid "Open radio-browser.info <sup>↗</sup>"
+msgstr "radio-browser.info’yu aç <sup>↗</sup>"
+
+#: data/gtk/menu/app_menu.ui:72
 msgid "Create new station"
 msgstr "Yeni istasyon oluştur"
 
-#: data/gtk/menu/app_menu.ui:82
+#: data/gtk/menu/app_menu.ui:97
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: data/gtk/menu/app_menu.ui:96
+#: data/gtk/menu/app_menu.ui:111
 msgid "Keyboard Shortcuts"
 msgstr "Klavye Kısayolları"
 
-#: data/gtk/menu/app_menu.ui:110
+#: data/gtk/menu/app_menu.ui:125
 msgid "About Shortwave"
 msgstr "Kısa Dalga Hakkında"
 
-#: data/gtk/menu/app_menu.ui:152
+#: data/gtk/menu/app_menu.ui:167
 msgid "Import from Gradio"
 msgstr "Gradio’dan içe aktar"
 
-#: data/gtk/menu/app_menu.ui:195
+#: data/gtk/menu/app_menu.ui:210
 msgid "Name"
 msgstr "Ad"
 
-#: data/gtk/menu/app_menu.ui:225
+#: data/gtk/menu/app_menu.ui:240
 msgid "Country"
 msgstr "Ülke"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:255
 msgid "State"
 msgstr "Eyalet"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:270
 msgid "Votes"
 msgstr "Oylar"
 
-#: data/gtk/menu/app_menu.ui:281
+#: data/gtk/menu/app_menu.ui:296
 msgid "Ascending"
 msgstr "Artan"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:311
 msgid "Descending"
 msgstr "Azalan"
 
@@ -229,15 +233,15 @@ msgstr "Aç"
 msgid "Connected with"
 msgstr "Şununla bağlı"
 
-#: src/audio/player.rs:142
+#: src/audio/player.rs:146
 msgid "This station cannot be played because the stream is offline."
 msgstr "Yayın çevrim dışı olduğundan bu istasyon çalınamıyor."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:164
 msgid "Station cannot be streamed."
 msgstr "İstasyon yayını bulunamadı."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:164
 msgid "URL is not valid."
 msgstr "URL geçersiz."
 
@@ -246,14 +250,38 @@ msgstr "URL geçersiz."
 msgid "Welcome to {}"
 msgstr "{} uygulamasına hoş geldiniz"
 
-#: src/database/library.rs:149
+#: src/database/library.rs:145
 msgid "No longer existing station removed from library."
 msgstr "Var olan istasyon kütüphaneden kaldırılmadı."
 
-#: src/database/library.rs:153 src/discover/pages/discover.rs:108
-#: src/discover/pages/search.rs:99
+#: src/database/library.rs:149 src/discover/pages/discover.rs:127
+#: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "İstasyon bilgisi alınamadı."
+
+#: src/discover/pages/discover.rs:57
+msgid "Show statistics"
+msgstr "İstatistikleri göster"
+
+#: src/discover/pages/discover.rs:58
+msgid "Browse over 25.500 stations"
+msgstr "25.000’i aşkın istasyona göz at"
+
+#: src/discover/pages/discover.rs:60
+msgid "Add new station"
+msgstr "Yeni istasyon ekle"
+
+#: src/discover/pages/discover.rs:61
+msgid "Your favourite station is missing?"
+msgstr "Gözde istasyonunuz eksik mi?"
+
+#: src/discover/pages/discover.rs:63
+msgid "Open website"
+msgstr "Web sitesini aç"
+
+#: src/discover/pages/discover.rs:64
+msgid "Powered by radio-browser.info"
+msgstr "radio-browser.info ile güçlendirildi"
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -288,7 +316,7 @@ msgid "Imported {} station!"
 msgid_plural "Imported {} stations!"
 msgstr[0] "{} istasyon içe aktarıldı!"
 
-#: src/ui/window.rs:268
+#: src/ui/window.rs:273
 msgid "Could not import library."
 msgstr "Kitaplık içe aktarılamadı."
 
