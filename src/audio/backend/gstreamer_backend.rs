@@ -476,7 +476,11 @@ impl GstreamerBackend {
             }
             MessageView::Error(err) => {
                 let msg = err.get_error().to_string();
-                warn!("Gstreamer Error: {:?}", msg);
+                if let Some(debug) = err.get_debug() {
+                    warn!("Gstreamer Error: {} (debug {})", msg, debug);
+                } else {
+                    warn!("Gstreamer Error: {}", msg);
+                }
                 send!(sender, GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(msg)));
             }
             _ => (),
