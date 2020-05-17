@@ -64,8 +64,7 @@ impl Client {
     async fn send_message(&self, url: Url) -> Result<String, Error> {
         let useragent = format!("{}/{}-{}", config::PKGNAME, config::VERSION, config::PROFILE);
 
-        let mut request = Request::builder();
-        request.uri(url.to_string()).header("User-Agent", useragent);
+        let request = Request::builder().uri(url.to_string()).header("User-Agent", useragent);
 
         let response = isahc::send_async(request.body(()).unwrap()).await?.text_async().await?;
         Ok(response)
