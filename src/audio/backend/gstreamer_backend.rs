@@ -204,6 +204,16 @@ impl GstreamerBackend {
 
         let res = self.pipeline.set_state(state);
 
+        if state > gstreamer::State::Null && res.is_err() {
+            warn!("Failed to set pipeline to playing");
+            send!(
+                self.sender,
+                GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(String::from("Failed to set pipeline to playing")))
+            );
+            let _ = self.pipeline.set_state(gstreamer::State::Null);
+            return;
+        }
+
         if state >= gstreamer::State::Paused {
             let mut buffering_state = self.buffering_state.lock().unwrap();
             if buffering_state.is_live.is_none() {
@@ -238,6 +248,17 @@ impl GstreamerBackend {
         let mut buffering_state = self.buffering_state.lock().unwrap();
         *buffering_state = BufferingState::default();
         let res = self.pipeline.set_state(State::Playing);
+
+        if res.is_err() {
+            warn!("Failed to set pipeline to playing");
+            send!(
+                self.sender,
+                GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(String::from("Failed to set pipeline to playing")))
+            );
+            let _ = self.pipeline.set_state(gstreamer::State::Null);
+            return;
+        }
+
         let is_live = res == Ok(gstreamer::StateChangeSuccess::NoPreroll);
         debug!("Pipeline is live: {}", is_live);
         buffering_state.is_live = Some(is_live);
