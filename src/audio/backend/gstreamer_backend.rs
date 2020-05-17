@@ -43,12 +43,24 @@ pub enum GstreamerMessage {
     PlaybackStateChanged(PlaybackState),
 }
 
+struct BufferingState {
+    buffering: bool,
+    is_live: Option<bool>,
+}
+
+impl Default for BufferingState {
+    fn default() -> Self {
+        Self { buffering: false, is_live: None }
+    }
+}
+
 pub struct GstreamerBackend {
     pipeline: Pipeline,
     recorderbin: Arc<Mutex<Option<Bin>>>,
     current_title: Arc<Mutex<String>>,
     volume: Arc<Mutex<f64>>,
     volume_signal_id: Option<glib::signal::SignalHandlerId>,
+    buffering_state: Arc<Mutex<BufferingState>>,
     sender: Sender<GstreamerMessage>,
 }
 
@@ -83,6 +95,9 @@ impl GstreamerBackend {
         let volume = Arc::new(Mutex::new(1.0));
         let volume_signal_id = None;
 
+        // Buffering state
+        let buffering_state = Arc::new(Mutex::new(BufferingState::default()));
+
         let mut gstreamer_backend = Self {
             pipeline,
             recorderbin,
@@ -90,6 +105,7 @@ impl GstreamerBackend {
             volume,
             volume_signal_id,
             sender: gst_sender,
+            buffering_state,
         };
 
         gstreamer_backend.setup_signals(app_sender);
@@ -171,8 +187,8 @@ impl GstreamerBackend {
         // listen for new pipeline / bus messages
         let bus = self.pipeline.get_bus().expect("Unable to get pipeline bus");
         bus.add_watch_local(
-            clone!(@weak self.pipeline as pipeline, @strong self.sender as gst_sender, @weak self.current_title as current_title => @default-panic, move |_, message|{
-                Self::parse_bus_message(pipeline, &message, gst_sender.clone(), current_title);
+            clone!(@weak self.pipeline as pipeline, @strong self.sender as gst_sender, @strong self.buffering_state as buffering_state, @weak self.current_title as current_title => @default-panic, move |_, message|{
+                Self::parse_bus_message(pipeline, &message, gst_sender.clone(), &buffering_state, current_title);
                 Continue(true)
             }),
         )
@@ -186,7 +202,16 @@ impl GstreamerBackend {
             send!(self.sender, GstreamerMessage::PlaybackStateChanged(PlaybackState::Stopped));
         }
 
-        let _ = self.pipeline.set_state(state);
+        let res = self.pipeline.set_state(state);
+
+        if state >= gstreamer::State::Paused {
+            let mut buffering_state = self.buffering_state.lock().unwrap();
+            if buffering_state.is_live.is_none() {
+                let is_live = res == Ok(gstreamer::StateChangeSuccess::NoPreroll);
+                debug!("Pipeline is live: {}", is_live);
+                buffering_state.is_live = Some(is_live);
+            }
+        }
     }
 
     pub fn set_volume(&self, volume: f64) {
@@ -210,7 +235,12 @@ impl GstreamerBackend {
         uridecodebin.set_property("uri", &source).unwrap();
 
         debug!("Start pipeline...");
-        let _ = self.pipeline.set_state(State::Playing);
+        let mut buffering_state = self.buffering_state.lock().unwrap();
+        *buffering_state = BufferingState::default();
+        let res = self.pipeline.set_state(State::Playing);
+        let is_live = res == Ok(gstreamer::StateChangeSuccess::NoPreroll);
+        debug!("Pipeline is live: {}", is_live);
+        buffering_state.is_live = Some(is_live);
     }
 
     pub fn start_recording(&mut self, path: PathBuf) {
@@ -355,7 +385,7 @@ impl GstreamerBackend {
         pulsesink.is_ok()
     }
 
-    fn parse_bus_message(pipeline: Pipeline, message: &gstreamer::Message, sender: Sender<GstreamerMessage>, current_title: Arc<Mutex<String>>) {
+    fn parse_bus_message(pipeline: Pipeline, message: &gstreamer::Message, sender: Sender<GstreamerMessage>, buffering_state: &Arc<Mutex<BufferingState>>, current_title: Arc<Mutex<String>>) {
         match message.view() {
             MessageView::Tag(tag) => {
                 if let Some(t) = tag.get_tags().get::<gstreamer::tags::Title>() {
@@ -378,6 +408,30 @@ impl GstreamerBackend {
                 };
 
                 send!(sender, GstreamerMessage::PlaybackStateChanged(playback_state));
+            }
+            MessageView::Buffering(buffering) => {
+                let percent = buffering.get_percent();
+                debug!("Buffering ({}%)", percent);
+
+                // Wait until buffering is complete before start/resume playing
+                let mut buffering_state = buffering_state.lock().unwrap();
+                if percent < 100 {
+                    if !buffering_state.buffering {
+                        buffering_state.buffering = true;
+                        if buffering_state.is_live == Some(false) {
+                            info!("Pausing pipeline because buffering started");
+                            let _ = pipeline.set_state(State::Paused);
+                        }
+                    }
+                } else {
+                    if buffering_state.buffering {
+                        buffering_state.buffering = false;
+                        if buffering_state.is_live == Some(false) {
+                            info!("Resuming pipeline because buffering finished");
+                            let _ = pipeline.set_state(State::Playing);
+                        }
+                    }
+                }
             }
             MessageView::Element(element) => {
                 // Catch the end-of-stream messages from the filesink
