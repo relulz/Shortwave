@@ -55,10 +55,10 @@ impl Discover {
         carousel_box.add(&carousel.widget);
 
         let _action = featured_carousel::Action::new("win.show-server-stats", &i18n("Show statistics"));
-        carousel.add_page(&i18n("Browse over 25.500 stations"), "26,95,180", None);
+        carousel.add_page(&i18n("Browse over 25,500 stations"), "26,95,180", None);
 
         let action = featured_carousel::Action::new("win.create-new-station", &i18n("Add new station"));
-        carousel.add_page(&i18n("Your favourite station is missing?"), "229,165,10", Some(action));
+        carousel.add_page(&i18n("Your favorite station is missing?"), "229,165,10", Some(action));
 
         let action = featured_carousel::Action::new("win.open-radio-browser-info", &i18n("Open website"));
         carousel.add_page(&i18n("Powered by radio-browser.info"), "38,162,105", Some(action));
