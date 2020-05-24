@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-04-19 10:22+0000\n"
-"PO-Revision-Date: 2020-04-26 11:30+0200\n"
+"POT-Creation-Date: 2020-05-23 16:27+0000\n"
+"PO-Revision-Date: 2020-05-24 14:25+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -264,7 +264,7 @@ msgid "Show statistics"
 msgstr "Wyświetl statystyki"
 
 #: src/discover/pages/discover.rs:58
-msgid "Browse over 25.500 stations"
+msgid "Browse over 25,500 stations"
 msgstr "Przeglądaj ponad 25 500 stacji"
 
 #: src/discover/pages/discover.rs:60
@@ -272,7 +272,7 @@ msgid "Add new station"
 msgstr "Dodaj nową stację"
 
 #: src/discover/pages/discover.rs:61
-msgid "Your favourite station is missing?"
+msgid "Your favorite station is missing?"
 msgstr "Brakuje Twojej ulubionej stacji?"
 
 #: src/discover/pages/discover.rs:63
@@ -360,7 +360,7 @@ msgid "Features:"
 msgstr "Funkcje:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favourite stations"
+msgid "Create your own library where you can add your favorite stations"
 msgstr "Tworzenie własnej kolekcji, do której można dodawać ulubione stacje"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
