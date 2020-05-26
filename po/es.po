@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-04-19 10:22+0000\n"
-"PO-Revision-Date: 2020-04-30 12:45+0200\n"
+"POT-Creation-Date: 2020-05-23 16:27+0000\n"
+"PO-Revision-Date: 2020-05-26 16:21+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -260,22 +260,21 @@ msgid "Station data could not be received."
 msgstr "No se han podido recibir los datos de la emisora."
 
 #: src/discover/pages/discover.rs:57
-#| msgid "Show station details"
 msgid "Show statistics"
 msgstr "Mostrar estadísticas"
 
 #: src/discover/pages/discover.rs:58
-#| msgid "Discover new stations"
-msgid "Browse over 25.500 stations"
+#| msgid "Browse over 25.500 stations"
+msgid "Browse over 25,500 stations"
 msgstr "Explorar más de 25.000 emisoras"
 
 #: src/discover/pages/discover.rs:60
-#| msgid "Create new station"
 msgid "Add new station"
 msgstr "Añadir una emisora nueva"
 
 #: src/discover/pages/discover.rs:61
-msgid "Your favourite station is missing?"
+#| msgid "Your favourite station is missing?"
+msgid "Your favorite station is missing?"
 msgstr "¿No encuentra su emisora favorita?"
 
 #: src/discover/pages/discover.rs:63
@@ -359,7 +358,8 @@ msgid "Features:"
 msgstr "Características:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favourite stations"
+#| msgid "Create your own library where you can add your favourite stations"
+msgid "Create your own library where you can add your favorite stations"
 msgstr "Crear su propia biblioteca donde puede añadir sus emisoras favoritas"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
