@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-04-19 10:22+0000\n"
-"PO-Revision-Date: 2020-04-22 01:51+0200\n"
+"POT-Creation-Date: 2020-05-26 14:26+0000\n"
+"PO-Revision-Date: 2020-05-27 00:45+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <gnome-se-list@gnome.org>\n"
 "Language: sv\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #: data/gtk/station_dialog.ui:10
 msgid "Station details"
@@ -262,7 +262,7 @@ msgid "Show statistics"
 msgstr "Visa statistik"
 
 #: src/discover/pages/discover.rs:58
-msgid "Browse over 25.500 stations"
+msgid "Browse over 25,500 stations"
 msgstr "Bläddra bland över 25500 stationer"
 
 #: src/discover/pages/discover.rs:60
@@ -270,7 +270,7 @@ msgid "Add new station"
 msgstr "Lägg till ny station"
 
 #: src/discover/pages/discover.rs:61
-msgid "Your favourite station is missing?"
+msgid "Your favorite station is missing?"
 msgstr "Saknas din favoritstation?"
 
 #: src/discover/pages/discover.rs:63
@@ -354,7 +354,7 @@ msgid "Features:"
 msgstr "Funktioner:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favourite stations"
+msgid "Create your own library where you can add your favorite stations"
 msgstr "Skapa ditt eget bibliotek där du kan lägga till dina favoritstationer"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
