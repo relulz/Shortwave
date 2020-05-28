@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-03-17 19:36+0000\n"
-"PO-Revision-Date: 2020-03-25 02:22+0100\n"
+"POT-Creation-Date: 2020-05-26 14:26+0000\n"
+"PO-Revision-Date: 2020-05-28 09:20+0200\n"
 "Last-Translator: Марко М. Костић <marko.m.kostic@gmail.com>\n"
 "Language-Team: Serbian <gnome-sr@googlegroups.org>\n"
 "Language: sr\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Station details"
 msgstr "Појединости станице"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:210
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:225
 msgid "Language"
 msgstr "Језик"
 
@@ -40,15 +40,15 @@ msgstr "Кодек"
 msgid "Homepage"
 msgstr "Матична страна"
 
-#: data/gtk/discover.ui:39
+#: data/gtk/discover.ui:55
 msgid "Most voted stations"
 msgstr "Станице са највише гласова"
 
-#: data/gtk/discover.ui:73
+#: data/gtk/discover.ui:89
 msgid "Trending"
 msgstr "Популарно"
 
-#: data/gtk/discover.ui:107
+#: data/gtk/discover.ui:123
 msgid "Other users are listening to…"
 msgstr "Други корисници слушају…"
 
@@ -88,56 +88,60 @@ msgstr "Дошло је до грешке"
 msgid "No playback"
 msgstr "Не пуштам било шта"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:177
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:192
 msgid "Sorting"
 msgstr "Ређање"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:135
+#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:150
 #: data/gtk/window.ui:41
 msgid "Library"
 msgstr "Библиотека"
 
 #: data/gtk/menu/app_menu.ui:57
+msgid "Open radio-browser.info <sup>↗</sup>"
+msgstr "Отвори radio-browser.info <sup>↗</sup>"
+
+#: data/gtk/menu/app_menu.ui:72
 msgid "Create new station"
 msgstr "Направи нову станицу"
 
-#: data/gtk/menu/app_menu.ui:82
+#: data/gtk/menu/app_menu.ui:97
 msgid "Preferences"
 msgstr "Поставке"
 
-#: data/gtk/menu/app_menu.ui:96
+#: data/gtk/menu/app_menu.ui:111
 msgid "Keyboard Shortcuts"
 msgstr "Пречице на тастатури"
 
-#: data/gtk/menu/app_menu.ui:110
+#: data/gtk/menu/app_menu.ui:125
 msgid "About Shortwave"
 msgstr "О Кратком таласу"
 
-#: data/gtk/menu/app_menu.ui:152
+#: data/gtk/menu/app_menu.ui:167
 msgid "Import from Gradio"
 msgstr "Увези из Г-радија"
 
-#: data/gtk/menu/app_menu.ui:195
+#: data/gtk/menu/app_menu.ui:210
 msgid "Name"
 msgstr "Назив"
 
-#: data/gtk/menu/app_menu.ui:225
+#: data/gtk/menu/app_menu.ui:240
 msgid "Country"
 msgstr "Држава"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:255
 msgid "State"
 msgstr "Покрајина"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:270
 msgid "Votes"
 msgstr "Гласова"
 
-#: data/gtk/menu/app_menu.ui:281
+#: data/gtk/menu/app_menu.ui:296
 msgid "Ascending"
 msgstr "Растуће"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:311
 msgid "Descending"
 msgstr "Опадајуће"
 
@@ -229,15 +233,15 @@ msgstr "Отвори"
 msgid "Connected with"
 msgstr "Повежи са"
 
-#: src/audio/player.rs:142
+#: src/audio/player.rs:146
 msgid "This station cannot be played because the stream is offline."
 msgstr "Станица се не може слушати јер је стрим ван мреже."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:164
 msgid "Station cannot be streamed."
 msgstr "Станица се не може стримовати."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:164
 msgid "URL is not valid."
 msgstr "Адреса је неисправна."
 
@@ -246,14 +250,41 @@ msgstr "Адреса је неисправна."
 msgid "Welcome to {}"
 msgstr "Добро дошли у {}"
 
-#: src/database/library.rs:149
+#: src/database/library.rs:145
 msgid "No longer existing station removed from library."
 msgstr "Угашене станице су уклоњене из библиотеке."
 
-#: src/database/library.rs:153 src/discover/pages/discover.rs:108
-#: src/discover/pages/search.rs:99
+#: src/database/library.rs:149 src/discover/pages/discover.rs:127
+#: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Подаци о станици се не могу преузети."
+
+#: src/discover/pages/discover.rs:57
+#| msgid "Show station details"
+msgid "Show statistics"
+msgstr "Прикажи статистику"
+
+#: src/discover/pages/discover.rs:58
+#| msgid "Discover new stations"
+msgid "Browse over 25,500 stations"
+msgstr "Погледајте више од 25.500 станица"
+
+#: src/discover/pages/discover.rs:60
+#| msgid "Create new station"
+msgid "Add new station"
+msgstr "Додај нову станицу"
+
+#: src/discover/pages/discover.rs:61
+msgid "Your favorite station is missing?"
+msgstr "Ваша омиљена станица недостаје?"
+
+#: src/discover/pages/discover.rs:63
+msgid "Open website"
+msgstr "Отвори веб страницу"
+
+#: src/discover/pages/discover.rs:64
+msgid "Powered by radio-browser.info"
+msgstr "Покреће radio-browser.info"
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -294,7 +325,7 @@ msgstr[1] "Увезао {} станице!"
 msgstr[2] "Увезао {} станица!"
 msgstr[3] "Увезао једну станицу!"
 
-#: src/ui/window.rs:268
+#: src/ui/window.rs:273
 msgid "Could not import library."
 msgstr "Нисам могао да увезем библиотеку."
 
@@ -336,9 +367,10 @@ msgid "Features:"
 msgstr "Могућности:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favourite stations"
+#| msgid "Create your own library where you can add your favourite stations"
+msgid "Create your own library where you can add your favorite stations"
 msgstr ""
-"Стварање сопствене библиотеке у коју можете додати своје омиљене станице"
+"Направите сопствену библиотеку у коју можете додати ваше омиљене станице"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Easily search and discover new radio stations"
