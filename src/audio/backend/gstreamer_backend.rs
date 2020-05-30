@@ -17,6 +17,7 @@
 use glib::Sender;
 use gstreamer::prelude::*;
 use gstreamer::{Bin, Element, Event, MessageView, PadProbeReturn, PadProbeType, Pipeline, State};
+use gstreamer_audio::{StreamVolume, StreamVolumeFormat};
 
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
@@ -133,13 +134,14 @@ impl GstreamerBackend {
             self.volume_signal_id = Some(pulsesink.connect_notify(
                 Some("volume"),
                 clone!(@weak self.volume as old_volume, @strong volume_sender => move |element, _| {
-                    let new_volume: f64 = element.get_property("volume").unwrap().get().unwrap().unwrap();
+                    let pa_volume: f64 = element.get_property("volume").unwrap().get().unwrap().unwrap();
+                    let new_volume = StreamVolume::convert_volume(StreamVolumeFormat::Linear, StreamVolumeFormat::Cubic, pa_volume);
 
                     // We have to check if the values are the same. For some reason gstreamer sends us
                     // slightly differents floats, so we round up here (only the the first two digits are
                     // important for use here).
                     let mut old_volume_locked = old_volume.lock().unwrap();
-                    let new_val = format!("{:.2}", old_volume_locked);
+                    let new_val = format!("{:.2}", new_volume);
                     let old_val = format!("{:.2}", old_volume_locked);
 
                     if new_val != old_val {
@@ -228,8 +230,17 @@ impl GstreamerBackend {
         if let Some(pulsesink) = self.pipeline.get_by_name("pulsesink") {
             // We need to block the signal, otherwise we risk creating a endless loop
             glib::signal::signal_handler_block(&pulsesink, &self.volume_signal_id.as_ref().unwrap());
+
+            if volume != 0.0 {
+                pulsesink.set_property("mute", &false).unwrap();
+            }
+
+            let pa_volume = StreamVolume::convert_volume(StreamVolumeFormat::Cubic, StreamVolumeFormat::Linear, volume);
+            pulsesink.set_property("volume", &pa_volume).unwrap();
+
             *self.volume.lock().unwrap() = volume;
-            pulsesink.set_property("volume", &volume).unwrap();
+
+            // Unblock the signal again
             glib::signal::signal_handler_unblock(&pulsesink, &self.volume_signal_id.as_ref().unwrap());
         } else {
             warn!("PulseAudio is required for changing the volume.")
@@ -440,7 +451,7 @@ impl GstreamerBackend {
                     if !buffering_state.buffering {
                         buffering_state.buffering = true;
                         if buffering_state.is_live == Some(false) {
-                            info!("Pausing pipeline because buffering started");
+                            debug!("Pausing pipeline because buffering started");
                             let _ = pipeline.set_state(State::Paused);
                         }
                     }
@@ -448,7 +459,7 @@ impl GstreamerBackend {
                     if buffering_state.buffering {
                         buffering_state.buffering = false;
                         if buffering_state.is_live == Some(false) {
-                            info!("Resuming pipeline because buffering finished");
+                            debug!("Resuming pipeline because buffering finished");
                             let _ = pipeline.set_state(State::Playing);
                         }
                     }
