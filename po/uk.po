@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-05-23 16:27+0000\n"
-"PO-Revision-Date: 2020-05-24 08:29+0300\n"
+"POT-Creation-Date: 2020-05-30 14:01+0000\n"
+"PO-Revision-Date: 2020-05-30 19:37+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -266,7 +266,6 @@ msgid "Show statistics"
 msgstr "Показати статистику"
 
 #: src/discover/pages/discover.rs:58
-#| msgid "Browse over 25.500 stations"
 msgid "Browse over 25,500 stations"
 msgstr "Навігація списком із понад 25500 станцій"
 
@@ -275,7 +274,6 @@ msgid "Add new station"
 msgstr "Додати нову станцію"
 
 #: src/discover/pages/discover.rs:61
-#| msgid "Your favourite station is missing?"
 msgid "Your favorite station is missing?"
 msgstr "Немає вашої улюбленої радіостанції?"
 
@@ -291,6 +289,10 @@ msgstr "На основі radio-browser.info"
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
 msgid "Listen to internet radio"
 msgstr "Прослуховування інтернет-радіо"
+
+#: src/ui/about_dialog.rs:34
+msgid "translator-credits"
+msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
 
 #: src/ui/import_dialog.rs:32
 msgid "Select database to import"
@@ -326,7 +328,7 @@ msgstr[1] "Імпортовано {} станції!"
 msgstr[2] "Імпортовано {} станцій!"
 msgstr[3] "Імпортовано {} станцію!"
 
-#: src/ui/window.rs:273
+#: src/ui/window.rs:272 src/ui/window.rs:282
 msgid "Could not import library."
 msgstr "Не вдалося імпортувати бібліотеку."
 
@@ -368,7 +370,6 @@ msgid "Features:"
 msgstr "Можливості:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-#| msgid "Create your own library where you can add your favourite stations"
 msgid "Create your own library where you can add your favorite stations"
 msgstr ""
 "Створіть власну бібліотеку, до якої ви зможете додавати улюблені станції"
