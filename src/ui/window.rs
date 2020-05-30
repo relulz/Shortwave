@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use chrono::prelude::*;
 use futures_util::future::FutureExt;
 use gio::prelude::*;
 use glib::subclass;
@@ -265,6 +266,14 @@ impl SwApplicationWindow {
             window,
             "import-gradio-library",
             clone!(@strong sender, @weak window => move |_, _| {
+                let now = Utc::today();
+                let deadline = Utc.ymd(2020, 8, 1);
+                if now > deadline {
+                    let notification = Notification::new_error(&i18n("Could not import library."), "The webservice which is required to import Gradio stations isn't available anymore.");
+                    send!(sender, Action::ViewShowNotification(notification));
+                    return;
+                }
+
                 let sender = sender.clone();
                 let future = import_dialog::import_gradio_db(sender.clone(), window).map(move|result|{
                     match result{
