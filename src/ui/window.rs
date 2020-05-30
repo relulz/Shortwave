@@ -112,7 +112,7 @@ impl SwApplicationWindow {
 
         app.add_window(&window.clone());
         window.setup_widgets();
-        window.setup_signals();
+        window.setup_signals(sender.clone());
         window.setup_gactions(sender);
         window
     }
@@ -162,7 +162,7 @@ impl SwApplicationWindow {
         self.resize(width, height);
     }
 
-    fn setup_signals(&self) {
+    fn setup_signals(&self, sender: Sender<Action>) {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
 
         // dark mode
@@ -195,6 +195,14 @@ impl SwApplicationWindow {
             settings_manager::set_integer(Key::WindowHeight, height);
             Inhibit(false)
         });
+
+        // back button (mouse)
+        self.connect_button_press_event(clone!(@strong sender => move |_, event|{
+            if event.get_button() == 8 {
+                send!(sender, Action::ViewShowLibrary);
+            }
+            Inhibit(false)
+        }));
     }
 
     fn setup_gactions(&self, sender: Sender<Action>) {
