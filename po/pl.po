@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-05-23 16:27+0000\n"
-"PO-Revision-Date: 2020-05-24 14:25+0200\n"
+"POT-Creation-Date: 2020-05-30 14:01+0000\n"
+"PO-Revision-Date: 2020-05-31 14:19+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -288,6 +288,12 @@ msgstr "Korzystamy z witryny radio-browser.info"
 msgid "Listen to internet radio"
 msgstr "Słuchanie radia internetowego"
 
+#: src/ui/about_dialog.rs:34
+msgid "translator-credits"
+msgstr ""
+"Piotr Drąg <piotrdrag@gmail.com>, 2020\n"
+"Aviary.pl <community-poland@mozilla.org>, 2020"
+
 #: src/ui/import_dialog.rs:32
 msgid "Select database to import"
 msgstr "Wybór bazy danych do zaimportowania"
@@ -320,7 +326,7 @@ msgstr[0] "Zaimportowano {} stację."
 msgstr[1] "Zaimportowano {} stacje."
 msgstr[2] "Zaimportowano {} stacji."
 
-#: src/ui/window.rs:273
+#: src/ui/window.rs:272 src/ui/window.rs:282
 msgid "Could not import library."
 msgstr "Nie można zaimportować kolekcji."
 
