@@ -53,6 +53,7 @@ pub enum Action {
     PlaybackSetStation(Box<Station>),
     PlaybackStart,
     PlaybackStop,
+    PlaybackToggleStartStop,
     PlaybackSetVolume(f64),
     PlaybackSaveSong(Song),
     LibraryAddStations(Vec<Station>),
@@ -219,6 +220,7 @@ impl SwApplication {
             }
             Action::PlaybackStart => self_.player.set_playback(PlaybackState::Playing),
             Action::PlaybackStop => self_.player.set_playback(PlaybackState::Stopped),
+            Action::PlaybackToggleStartStop => self_.player.toggle_playback(),
             Action::PlaybackSetVolume(volume) => self_.player.set_volume(volume),
             Action::PlaybackSaveSong(song) => self_.player.save_song(song),
             Action::LibraryAddStations(stations) => self_.library.add_stations(stations),

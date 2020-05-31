@@ -168,6 +168,7 @@ impl Player {
     }
 
     pub fn set_playback(&self, playback: PlaybackState) {
+        debug!("Set playback: {:?}", playback);
         match playback {
             PlaybackState::Playing => {
                 self.backend.lock().unwrap().gstreamer.set_state(gstreamer::State::Playing);
@@ -186,6 +187,14 @@ impl Player {
                 backend.gstreamer.set_state(gstreamer::State::Null);
             }
             _ => (),
+        }
+    }
+
+    pub fn toggle_playback(&self) {
+        if self.backend.lock().unwrap().gstreamer.get_state() == PlaybackState::Playing {
+            self.set_playback(PlaybackState::Stopped);
+        } else if self.backend.lock().unwrap().gstreamer.get_state() == PlaybackState::Stopped {
+            self.set_playback(PlaybackState::Playing);
         }
     }
 

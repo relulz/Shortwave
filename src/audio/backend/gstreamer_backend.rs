@@ -226,6 +226,14 @@ impl GstreamerBackend {
         }
     }
 
+    pub fn get_state(&self) -> PlaybackState {
+        let state = self.pipeline.get_state(gstreamer::ClockTime::from_mseconds(250)).1;
+        match state {
+            gstreamer::State::Playing => PlaybackState::Playing,
+            _ => PlaybackState::Stopped,
+        }
+    }
+
     pub fn set_volume(&self, volume: f64) {
         if let Some(pulsesink) = self.pipeline.get_by_name("pulsesink") {
             // We need to block the signal, otherwise we risk creating a endless loop
