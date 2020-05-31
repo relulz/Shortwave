@@ -89,7 +89,7 @@ pub async fn read_database(path: PathBuf) -> Result<Vec<StationIdentifier>, Erro
         // https://gitlab.gnome.org/World/Shortwave/issues/418
         match id2uuid(shortwave_id).await? {
             Some(shortwave_uuid) => result.push(shortwave_uuid),
-            None => warn!("No UUID for ID \"{}\" found.", id.station_id.clone().to_string(),),
+            None => warn!("No UUID for ID \"{}\" found.", id.station_id.clone().to_string()),
         };
     }
     Ok(result)
@@ -133,8 +133,13 @@ pub async fn import_database(path: PathBuf, sender: Sender<Action>) -> Result<()
     let sender = sender.clone();
     let mut stations = Vec::new();
     for id in ids {
-        let station = client.clone().get_station_by_identifier(id).await?;
-        stations.insert(0, station);
+        match client.clone().get_station_by_identifier(id).await {
+            Ok(station) => stations.insert(0, station),
+            Err(err) => match err {
+                Error::InvalidStationError(uuid) => warn!("Unable to import station because of invalid UUID: {}", uuid),
+                _ => return Err(err),
+            },
+        }
     }
 
     spinner_notification.hide();
