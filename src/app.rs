@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use futures_util::FutureExt;
 use gio::subclass::prelude::ApplicationImpl;
 use gio::{self, prelude::*, ApplicationFlags, SettingsExt};
 use glib::subclass;
@@ -25,14 +26,17 @@ use gtk::subclass::application::GtkApplicationImpl;
 
 use std::cell::RefCell;
 use std::env;
+use std::path::PathBuf;
 use std::rc::Rc;
 use std::str::FromStr;
 
 use crate::api::{Station, StationRequest};
 use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
+use crate::database::gradio_db;
 use crate::database::Library;
 use crate::discover::StoreFront;
+use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
 use crate::ui::{Notification, SwApplicationWindow, View};
 use crate::utils::{Order, Sorting};
@@ -53,6 +57,7 @@ pub enum Action {
     PlaybackSaveSong(Song),
     LibraryAddStations(Vec<Station>),
     LibraryRemoveStations(Vec<Station>),
+    LibraryImportGradioDatabase(PathBuf),
     SearchFor(StationRequest), // TODO: is this neccessary?,
     SettingsKeyChanged(Key),
 }
@@ -218,6 +223,17 @@ impl SwApplication {
             Action::PlaybackSaveSong(song) => self_.player.save_song(song),
             Action::LibraryAddStations(stations) => self_.library.add_stations(stations),
             Action::LibraryRemoveStations(stations) => self_.library.remove_stations(stations),
+            Action::LibraryImportGradioDatabase(path) => {
+                let sender = self_.sender.clone();
+                let future = gradio_db::import_database(path, self_.sender.clone()).map(move |result| match result {
+                    Ok(_) => (),
+                    Err(err) => {
+                        let notification = Notification::new_error(&i18n("Could not import library."), &err.to_string());
+                        send!(sender, Action::ViewShowNotification(notification));
+                    }
+                });
+                spawn!(future);
+            }
             Action::SearchFor(data) => self_.storefront.search_for(data),
             Action::SettingsKeyChanged(key) => {
                 debug!("Settings key changed: {:?}", &key);

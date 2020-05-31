@@ -17,17 +17,21 @@
 use gio::FileExt;
 use glib::Sender;
 use gtk::prelude::*;
-use url::Url;
 
-use crate::api::Client;
-use crate::api::Error;
 use crate::app::Action;
-use crate::database::gradio_db;
 use crate::i18n::*;
-use crate::settings::{settings_manager, Key};
-use crate::ui::Notification;
 
-pub async fn import_gradio_db(sender: Sender<Action>, window: gtk::ApplicationWindow) -> Result<(), Error> {
+pub fn import_gradio_db(sender: Sender<Action>, _window: gtk::ApplicationWindow) {
+    let import_dialog = gtk::FileChooserDialog::with_buttons::<gtk::Window>(
+        Some(&i18n("Select database to import")),
+        None,
+        gtk::FileChooserAction::Open,
+        &[(&i18n("Cancel"), gtk::ResponseType::Cancel), (&i18n("Import"), gtk::ResponseType::Accept)],
+    );
+
+    // For some reason we cannot access sqlite3 databases from the Flatpak sandbox,
+    // so we're accessing the database directly by using "--filesystem=home"
+    /*
     let import_dialog = gtk::FileChooserNative::new(
         Some(&i18n("Select database to import")),
         Some(&window),
@@ -35,6 +39,7 @@ pub async fn import_gradio_db(sender: Sender<Action>, window: gtk::ApplicationWi
         Some(&i18n("Import")),
         Some(&i18n("Cancel")),
     );
+    */
 
     // Set filechooser filters
     let filter = gtk::FileFilter::new();
@@ -44,34 +49,8 @@ pub async fn import_gradio_db(sender: Sender<Action>, window: gtk::ApplicationWi
 
     if import_dialog.run() == gtk::ResponseType::Accept {
         let path = import_dialog.get_file().unwrap().get_path().unwrap();
-        debug!("Import path: {:?}", path);
-
-        // Get station identifiers
-        let spinner_notification = Notification::new_spinner(&i18n("Converting data…"));
-        send!(sender, Action::ViewShowNotification(spinner_notification.clone()));
-        let ids = gradio_db::read_database(path).await?;
-        spinner_notification.hide();
-
-        // Get actual stations from identifiers
-        let message = ni18n_f("Importing {} station…", "Importing {} stations…", ids.len() as u32, &[&ids.len().to_string()]);
-        let spinner_notification = Notification::new_spinner(&message);
-        send!(sender, Action::ViewShowNotification(spinner_notification.clone()));
-
-        let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
-        let sender = sender.clone();
-        let mut stations = Vec::new();
-        for id in ids {
-            let station = client.clone().get_station_by_identifier(id).await?;
-            stations.insert(0, station);
-        }
-
-        spinner_notification.hide();
-        send!(sender, Action::LibraryAddStations(stations.clone()));
-        let message = ni18n_f("Imported {} station!", "Imported {} stations!", stations.len() as u32, &[&stations.len().to_string()]);
-        let notification = Notification::new_info(&message);
-        send!(sender, Action::ViewShowNotification(notification));
+        send!(sender, Action::LibraryImportGradioDatabase(path));
     }
 
     import_dialog.destroy();
-    Ok(())
 }

@@ -15,7 +15,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use chrono::prelude::*;
-use futures_util::future::FutureExt;
 use gio::prelude::*;
 use glib::subclass;
 use glib::subclass::prelude::*;
@@ -283,16 +282,7 @@ impl SwApplicationWindow {
                 }
 
                 let sender = sender.clone();
-                let future = import_dialog::import_gradio_db(sender.clone(), window).map(move|result|{
-                    match result{
-                        Ok(_) => (),
-                        Err(err) => {
-                            let notification = Notification::new_error(&i18n("Could not import library."), &err.to_string());
-                            send!(sender, Action::ViewShowNotification(notification));
-                        }
-                    }
-                });
-                spawn!(future);
+                import_dialog::import_gradio_db(sender.clone(), window);
             })
         );
 

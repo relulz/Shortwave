@@ -12,6 +12,7 @@
     ],
     "finish-args" : [
         "--filesystem=xdg-music",
+        "--filesystem=home",
         "--share=network",
         "--share=ipc",
         "--socket=x11",
