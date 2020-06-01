@@ -32,6 +32,7 @@ pub struct StationRequest {
     pub reverse: Option<bool>,
     pub offset: Option<u32>,
     pub limit: Option<u32>,
+    pub hidebroken: Option<bool>,
 }
 
 impl StationRequest {
@@ -39,6 +40,7 @@ impl StationRequest {
         let mut search = Self::default();
         search.name = Some(name.to_string());
         search.limit = Some(limit);
+        search.hidebroken = Some(true);
         search
     }
 
