@@ -53,6 +53,32 @@
   </kudos>
 
   <releases>
+    <release version="1.1.0" date="2020-06-01">
+      <description>
+        <p>
+          Version 1.1.0 is a stable release, with the following major
+          improvements since 1.0.1:
+        </p>
+        <ul>
+          <li>Add CTRL + spacebar as shortcut to start/stop audio playback.</li>
+          <li>Add stream buffering to prevent playback stuttering.</li>
+          <li>Add featured carousel to discover page.</li>
+          <li>Add support for non pulseaudio systems / environments.</li>
+          <li>Add support for additional mouse buttons to switch between views.</li>
+          <li>Improve stability of audio/recording backend.</li>
+          <li>Fixed issue that the volume didn't get calculated correctly (linear/cubic).</li>
+          <li>Fixed issue that broken stations are getting displayed in search results.</li>
+          <li>Fixed issue with random scrolling in search page.</li>
+          <li>Fixed issues which prevented to import Gradio databases.</li>
+        </ul>
+        <p>This release also updates translations in several languages.</p>
+        <p>
+          This might be the last release with the feature to import Gradio
+          databases. The needed API server will be deactivated / no longer
+          available in August 2020.
+        </p>
+      </description>
+    </release>
     <release version="1.0.1" date="2020-03-15">
       <description>
         <p>Fixes a bug that no songs can be saved.</p>
@@ -81,5 +107,3 @@
     </release>
   </releases>
 </component>
-
-
