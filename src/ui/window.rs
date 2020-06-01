@@ -276,7 +276,7 @@ impl SwApplicationWindow {
                 send!(sender, Action::PlaybackToggleStartStop);
             })
         );
-        app.set_accels_for_action("win.toggle-start-stop", &["space"]);
+        app.set_accels_for_action("win.toggle-start-stop", &["<primary>space"]);
 
         // win.import-gradio-library
         action!(
