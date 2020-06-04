@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-05-31 21:23+0000\n"
-"PO-Revision-Date: 2020-06-01 10:02+0200\n"
+"POT-Creation-Date: 2020-06-01 08:03+0000\n"
+"PO-Revision-Date: 2020-06-04 11:21+0200\n"
 "Last-Translator: Thibault Martin <mail@thibaultmart.in>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -52,7 +52,7 @@ msgstr "Les autres personnes écoutent aussi…"
 
 #: data/gtk/song_row.ui:17
 msgid "Save recorded song"
-msgstr "Sauvegarder une chanson enregistrée"
+msgstr "Conserver une chanson enregistrée"
 
 #: data/gtk/streaming_dialog.ui:75 data/gtk/menu/player_menu.ui:33
 msgid "Stream to a device"
@@ -291,7 +291,8 @@ msgstr "Écouter une radio internet"
 
 #: src/ui/about_dialog.rs:34
 msgid "translator-credits"
-msgstr "Thibault Martin\n"
+msgstr ""
+"Thibault Martin\n"
 "Alexandre Franke\n"
 "Claude Paroz"
 
