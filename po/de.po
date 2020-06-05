@@ -1,30 +1,31 @@
 # German translation for shortwave.
 # Copyright (C) 2020 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
+#
 # Peter Sonntag <peter@sonniger-tag.eu>, 2020.
 # Christian Kirbach <christian.kirbach@gmail.com>, 2020.
 # Wolfgang Stoeggl <c72578@yahoo.de>, 2020.
-#
+# Mario Blättermann <mario.blaettermann@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-03-26 17:05+0000\n"
-"PO-Revision-Date: 2020-03-29 03:23+0200\n"
-"Last-Translator: Wolfgang Stoeggl <c72578@yahoo.de>\n"
+"POT-Creation-Date: 2020-05-31 14:43+0000\n"
+"PO-Revision-Date: 2020-06-03 11:15+0200\n"
+"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Lokalize 20.04.1\n"
 
 #: data/gtk/station_dialog.ui:10
 msgid "Station details"
 msgstr "Senderdetails"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:210
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:225
 msgid "Language"
 msgstr "Sprache"
 
@@ -40,15 +41,15 @@ msgstr "Codec"
 msgid "Homepage"
 msgstr "Internetseite"
 
-#: data/gtk/discover.ui:39
+#: data/gtk/discover.ui:55
 msgid "Most voted stations"
 msgstr "Beliebteste Sender"
 
-#: data/gtk/discover.ui:73
+#: data/gtk/discover.ui:89
 msgid "Trending"
 msgstr "Im Trend"
 
-#: data/gtk/discover.ui:107
+#: data/gtk/discover.ui:123
 msgid "Other users are listening to…"
 msgstr "Andere Nutzer hören gerade …"
 
@@ -89,56 +90,60 @@ msgstr "Es ist ein Fehler aufgetreten"
 msgid "No playback"
 msgstr "Keine Wiedergabe"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:177
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:192
 msgid "Sorting"
 msgstr "Sortierung"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:135
+#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:150
 #: data/gtk/window.ui:41
 msgid "Library"
 msgstr "Bibliothek"
 
 #: data/gtk/menu/app_menu.ui:57
+msgid "Open radio-browser.info <sup>↗</sup>"
+msgstr "radio-browser.info <sup>↗</sup> öffnen"
+
+#: data/gtk/menu/app_menu.ui:72
 msgid "Create new station"
 msgstr "Neuen Sender anlegen"
 
-#: data/gtk/menu/app_menu.ui:82
+#: data/gtk/menu/app_menu.ui:97
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: data/gtk/menu/app_menu.ui:96
+#: data/gtk/menu/app_menu.ui:111
 msgid "Keyboard Shortcuts"
 msgstr "Tastenkürzel"
 
-#: data/gtk/menu/app_menu.ui:110
+#: data/gtk/menu/app_menu.ui:125
 msgid "About Shortwave"
-msgstr "Info zu Kurzwelle"
+msgstr "Info zu Shortwave"
 
-#: data/gtk/menu/app_menu.ui:152
+#: data/gtk/menu/app_menu.ui:167
 msgid "Import from Gradio"
 msgstr "Von Gradio importieren"
 
-#: data/gtk/menu/app_menu.ui:195
+#: data/gtk/menu/app_menu.ui:210
 msgid "Name"
 msgstr "Name"
 
-#: data/gtk/menu/app_menu.ui:225
+#: data/gtk/menu/app_menu.ui:240
 msgid "Country"
 msgstr "Land"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:255
 msgid "State"
 msgstr "Status"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:270
 msgid "Votes"
 msgstr "Stimmen"
 
-#: data/gtk/menu/app_menu.ui:281
+#: data/gtk/menu/app_menu.ui:296
 msgid "Ascending"
 msgstr "Aufsteigend"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:311
 msgid "Descending"
 msgstr "Absteigend"
 
@@ -230,17 +235,16 @@ msgstr "Öffnen"
 msgid "Connected with"
 msgstr "Verbunden mit"
 
-#: src/audio/player.rs:142
+#: src/audio/player.rs:146
 msgid "This station cannot be played because the stream is offline."
 msgstr ""
-"Dieser Sender kann nicht abgespielt werden, weil die Quelle außer Betrieb "
-"ist."
+"Dieser Sender kann nicht abgespielt werden, weil die Quelle außer Betrieb ist."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:164
 msgid "Station cannot be streamed."
 msgstr "Sender kann nicht abgespielt werden."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:164
 msgid "URL is not valid."
 msgstr "Die Adresse ist ungültig."
 
@@ -253,47 +257,62 @@ msgstr "Willkommen zu {}"
 msgid "No longer existing station removed from library."
 msgstr "Nicht mehr existierender Sender wurde aus der Bibliothek entfernt."
 
-#: src/database/library.rs:149 src/discover/pages/discover.rs:104
+#: src/database/library.rs:149 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Senderdaten konnten nicht empfangen werden."
 
-#: src/ui/about_dialog.rs:32
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
+#: src/discover/pages/discover.rs:57
+#| msgid "Show station details"
+msgid "Show statistics"
+msgstr "Senderdetails anzeigen"
+
+#: src/discover/pages/discover.rs:58
+#| msgid "Discover new stations"
+msgid "Browse over 25,500 stations"
+msgstr "Über 25000 Sender durchsuchen"
+
+#: src/discover/pages/discover.rs:60
+#| msgid "Create new station"
+msgid "Add new station"
+msgstr "Neuen Sender hinzufügen"
+
+#: src/discover/pages/discover.rs:61
+msgid "Your favorite station is missing?"
+msgstr "Ihr Lieblingssender fehlt?"
+
+#: src/discover/pages/discover.rs:63
+msgid "Open website"
+msgstr "Internet-Seite"
+
+#: src/discover/pages/discover.rs:64
+msgid "Powered by radio-browser.info"
+msgstr "Unterstützt von radio-browser.info"
+
+#: src/ui/about_dialog.rs:32 data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
 msgid "Listen to internet radio"
 msgstr "Internet-Radio hören"
 
-#: src/ui/import_dialog.rs:32
+#: src/ui/about_dialog.rs:34
+msgid "translator-credits"
+msgstr ""
+"Peter Sonntag <peter@sonniger-tag.eu>\n"
+"Christian Kirbach <christian.kirbach@gmail.com>\n"
+"Wolfgang Stoeggl <c72578@yahoo.de>"
+
+#: src/ui/import_dialog.rs:26
 msgid "Select database to import"
 msgstr "Zu importierende Datenbank auswählen"
 
-#: src/ui/import_dialog.rs:35
-msgid "Import"
-msgstr "Importieren"
-
-#: src/ui/import_dialog.rs:36
+#: src/ui/import_dialog.rs:29
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#. Get station identifiers
-#: src/ui/import_dialog.rs:50
-msgid "Converting data…"
-msgstr "Umwandeln der Daten …"
+#: src/ui/import_dialog.rs:29
+msgid "Import"
+msgstr "Importieren"
 
-#. Get actual stations from identifiers
-#: src/ui/import_dialog.rs:56
-msgid "Importing {} station…"
-msgid_plural "Importing {} stations…"
-msgstr[0] "Importieren von {} Sender …"
-msgstr[1] "Importieren von {} Sendern …"
-
-#: src/ui/import_dialog.rs:70
-msgid "Imported {} station!"
-msgid_plural "Imported {} stations!"
-msgstr[0] "{} Sender wurde importiert!"
-msgstr[1] "{} Sender wurden importiert!"
-
-#: src/ui/window.rs:268
+#: src/ui/window.rs:279
 msgid "Could not import library."
 msgstr "Bibliothek konnte nicht importiert werden."
 
@@ -312,7 +331,7 @@ msgstr[1] "{} · {} Stimmen"
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 msgid "Shortwave"
-msgstr "Kurzwelle"
+msgstr "Shortwave"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
 msgid "Felix Häcker"
@@ -323,7 +342,7 @@ msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 25,000 stations."
 msgstr ""
-"Kurzwelle ist eine Internet-Radiowiedergabe, die Zugang zu einer "
+"Shortwave ist eine Internet-Radiowiedergabe, die Zugang zu einer "
 "Senderdatenbank mit über 25.000 Sendern bietet."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
@@ -331,7 +350,8 @@ msgid "Features:"
 msgstr "Funktionen:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favourite stations"
+#| msgid "Create your own library where you can add your favourite stations"
+msgid "Create your own library where you can add your favorite stations"
 msgstr ""
 "Erstellen Sie Ihre eigene Bibliothek, in der Sie Ihre Lieblingssender "
 "hinzufügen"
@@ -342,8 +362,7 @@ msgstr "Einfaches Suchen und Entdecken neuer Radiosender"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
 msgid ""
-"Automatic recognition of songs, with the possibility to save them "
-"individually"
+"Automatic recognition of songs, with the possibility to save them individually"
 msgstr ""
 "Automatische Erkennung von Titeln, mit der Möglichkeit, sie einzeln zu "
 "speichern"
@@ -366,3 +385,16 @@ msgstr "Nahtlose Integration in die GNOME-Arbeitsumgebung"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Welle;"
+
+#~ msgid "Converting data…"
+#~ msgstr "Umwandeln der Daten …"
+
+#~ msgid "Importing {} station…"
+#~ msgid_plural "Importing {} stations…"
+#~ msgstr[0] "Importieren von {} Sender …"
+#~ msgstr[1] "Importieren von {} Sendern …"
+
+#~ msgid "Imported {} station!"
+#~ msgid_plural "Imported {} stations!"
+#~ msgstr[0] "{} Sender wurde importiert!"
+#~ msgstr[1] "{} Sender wurden importiert!"
