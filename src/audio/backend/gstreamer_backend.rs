@@ -46,12 +46,17 @@ pub enum GstreamerMessage {
 
 struct BufferingState {
     buffering: bool,
+    buffering_probe: Option<(gstreamer::Pad, gstreamer::PadProbeId)>,
     is_live: Option<bool>,
 }
 
 impl Default for BufferingState {
     fn default() -> Self {
-        Self { buffering: false, is_live: None }
+        Self {
+            buffering: false,
+            buffering_probe: None,
+            is_live: None,
+        }
     }
 }
 
@@ -460,6 +465,19 @@ impl GstreamerBackend {
                         buffering_state.buffering = true;
                         if buffering_state.is_live == Some(false) {
                             debug!("Pausing pipeline because buffering started");
+                            let tee = pipeline.get_by_name("tee").unwrap();
+                            let sinkpad = tee.get_static_pad("sink").unwrap();
+                            let probe_id = sinkpad
+                                .add_probe(
+                                    gstreamer::PadProbeType::BLOCK | gstreamer::PadProbeType::BUFFER | gstreamer::PadProbeType::BUFFER_LIST,
+                                    |_pad, _info| {
+                                        debug!("Pipeline blocked because of buffering");
+                                        gstreamer::PadProbeReturn::Ok
+                                    },
+                                )
+                                .unwrap();
+
+                            buffering_state.buffering_probe = Some((sinkpad, probe_id));
                             let _ = pipeline.set_state(State::Paused);
                         }
                     }
@@ -469,6 +487,9 @@ impl GstreamerBackend {
                         if buffering_state.is_live == Some(false) {
                             debug!("Resuming pipeline because buffering finished");
                             let _ = pipeline.set_state(State::Playing);
+                            if let Some((pad, probe_id)) = buffering_state.buffering_probe.take() {
+                                pad.remove_probe(probe_id);
+                            }
                         }
                     }
                 }
