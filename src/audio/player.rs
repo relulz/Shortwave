@@ -28,7 +28,9 @@ use std::time::Duration;
 use crate::api::Station;
 use crate::app::Action;
 use crate::audio::backend::*;
-use crate::audio::controller::{Controller, GCastController, MiniController, MprisController, SidebarController};
+#[cfg(unix)]
+use crate::audio::controller::MprisController;
+use crate::audio::controller::{Controller, GCastController, MiniController, SidebarController};
 use crate::audio::{GCastDevice, Song};
 use crate::i18n::*;
 use crate::path;
@@ -100,8 +102,10 @@ impl Player {
         let mini_controller_widget = mini_controller.widget.clone();
         controller.push(Box::new(mini_controller));
 
-        // Mpris Controller
+        // Mpris Controller (Only available on UNIX platforms)
+        #[cfg(unix)]
         let mpris_controller = MprisController::new(sender.clone());
+        #[cfg(unix)]
         controller.push(Box::new(mpris_controller));
 
         // Google Cast Controller

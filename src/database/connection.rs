@@ -35,7 +35,12 @@ type Pool = r2d2::Pool<ConnectionManager<SqliteConnection>>;
 
 lazy_static! {
     // Database path
-    pub static ref DB_PATH: PathBuf = path::BASE.place_data_file(format!("{}.db",config::NAME)).unwrap();
+    pub static ref DB_PATH: PathBuf = {
+        let mut path = path::DATA.clone();
+        path.push(format!("{}.db",config::NAME));
+        path
+    };
+
     // Database R2D2 connection pool
     static ref POOL: Pool = init_connection_pool(DB_PATH.to_str().unwrap());
 }
