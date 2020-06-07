@@ -53,6 +53,17 @@
   </kudos>
 
   <releases>
+    <release version="1.1.1" date="2020-06-07">
+      <description>
+        <p>This version fixes a bug that caused some users not to be able to record songs.</p>
+        <p>This release also updates translations in several languages.</p>
+        <p>
+          This might be the last release with the feature to import Gradio
+          databases. The needed API server will be deactivated / no longer
+          available in August 2020.
+        </p>
+      </description>
+    </release>
     <release version="1.1.0" date="2020-06-01">
       <description>
         <p>
