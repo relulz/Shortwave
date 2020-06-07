@@ -60,6 +60,9 @@ fn main() {
     // Initialize logger
     pretty_env_logger::init();
 
+    // Initialize paths
+    path::init().expect("Unable to create paths.");
+
     // Initialize GTK
     gtk::init().unwrap_or_else(|_| panic!("Failed to initialize GTK."));
 

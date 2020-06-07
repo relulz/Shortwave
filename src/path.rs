@@ -16,12 +16,30 @@
 
 use crate::config;
 
+use std::fs;
 use std::path::PathBuf;
-use xdg;
 
 lazy_static! {
-    pub static ref BASE: xdg::BaseDirectories = { xdg::BaseDirectories::with_prefix(config::NAME).unwrap() };
-    pub static ref DATA: PathBuf = { BASE.create_data_directory(BASE.get_data_home()).unwrap() };
-    pub static ref CONFIG: PathBuf = { BASE.create_config_directory(BASE.get_config_home()).unwrap() };
-    pub static ref CACHE: PathBuf = { BASE.create_cache_directory(BASE.get_cache_home()).unwrap() };
+    pub static ref DATA: PathBuf = {
+        let mut path = glib::get_user_data_dir().unwrap();
+        path.push(config::NAME);
+        path
+    };
+    pub static ref CONFIG: PathBuf = {
+        let mut path = glib::get_user_config_dir().unwrap();
+        path.push(config::NAME);
+        path
+    };
+    pub static ref CACHE: PathBuf = {
+        let mut path = glib::get_user_cache_dir().unwrap();
+        path.push(config::NAME);
+        path
+    };
+}
+
+pub fn init() -> std::io::Result<()> {
+    fs::create_dir_all(DATA.to_owned())?;
+    fs::create_dir_all(CONFIG.to_owned())?;
+    fs::create_dir_all(CACHE.to_owned())?;
+    Ok(())
 }

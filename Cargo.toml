@@ -19,7 +19,6 @@ lazy_static = "1.4.0"
 matches = "0.1.8"
 open = "1.3.2"
 url = "2.1.0"
-xdg = "2.2.0"
 indexmap = "1.3.0"
 failure = "0.1.6"
 failure_derive = "0.1.6"
@@ -34,7 +33,6 @@ async-std = "1.4.0"
 isahc = "0.9"
 regex = "1.3.4"
 
-mpris-player = "0.5.0"
 gstreamer = { version = "0.15.0", features = ["v1_10"] }
 gstreamer-audio = "0.15.5"
 cairo-rs = "0.8.0"
@@ -46,3 +44,6 @@ gdk-pixbuf = { version = "0.8.0", features = ["v2_36"] }
 gettext-rs = { version = "0.4.4", features = ["gettext-system"] }
 libhandy = { git="https://gitlab.gnome.org/haecker-felix/libhandy-rs.git", branch = "update_cargo_version", features = ["v0_0_12"] }
 gtk-macros = "0.2.0"
+
+[target.'cfg(unix)'.dependencies]
+mpris-player = "0.5.0"
