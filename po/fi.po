@@ -7,22 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-03-14 23:18+0000\n"
-"PO-Revision-Date: 2020-03-15 12:08+0200\n"
+"POT-Creation-Date: 2020-05-31 14:43+0000\n"
+"PO-Revision-Date: 2020-06-08 12:30+0300\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #: data/gtk/station_dialog.ui:10
 msgid "Station details"
 msgstr "Aseman tiedot"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:210
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:225
 msgid "Language"
 msgstr "Kieli"
 
@@ -38,15 +38,15 @@ msgstr "Koodekki"
 msgid "Homepage"
 msgstr "Verkkosivusto"
 
-#: data/gtk/discover.ui:39
+#: data/gtk/discover.ui:55
 msgid "Most voted stations"
 msgstr "Eniten ääniä keränneet asemat"
 
-#: data/gtk/discover.ui:73
+#: data/gtk/discover.ui:89
 msgid "Trending"
 msgstr "Nousussa"
 
-#: data/gtk/discover.ui:107
+#: data/gtk/discover.ui:123
 msgid "Other users are listening to…"
 msgstr "Muut käyttäjät kuuntelevat…"
 
@@ -86,56 +86,60 @@ msgstr "Tapahtui virhe"
 msgid "No playback"
 msgstr "Mitään ei toisteta"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:177
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:192
 msgid "Sorting"
 msgstr "Järjestys"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:135
+#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:150
 #: data/gtk/window.ui:41
 msgid "Library"
 msgstr "Kirjasto"
 
 #: data/gtk/menu/app_menu.ui:57
+msgid "Open radio-browser.info <sup>↗</sup>"
+msgstr "Avaa radio-browser.info <sup>↗</sup>"
+
+#: data/gtk/menu/app_menu.ui:72
 msgid "Create new station"
 msgstr "Luo uusi asema"
 
-#: data/gtk/menu/app_menu.ui:82
+#: data/gtk/menu/app_menu.ui:97
 msgid "Preferences"
 msgstr "Asetukset"
 
-#: data/gtk/menu/app_menu.ui:96
+#: data/gtk/menu/app_menu.ui:111
 msgid "Keyboard Shortcuts"
 msgstr "Pikanäppäimet"
 
-#: data/gtk/menu/app_menu.ui:110
+#: data/gtk/menu/app_menu.ui:125
 msgid "About Shortwave"
 msgstr "Tietoja - Shortwave"
 
-#: data/gtk/menu/app_menu.ui:152
+#: data/gtk/menu/app_menu.ui:167
 msgid "Import from Gradio"
 msgstr "Tuo Gradiosta"
 
-#: data/gtk/menu/app_menu.ui:195
+#: data/gtk/menu/app_menu.ui:210
 msgid "Name"
 msgstr "Nimi"
 
-#: data/gtk/menu/app_menu.ui:225
+#: data/gtk/menu/app_menu.ui:240
 msgid "Country"
 msgstr "Maa"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:255
 msgid "State"
 msgstr "Tila"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:270
 msgid "Votes"
 msgstr "Äänet"
 
-#: data/gtk/menu/app_menu.ui:281
+#: data/gtk/menu/app_menu.ui:296
 msgid "Ascending"
 msgstr "Nouseva"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:311
 msgid "Descending"
 msgstr "Laskeva"
 
@@ -227,15 +231,15 @@ msgstr "Avaa"
 msgid "Connected with"
 msgstr "Yhdistettynä"
 
-#: src/audio/player.rs:142
+#: src/audio/player.rs:146
 msgid "This station cannot be played because the stream is offline."
 msgstr "Asemaa ei voida toistaa, koska aseman suoratoisto ei ole käynnissä."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:164
 msgid "Station cannot be streamed."
 msgstr "Asemaa ei voi suoratoistaa."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:164
 msgid "URL is not valid."
 msgstr "Osoite ei ole kelvollinen."
 
@@ -244,51 +248,62 @@ msgstr "Osoite ei ole kelvollinen."
 msgid "Welcome to {}"
 msgstr "Tervetuloa, käytössäsi on {}"
 
-#: src/database/library.rs:149
+#: src/database/library.rs:145
 msgid "No longer existing station removed from library."
 msgstr "Toimintansa lopettanut asema poistettiin kirjastosta."
 
-#: src/database/library.rs:153 src/discover/pages/discover.rs:108
-#: src/discover/pages/search.rs:99
+#: src/database/library.rs:149 src/discover/pages/discover.rs:127
+#: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Aseman tietoja ei voitu vastaanottaa."
+
+#: src/discover/pages/discover.rs:57
+msgid "Show statistics"
+msgstr "Näytä tilastot"
+
+#: src/discover/pages/discover.rs:58
+#| msgid "Discover new stations"
+msgid "Browse over 25,500 stations"
+msgstr "Selaa yli 25 500 asemaa"
+
+#: src/discover/pages/discover.rs:60
+msgid "Add new station"
+msgstr "Lisää uusi asema"
+
+#: src/discover/pages/discover.rs:61
+msgid "Your favorite station is missing?"
+msgstr "Puuttuuko suosikkiasemasi?"
+
+#: src/discover/pages/discover.rs:63
+msgid "Open website"
+msgstr "Avaa verkkosivu"
+
+#: src/discover/pages/discover.rs:64
+msgid "Powered by radio-browser.info"
+msgstr "Taustavoimana radio-browser.info"
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
 msgid "Listen to internet radio"
 msgstr "Kuuntele internetradiota"
 
-#: src/ui/import_dialog.rs:32
+#: src/ui/about_dialog.rs:34
+msgid "translator-credits"
+msgstr "Jiri Grönroos"
+
+#: src/ui/import_dialog.rs:26
 msgid "Select database to import"
 msgstr "Valitse tuotava tietokanta"
 
-#: src/ui/import_dialog.rs:35
-msgid "Import"
-msgstr "Tuo"
-
-#: src/ui/import_dialog.rs:36
+#: src/ui/import_dialog.rs:29
 msgid "Cancel"
 msgstr "Peru"
 
-#. Get station identifiers
-#: src/ui/import_dialog.rs:50
-msgid "Converting data…"
-msgstr "Muunnetaan tietoja…"
+#: src/ui/import_dialog.rs:29
+msgid "Import"
+msgstr "Tuo"
 
-#. Get actual stations from identifiers
-#: src/ui/import_dialog.rs:56
-msgid "Importing {} station…"
-msgid_plural "Importing {} stations…"
-msgstr[0] "Tuotiin {} asema…"
-msgstr[1] "Tuotiin {} asemaa…"
-
-#: src/ui/import_dialog.rs:70
-msgid "Imported {} station!"
-msgid_plural "Imported {} stations!"
-msgstr[0] "Tuotiin {} asema!"
-msgstr[1] "Tuotiin {} asemaa!"
-
-#: src/ui/window.rs:268
+#: src/ui/window.rs:279
 msgid "Could not import library."
 msgstr "Kirjastoa ei voitu tuoda."
 
@@ -326,8 +341,8 @@ msgid "Features:"
 msgstr "Ominaisuudet:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favourite stations"
-msgstr "Luo oma kirjasto ja lisää siihen suosikkiasemasi"
+msgid "Create your own library where you can add your favorite stations"
+msgstr "Luo oma kirjasto, johon voit lisätä omat suosikkiasemasi"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Easily search and discover new radio stations"
@@ -359,3 +374,16 @@ msgstr "Saumaton integraatio Gnome-työpöytäympäristöön"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;suoratoisto;nettiradio;"
+
+#~ msgid "Converting data…"
+#~ msgstr "Muunnetaan tietoja…"
+
+#~ msgid "Importing {} station…"
+#~ msgid_plural "Importing {} stations…"
+#~ msgstr[0] "Tuotiin {} asema…"
+#~ msgstr[1] "Tuotiin {} asemaa…"
+
+#~ msgid "Imported {} station!"
+#~ msgid_plural "Imported {} stations!"
+#~ msgstr[0] "Tuotiin {} asema!"
+#~ msgstr[1] "Tuotiin {} asemaa!"
