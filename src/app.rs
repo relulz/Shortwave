@@ -193,7 +193,8 @@ impl SwApplication {
         // Setup help overlay
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
         get_widget!(builder, gtk::ShortcutsWindow, shortcuts);
-        window.set_help_overlay(Some(&shortcuts));
+        let w = window.clone().upcast::<gtk::ApplicationWindow>();
+        w.set_help_overlay(Some(&shortcuts));
 
         window
     }

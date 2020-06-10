@@ -20,7 +20,7 @@ use glib::subclass::prelude::*;
 use glib::translate::*;
 use glib::Sender;
 use gtk::prelude::*;
-use gtk::subclass::prelude::{ApplicationWindowImpl, BinImpl, ContainerImpl, WidgetImpl, WindowImpl};
+use gtk::subclass::prelude::{BinImpl, ContainerImpl, WidgetImpl, WindowImpl};
 use libhandy::prelude::*;
 use libhandy::LeafletExt;
 
@@ -48,7 +48,7 @@ pub struct SwApplicationWindowPrivate {
 
 impl ObjectSubclass for SwApplicationWindowPrivate {
     const NAME: &'static str = "SwApplicationWindow";
-    type ParentType = gtk::ApplicationWindow;
+    type ParentType = libhandy::ApplicationWindow;
     type Instance = subclass::simple::InstanceStruct<Self>;
     type Class = subclass::simple::ClassStruct<Self>;
 
@@ -86,7 +86,10 @@ impl BinImpl for SwApplicationWindowPrivate {}
 impl WindowImpl for SwApplicationWindowPrivate {}
 
 // Implement Gtk.ApplicationWindow for SwApplicationWindow
-impl ApplicationWindowImpl for SwApplicationWindowPrivate {}
+impl gtk::subclass::prelude::ApplicationWindowImpl for SwApplicationWindowPrivate {}
+
+// Implement Hdy.ApplicationWindow for SwApplicationWindow
+impl libhandy::subclass::prelude::ApplicationWindowImpl for SwApplicationWindowPrivate {}
 
 // Wrap SwApplicationWindowPrivate into a usable gtk-rs object
 glib_wrapper! {
@@ -94,7 +97,7 @@ glib_wrapper! {
         Object<subclass::simple::InstanceStruct<SwApplicationWindowPrivate>,
         subclass::simple::ClassStruct<SwApplicationWindowPrivate>,
         SwApplicationWindowClass>)
-        @extends gtk::Widget, gtk::Container, gtk::Bin, gtk::Window, gtk::ApplicationWindow;
+        @extends gtk::Widget, gtk::Container, gtk::Bin, gtk::Window, gtk::ApplicationWindow, libhandy::ApplicationWindow;
 
     match fn {
         get_type => || SwApplicationWindowPrivate::get_type().to_glib(),
@@ -120,10 +123,8 @@ impl SwApplicationWindow {
         let app_private = SwApplicationPrivate::from_instance(&app);
 
         // Add headerbar/content to the window itself
-        get_widget!(self_.window_builder, libhandy::HeaderBar, headerbar);
-        get_widget!(self_.window_builder, gtk::Overlay, content);
-        self.set_titlebar(Some(&headerbar));
-        self.add(&content);
+        get_widget!(self_.window_builder, gtk::Box, window);
+        self.add(&window);
 
         // Wire everything up
         get_widget!(self_.window_builder, gtk::Box, mini_controller_box);
@@ -203,7 +204,7 @@ impl SwApplicationWindow {
     }
 
     fn setup_gactions(&self, sender: Sender<Action>) {
-        // We need to upcast from SwApplicationWindow to gtk::ApplicationWindow, because SwApplicationWindow
+        // We need to upcast from SwApplicationWindow to libhandy::ApplicationWindow, because SwApplicationWindow
         // currently doesn't implement GLib.ActionMap, since it's not supported in gtk-rs for subclassing (13-01-2020)
         let window = self.clone().upcast::<gtk::ApplicationWindow>();
         let app = window.get_application().unwrap();
