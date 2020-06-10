@@ -15,7 +15,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 mod connection;
-pub mod gradio_db;
 mod library;
 mod models;
 mod queries;

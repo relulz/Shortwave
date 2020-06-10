@@ -48,7 +48,6 @@ sources = files(
   'audio/song.rs',
 
   'database/connection.rs',
-  'database/gradio_db.rs',
   'database/library.rs',
   'database/mod.rs',
   'database/queries.rs',
@@ -67,7 +66,6 @@ sources = files(
 
   'ui/about_dialog.rs',
   'ui/featured_carousel.rs',
-  'ui/import_dialog.rs',
   'ui/mod.rs',
   'ui/notification.rs',
   'ui/song_listbox.rs',

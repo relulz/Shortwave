@@ -16,7 +16,6 @@
 
 pub mod about_dialog;
 pub mod featured_carousel;
-pub mod import_dialog;
 mod notification;
 mod song_listbox;
 mod song_row;

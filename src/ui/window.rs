@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use chrono::prelude::*;
 use gio::prelude::*;
 use glib::subclass;
 use glib::subclass::prelude::*;
@@ -30,9 +29,8 @@ use std::rc::Rc;
 
 use crate::app::{Action, SwApplication, SwApplicationPrivate};
 use crate::config;
-use crate::i18n::*;
 use crate::settings::{settings_manager, Key, SettingsWindow};
-use crate::ui::{about_dialog, import_dialog, Notification};
+use crate::ui::{about_dialog, Notification};
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum View {
@@ -278,24 +276,6 @@ impl SwApplicationWindow {
         );
         app.set_accels_for_action("win.toggle-start-stop", &["<primary>space"]);
 
-        // win.import-gradio-library
-        action!(
-            window,
-            "import-gradio-library",
-            clone!(@strong sender, @weak window => move |_, _| {
-                let now = Utc::today();
-                let deadline = Utc.ymd(2020, 8, 1);
-                if now > deadline {
-                    let notification = Notification::new_error(&i18n("Could not import library."), "The webservice which is required to import Gradio stations isn't available anymore.");
-                    send!(sender, Action::ViewShowNotification(notification));
-                    return;
-                }
-
-                let sender = sender.clone();
-                import_dialog::import_gradio_db(sender.clone(), window);
-            })
-        );
-
         // Sort / Order menu
         let sorting_action = settings_manager::create_action(Key::ViewSorting);
         window.add_action(&sorting_action);
@@ -347,7 +327,6 @@ impl SwApplicationWindow {
         get_widget!(self_.window_builder, gtk::Stack, view_stack);
         get_widget!(self_.window_builder, libhandy::Leaflet, leaflet);
         get_widget!(self_.menu_builder, gtk::ModelButton, sorting_mbutton);
-        get_widget!(self_.menu_builder, gtk::ModelButton, library_mbutton);
         get_widget!(self_.window_builder, gtk::Button, add_button);
         get_widget!(self_.window_builder, gtk::Button, back_button);
 
@@ -361,7 +340,6 @@ impl SwApplicationWindow {
         add_button.set_visible(library_mode);
         back_button.set_visible(!library_mode);
         sorting_mbutton.set_sensitive(library_mode);
-        library_mbutton.set_sensitive(library_mode);
 
         // Show requested view / page
         match view {
