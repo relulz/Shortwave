@@ -25,7 +25,6 @@ src/database/library.rs
 src/discover/pages/discover.rs
 src/discover/pages/search.rs
 src/ui/about_dialog.rs
-src/ui/import_dialog.rs
 src/ui/station_row.rs
 src/ui/window.rs
 src/utils.rs
