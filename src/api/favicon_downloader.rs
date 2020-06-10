@@ -49,14 +49,16 @@ impl FaviconDownloader {
         let mut bytes = vec![];
         async_std::io::copy(&mut body, &mut bytes).await.unwrap();
 
+        let input_stream = gio::MemoryInputStream::new_from_bytes(&glib::Bytes::from(&bytes));
+        let pixbuf = Pixbuf::new_from_stream_at_scale_async_future(&input_stream, size, size, true).await?;
+
         // Write downloaded bytes into file
         let file = Self::get_file(&url)?;
         file.replace_contents_async_future(bytes, None, false, gio::FileCreateFlags::NONE)
             .await
             .expect("Could not write favicon data");
 
-        // Open downloaded favicon as pixbuf
-        Ok(Self::get_cached_pixbuf(&url, size).await?)
+        Ok(pixbuf)
     }
 
     async fn get_cached_pixbuf(url: &Url, size: i32) -> Result<Pixbuf, Error> {
