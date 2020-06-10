@@ -17,8 +17,9 @@
             <child>
               <object class="HdyActionRow">
                 <property name="title" translatable="yes">Enable dark mode</property>
+                <property name="activatable_widget">dark_mode_button</property>
                 <property name="visible">True</property>
-                <child type="action">
+                <child>
                   <object class="GtkSwitch" id="dark_mode_button">
                     <property name="can_focus">True</property>
                     <property name="valign">center</property>
