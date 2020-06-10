@@ -169,9 +169,9 @@ impl SwApplicationWindow {
 
         // leaflet
         get_widget!(self_.window_builder, libhandy::Leaflet, leaflet);
-        leaflet.connect_property_fold_notify(clone!(@strong self as this, @weak self_.window_builder as window_builder => move |leaflet| {
+        leaflet.connect_property_folded_notify(clone!(@strong self as this, @weak self_.window_builder as window_builder => move |leaflet| {
             get_widget!(window_builder, gtk::Stack, view_stack);
-            let current_view = if leaflet.get_property_folded() && leaflet.get_visible_child_name().unwrap() == "player" {
+            let current_view = if leaflet.get_folded() && leaflet.get_visible_child_name().unwrap() == "player" {
                 View::Player
             } else {
                 match view_stack.get_visible_child_name().unwrap().as_str() {
@@ -331,7 +331,7 @@ impl SwApplicationWindow {
         get_widget!(self_.window_builder, gtk::Button, back_button);
 
         // Determine if window is currently in phone mode (leaflet = folded)
-        let phone_mode = leaflet.get_property_folded();
+        let phone_mode = leaflet.get_folded();
 
         // Determine if current visible page is library
         let library_mode = view == View::Library;

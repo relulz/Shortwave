@@ -9,7 +9,6 @@
     "command" : "shortwave",
     "finish-args" : [
         "--filesystem=xdg-music",
-        "--filesystem=home",
         "--share=network",
         "--share=ipc",
         "--socket=x11",
@@ -46,7 +45,7 @@
                 {
                     "type" : "git",
                     "url" : "https://source.puri.sm/Librem5/libhandy.git",
-                    "tag": "v0.0.13"
+                    "tag": "v0.80.0"
                 }
             ]
         },

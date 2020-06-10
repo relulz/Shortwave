@@ -16,7 +16,7 @@
 
 use gtk::prelude::*;
 use libhandy::prelude::*;
-use libhandy::Paginator;
+use libhandy::Carousel;
 
 use std::cell::RefCell;
 use std::convert::TryInto;
@@ -24,7 +24,7 @@ use std::rc::Rc;
 
 pub struct FeaturedCarousel {
     pub widget: gtk::Box,
-    paginator: Paginator,
+    paginator: Carousel,
 
     pages: Rc<RefCell<Vec<gtk::Box>>>,
     visible_page: Rc<RefCell<usize>>,
@@ -36,7 +36,7 @@ impl FeaturedCarousel {
     pub fn new() -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/featured_carousel.ui");
         get_widget!(builder, gtk::Box, featured_carousel);
-        get_widget!(builder, Paginator, paginator);
+        get_widget!(builder, Carousel, paginator);
 
         let pages = Rc::new(RefCell::new(Vec::new()));
         let visible_page = Rc::new(RefCell::new(0));

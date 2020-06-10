@@ -17,7 +17,6 @@
 use futures_util::future::FutureExt;
 use glib::Sender;
 use gtk::prelude::*;
-use libhandy::Dialog;
 
 use crate::api::{FaviconDownloader, Station};
 use crate::app::Action;
@@ -26,7 +25,7 @@ use crate::ui::{FaviconSize, StationFavicon};
 use crate::utils;
 
 pub struct StationDialog {
-    pub widget: Dialog,
+    pub widget: gtk::Dialog,
     station: Station,
 
     title_label: gtk::Label,
@@ -48,7 +47,7 @@ pub struct StationDialog {
 impl StationDialog {
     pub fn new(sender: Sender<Action>, station: Station) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_dialog.ui");
-        get_widget!(builder, Dialog, station_dialog);
+        get_widget!(builder, gtk::Dialog, station_dialog);
         get_widget!(builder, gtk::Label, title_label);
         get_widget!(builder, gtk::Label, subtitle_label);
         get_widget!(builder, gtk::Label, codec_label);

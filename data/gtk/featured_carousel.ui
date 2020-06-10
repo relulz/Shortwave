@@ -12,7 +12,7 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <object class="HdyPaginator" id="paginator">
+          <object class="HdyCarousel" id="paginator">
             <property name="height_request">150</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>

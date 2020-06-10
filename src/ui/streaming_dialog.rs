@@ -27,7 +27,7 @@ use crate::audio::GCastDiscovererMessage;
 use crate::utils;
 
 pub struct StreamingDialog {
-    pub widget: libhandy::Dialog,
+    pub widget: gtk::Dialog,
     gcd: Rc<GCastDiscoverer>,
 
     builder: gtk::Builder,
@@ -37,7 +37,7 @@ pub struct StreamingDialog {
 impl StreamingDialog {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/streaming_dialog.ui");
-        get_widget!(builder, libhandy::Dialog, streaming_dialog);
+        get_widget!(builder, gtk::Dialog, streaming_dialog);
 
         // Setup Google Cast discoverer
         let gcd_t = GCastDiscoverer::new();
@@ -127,7 +127,7 @@ impl StreamingDialog {
         get_widget!(self.builder, gtk::Button, connect_button);
         connect_button.connect_clicked(clone!(@weak self.builder as builder, @weak self.gcd as gcd, @strong self.sender as sender => move |_| {
             get_widget!(builder, gtk::ListBox, devices_listbox);
-            get_widget!(builder, libhandy::Dialog, streaming_dialog);
+            get_widget!(builder, gtk::Dialog, streaming_dialog);
 
             if let Some(active_row) = devices_listbox.get_selected_row() {
                 // Very hackish way to get the selected ip address

@@ -42,7 +42,7 @@ gtk = { version = "0.8.0", features = ["v3_22"] }
 gio = { version = "0.8.0", features = ["v2_46"] }
 gdk-pixbuf = { version = "0.8.0", features = ["v2_36"] }
 gettext-rs = { version = "0.4.4", features = ["gettext-system"] }
-libhandy = { git="https://gitlab.gnome.org/haecker-felix/libhandy-rs.git", branch = "update_cargo_version", features = ["v0_0_12"] }
+libhandy = { git="https://gitlab.gnome.org/bilelmoussaoui/libhandy-rs", features = ["v1_0"] }
 gtk-macros = "0.2.0"
 
 [target.'cfg(unix)'.dependencies]
