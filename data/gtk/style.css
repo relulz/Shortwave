@@ -44,7 +44,7 @@
   background-color: @theme_base_color;
 }
 
-.minicontroller{
+.toolbarcontroller{
   border-top: 1px solid @borders;
 }
 
@@ -55,33 +55,79 @@
   color: white;
 }
 
-.carousel-banner button{
+.carousel-banner button {
   background-image: none;
   color:white;
   border: 1px solid white;
 }
 
-.carousel-banner button:hover{
+.carousel-banner button:hover {
   box-shadow: none;
   text-shadow: none;
   background-color: white;
   color: black;
 }
 
-.carousel-banner button:active{
+.carousel-banner button:active {
   background-color: lightgrey;
 }
 
-.carousel-left-button{
+.carousel-left-button {
   padding: 2px;
   border-radius: 0px;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px
 }
 
-.carousel-right-button{
+.carousel-right-button {
   padding: 2px;
   border-radius: 0px;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px
+}
+
+.mini-controller {
+  background-image: url('resource://de/haeckerfelix/Shortwave/images/wood.png');
+  background-size: cover;
+}
+
+/* Based on the styling from Pebbles by Subhadeep Jasu */
+/* https://github.com/SubhadeepJasu/pebbles/blob/e8159b8e73f2ceb3597c8fe37fe338ba1fb6f50c/data/Application.css */
+.mini-controller-display {
+	background-image: linear-gradient(#b6bfb6, #dae6da);
+	border-radius: 8px;
+	border: 1px solid alpha (black, 1);
+	padding-top: 3px;
+	box-shadow:
+	inset 0px 1px 8px 0px alpha (black, 0.5),
+	inset 0px 0px 2px 1px alpha (black, 0.5),
+	0px 1px 0px 0px alpha (white, 0.3),
+	0px -1px 0px 0px alpha (black, 0.15);
+}
+
+.mini-controller-display {
+	background-image: linear-gradient(#b6bfb6, #dae6da);
+	border-radius: 8px;
+	border: 1px solid alpha (black, 1);
+	padding-top: 3px;
+	box-shadow:
+	inset 0px 1px 8px 0px alpha (black, 0.5),
+	inset 0px 0px 2px 1px alpha (black, 0.5),
+	0px 1px 0px 0px alpha (white, 0.3),
+	0px -1px 0px 0px alpha (black, 0.15);
+}
+
+.mini-controller-button {
+  background-image: url('resource://de/haeckerfelix/Shortwave/images/metal.png');
+  background-size: cover;
+  color: black;
+  border: 1px solid alpha (black, 1);
+}
+
+window.csd.unified:not(.solid-csd):not(.fullscreen) > decoration-overlay {
+  box-shadow:
+    inset 0 -1px 0 0 alpha(#fff, 0.2),
+    inset 0 1px 0 0 alpha(#fff, 0.3),
+    inset 1px 0 0 0 alpha(#fff, 0.07),
+    inset -1px 0 0 0 alpha(#fff, 0.07);
 }

@@ -127,10 +127,12 @@ impl SwApplicationWindow {
         self.add(&window);
 
         // Wire everything up
+        get_widget!(self_.window_builder, gtk::Box, toolbar_controller_box);
         get_widget!(self_.window_builder, gtk::Box, mini_controller_box);
         get_widget!(self_.window_builder, gtk::Box, library_box);
         get_widget!(self_.window_builder, gtk::Box, discover_box);
 
+        toolbar_controller_box.add(&app_private.player.toolbar_controller_widget);
         mini_controller_box.add(&app_private.player.mini_controller_widget);
         library_box.add(&app_private.library.widget);
         discover_box.add(&app_private.storefront.widget);
@@ -277,6 +279,24 @@ impl SwApplicationWindow {
         );
         app.set_accels_for_action("win.toggle-start-stop", &["<primary>space"]);
 
+        // win.disable-mini-player
+        action!(
+            window,
+            "disable-mini-player",
+            clone!(@strong sender => move |_, _| {
+                send!(sender, Action::ViewDisableMiniPlayer);
+            })
+        );
+
+        // win.enable-mini-player
+        action!(
+            window,
+            "enable-mini-player",
+            clone!(@strong sender => move |_, _| {
+                send!(sender, Action::ViewEnableMiniPlayer);
+            })
+        );
+
         // Sort / Order menu
         let sorting_action = settings_manager::create_action(Key::ViewSorting);
         window.add_action(&sorting_action);
@@ -303,6 +323,7 @@ impl SwApplicationWindow {
     }
 
     pub fn show_notification(&self, notification: Rc<Notification>) {
+        let x = 1;
         let self_ = SwApplicationWindowPrivate::from_instance(self);
         get_widget!(self_.window_builder, gtk::Overlay, content);
 
@@ -317,6 +338,15 @@ impl SwApplicationWindow {
 
     pub fn set_view(&self, view: View) {
         self.update_view(view);
+    }
+
+    pub fn enable_mini_player(&self, enable: bool) {
+        if enable {
+            self.unmaximize();
+            self.resize(425, 125);
+        } else {
+            self.resize(700, 500);
+        }
     }
 
     fn update_view(&self, view: View) {

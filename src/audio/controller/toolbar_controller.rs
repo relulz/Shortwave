@@ -1,4 +1,4 @@
-// Shortwave - mini_controller.rs
+// Shortwave - toolbar_controller.rs
 // Copyright (C) 2020  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -14,63 +14,67 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use futures_util::future::FutureExt;
 use glib::Sender;
 use gtk::prelude::*;
 
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::api::Station;
+use crate::api::{FaviconDownloader, Station};
 use crate::app::Action;
 use crate::audio::Controller;
 use crate::audio::PlaybackState;
+use crate::ui::{FaviconSize, StationFavicon};
 
-pub struct MiniController {
+pub struct ToolbarController {
     pub widget: gtk::Box,
     sender: Sender<Action>,
     station: Rc<RefCell<Option<Station>>>,
 
+    station_favicon: Rc<StationFavicon>,
     title_label: gtk::Label,
     subtitle_label: gtk::Label,
     subtitle_revealer: gtk::Revealer,
+    action_revealer: gtk::Revealer,
     playback_button_stack: gtk::Stack,
     start_playback_button: gtk::Button,
     stop_playback_button: gtk::Button,
-    volume_button: gtk::VolumeButton,
-    volume_signal_id: glib::signal::SignalHandlerId,
+    eventbox: gtk::EventBox,
 }
 
-impl MiniController {
+impl ToolbarController {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/mini_controller.ui");
-        get_widget!(builder, gtk::Box, mini_controller);
+        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/toolbar_controller.ui");
+        get_widget!(builder, gtk::Box, toolbar_controller);
         get_widget!(builder, gtk::Label, title_label);
         get_widget!(builder, gtk::Label, subtitle_label);
         get_widget!(builder, gtk::Revealer, subtitle_revealer);
+        get_widget!(builder, gtk::Revealer, action_revealer);
         get_widget!(builder, gtk::Stack, playback_button_stack);
         get_widget!(builder, gtk::Button, start_playback_button);
         get_widget!(builder, gtk::Button, stop_playback_button);
-        get_widget!(builder, gtk::VolumeButton, volume_button);
-
-        // volume_button | We need the volume_signal_id later to block the signal
-        let volume_signal_id = volume_button.connect_value_changed(clone!(@strong sender => move |_, value| {
-            send!(sender, Action::PlaybackSetVolume(value));
-        }));
+        get_widget!(builder, gtk::EventBox, eventbox);
 
         let station = Rc::new(RefCell::new(None));
 
+        get_widget!(builder, gtk::Box, favicon_box);
+        let station_favicon = Rc::new(StationFavicon::new(FaviconSize::Mini));
+        favicon_box.add(&station_favicon.widget);
+
         let controller = Self {
-            widget: mini_controller,
+            widget: toolbar_controller,
             sender,
             station,
+            station_favicon,
             title_label,
             subtitle_label,
+            action_revealer,
             subtitle_revealer,
             playback_button_stack,
             start_playback_button,
             stop_playback_button,
-            volume_button,
-            volume_signal_id,
+            eventbox,
         };
 
         controller.setup_signals();
@@ -87,15 +91,35 @@ impl MiniController {
         self.stop_playback_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
             send!(sender, Action::PlaybackStop);
         }));
+
+        // show_player_button
+        self.eventbox.connect_button_release_event(clone!(@strong self.sender as sender => move |_, _| {
+            send!(sender, Action::ViewShowPlayer);
+            glib::signal::Inhibit(false)
+        }));
     }
 }
 
-impl Controller for MiniController {
+impl Controller for ToolbarController {
     fn set_station(&self, station: Station) {
+        self.action_revealer.set_reveal_child(true);
         self.title_label.set_text(&station.name);
         self.title_label.set_tooltip_text(Some(station.name.as_str()));
         *self.station.borrow_mut() = Some(station.clone());
 
+        // Download & set icon
+        let station_favicon = self.station_favicon.clone();
+        if let Some(favicon) = station.favicon {
+            let fut = FaviconDownloader::download(favicon, FaviconSize::Mini as i32).map(move |pixbuf| {
+                if let Ok(pixbuf) = pixbuf {
+                    station_favicon.set_pixbuf(pixbuf)
+                }
+            });
+            spawn!(fut);
+        }
+
+        // reset everything else
+        self.station_favicon.reset();
         self.subtitle_revealer.set_reveal_child(false);
     }
 
@@ -107,11 +131,8 @@ impl Controller for MiniController {
         };
     }
 
-    fn set_volume(&self, volume: f64) {
-        // We need to block the signal, otherwise we risk creating a endless loop
-        glib::signal::signal_handler_block(&self.volume_button, &self.volume_signal_id);
-        self.volume_button.set_value(volume);
-        glib::signal::signal_handler_unblock(&self.volume_button, &self.volume_signal_id);
+    fn set_volume(&self, _volume: f64) {
+        // We don't have to do anything here.
     }
 
     fn set_song_title(&self, title: &str) {

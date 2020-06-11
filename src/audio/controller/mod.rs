@@ -17,10 +17,12 @@
 mod gcast_controller;
 mod mini_controller;
 mod sidebar_controller;
+mod toolbar_controller;
 
 pub use gcast_controller::GCastController;
 pub use mini_controller::MiniController;
 pub use sidebar_controller::SidebarController;
+pub use toolbar_controller::ToolbarController;
 
 #[cfg(unix)]
 pub use mpris_controller::MprisController;

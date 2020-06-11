@@ -17,12 +17,16 @@
       <file compressed="true" preprocess="xml-stripblanks">gtk/song_listbox.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/song_row.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/sidebar_controller.ui</file>
+      <file compressed="true" preprocess="xml-stripblanks">gtk/toolbar_controller.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/mini_controller.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/search.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/settings_window.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/discover.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/streaming_dialog.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/featured_carousel.ui</file>
+
+      <file compressed="true">images/wood.png</file>
+      <file compressed="true">images/metal.png</file>
 
       <file compressed="true">gtk/style.css</file>
   </gresource>

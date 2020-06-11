@@ -25,11 +25,11 @@
             "--share=network"
         ],
         "env" : {
+            "G_MESSAGES_DEBUG" : "none",
             "RUSTFLAGS" : "--remap-path-prefix =../",
             "CARGO_HOME" : "/run/build/Shortwave/cargo",
             "RUST_BACKTRACE" : "1",
-            "RUST_LOG" : "shortwave=debug",
-            "G_MESSAGES_DEBUG" : "none"
+            "RUST_LOG" : "shortwave=debug"
         }
     },
     "modules" : [
@@ -51,13 +51,15 @@
                 {
                     "type" : "git",
                     "url" : "https://gitlab.gnome.org/GNOME/libhandy",
-                    "tag": "v0.80.0"
+                    "tag" : "v0.80.0"
                 }
             ]
         },
         {
             "name" : "gst-libav",
-            "cleanup" : ["*.la"],
+            "cleanup" : [
+                "*.la"
+            ],
             "sources" : [
                 {
                     "type" : "archive",

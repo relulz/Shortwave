@@ -30,7 +30,7 @@ use crate::app::Action;
 use crate::audio::backend::*;
 #[cfg(unix)]
 use crate::audio::controller::MprisController;
-use crate::audio::controller::{Controller, GCastController, MiniController, SidebarController};
+use crate::audio::controller::{Controller, GCastController, MiniController, SidebarController, ToolbarController};
 use crate::audio::{GCastDevice, Song};
 use crate::i18n::*;
 use crate::path;
@@ -38,31 +38,31 @@ use crate::settings::{settings_manager, Key};
 use crate::ui::Notification;
 use crate::utils;
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                             //
-//  A small overview of the player/gstreamer program structure  :)                             //
-//                                                                                             //
-//   -----------------    -----------------    -------------------    ----------------         //
-//  | GCastController |  | MprisController |  | SidebarController |  | MiniController |        //
-//   -----------------    -----------------    -------------------    ----------------         //
-//            |                        |                   |                      |            //
-//            \-------------------------------------------------------------------/            //
-//                                     |                                                       //
-//                              ------------       -----------    ------                       //
-//                             | Controller |     | Gstreamer |  | Song |                      //
-//                              ------------       -----------    ------                       //
-//                                    |                   \       /                            //
-//                                    |                   ---------                            //
-//                                    |                  | Backend |                           //
-//                                    |                   ---------                            //
-//                                    |                     |                                  //
-//                                    \---           -------/                                  //
-//                                        \         /                                          //
-//                                        -----------                                          //
-//                                       |  Player   |                                         //
-//                                        -----------                                          //
-//                                                                                             //
-/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                             //
+//  A small overview of the player/gstreamer program structure  :)                                             //
+//                                                                                                             //
+//   -----------------    -----------------    -------------------    ----------------    ------------------   //
+//  | GCastController |  | MprisController |  | SidebarController |  | MiniController |  | SimpleController |  //
+//   -----------------    -----------------    -------------------    ----------------    ------------------   //
+//            |                        |                   |                      |                            //
+//            \-------------------------------------------------------------------/                            //
+//                                     |                                                                       //
+//                              ------------       -----------    ------                                       //
+//                             | Controller |     | Gstreamer |  | Song |                                      //
+//                              ------------       -----------    ------                                       //
+//                                    |                   \       /                                            //
+//                                    |                   ---------                                            //
+//                                    |                  | Backend |                                           //
+//                                    |                   ---------                                            //
+//                                    |                     |                                                  //
+//                                    \---           -------/                                                  //
+//                                        \         /                                                          //
+//                                        -----------                                                          //
+//                                       |  Player   |                                                         //
+//                                        -----------                                                          //
+//                                                                                                             //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, PartialEq, Debug)]
 pub enum PlaybackState {
@@ -73,6 +73,7 @@ pub enum PlaybackState {
 
 pub struct Player {
     pub widget: gtk::Box,
+    pub toolbar_controller_widget: gtk::Box,
     pub mini_controller_widget: gtk::Box,
     controller: Rc<Vec<Box<dyn Controller>>>,
     gcast_controller: Rc<GCastController>,
@@ -96,6 +97,11 @@ impl Player {
         player_box.add(&sidebar_controller.widget);
         player_box.reorder_child(&sidebar_controller.widget, 0);
         controller.push(Box::new(sidebar_controller));
+
+        // Toolbar Controller
+        let toolbar_controller = ToolbarController::new(sender.clone());
+        let toolbar_controller_widget = toolbar_controller.widget.clone();
+        controller.push(Box::new(toolbar_controller));
 
         // Mini Controller (gets used in phone mode / bottom toolbar)
         let mini_controller = MiniController::new(sender.clone());
@@ -125,6 +131,7 @@ impl Player {
 
         let player = Self {
             widget: player,
+            toolbar_controller_widget,
             mini_controller_widget,
             controller,
             gcast_controller,
