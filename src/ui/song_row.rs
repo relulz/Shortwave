@@ -81,6 +81,7 @@ impl SongRow {
     // stolen from gnome-podcasts
     // https://gitlab.gnome.org/haecker-felix/podcasts/blob/2f8a6a91f87d7fa335a954bbaf2f70694f32f6dd/podcasts-gtk/src/widgets/player.rs#L168
     fn format_duration(seconds: u64) -> String {
+        debug!("Format duration (seconds): {}", &seconds);
         let time = NaiveTime::from_num_seconds_from_midnight(seconds as u32, 0);
 
         if seconds >= 3600 {

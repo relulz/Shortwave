@@ -323,7 +323,6 @@ impl SwApplicationWindow {
     }
 
     pub fn show_notification(&self, notification: Rc<Notification>) {
-        let x = 1;
         let self_ = SwApplicationWindowPrivate::from_instance(self);
         get_widget!(self_.window_builder, gtk::Overlay, content);
 
