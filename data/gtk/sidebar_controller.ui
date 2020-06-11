@@ -96,6 +96,7 @@
         <property name="label" translatable="yes">No playback</property>
         <property name="justify">center</property>
         <property name="wrap">True</property>
+        <property name="wrap_mode">word_char</property>
         <property name="selectable">True</property>
         <attributes>
           <attribute name="weight" value="bold"/>
@@ -120,6 +121,7 @@
             <property name="label">subtitle</property>
             <property name="justify">center</property>
             <property name="wrap">True</property>
+            <property name="wrap_mode">word_char</property>
             <property name="selectable">True</property>
           </object>
         </child>
