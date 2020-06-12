@@ -18,6 +18,7 @@ data/gtk/library.ui
 data/gtk/mini_controller.ui
 data/gtk/song_listbox.ui
 data/gtk/player.ui
+data/gtk/toolbar_controller.ui
 data/gtk/window.ui
 
 src/audio/player.rs
