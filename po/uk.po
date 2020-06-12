@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-05-30 14:01+0000\n"
-"PO-Revision-Date: 2020-05-30 19:37+0300\n"
+"POT-Creation-Date: 2020-06-11 18:54+0000\n"
+"PO-Revision-Date: 2020-06-12 07:38+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Station details"
 msgstr "Параметри станції"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:225
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:169
 msgid "Language"
 msgstr "Мова"
 
@@ -51,7 +51,7 @@ msgstr "Тренди"
 msgid "Other users are listening to…"
 msgstr "Інші користувачі слухають…"
 
-#: data/gtk/song_row.ui:17
+#: data/gtk/song_row.ui:18
 msgid "Save recorded song"
 msgstr "Зберегти записану пісню"
 
@@ -84,70 +84,65 @@ msgstr "Подробиці щодо помилки"
 msgid "An error occurred"
 msgstr "Сталася помилка"
 
-#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:57
+#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
 msgid "No playback"
 msgstr "Немає відтворення"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:192
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:136
 msgid "Sorting"
 msgstr "Впорядкування"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:150
-#: data/gtk/window.ui:41
-msgid "Library"
-msgstr "Бібліотека"
-
-#: data/gtk/menu/app_menu.ui:57
+#: data/gtk/menu/app_menu.ui:43
 msgid "Open radio-browser.info <sup>↗</sup>"
 msgstr "Відкрити radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/menu/app_menu.ui:72
+#: data/gtk/menu/app_menu.ui:58
 msgid "Create new station"
 msgstr "Створити станцію"
 
-#: data/gtk/menu/app_menu.ui:97
+#: data/gtk/menu/app_menu.ui:83
 msgid "Preferences"
 msgstr "Налаштування"
 
-#: data/gtk/menu/app_menu.ui:111
+#: data/gtk/menu/app_menu.ui:97
 msgid "Keyboard Shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: data/gtk/menu/app_menu.ui:125
+#: data/gtk/menu/app_menu.ui:111
 msgid "About Shortwave"
 msgstr "Про «Shortwave»"
 
-#: data/gtk/menu/app_menu.ui:167
-msgid "Import from Gradio"
-msgstr "Імпортувати з Gradio"
-
-#: data/gtk/menu/app_menu.ui:210
+#: data/gtk/menu/app_menu.ui:154
 msgid "Name"
 msgstr "Назва"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:184
 msgid "Country"
 msgstr "Країна"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:199
 msgid "State"
 msgstr "Штат"
 
-#: data/gtk/menu/app_menu.ui:270
+#: data/gtk/menu/app_menu.ui:214
 msgid "Votes"
 msgstr "Голоси"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:240
 msgid "Ascending"
 msgstr "За зростанням"
 
-#: data/gtk/menu/app_menu.ui:311
+#: data/gtk/menu/app_menu.ui:255
 msgid "Descending"
 msgstr "За спаданням"
 
 #: data/gtk/menu/player_menu.ui:19
 msgid "Show station details"
 msgstr "Показати параметри станції"
+
+#: data/gtk/menu/player_menu.ui:58
+msgid "Enable mini player"
+msgstr "Увімкнути мініпрогравач"
 
 #: data/gtk/settings_window.ui:15
 msgid "Appearance"
@@ -195,10 +190,6 @@ msgstr "Отримання даних щодо станції…"
 msgid "Discover new stations"
 msgstr "Виявити нові станції"
 
-#: data/gtk/library.ui:176
-msgid "Import stations from Gradio"
-msgstr "Імпортувати станції з Gradio"
-
 #: data/gtk/song_listbox.ui:34
 msgid ""
 "Songs are automatically recognized using the stream metadata.\n"
@@ -221,11 +212,11 @@ msgstr "Виявлені пісні буде показано тут."
 msgid "How does this work?"
 msgstr "Як це працює?"
 
-#: data/gtk/song_listbox.ui:205
+#: data/gtk/song_listbox.ui:197
 msgid "Saved songs are located in your Music folder."
 msgstr "Збережені пісні можна буде знайти у теці «Музика»."
 
-#: data/gtk/song_listbox.ui:223
+#: data/gtk/song_listbox.ui:215
 msgid "Open"
 msgstr "Відкрити"
 
@@ -233,17 +224,21 @@ msgstr "Відкрити"
 msgid "Connected with"
 msgstr "З'єднано з"
 
-#: src/audio/player.rs:146
+#: data/gtk/window.ui:213
+msgid "Library"
+msgstr "Бібліотека"
+
+#: src/audio/player.rs:157
 msgid "This station cannot be played because the stream is offline."
 msgstr ""
 "Відтворення цієї станції неможливе, оскільки потік даних від неї не "
 "надходить."
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:175
 msgid "Station cannot be streamed."
 msgstr "Станцію не можна транслювати."
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:175
 msgid "URL is not valid."
 msgstr "Некоректна адреса."
 
@@ -293,44 +288,6 @@ msgstr "Прослуховування інтернет-радіо"
 #: src/ui/about_dialog.rs:34
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
-
-#: src/ui/import_dialog.rs:32
-msgid "Select database to import"
-msgstr "Виберіть базу даних для імпортування"
-
-#: src/ui/import_dialog.rs:35
-msgid "Import"
-msgstr "Імпортувати"
-
-#: src/ui/import_dialog.rs:36
-msgid "Cancel"
-msgstr "Скасувати"
-
-#. Get station identifiers
-#: src/ui/import_dialog.rs:50
-msgid "Converting data…"
-msgstr "Перетворюємо дані…"
-
-#. Get actual stations from identifiers
-#: src/ui/import_dialog.rs:56
-msgid "Importing {} station…"
-msgid_plural "Importing {} stations…"
-msgstr[0] "Імпортуємо {} станцію…"
-msgstr[1] "Імпортуємо {} станції…"
-msgstr[2] "Імпортуємо {} станцій…"
-msgstr[3] "Імпортуємо {} станцію…"
-
-#: src/ui/import_dialog.rs:70
-msgid "Imported {} station!"
-msgid_plural "Imported {} stations!"
-msgstr[0] "Імпортовано {} станцію!"
-msgstr[1] "Імпортовано {} станції!"
-msgstr[2] "Імпортовано {} станцій!"
-msgstr[3] "Імпортовано {} станцію!"
-
-#: src/ui/window.rs:272 src/ui/window.rs:282
-msgid "Could not import library."
-msgstr "Не вдалося імпортувати бібліотеку."
 
 #: src/utils.rs:122
 msgid "{} Vote"
@@ -403,3 +360,38 @@ msgstr "Безшовна інтеграція до стільничного се
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;градіо;жрадіо;радіо;потік;трансляція;хвиля;"
+
+#~ msgid "Import from Gradio"
+#~ msgstr "Імпортувати з Gradio"
+
+#~ msgid "Import stations from Gradio"
+#~ msgstr "Імпортувати станції з Gradio"
+
+#~ msgid "Select database to import"
+#~ msgstr "Виберіть базу даних для імпортування"
+
+#~ msgid "Import"
+#~ msgstr "Імпортувати"
+
+#~ msgid "Cancel"
+#~ msgstr "Скасувати"
+
+#~ msgid "Converting data…"
+#~ msgstr "Перетворюємо дані…"
+
+#~ msgid "Importing {} station…"
+#~ msgid_plural "Importing {} stations…"
+#~ msgstr[0] "Імпортуємо {} станцію…"
+#~ msgstr[1] "Імпортуємо {} станції…"
+#~ msgstr[2] "Імпортуємо {} станцій…"
+#~ msgstr[3] "Імпортуємо {} станцію…"
+
+#~ msgid "Imported {} station!"
+#~ msgid_plural "Imported {} stations!"
+#~ msgstr[0] "Імпортовано {} станцію!"
+#~ msgstr[1] "Імпортовано {} станції!"
+#~ msgstr[2] "Імпортовано {} станцій!"
+#~ msgstr[3] "Імпортовано {} станцію!"
+
+#~ msgid "Could not import library."
+#~ msgstr "Не вдалося імпортувати бібліотеку."
