@@ -96,5 +96,5 @@ You need following dependencies to build Shortwave:
 If you need help to build Shortwave, please don't hesitate to ask [here](https://matrix.to/#/#shortwave:matrix.org)!
 
 ## Code Of Conduct
-We follow the [GNOME Code of Conduct](/CODE_OF_CONDUCT.mdmd).
+We follow the [GNOME Code of Conduct](/CODE_OF_CONDUCT.md).
 All communications in project spaces are expected to follow it.
