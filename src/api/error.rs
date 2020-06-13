@@ -14,55 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#[derive(Fail, Debug)]
+use thiserror::Error;
+
+#[derive(Error, Debug)]
 pub enum Error {
-    #[fail(display = "Serde error: {}", _0)]
-    SerdeError(#[cause] serde_json::error::Error),
+    #[error("Serde error: {0}")]
+    SerdeError(#[from] serde_json::error::Error),
 
-    #[fail(display = "URL parser error: {}", _0)]
-    UrlParseError(#[cause] url::ParseError),
+    #[error("URL parser error: {0}")]
+    UrlParseError(#[from] url::ParseError),
 
-    #[fail(display = "GLib Error: {}", _0)]
-    GLibError(#[cause] glib::error::Error),
+    #[error("GLib Error: {0}")]
+    GLibError(#[from] glib::error::Error),
 
-    #[fail(display = "Input/Output error.")]
-    IOError(#[cause] std::io::Error),
+    #[error("Input/Output error: {0}")]
+    IOError(#[from] std::io::Error),
 
-    #[fail(display = "Network error: {}", _0)]
-    NetworkError(#[cause] isahc::Error),
+    #[error("Network error: {0}")]
+    NetworkError(#[from] isahc::Error),
 
-    #[fail(display = "Database error: {}", _0)]
-    DieselError(#[cause] diesel::result::Error),
+    #[error("Database error: {0}")]
+    DieselError(#[from] diesel::result::Error),
 
-    #[fail(display = "Invalid station UUID")]
+    #[error("Invalid station UUID: {0}")]
     InvalidStationError(String),
 
-    #[fail(display = "Cache error")]
+    #[error("Cache error")]
     CacheError,
 }
-
-// Maps a type to a variant of the Error enum
-// Source: https://gitlab.gnome.org/World/podcasts/blob/945b40249cdf41d9c9766938f455e204ff88906e/podcasts-data/src/errors.rs#L94
-macro_rules! easy_from_impl {
-    ($outer_type:ty, $from:ty => $to:expr) => (
-        impl From<$from> for $outer_type {
-            fn from(err: $from) -> Self {
-                $to(err)
-            }
-        }
-    );
-    ($outer_type:ty, $from:ty => $to:expr, $($f:ty => $t:expr),+) => (
-        easy_from_impl!($outer_type, $from => $to);
-        easy_from_impl!($outer_type, $($f => $t),+);
-    );
-}
-
-easy_from_impl!(
-    Error,
-    serde_json::error::Error => Error::SerdeError,
-    glib::error::Error       => Error::GLibError,
-    url::ParseError          => Error::UrlParseError,
-    std::io::Error           => Error::IOError,
-    isahc::Error             => Error::NetworkError,
-    diesel::result::Error    => Error::DieselError
-);
