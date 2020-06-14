@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-05-30 14:01+0000\n"
-"PO-Revision-Date: 2020-05-31 14:19+0200\n"
+"POT-Creation-Date: 2020-06-11 18:54+0000\n"
+"PO-Revision-Date: 2020-06-14 13:35+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Station details"
 msgstr "Informacje o stacji"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:225
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:169
 msgid "Language"
 msgstr "Język"
 
@@ -51,7 +51,7 @@ msgstr "Na czasie"
 msgid "Other users are listening to…"
 msgstr "Inni użytkownicy słuchają…"
 
-#: data/gtk/song_row.ui:17
+#: data/gtk/song_row.ui:18
 msgid "Save recorded song"
 msgstr "Zapisuje nagrany utwór"
 
@@ -83,70 +83,65 @@ msgstr "Informacje o błędzie"
 msgid "An error occurred"
 msgstr "Wystąpił błąd"
 
-#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:57
+#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
 msgid "No playback"
 msgstr "Brak odtwarzania"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:192
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:136
 msgid "Sorting"
 msgstr "Porządkowanie"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:150
-#: data/gtk/window.ui:41
-msgid "Library"
-msgstr "Kolekcja"
-
-#: data/gtk/menu/app_menu.ui:57
+#: data/gtk/menu/app_menu.ui:43
 msgid "Open radio-browser.info <sup>↗</sup>"
 msgstr "Otwórz radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/menu/app_menu.ui:72
+#: data/gtk/menu/app_menu.ui:58
 msgid "Create new station"
 msgstr "Utwórz nową stację"
 
-#: data/gtk/menu/app_menu.ui:97
+#: data/gtk/menu/app_menu.ui:83
 msgid "Preferences"
 msgstr "Preferencje"
 
-#: data/gtk/menu/app_menu.ui:111
+#: data/gtk/menu/app_menu.ui:97
 msgid "Keyboard Shortcuts"
 msgstr "Skróty klawiszowe"
 
-#: data/gtk/menu/app_menu.ui:125
+#: data/gtk/menu/app_menu.ui:111
 msgid "About Shortwave"
 msgstr "O programie"
 
-#: data/gtk/menu/app_menu.ui:167
-msgid "Import from Gradio"
-msgstr "Zaimportuj z Gradio"
-
-#: data/gtk/menu/app_menu.ui:210
+#: data/gtk/menu/app_menu.ui:154
 msgid "Name"
 msgstr "Nazwa"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:184
 msgid "Country"
 msgstr "Kraj"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:199
 msgid "State"
 msgstr "Stan"
 
-#: data/gtk/menu/app_menu.ui:270
+#: data/gtk/menu/app_menu.ui:214
 msgid "Votes"
 msgstr "Głosy"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:240
 msgid "Ascending"
 msgstr "Rosnąco"
 
-#: data/gtk/menu/app_menu.ui:311
+#: data/gtk/menu/app_menu.ui:255
 msgid "Descending"
 msgstr "Malejąco"
 
 #: data/gtk/menu/player_menu.ui:19
 msgid "Show station details"
 msgstr "Informacje o stacji"
+
+#: data/gtk/menu/player_menu.ui:58
+msgid "Enable mini player"
+msgstr "Miniodtwarzacz"
 
 #: data/gtk/settings_window.ui:15
 msgid "Appearance"
@@ -194,10 +189,6 @@ msgstr "Odbieranie danych stacji…"
 msgid "Discover new stations"
 msgstr "Odkrywaj nowe stacje"
 
-#: data/gtk/library.ui:176
-msgid "Import stations from Gradio"
-msgstr "Zaimportuj stacje z Gradio"
-
 #: data/gtk/song_listbox.ui:34
 msgid ""
 "Songs are automatically recognized using the stream metadata.\n"
@@ -221,11 +212,11 @@ msgstr "Tutaj będą wyświetlane wykryte utwory."
 msgid "How does this work?"
 msgstr "Jak to działa?"
 
-#: data/gtk/song_listbox.ui:205
+#: data/gtk/song_listbox.ui:197
 msgid "Saved songs are located in your Music folder."
 msgstr "Zapisane utwory znajdują się w katalogu Muzyka."
 
-#: data/gtk/song_listbox.ui:223
+#: data/gtk/song_listbox.ui:215
 msgid "Open"
 msgstr "Otwórz"
 
@@ -233,15 +224,19 @@ msgstr "Otwórz"
 msgid "Connected with"
 msgstr "Połączono z urządzeniem"
 
-#: src/audio/player.rs:146
+#: data/gtk/window.ui:213
+msgid "Library"
+msgstr "Kolekcja"
+
+#: src/audio/player.rs:157
 msgid "This station cannot be played because the stream is offline."
 msgstr "Nie można odtwarzać tej stacji, ponieważ strumień jest rozłączony."
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:175
 msgid "Station cannot be streamed."
 msgstr "Nie można odtwarzać stacji."
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:175
 msgid "URL is not valid."
 msgstr "Adres URL jest nieprawidłowy."
 
@@ -293,42 +288,6 @@ msgid "translator-credits"
 msgstr ""
 "Piotr Drąg <piotrdrag@gmail.com>, 2020\n"
 "Aviary.pl <community-poland@mozilla.org>, 2020"
-
-#: src/ui/import_dialog.rs:32
-msgid "Select database to import"
-msgstr "Wybór bazy danych do zaimportowania"
-
-#: src/ui/import_dialog.rs:35
-msgid "Import"
-msgstr "Zaimportuj"
-
-#: src/ui/import_dialog.rs:36
-msgid "Cancel"
-msgstr "Anuluj"
-
-#. Get station identifiers
-#: src/ui/import_dialog.rs:50
-msgid "Converting data…"
-msgstr "Konwertowanie danych…"
-
-#. Get actual stations from identifiers
-#: src/ui/import_dialog.rs:56
-msgid "Importing {} station…"
-msgid_plural "Importing {} stations…"
-msgstr[0] "Importowanie {} stacji…"
-msgstr[1] "Importowanie {} stacji…"
-msgstr[2] "Importowanie {} stacji…"
-
-#: src/ui/import_dialog.rs:70
-msgid "Imported {} station!"
-msgid_plural "Imported {} stations!"
-msgstr[0] "Zaimportowano {} stację."
-msgstr[1] "Zaimportowano {} stacje."
-msgstr[2] "Zaimportowano {} stacji."
-
-#: src/ui/window.rs:272 src/ui/window.rs:282
-msgid "Could not import library."
-msgstr "Nie można zaimportować kolekcji."
 
 #: src/utils.rs:122
 msgid "{} Vote"
