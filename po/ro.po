@@ -7,23 +7,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-05-24 12:27+0000\n"
-"PO-Revision-Date: 2020-05-26 16:53+0200\n"
+"POT-Creation-Date: 2020-06-11 18:54+0000\n"
+"PO-Revision-Date: 2020-07-13 15:13+0300\n"
+"Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 "
-"< 20)) ? 1 : 2);;\n"
-"Last-Translator: \n"
-"X-Generator: Poedit 2.3\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2);\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #: data/gtk/station_dialog.ui:10
 msgid "Station details"
 msgstr "Detaliile stației"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:225
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:169
 msgid "Language"
 msgstr "Limbă"
 
@@ -51,7 +51,7 @@ msgstr "La modă"
 msgid "Other users are listening to…"
 msgstr "Alți utilizatori ascultă la…"
 
-#: data/gtk/song_row.ui:17
+#: data/gtk/song_row.ui:18
 msgid "Save recorded song"
 msgstr "Salvați melodia înregistrată"
 
@@ -61,8 +61,7 @@ msgstr "Transmiteți către un dispozitiv"
 
 #: data/gtk/streaming_dialog.ui:154
 msgid "Devices which implement the Google Cast protocol are supported."
-msgstr ""
-"Dispozitive care implementează protocolul Google Cast sunt suportate."
+msgstr "Dispozitive care implementează protocolul Google Cast sunt suportate."
 
 #: data/gtk/streaming_dialog.ui:209
 msgid "No devices found"
@@ -84,70 +83,65 @@ msgstr "Detalii eroare"
 msgid "An error occurred"
 msgstr "A apărut o eroare"
 
-#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:57
+#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
 msgid "No playback"
 msgstr "Fără redare"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:192
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:136
 msgid "Sorting"
 msgstr "Sortare"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:150
-#: data/gtk/window.ui:41
-msgid "Library"
-msgstr "Bibliotecă"
-
-#: data/gtk/menu/app_menu.ui:57
+#: data/gtk/menu/app_menu.ui:43
 msgid "Open radio-browser.info <sup>↗</sup>"
 msgstr "Deschideți radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/menu/app_menu.ui:72
+#: data/gtk/menu/app_menu.ui:58
 msgid "Create new station"
 msgstr "Creați o nouă stație"
 
-#: data/gtk/menu/app_menu.ui:97
+#: data/gtk/menu/app_menu.ui:83
 msgid "Preferences"
 msgstr "Preferințe"
 
-#: data/gtk/menu/app_menu.ui:111
+#: data/gtk/menu/app_menu.ui:97
 msgid "Keyboard Shortcuts"
 msgstr "Scurtături de tastatură"
 
-#: data/gtk/menu/app_menu.ui:125
+#: data/gtk/menu/app_menu.ui:111
 msgid "About Shortwave"
 msgstr "Despre Shortwave"
 
-#: data/gtk/menu/app_menu.ui:167
-msgid "Import from Gradio"
-msgstr "Importă din Gradio"
-
-#: data/gtk/menu/app_menu.ui:210
+#: data/gtk/menu/app_menu.ui:154
 msgid "Name"
 msgstr "Nume"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:184
 msgid "Country"
 msgstr "Țară"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:199
 msgid "State"
 msgstr "Stat"
 
-#: data/gtk/menu/app_menu.ui:270
+#: data/gtk/menu/app_menu.ui:214
 msgid "Votes"
 msgstr "Voturi"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:240
 msgid "Ascending"
 msgstr "Ascendent"
 
-#: data/gtk/menu/app_menu.ui:311
+#: data/gtk/menu/app_menu.ui:255
 msgid "Descending"
 msgstr "Descendent"
 
 #: data/gtk/menu/player_menu.ui:19
 msgid "Show station details"
 msgstr "Arată detaliile stației"
+
+#: data/gtk/menu/player_menu.ui:58
+msgid "Enable mini player"
+msgstr "Activează playerul mini"
 
 #: data/gtk/settings_window.ui:15
 msgid "Appearance"
@@ -195,10 +189,6 @@ msgstr "Se primesc date despre stație…"
 msgid "Discover new stations"
 msgstr "Descoperă noi stații"
 
-#: data/gtk/library.ui:176
-msgid "Import stations from Gradio"
-msgstr "Importă stații de la Gradio"
-
 #: data/gtk/song_listbox.ui:34
 msgid ""
 "Songs are automatically recognized using the stream metadata.\n"
@@ -221,11 +211,11 @@ msgstr "Piesele detectate vor apărea aici."
 msgid "How does this work?"
 msgstr "Cum funcționează?"
 
-#: data/gtk/song_listbox.ui:205
+#: data/gtk/song_listbox.ui:197
 msgid "Saved songs are located in your Music folder."
 msgstr "Piesele salvate sunt localizate în dosarul Muzică."
 
-#: data/gtk/song_listbox.ui:223
+#: data/gtk/song_listbox.ui:215
 msgid "Open"
 msgstr "Deschide"
 
@@ -233,15 +223,19 @@ msgstr "Deschide"
 msgid "Connected with"
 msgstr "Conectat cu"
 
-#: src/audio/player.rs:146
+#: data/gtk/window.ui:213
+msgid "Library"
+msgstr "Bibliotecă"
+
+#: src/audio/player.rs:157
 msgid "This station cannot be played because the stream is offline."
 msgstr "Această stație nu poate fi redată pentru că fluxul este offline."
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:175
 msgid "Station cannot be streamed."
 msgstr "Stația nu poate fi redată."
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:175
 msgid "URL is not valid."
 msgstr "URL-ul nu este valid."
 
@@ -265,7 +259,7 @@ msgstr "Arată statistici"
 
 #: src/discover/pages/discover.rs:58
 msgid "Browse over 25,500 stations"
-msgstr " Navighează prin peste 25.500 stații"
+msgstr "Navighează peste 25,500 stații"
 
 #: src/discover/pages/discover.rs:60
 msgid "Add new station"
@@ -288,41 +282,11 @@ msgstr "Propulsat de radio-browser.info"
 msgid "Listen to internet radio"
 msgstr "Ascultați la stația de radio prin internet"
 
-#: src/ui/import_dialog.rs:32
-msgid "Select database to import"
-msgstr "Alegeți o bază de date de importat"
-
-#: src/ui/import_dialog.rs:35
-msgid "Import"
-msgstr "Importă"
-
-#: src/ui/import_dialog.rs:36
-msgid "Cancel"
-msgstr "Renunță"
-
-#. Get station identifiers
-#: src/ui/import_dialog.rs:50
-msgid "Converting data…"
-msgstr "Se convertesc datele…"
-
-#. Get actual stations from identifiers
-#: src/ui/import_dialog.rs:56
-msgid "Importing {} station…"
-msgid_plural "Importing {} stations…"
-msgstr[0] "Se importă {} stație…"
-msgstr[1] "Se importă {} stații…"
-msgstr[2] "Se importă {} de stații…"
-
-#: src/ui/import_dialog.rs:70
-msgid "Imported {} station!"
-msgid_plural "Imported {} stations!"
-msgstr[0] "S-a importat {} post!"
-msgstr[1] "S-a importat {} posturi!"
-msgstr[2] "S-a importat {} de posturi!"
-
-#: src/ui/window.rs:273
-msgid "Could not import library."
-msgstr "Nu s-a putut importa biblioteca."
+#: src/ui/about_dialog.rs:34
+msgid "translator-credits"
+msgstr ""
+"Florentina Mușat <florentina [dot] musat [dot] 28 [at] gmail [dot] com>, "
+"2020"
 
 #: src/utils.rs:122
 msgid "{} Vote"
@@ -352,8 +316,8 @@ msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 25,000 stations."
 msgstr ""
-"Shortwave este un player de radio prin internet ce oferă acces la o bază "
-"de date cu peste 25.000 de stații radio."
+"Shortwave este un player de radio prin internet ce oferă acces la o bază de "
+"date cu peste 25.000 de stații radio."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid "Features:"
@@ -361,8 +325,7 @@ msgstr "Funcționalități:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
 msgid "Create your own library where you can add your favorite stations"
-msgstr ""
-" Creați-vă propria bibliotecă unde vă puteți adăuga stațiile favorite"
+msgstr "Creați-vă propria bibliotecă unde puteți adăuga stațiile favorite"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Easily search and discover new radio stations"
@@ -373,8 +336,7 @@ msgid ""
 "Automatic recognition of songs, with the possibility to save them "
 "individually"
 msgstr ""
-"Recunoașterea automată a pieselor, cu posibilitatea de a le salva "
-"individual"
+"Recunoașterea automată a pieselor, cu posibilitatea de a le salva individual"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
 msgid "Responsive application layout, compatible for small and large screens"
@@ -393,3 +355,36 @@ msgstr "Integrare unitară în mediul desktop GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;"
+
+#~ msgid "Import from Gradio"
+#~ msgstr "Importă din Gradio"
+
+#~ msgid "Import stations from Gradio"
+#~ msgstr "Importă stații de la Gradio"
+
+#~ msgid "Select database to import"
+#~ msgstr "Alegeți o bază de date de importat"
+
+#~ msgid "Import"
+#~ msgstr "Importă"
+
+#~ msgid "Cancel"
+#~ msgstr "Renunță"
+
+#~ msgid "Converting data…"
+#~ msgstr "Se convertesc datele…"
+
+#~ msgid "Importing {} station…"
+#~ msgid_plural "Importing {} stations…"
+#~ msgstr[0] "Se importă {} stație…"
+#~ msgstr[1] "Se importă {} stații…"
+#~ msgstr[2] "Se importă {} de stații…"
+
+#~ msgid "Imported {} station!"
+#~ msgid_plural "Imported {} stations!"
+#~ msgstr[0] "S-a importat {} post!"
+#~ msgstr[1] "S-a importat {} posturi!"
+#~ msgstr[2] "S-a importat {} de posturi!"
+
+#~ msgid "Could not import library."
+#~ msgstr "Nu s-a putut importa biblioteca."
