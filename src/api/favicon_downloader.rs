@@ -14,17 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use async_std::io::ReadExt;
 use gdk_pixbuf::Pixbuf;
 use gio::prelude::*;
 use gio::DataInputStream;
-use isahc::config::RedirectPolicy;
-use isahc::prelude::*;
 use url::Url;
 
 use std::collections::hash_map::DefaultHasher;
 use std::hash::Hash;
 use std::hash::Hasher;
 
+use crate::api::client::HTTP_CLIENT;
 use crate::api::Error;
 use crate::path;
 
@@ -44,10 +44,8 @@ impl FaviconDownloader {
         }
 
         // Download favicon
-        let mut response = Request::get(url.to_string()).redirect_policy(RedirectPolicy::Follow).body(()).unwrap().send_async().await?;
-        let mut body = response.body_mut();
         let mut bytes = vec![];
-        async_std::io::copy(&mut body, &mut bytes).await.unwrap();
+        HTTP_CLIENT.get_async(url.as_str()).await?.into_body().read_to_end(&mut bytes).await?;
 
         let input_stream = gio::MemoryInputStream::from_bytes(&glib::Bytes::from(&bytes));
         let pixbuf = Pixbuf::from_stream_at_scale_async_future(&input_stream, size, size, true).await?;
