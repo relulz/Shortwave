@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-05-26 14:26+0000\n"
-"PO-Revision-Date: 2020-05-27 00:45+0200\n"
+"POT-Creation-Date: 2020-06-11 18:54+0000\n"
+"PO-Revision-Date: 2020-07-30 12:26+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <gnome-se-list@gnome.org>\n"
 "Language: sv\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Station details"
 msgstr "Stationsdetaljer"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:225
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:169
 msgid "Language"
 msgstr "Språk"
 
@@ -50,7 +50,7 @@ msgstr "Populärt just nu"
 msgid "Other users are listening to…"
 msgstr "Andra användare lyssnar på…"
 
-#: data/gtk/song_row.ui:17
+#: data/gtk/song_row.ui:18
 msgid "Save recorded song"
 msgstr "Spara inspelad låt"
 
@@ -82,70 +82,65 @@ msgstr "Feldetaljer"
 msgid "An error occurred"
 msgstr "Ett fel uppstod"
 
-#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:57
+#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
 msgid "No playback"
 msgstr "Ingen uppspelning"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:192
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:136
 msgid "Sorting"
 msgstr "Sortering"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:150
-#: data/gtk/window.ui:41
-msgid "Library"
-msgstr "Bibliotek"
-
-#: data/gtk/menu/app_menu.ui:57
+#: data/gtk/menu/app_menu.ui:43
 msgid "Open radio-browser.info <sup>↗</sup>"
 msgstr "Öppna radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/menu/app_menu.ui:72
+#: data/gtk/menu/app_menu.ui:58
 msgid "Create new station"
 msgstr "Skapa ny station"
 
-#: data/gtk/menu/app_menu.ui:97
+#: data/gtk/menu/app_menu.ui:83
 msgid "Preferences"
 msgstr "Inställningar"
 
-#: data/gtk/menu/app_menu.ui:111
+#: data/gtk/menu/app_menu.ui:97
 msgid "Keyboard Shortcuts"
 msgstr "Tangentbordsgenvägar"
 
-#: data/gtk/menu/app_menu.ui:125
+#: data/gtk/menu/app_menu.ui:111
 msgid "About Shortwave"
 msgstr "Om Shortwave"
 
-#: data/gtk/menu/app_menu.ui:167
-msgid "Import from Gradio"
-msgstr "Importera från Gradio"
-
-#: data/gtk/menu/app_menu.ui:210
+#: data/gtk/menu/app_menu.ui:154
 msgid "Name"
 msgstr "Namn"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:184
 msgid "Country"
 msgstr "Land"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:199
 msgid "State"
 msgstr "Län"
 
-#: data/gtk/menu/app_menu.ui:270
+#: data/gtk/menu/app_menu.ui:214
 msgid "Votes"
 msgstr "Röster"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:240
 msgid "Ascending"
 msgstr "Stigande"
 
-#: data/gtk/menu/app_menu.ui:311
+#: data/gtk/menu/app_menu.ui:255
 msgid "Descending"
 msgstr "Fallande"
 
 #: data/gtk/menu/player_menu.ui:19
 msgid "Show station details"
 msgstr "Visa stationsdetaljer"
+
+#: data/gtk/menu/player_menu.ui:58
+msgid "Enable mini player"
+msgstr "Aktivera minispelare"
 
 #: data/gtk/settings_window.ui:15
 msgid "Appearance"
@@ -193,10 +188,6 @@ msgstr "Erhåller stationsdata…"
 msgid "Discover new stations"
 msgstr "Upptäck nya stationer"
 
-#: data/gtk/library.ui:176
-msgid "Import stations from Gradio"
-msgstr "Importera stationer från Gradio"
-
 #: data/gtk/song_listbox.ui:34
 msgid ""
 "Songs are automatically recognized using the stream metadata.\n"
@@ -219,11 +210,11 @@ msgstr "Upptäckta låtar kommer dyka upp här."
 msgid "How does this work?"
 msgstr "Hur fungerar detta?"
 
-#: data/gtk/song_listbox.ui:205
+#: data/gtk/song_listbox.ui:197
 msgid "Saved songs are located in your Music folder."
 msgstr "Sparade låtar finns i din mapp Musik."
 
-#: data/gtk/song_listbox.ui:223
+#: data/gtk/song_listbox.ui:215
 msgid "Open"
 msgstr "Öppna"
 
@@ -231,15 +222,19 @@ msgstr "Öppna"
 msgid "Connected with"
 msgstr "Ansluten till"
 
-#: src/audio/player.rs:146
+#: data/gtk/window.ui:213
+msgid "Library"
+msgstr "Bibliotek"
+
+#: src/audio/player.rs:157
 msgid "This station cannot be played because the stream is offline."
 msgstr "Denna station kan inte spelas eftersom strömmen är frånkopplad."
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:175
 msgid "Station cannot be streamed."
 msgstr "Stationen kan inte strömmas."
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:175
 msgid "URL is not valid."
 msgstr "URL är inte giltig."
 
@@ -286,39 +281,13 @@ msgstr "Driftas av radio-browser.info"
 msgid "Listen to internet radio"
 msgstr "Lyssna på internetradio"
 
-#: src/ui/import_dialog.rs:32
-msgid "Select database to import"
-msgstr "Välj databas att importera"
-
-#: src/ui/import_dialog.rs:35
-msgid "Import"
-msgstr "Importera"
-
-#: src/ui/import_dialog.rs:36
-msgid "Cancel"
-msgstr "Avbryt"
-
-#. Get station identifiers
-#: src/ui/import_dialog.rs:50
-msgid "Converting data…"
-msgstr "Konverterar data…"
-
-#. Get actual stations from identifiers
-#: src/ui/import_dialog.rs:56
-msgid "Importing {} station…"
-msgid_plural "Importing {} stations…"
-msgstr[0] "Importerar {} station…"
-msgstr[1] "Importerar {} stationer…"
-
-#: src/ui/import_dialog.rs:70
-msgid "Imported {} station!"
-msgid_plural "Imported {} stations!"
-msgstr[0] "Importerade {} station!"
-msgstr[1] "Importerade {} stationer!"
-
-#: src/ui/window.rs:273
-msgid "Could not import library."
-msgstr "Kunde inte importera bibliotek."
+#: src/ui/about_dialog.rs:34
+msgid "translator-credits"
+msgstr ""
+"Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
+"\n"
+"Skicka synpunkter på översättningen till\n"
+"<tp-sv@listor.tp-sv.se>"
 
 #: src/utils.rs:122
 msgid "{} Vote"
@@ -384,3 +353,34 @@ msgstr "Sömlös integration med skrivbordsmiljön GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Ström;Stream;Wave;"
+
+#~ msgid "Import from Gradio"
+#~ msgstr "Importera från Gradio"
+
+#~ msgid "Import stations from Gradio"
+#~ msgstr "Importera stationer från Gradio"
+
+#~ msgid "Select database to import"
+#~ msgstr "Välj databas att importera"
+
+#~ msgid "Import"
+#~ msgstr "Importera"
+
+#~ msgid "Cancel"
+#~ msgstr "Avbryt"
+
+#~ msgid "Converting data…"
+#~ msgstr "Konverterar data…"
+
+#~ msgid "Importing {} station…"
+#~ msgid_plural "Importing {} stations…"
+#~ msgstr[0] "Importerar {} station…"
+#~ msgstr[1] "Importerar {} stationer…"
+
+#~ msgid "Imported {} station!"
+#~ msgid_plural "Imported {} stations!"
+#~ msgstr[0] "Importerade {} station!"
+#~ msgstr[1] "Importerade {} stationer!"
+
+#~ msgid "Could not import library."
+#~ msgstr "Kunde inte importera bibliotek."
