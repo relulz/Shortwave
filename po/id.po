@@ -7,22 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-04-02 07:26+0000\n"
-"PO-Revision-Date: 2020-04-10 16:23+0700\n"
+"POT-Creation-Date: 2020-06-11 18:54+0000\n"
+"PO-Revision-Date: 2020-07-31 19:52+0700\n"
+"Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
-"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4\n"
 
 #: data/gtk/station_dialog.ui:10
 msgid "Station details"
 msgstr "Rincian stasiun"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:210
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:169
 msgid "Language"
 msgstr "Bahasa"
 
@@ -38,19 +38,19 @@ msgstr "Kodek"
 msgid "Homepage"
 msgstr "Beranda"
 
-#: data/gtk/discover.ui:39
+#: data/gtk/discover.ui:55
 msgid "Most voted stations"
 msgstr "Stasiun paling banyak dipilih"
 
-#: data/gtk/discover.ui:73
+#: data/gtk/discover.ui:89
 msgid "Trending"
 msgstr "Tren"
 
-#: data/gtk/discover.ui:107
+#: data/gtk/discover.ui:123
 msgid "Other users are listening to…"
 msgstr "Pengguna lain sedang mendengarkan…"
 
-#: data/gtk/song_row.ui:17
+#: data/gtk/song_row.ui:18
 msgid "Save recorded song"
 msgstr "Menyimpan lagu yang direkam"
 
@@ -82,66 +82,65 @@ msgstr "Rincian kesalahan"
 msgid "An error occurred"
 msgstr "Terjadi kesalahan"
 
-#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:57
+#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
 msgid "No playback"
 msgstr "Tidak ada pemutaran"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:177
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:136
 msgid "Sorting"
 msgstr "Mengurutkan"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:135
-#: data/gtk/window.ui:41
-msgid "Library"
-msgstr "Pustaka"
+#: data/gtk/menu/app_menu.ui:43
+msgid "Open radio-browser.info <sup>↗</sup>"
+msgstr "Buka radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/menu/app_menu.ui:57
+#: data/gtk/menu/app_menu.ui:58
 msgid "Create new station"
 msgstr "Membuat stasiun baru"
 
-#: data/gtk/menu/app_menu.ui:82
+#: data/gtk/menu/app_menu.ui:83
 msgid "Preferences"
 msgstr "Preferensi"
 
-#: data/gtk/menu/app_menu.ui:96
+#: data/gtk/menu/app_menu.ui:97
 msgid "Keyboard Shortcuts"
 msgstr "Pintasan Papan Tik"
 
-#: data/gtk/menu/app_menu.ui:110
+#: data/gtk/menu/app_menu.ui:111
 msgid "About Shortwave"
 msgstr "Tentang Shortwave"
 
-#: data/gtk/menu/app_menu.ui:152
-msgid "Import from Gradio"
-msgstr "Impor dari Gradio"
-
-#: data/gtk/menu/app_menu.ui:195
+#: data/gtk/menu/app_menu.ui:154
 msgid "Name"
 msgstr "Nama"
 
-#: data/gtk/menu/app_menu.ui:225
+#: data/gtk/menu/app_menu.ui:184
 msgid "Country"
 msgstr "Negara"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:199
 msgid "State"
 msgstr "Negara Bagian"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:214
 msgid "Votes"
 msgstr "Suara"
 
-#: data/gtk/menu/app_menu.ui:281
+#: data/gtk/menu/app_menu.ui:240
 msgid "Ascending"
 msgstr "Naik"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:255
 msgid "Descending"
 msgstr "Turun"
 
 #: data/gtk/menu/player_menu.ui:19
 msgid "Show station details"
 msgstr "Tampilkan detail stasiun"
+
+#: data/gtk/menu/player_menu.ui:58
+msgid "Enable mini player"
+msgstr "Aktifkan pemutar mini"
 
 #: data/gtk/settings_window.ui:15
 msgid "Appearance"
@@ -189,10 +188,6 @@ msgstr "Menerima data stasiun…"
 msgid "Discover new stations"
 msgstr "Temukan stasiun baru"
 
-#: data/gtk/library.ui:176
-msgid "Import stations from Gradio"
-msgstr "Impor stasiun dari Gradio"
-
 #: data/gtk/song_listbox.ui:34
 msgid ""
 "Songs are automatically recognized using the stream metadata.\n"
@@ -215,11 +210,11 @@ msgstr "Lagu yang terdeteksi akan muncul di sini."
 msgid "How does this work?"
 msgstr "Bagaimana cara kerjanya?"
 
-#: data/gtk/song_listbox.ui:205
+#: data/gtk/song_listbox.ui:197
 msgid "Saved songs are located in your Music folder."
 msgstr "Lagu tersimpan berada di folder Musik Anda."
 
-#: data/gtk/song_listbox.ui:223
+#: data/gtk/song_listbox.ui:215
 msgid "Open"
 msgstr "Buka"
 
@@ -227,15 +222,19 @@ msgstr "Buka"
 msgid "Connected with"
 msgstr "Terhubung dengan"
 
-#: src/audio/player.rs:142
+#: data/gtk/window.ui:213
+msgid "Library"
+msgstr "Pustaka"
+
+#: src/audio/player.rs:157
 msgid "This station cannot be played because the stream is offline."
 msgstr "Stasiun ini tidak dapat diputar karena stream sedang luring."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:175
 msgid "Station cannot be streamed."
 msgstr "Stasiun tidak dapat di-stream."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:175
 msgid "URL is not valid."
 msgstr "URL tidak valid."
 
@@ -248,49 +247,45 @@ msgstr "Selamat datang di {}"
 msgid "No longer existing station removed from library."
 msgstr "Stasiun yang tidak ada lagi dihapus dari pustaka."
 
-#: src/database/library.rs:149 src/discover/pages/discover.rs:104
+#: src/database/library.rs:149 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Data stasiun tidak dapat diterima."
+
+#: src/discover/pages/discover.rs:57
+msgid "Show statistics"
+msgstr "Tampilkan statistik"
+
+#: src/discover/pages/discover.rs:58
+msgid "Browse over 25,500 stations"
+msgstr "Jelajahi lebih dari 25.500 stasiun"
+
+#: src/discover/pages/discover.rs:60
+msgid "Add new station"
+msgstr "Tambah stasiun baru"
+
+#: src/discover/pages/discover.rs:61
+msgid "Your favorite station is missing?"
+msgstr "Stasiun favorit Anda hilang?"
+
+#: src/discover/pages/discover.rs:63
+msgid "Open website"
+msgstr "Buka situs web"
+
+#: src/discover/pages/discover.rs:64
+msgid "Powered by radio-browser.info"
+msgstr "Didukung oleh radio-browser.info"
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
 msgid "Listen to internet radio"
 msgstr "Dengarkan radio internet"
 
-#: src/ui/import_dialog.rs:32
-msgid "Select database to import"
-msgstr "Pilih basis data untuk diimpor"
-
-#: src/ui/import_dialog.rs:35
-msgid "Import"
-msgstr "Impor"
-
-#: src/ui/import_dialog.rs:36
-msgid "Cancel"
-msgstr "Batal"
-
-#. Get station identifiers
-#: src/ui/import_dialog.rs:50
-msgid "Converting data…"
-msgstr "Mengonversi data…"
-
-#. Get actual stations from identifiers
-#: src/ui/import_dialog.rs:56
-msgid "Importing {} station…"
-msgid_plural "Importing {} stations…"
-msgstr[0] "Mengimpor {} stasiun…"
-msgstr[1] "Mengimpor {} stasiun…"
-
-#: src/ui/import_dialog.rs:70
-msgid "Imported {} station!"
-msgid_plural "Imported {} stations!"
-msgstr[0] "Diimpor {} stasiun!"
-msgstr[1] "Diimpor {} stasiun!"
-
-#: src/ui/window.rs:268
-msgid "Could not import library."
-msgstr "Tidak dapat mengimpor pustaka."
+#: src/ui/about_dialog.rs:34
+msgid "translator-credits"
+msgstr ""
+"Andika Triwidada <andika@gmail.com>, 2020.\n"
+"Kukuh Syafat <kukuhsyafaat@gnome.org>, 2020."
 
 #: src/utils.rs:122
 msgid "{} Vote"
@@ -318,17 +313,17 @@ msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 25,000 stations."
 msgstr ""
-"Shortwave adalah pemutar radio internet yang menyediakan akses ke basis "
-"data stasiun dengan lebih dari 25.000 stasiun."
+"Shortwave adalah pemutar radio internet yang menyediakan akses ke basis data "
+"stasiun dengan lebih dari 25.000 stasiun."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid "Features:"
 msgstr "Fitur:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favourite stations"
+msgid "Create your own library where you can add your favorite stations"
 msgstr ""
-"Buat perpustakaan Anda sendiri dimana Anda dapat menambahkan stasiun "
+"Buat perpustakaan Anda sendiri di mana Anda dapat menambahkan stasiun "
 "favorit Anda"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
@@ -345,14 +340,12 @@ msgstr ""
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
 msgid "Responsive application layout, compatible for small and large screens"
-msgstr ""
-"Tata letak aplikasi responsif, kompatibel untuk layar kecil dan besar"
+msgstr "Tata letak aplikasi responsif, kompatibel untuk layar kecil dan besar"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
 msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
 msgstr ""
-"Memutar audio pada perangkat jaringan yang didukung (mis. Google "
-"Chromecasts)"
+"Memutar audio pada perangkat jaringan yang didukung (mis. Google Chromecasts)"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
 msgid "Seamless integration into the GNOME desktop environment"
@@ -362,3 +355,34 @@ msgstr "Integrasi mulus ke dalam lingkungan desktop GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Gelombang;"
+
+#~ msgid "Import from Gradio"
+#~ msgstr "Impor dari Gradio"
+
+#~ msgid "Import stations from Gradio"
+#~ msgstr "Impor stasiun dari Gradio"
+
+#~ msgid "Select database to import"
+#~ msgstr "Pilih basis data untuk diimpor"
+
+#~ msgid "Import"
+#~ msgstr "Impor"
+
+#~ msgid "Cancel"
+#~ msgstr "Batal"
+
+#~ msgid "Converting data…"
+#~ msgstr "Mengonversi data…"
+
+#~ msgid "Importing {} station…"
+#~ msgid_plural "Importing {} stations…"
+#~ msgstr[0] "Mengimpor {} stasiun…"
+#~ msgstr[1] "Mengimpor {} stasiun…"
+
+#~ msgid "Imported {} station!"
+#~ msgid_plural "Imported {} stations!"
+#~ msgstr[0] "Diimpor {} stasiun!"
+#~ msgstr[1] "Diimpor {} stasiun!"
+
+#~ msgid "Could not import library."
+#~ msgstr "Tidak dapat mengimpor pustaka."
