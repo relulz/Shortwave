@@ -134,6 +134,7 @@ impl SwApplicationWindow {
 
         self_.sidebar_flap.add(&window_deck);
         self_.sidebar_flap.set_reveal_flap(false);
+        self_.sidebar_flap.set_locked(true);
         self_.sidebar_flap.set_flap_position(gtk::PackType::End);
         self_.sidebar_flap.set_flap(&app_private.player.widget);
 
@@ -170,6 +171,11 @@ impl SwApplicationWindow {
         let s = settings_manager::get_settings();
         let gtk_s = gtk::Settings::get_default().unwrap();
         s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme", gio::SettingsBindFlags::GET);
+
+        // flap
+        self_.sidebar_flap.connect_property_folded_notify(clone!(@strong self as this => move |_| {
+            Self::sync_ui_state(this.clone());
+        }));
 
         // window gets closed
         self.connect_delete_event(move |window, _| {
@@ -303,14 +309,13 @@ impl SwApplicationWindow {
 
     pub fn show_player_widget(&self) {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
-        let app: SwApplication = self.get_application().unwrap().downcast::<SwApplication>().unwrap();
-        let app_private = SwApplicationPrivate::from_instance(&app);
-
-        self_.sidebar_flap.set_reveal_flap(true);
-
-        // make player toolbar visible
         get_widget!(self_.window_builder, gtk::Revealer, toolbar_controller_revealer);
         toolbar_controller_revealer.set_visible(true);
+
+        // Unlock player sidebar flap
+        self_.sidebar_flap.set_locked(false);
+
+        Self::sync_ui_state(self.clone());
     }
 
     pub fn show_notification(&self, notification: Rc<Notification>) {
@@ -328,6 +333,7 @@ impl SwApplicationWindow {
 
     pub fn set_view(&self, view: View) {
         self.update_view(view);
+        Self::sync_ui_state(self.clone());
     }
 
     pub fn enable_mini_player(&self, enable: bool) {
@@ -343,28 +349,45 @@ impl SwApplicationWindow {
         debug!("Go back to previous view");
         let self_ = SwApplicationWindowPrivate::from_instance(self);
 
-        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
-        window_deck.navigate(libhandy::NavigationDirection::Back);
+        // Check if current view = player sidebar
+        if self_.sidebar_flap.get_folded() && self_.sidebar_flap.get_reveal_flap() {
+            self_.sidebar_flap.set_reveal_flap(false);
+        } else {
+            get_widget!(self_.window_builder, libhandy::Deck, window_deck);
+            window_deck.navigate(libhandy::NavigationDirection::Back);
+        }
 
         // Make sure that the rest of the UI is correctly synced
-        Self::sync_ui_state(self.clone(), self_.window_builder.clone());
+        Self::sync_ui_state(self.clone());
     }
 
-    fn sync_ui_state(this: Self, window_builder: gtk::Builder) {
-        get_widget!(window_builder, libhandy::Deck, window_deck);
-        get_widget!(window_builder, gtk::Revealer, toolbar_controller_revealer);
+    fn sync_ui_state(this: Self) {
+        let self_ = SwApplicationWindowPrivate::from_instance(&this);
+        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
+        get_widget!(self_.window_builder, gtk::Revealer, toolbar_controller_revealer);
 
         let deck_child_name = window_deck.get_visible_child_name().unwrap();
 
-        // Check in which state the XXX is,
+        // Check in which state the sidebar flap is,
         // and set the corresponding view (Library|Storefront|Player)
-        let mut current_view = if deck_child_name == "storefront" { View::Storefront } else { View::Library };
+        let current_view = if self_.sidebar_flap.get_folded() && self_.sidebar_flap.get_reveal_flap() {
+            View::Player
+        } else {
+            if deck_child_name == "storefront" {
+                View::Storefront
+            } else {
+                View::Library
+            }
+        };
 
-        // Show bottom player controller toolbar when XXX is folded
-        let mut show_toolbar_controller = true;
-        // But don't show it when currently visible page is the player,
-        // since it would be duplicated
+        // Show bottom player controller toolbar when sidebar flap is folded and player widget is not revealed
+        let show_toolbar_controller = self_.sidebar_flap.get_folded() && !self_.sidebar_flap.get_reveal_flap();
         toolbar_controller_revealer.set_reveal_child(show_toolbar_controller);
+
+        // Ensure that player sidebar gets revealed
+        if !show_toolbar_controller && !self_.sidebar_flap.get_locked() {
+            self_.sidebar_flap.set_reveal_flap(true);
+        }
 
         debug!("Setting current view as {:?}", &current_view);
         this.update_view(current_view);
@@ -379,6 +402,11 @@ impl SwApplicationWindow {
         let app = self.get_application().unwrap();
         let app_priv = SwApplicationPrivate::from_instance(&app);
 
+        // Don't reveal sidebar flap by default
+        if !self_.sidebar_flap.get_locked() && self_.sidebar_flap.get_folded() {
+            self_.sidebar_flap.set_reveal_flap(false);
+        }
+
         // Show requested view / page
         match view {
             View::Storefront => {
@@ -391,6 +419,7 @@ impl SwApplicationWindow {
             }
             View::Player => {
                 app_priv.player.set_expand_widget(true);
+                self_.sidebar_flap.set_reveal_flap(true);
             }
         }
     }
