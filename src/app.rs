@@ -39,6 +39,7 @@ use crate::utils::{Order, Sorting};
 
 #[derive(Debug, Clone)]
 pub enum Action {
+    ViewGoBack,
     ViewShowDiscover,
     ViewShowLibrary,
     ViewShowPlayer,
@@ -193,7 +194,7 @@ impl SwApplication {
         window.set_view(View::Library);
 
         // Setup help overlay
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
         get_widget!(builder, gtk::ShortcutsWindow, shortcuts);
         let w = window.clone().upcast::<gtk::ApplicationWindow>();
         w.set_help_overlay(Some(&shortcuts));
@@ -205,7 +206,8 @@ impl SwApplication {
         let self_ = SwApplicationPrivate::from_instance(self);
 
         match action {
-            Action::ViewShowDiscover => self_.window.borrow().as_ref().unwrap().set_view(View::Discover),
+            Action::ViewGoBack => self_.window.borrow().as_ref().unwrap().go_back(),
+            Action::ViewShowDiscover => self_.window.borrow().as_ref().unwrap().set_view(View::Storefront),
             Action::ViewShowLibrary => self_.window.borrow().as_ref().unwrap().set_view(View::Library),
             Action::ViewShowPlayer => self_.window.borrow().as_ref().unwrap().set_view(View::Player),
             Action::ViewRaise => self_.window.borrow().as_ref().unwrap().present_with_time((glib::get_monotonic_time() / 1000) as u32),
@@ -216,7 +218,7 @@ impl SwApplication {
             Action::PlaybackDisconnectGCastDevice => self_.player.disconnect_from_gcast_device(),
             Action::PlaybackSetStation(station) => {
                 self_.player.set_station(*station);
-                self_.window.borrow().as_ref().unwrap().show_player_widget(self_.player.widget.clone());
+                self_.window.borrow().as_ref().unwrap().show_player_widget();
             }
             Action::PlaybackStart => self_.player.set_playback(PlaybackState::Playing),
             Action::PlaybackStop => self_.player.set_playback(PlaybackState::Stopped),

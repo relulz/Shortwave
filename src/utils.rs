@@ -135,6 +135,5 @@ where
     let children = container.get_children();
     for widget in children {
         container.remove(&widget);
-        widget.destroy();
     }
 }

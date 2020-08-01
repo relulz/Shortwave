@@ -73,6 +73,7 @@ pub enum PlaybackState {
 
 pub struct Player {
     pub widget: gtk::Box,
+    pub header: gtk::HeaderBar,
     pub toolbar_controller_widget: gtk::Box,
     pub mini_controller_widget: gtk::Box,
     controller: Rc<Vec<Box<dyn Controller>>>,
@@ -87,8 +88,9 @@ pub struct Player {
 
 impl Player {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/player.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/player.ui");
         get_widget!(builder, gtk::Box, player);
+        get_widget!(builder, gtk::HeaderBar, header);
         let mut controller: Vec<Box<dyn Controller>> = Vec::new();
 
         // Sidebar Controller
@@ -131,6 +133,7 @@ impl Player {
 
         let player = Self {
             widget: player,
+            header,
             toolbar_controller_widget,
             mini_controller_widget,
             controller,
@@ -237,6 +240,13 @@ impl Player {
         get_widget!(self.builder, gtk::Revealer, stream_revealer);
         stream_revealer.set_reveal_child(false);
         self.gcast_controller.disconnect_from_device();
+    }
+
+    pub fn set_expand_widget(&self, expand: bool) {
+        get_widget!(self.builder, gtk::Button, back_button);
+
+        back_button.set_visible(expand);
+        self.widget.set_hexpand(expand);
     }
 
     fn setup_signals(&self) {

@@ -40,6 +40,6 @@ pub fn show_about_dialog(window: gtk::ApplicationWindow) {
     dialog.set_authors(&["Felix Häcker"]);
     dialog.set_artists(&["Tobias Bernard"]);
 
-    dialog.connect_response(|dialog, _| dialog.destroy());
+    dialog.connect_response(|dialog, _| dialog.close());
     dialog.show();
 }
