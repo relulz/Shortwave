@@ -33,7 +33,7 @@ pub struct StationRow {
 
 impl StationRow {
     pub fn new(sender: Sender<Action>, station: Station) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_row.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/station_row.ui");
         get_widget!(builder, gtk::FlowBoxChild, station_row);
 
         // Set row information

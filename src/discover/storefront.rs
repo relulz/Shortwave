@@ -24,6 +24,7 @@ use crate::discover::pages::{Discover, Search};
 #[allow(dead_code)]
 pub struct StoreFront {
     pub widget: gtk::Box,
+    pub header: gtk::HeaderBar,
     pub storefront_stack: gtk::Stack,
 
     discover: Discover,
@@ -34,7 +35,8 @@ pub struct StoreFront {
 
 impl StoreFront {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/storefront.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/storefront.ui");
+        get_widget!(builder, gtk::HeaderBar, header);
         get_widget!(builder, gtk::Box, storefront);
         get_widget!(builder, gtk::Stack, storefront_stack);
 
@@ -50,6 +52,7 @@ impl StoreFront {
 
         let storefront = Self {
             widget: storefront,
+            header,
             storefront_stack,
             discover,
             search,

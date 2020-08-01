@@ -33,7 +33,7 @@ pub struct SongListBox {
 
 impl SongListBox {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/song_listbox.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/song_listbox.ui");
         get_widget!(builder, gtk::Box, song_listbox);
         get_widget!(builder, gtk::ListBox, listbox);
         get_widget!(builder, gtk::Stack, stack);
@@ -67,9 +67,7 @@ impl SongListBox {
     pub fn remove_last_row(&self) {
         let mut children = self.listbox.get_children();
         let widget = children.pop().unwrap();
-
         self.listbox.remove(&widget);
-        widget.destroy();
 
         self.update_stack();
     }

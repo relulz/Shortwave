@@ -66,6 +66,8 @@ fn main() {
     // Initialize GTK
     gtk::init().unwrap_or_else(|_| panic!("Failed to initialize GTK."));
 
+    libhandy::init();
+
     // Initialize Gstreamer
     gstreamer::init().expect("Failed to initialize Gstreamer");
 

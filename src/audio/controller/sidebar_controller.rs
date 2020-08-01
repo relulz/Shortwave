@@ -51,7 +51,7 @@ pub struct SidebarController {
 
 impl SidebarController {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/sidebar_controller.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/sidebar_controller.ui");
         get_widget!(builder, gtk::Box, sidebar_controller);
         get_widget!(builder, gtk::Label, title_label);
         get_widget!(builder, gtk::Label, subtitle_label);
@@ -75,7 +75,7 @@ impl SidebarController {
         }));
 
         // menu button
-        let menu_builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/menu/player_menu.ui");
+        let menu_builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/menu/player_menu.ui");
         get_widget!(menu_builder, gtk::PopoverMenu, popover_menu);
         get_widget!(builder, gtk::MenuButton, playermenu_button);
         playermenu_button.set_popover(Some(&popover_menu));
@@ -173,7 +173,7 @@ impl Controller for SidebarController {
             PlaybackState::Stopped => self.playback_button_stack.set_visible_child_name("start_playback"),
             PlaybackState::Failure(msg) => {
                 self.playback_button_stack.set_visible_child_name("error");
-                let mut text = self.error_label.get_text().unwrap().to_string();
+                let mut text = self.error_label.get_text().to_string();
                 text = text + " " + msg;
                 self.error_label.set_text(&text);
             }

@@ -41,7 +41,7 @@ pub struct Search {
 
 impl Search {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/search.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/search.ui");
         get_widget!(builder, gtk::Box, search);
 
         let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
@@ -106,7 +106,7 @@ impl Search {
     fn setup_signals(&self) {
         get_widget!(self.builder, gtk::SearchEntry, search_entry);
         search_entry.connect_search_changed(clone!(@strong self.sender as sender => move |entry| {
-            let request = StationRequest::search_for_name(&entry.get_text().unwrap(), 250);
+            let request = StationRequest::search_for_name(&entry.get_text(), 250);
             send!(sender, Action::SearchFor(request));
         }));
     }

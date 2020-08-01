@@ -44,7 +44,7 @@ pub struct Discover {
 
 impl Discover {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/discover.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/discover.ui");
         get_widget!(builder, gtk::Box, discover);
 
         let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());

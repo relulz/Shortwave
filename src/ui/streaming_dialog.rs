@@ -36,7 +36,7 @@ pub struct StreamingDialog {
 
 impl StreamingDialog {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/streaming_dialog.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/streaming_dialog.ui");
         get_widget!(builder, gtk::Dialog, streaming_dialog);
 
         // Setup Google Cast discoverer
@@ -77,7 +77,7 @@ impl StreamingDialog {
                         stream_stack.set_visible_child_name("results");
                         connect_button.set_sensitive(true);
 
-                        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/streaming_dialog.ui");
+                        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/streaming_dialog.ui");
                         get_widget!(builder, gtk::ListBoxRow, device_row);
                         get_widget!(builder, gtk::Label, name_label);
                         get_widget!(builder, gtk::Label, ip_label);
@@ -134,7 +134,7 @@ impl StreamingDialog {
                 let box1: gtk::Box = active_row.get_children()[0].clone().downcast().unwrap();
                 let box2: gtk::Box = box1.get_children()[0].clone().downcast().unwrap();
                 let ip_label: gtk::Label = box2.get_children()[1].clone().downcast().unwrap();
-                let ip_addr: IpAddr = IpAddr::from_str(ip_label.get_text().unwrap().to_string().as_str()).unwrap();
+                let ip_addr: IpAddr = IpAddr::from_str(ip_label.get_text().to_string().as_str()).unwrap();
 
                 // Get GCastDevice
                 let device = gcd.get_device_by_ip_addr(ip_addr).unwrap();

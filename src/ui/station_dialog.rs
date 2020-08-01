@@ -46,7 +46,7 @@ pub struct StationDialog {
 
 impl StationDialog {
     pub fn new(sender: Sender<Action>, station: Station) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_dialog.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/station_dialog.ui");
         get_widget!(builder, gtk::Dialog, station_dialog);
         get_widget!(builder, gtk::Label, title_label);
         get_widget!(builder, gtk::Label, subtitle_label);
@@ -146,7 +146,7 @@ impl StationDialog {
         remove_button.connect_clicked(clone!(@weak self.widget as widget, @strong self.station as station, @strong self.sender as sender => move |_| {
             send!(sender, Action::LibraryRemoveStations(vec![station.clone()]));
             widget.hide();
-            widget.destroy();
+            widget.close();
         }));
 
         // add_button
@@ -154,7 +154,7 @@ impl StationDialog {
         add_button.connect_clicked(clone!(@weak self.widget as widget, @strong self.station as station, @strong self.sender as sender => move |_| {
             send!(sender, Action::LibraryAddStations(vec![station.clone()]));
             widget.hide();
-            widget.destroy();
+            widget.close();
         }));
     }
 }

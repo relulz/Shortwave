@@ -40,7 +40,7 @@ pub struct StationFlowBox {
 
 impl StationFlowBox {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/station_flowbox.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/station_flowbox.ui");
         get_widget!(builder, gtk::FlowBox, station_flowbox);
         let stations = Rc::new(RefCell::new(IndexMap::new()));
 
@@ -90,7 +90,6 @@ impl StationFlowBox {
             let index: usize = self.stations.borrow_mut().entry(station.stationuuid.clone()).index();
             let widget = self.widget.get_child_at_index(index.try_into().unwrap()).unwrap();
             self.widget.remove(&widget);
-            widget.destroy();
 
             // Remove the station from the indexmap itself
             self.stations.borrow_mut().shift_remove(&station.stationuuid);

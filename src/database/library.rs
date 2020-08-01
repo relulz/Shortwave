@@ -34,6 +34,8 @@ use crate::utils::{Order, Sorting};
 
 pub struct Library {
     pub widget: gtk::Box,
+    pub header: gtk::HeaderBar,
+
     flowbox: Rc<StationFlowBox>,
     library_stack: gtk::Stack,
 
@@ -43,16 +45,24 @@ pub struct Library {
 
 impl Library {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/library.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/library.ui");
+        let menu_builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/menu/app_menu.ui");
         get_widget!(builder, gtk::Box, library);
+        get_widget!(builder, gtk::HeaderBar, header);
         get_widget!(builder, gtk::Box, content_box);
         get_widget!(builder, gtk::Stack, library_stack);
 
+        // Setup empty state page
         get_widget!(builder, gtk::Image, logo_image);
         logo_image.set_from_icon_name(Some(config::APP_ID), gtk::IconSize::__Unknown(256));
         get_widget!(builder, gtk::Label, welcome_text);
         // Welcome text which gets displayed when the library is empty. "{}" is the application name.
         welcome_text.set_text(i18n_f("Welcome to {}", &[config::NAME]).as_str());
+
+        // Set hamburger menu
+        get_widget!(menu_builder, gtk::PopoverMenu, popover_menu);
+        get_widget!(builder, gtk::MenuButton, appmenu_button);
+        appmenu_button.set_popover(Some(&popover_menu));
 
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
         content_box.add(&flowbox.widget);
@@ -61,6 +71,7 @@ impl Library {
 
         let library = Self {
             widget: library,
+            header,
             flowbox,
             library_stack,
             client,

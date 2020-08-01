@@ -29,7 +29,7 @@ pub struct Notification {
 
 impl Default for Notification {
     fn default() -> Self {
-        let builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/notification.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/notification.ui");
         get_widget!(builder, gtk::Revealer, revealer);
         get_widget!(builder, gtk::Box, spinner);
         get_widget!(builder, gtk::Label, text_label);
@@ -99,7 +99,7 @@ impl Notification {
 
     fn destroy(r: gtk::Revealer) {
         gtk::timeout_add(1000, move || {
-            r.destroy();
+            //TODO: r.destroy();
             glib::Continue(false)
         });
     }

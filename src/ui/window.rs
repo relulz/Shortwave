@@ -22,7 +22,6 @@ use glib::Sender;
 use gtk::prelude::*;
 use gtk::subclass::prelude::{BinImpl, ContainerImpl, WidgetImpl, WindowImpl};
 use libhandy::prelude::*;
-use libhandy::LeafletExt;
 
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -34,15 +33,14 @@ use crate::ui::{about_dialog, Notification};
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum View {
-    Discover,
+    Storefront,
     Library,
     Player,
 }
 
 pub struct SwApplicationWindowPrivate {
     window_builder: gtk::Builder,
-    menu_builder: gtk::Builder,
-
+    sidebar_flap: libhandy::Flap,
     current_notification: RefCell<Option<Rc<Notification>>>,
 }
 
@@ -55,14 +53,14 @@ impl ObjectSubclass for SwApplicationWindowPrivate {
     glib_object_subclass!();
 
     fn new() -> Self {
-        let window_builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/window.ui");
-        let menu_builder = gtk::Builder::new_from_resource("/de/haeckerfelix/Shortwave/gtk/menu/app_menu.ui");
-
+        let window_builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/window.ui");
         let current_notification = RefCell::new(None);
+
+        let sidebar_flap = libhandy::Flap::new();
 
         Self {
             window_builder,
-            menu_builder,
+            sidebar_flap,
             current_notification,
         }
     }
@@ -127,28 +125,31 @@ impl SwApplicationWindow {
         self.add(&window);
 
         // Wire everything up
-        get_widget!(self_.window_builder, gtk::Box, toolbar_controller_box);
         get_widget!(self_.window_builder, gtk::Box, mini_controller_box);
-        get_widget!(self_.window_builder, gtk::Box, library_box);
-        get_widget!(self_.window_builder, gtk::Box, discover_box);
+        get_widget!(self_.window_builder, gtk::Box, library_page);
+        get_widget!(self_.window_builder, gtk::Box, storefront_page);
+        get_widget!(self_.window_builder, gtk::Box, toolbar_controller_box);
+        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
+        get_widget!(self_.window_builder, gtk::Overlay, overlay);
 
-        toolbar_controller_box.add(&app_private.player.toolbar_controller_widget);
+        self_.sidebar_flap.add(&window_deck);
+        self_.sidebar_flap.set_reveal_flap(false);
+        self_.sidebar_flap.set_flap_position(gtk::PackType::End);
+        self_.sidebar_flap.set_flap(&app_private.player.widget);
+
+        overlay.add(&self_.sidebar_flap);
+        overlay.show_all();
+
         mini_controller_box.add(&app_private.player.mini_controller_widget);
-        library_box.add(&app_private.library.widget);
-        discover_box.add(&app_private.storefront.widget);
+        library_page.add(&app_private.library.widget);
+        storefront_page.add(&app_private.storefront.widget);
+        toolbar_controller_box.add(&app_private.player.toolbar_controller_widget);
 
-        get_widget!(self_.window_builder, libhandy::ViewSwitcher, discover_header_switcher_wide);
-        get_widget!(self_.window_builder, libhandy::ViewSwitcher, discover_header_switcher_narrow);
-        get_widget!(self_.window_builder, libhandy::ViewSwitcherBar, discover_bottom_switcher);
-
-        discover_header_switcher_wide.set_stack(Some(&app_private.storefront.storefront_stack));
-        discover_header_switcher_narrow.set_stack(Some(&app_private.storefront.storefront_stack));
-        discover_bottom_switcher.set_stack(Some(&app_private.storefront.storefront_stack));
-
-        // Set hamburger menu
-        get_widget!(self_.menu_builder, gtk::PopoverMenu, popover_menu);
-        get_widget!(self_.window_builder, gtk::MenuButton, appmenu_button);
-        appmenu_button.set_popover(Some(&popover_menu));
+        // Make sure that the headerbars are correctly synced
+        let headergroup = libhandy::HeaderGroup::new();
+        headergroup.add_gtk_header_bar(&app_private.library.header);
+        headergroup.add_gtk_header_bar(&app_private.storefront.header);
+        headergroup.add_gtk_header_bar(&app_private.player.header);
 
         // Add devel style class for development or beta builds
         if config::PROFILE == "development" || config::PROFILE == "beta" {
@@ -169,21 +170,6 @@ impl SwApplicationWindow {
         let s = settings_manager::get_settings();
         let gtk_s = gtk::Settings::get_default().unwrap();
         s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme", gio::SettingsBindFlags::GET);
-
-        // leaflet
-        get_widget!(self_.window_builder, libhandy::Leaflet, leaflet);
-        leaflet.connect_property_folded_notify(clone!(@strong self as this, @weak self_.window_builder as window_builder => move |leaflet| {
-            get_widget!(window_builder, gtk::Stack, view_stack);
-            let current_view = if leaflet.get_folded() && leaflet.get_visible_child_name().unwrap() == "player" {
-                View::Player
-            } else {
-                match view_stack.get_visible_child_name().unwrap().as_str() {
-                    "discover" => View::Discover,
-                    _ => View::Library,
-                }
-            };
-            this.update_view(current_view);
-        }));
 
         // window gets closed
         self.connect_delete_event(move |window, _| {
@@ -250,6 +236,16 @@ impl SwApplicationWindow {
             })
         );
 
+        // win.go-back
+        action!(
+            window,
+            "go-back",
+            clone!(@strong sender => move |_, _| {
+                send!(sender, Action::ViewGoBack);
+            })
+        );
+        app.set_accels_for_action("win.go-back", &["Escape"]);
+
         // win.show-discover
         action!(
             window,
@@ -305,33 +301,28 @@ impl SwApplicationWindow {
         window.add_action(&order_action);
     }
 
-    pub fn show_player_widget(&self, player: gtk::Box) {
+    pub fn show_player_widget(&self) {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
-        get_widget!(self_.window_builder, libhandy::Leaflet, leaflet);
+        let app: SwApplication = self.get_application().unwrap().downcast::<SwApplication>().unwrap();
+        let app_private = SwApplicationPrivate::from_instance(&app);
 
-        // We don't have to add the widget again if it's already added
-        if leaflet.get_children().len() != 3 {
-            let separator = gtk::Separator::new(gtk::Orientation::Vertical);
-            separator.set_visible(true);
-            leaflet.add(&separator);
+        self_.sidebar_flap.set_reveal_flap(true);
 
-            leaflet.add(&player);
-        }
-        leaflet.set_child_name(&player, Some("player"));
-
-        // TODO: The revealer inside the player widget currently doesn't get animated.
+        // make player toolbar visible
+        get_widget!(self_.window_builder, gtk::Revealer, toolbar_controller_revealer);
+        toolbar_controller_revealer.set_visible(true);
     }
 
     pub fn show_notification(&self, notification: Rc<Notification>) {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
-        get_widget!(self_.window_builder, gtk::Overlay, content);
+        get_widget!(self_.window_builder, gtk::Overlay, overlay);
 
         // Remove previous notification
         if let Some(notification) = self_.current_notification.borrow_mut().take() {
             notification.hide();
         }
 
-        notification.show(&content);
+        notification.show(&overlay);
         *self_.current_notification.borrow_mut() = Some(notification);
     }
 
@@ -348,68 +339,58 @@ impl SwApplicationWindow {
         }
     }
 
-    fn update_view(&self, view: View) {
+    pub fn go_back(&self) {
+        debug!("Go back to previous view");
         let self_ = SwApplicationWindowPrivate::from_instance(self);
 
-        get_widget!(self_.window_builder, gtk::Revealer, bottom_switcher_revealer);
-        get_widget!(self_.window_builder, gtk::Stack, bottom_switcher_stack);
-        get_widget!(self_.window_builder, gtk::Stack, header_switcher_stack);
-        get_widget!(self_.window_builder, gtk::Stack, view_stack);
-        get_widget!(self_.window_builder, libhandy::Leaflet, leaflet);
-        get_widget!(self_.menu_builder, gtk::ModelButton, sorting_mbutton);
-        get_widget!(self_.window_builder, gtk::Button, add_button);
-        get_widget!(self_.window_builder, gtk::Button, back_button);
+        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
+        window_deck.navigate(libhandy::NavigationDirection::Back);
 
-        // Determine if window is currently in phone mode (leaflet = folded)
-        let phone_mode = leaflet.get_folded();
+        // Make sure that the rest of the UI is correctly synced
+        Self::sync_ui_state(self.clone(), self_.window_builder.clone());
+    }
 
-        // Determine if current visible page is library
-        let library_mode = view == View::Library;
+    fn sync_ui_state(this: Self, window_builder: gtk::Builder) {
+        get_widget!(window_builder, libhandy::Deck, window_deck);
+        get_widget!(window_builder, gtk::Revealer, toolbar_controller_revealer);
 
-        // Show or hide buttons depending on the selected view
-        add_button.set_visible(library_mode);
-        back_button.set_visible(!library_mode);
-        sorting_mbutton.set_sensitive(library_mode);
+        let deck_child_name = window_deck.get_visible_child_name().unwrap();
+
+        // Check in which state the XXX is,
+        // and set the corresponding view (Library|Storefront|Player)
+        let mut current_view = if deck_child_name == "storefront" { View::Storefront } else { View::Library };
+
+        // Show bottom player controller toolbar when XXX is folded
+        let mut show_toolbar_controller = true;
+        // But don't show it when currently visible page is the player,
+        // since it would be duplicated
+        toolbar_controller_revealer.set_reveal_child(show_toolbar_controller);
+
+        debug!("Setting current view as {:?}", &current_view);
+        this.update_view(current_view);
+    }
+
+    fn update_view(&self, view: View) {
+        debug!("Set view to {:?}", &view);
+
+        let self_ = SwApplicationWindowPrivate::from_instance(self);
+        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
+
+        let app = self.get_application().unwrap();
+        let app_priv = SwApplicationPrivate::from_instance(&app);
 
         // Show requested view / page
         match view {
-            View::Discover => {
-                leaflet.set_visible_child_name("content");
-                view_stack.set_visible_child_name("discover");
-
-                if phone_mode {
-                    header_switcher_stack.set_visible_child_name("main");
-                    bottom_switcher_stack.set_visible_child_name("discover");
-                    bottom_switcher_revealer.set_reveal_child(true);
-                } else {
-                    header_switcher_stack.set_visible_child_name("discover");
-                    bottom_switcher_revealer.set_reveal_child(false);
-                }
+            View::Storefront => {
+                window_deck.set_visible_child_name("storefront");
+                app_priv.player.set_expand_widget(false);
             }
             View::Library => {
-                leaflet.set_visible_child_name("content");
-                view_stack.set_visible_child_name("library");
-
-                if phone_mode {
-                    header_switcher_stack.set_visible_child_name("main");
-                    bottom_switcher_stack.set_visible_child_name("main");
-                    bottom_switcher_revealer.set_reveal_child(true);
-                } else {
-                    header_switcher_stack.set_visible_child_name("main");
-                    bottom_switcher_revealer.set_reveal_child(false);
-                }
+                window_deck.set_visible_child_name("library");
+                app_priv.player.set_expand_widget(false);
             }
             View::Player => {
-                leaflet.set_visible_child_name("player");
-
-                if phone_mode {
-                    header_switcher_stack.set_visible_child_name("main");
-                    bottom_switcher_stack.set_visible_child_name("main");
-                    bottom_switcher_revealer.set_reveal_child(false);
-                } else {
-                    header_switcher_stack.set_visible_child_name("main");
-                    bottom_switcher_revealer.set_reveal_child(false);
-                }
+                app_priv.player.set_expand_widget(true);
             }
         }
     }
