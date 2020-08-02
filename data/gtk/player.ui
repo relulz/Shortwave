@@ -8,7 +8,6 @@
     <property name="can_focus">False</property>
     <property name="vexpand">True</property>
     <property name="orientation">vertical</property>
-    <property name="spacing">6</property>
     <child>
       <object class="HdyWindowHandle" id="header_handle">
         <property name="visible">True</property>
@@ -69,6 +68,8 @@
                     <property name="width_request">275</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="margin_left">6</property>
+                    <property name="margin_right">6</property>
                     <property name="maximum_size">400</property>
                     <property name="tightening_threshold">0</property>
                     <child>
@@ -214,12 +215,6 @@
             <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
         </child>
       </object>
       <packing>
