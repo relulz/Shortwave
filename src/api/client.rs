@@ -20,6 +20,23 @@ use url::Url;
 use crate::api::*;
 use crate::config;
 use crate::database::StationIdentifier;
+use isahc::config::RedirectPolicy;
+use std::time::Duration;
+
+lazy_static! {
+    pub static ref USER_AGENT: String = format!("{}/{}-{}", config::PKGNAME, config::VERSION, config::PROFILE);
+    pub static ref HTTP_CLIENT: isahc::HttpClient = isahc::HttpClientBuilder::new()
+        // Limit to reduce ram usage. We don't need 250 concurrent connections
+        .max_connections(8)
+        // Icons are fetched from different urls.
+        // There's a lot of probability we aren't going to reuse the same connection
+        .connection_cache_size(8)
+        .timeout(Duration::from_secs(15))
+        .redirect_policy(RedirectPolicy::Follow)
+        .default_header("User-Agent", USER_AGENT.as_str())
+        .build()
+        .unwrap();
+}
 
 #[derive(Clone)]
 pub struct Client {
@@ -34,10 +51,7 @@ impl Client {
     pub async fn send_station_request(self, request: StationRequest) -> Result<Vec<Station>, Error> {
         let url = self.build_url(STATION_SEARCH, Some(&request.url_encode()))?;
         debug!("Station request URL: {}", url);
-        let data = self.send_message(url).await?;
-
-        // Parse text to Vec<Station>
-        let stations: Vec<Station> = serde_json::from_str(data.as_str())?;
+        let stations: Vec<Station> = HTTP_CLIENT.get_async(url.as_ref()).await?.json()?;
         debug!("Found {} station(s)!", stations.len());
 
         Ok(stations)
@@ -47,27 +61,15 @@ impl Client {
         let url = self.build_url(&format!("{}{}", STATION_BY_UUID, identifier.stationuuid), None)?;
         debug!("Request station by UUID URL: {}", url);
 
-        let data = self.send_message(url).await?;
+        let mut data: Vec<Station> = HTTP_CLIENT.get_async(url.as_ref()).await?.json()?;
 
-        // Parse text to Vec<Station>
-        let mut s: Vec<Station> = serde_json::from_str(data.as_str())?;
-        match s.pop() {
+        match data.pop() {
             Some(station) => Ok(station),
             None => {
                 warn!("API: No station for identifier \"{}\" found", &identifier.stationuuid);
                 Err(Error::InvalidStationError(identifier.stationuuid))
             }
         }
-    }
-
-    // Create and send message, return the received data.
-    async fn send_message(&self, url: Url) -> Result<String, Error> {
-        let useragent = format!("{}/{}-{}", config::PKGNAME, config::VERSION, config::PROFILE);
-
-        let request = Request::builder().uri(url.to_string()).header("User-Agent", useragent);
-
-        let response = isahc::send_async(request.body(()).unwrap()).await?.text_async().await?;
-        Ok(response)
     }
 
     fn build_url(&self, param: &str, options: Option<&str>) -> Result<Url, Error> {

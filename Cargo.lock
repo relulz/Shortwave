@@ -1057,6 +1057,8 @@ dependencies = [
  "lazy_static",
  "log",
  "mime",
+ "serde",
+ "serde_json",
  "slab",
  "sluice",
  "tracing",
