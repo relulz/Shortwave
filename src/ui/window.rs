@@ -174,7 +174,7 @@ impl SwApplicationWindow {
 
         // flap
         self_.sidebar_flap.connect_property_folded_notify(clone!(@strong self as this => move |_| {
-            Self::sync_ui_state(this.clone());
+            this.sync_ui_state();
         }));
 
         // window gets closed
@@ -315,7 +315,7 @@ impl SwApplicationWindow {
         // Unlock player sidebar flap
         self_.sidebar_flap.set_locked(false);
 
-        Self::sync_ui_state(self.clone());
+        self.sync_ui_state();
     }
 
     pub fn show_notification(&self, notification: Rc<Notification>) {
@@ -333,7 +333,7 @@ impl SwApplicationWindow {
 
     pub fn set_view(&self, view: View) {
         self.update_view(view);
-        Self::sync_ui_state(self.clone());
+        self.sync_ui_state();
     }
 
     pub fn enable_mini_player(&self, enable: bool) {
@@ -358,11 +358,11 @@ impl SwApplicationWindow {
         }
 
         // Make sure that the rest of the UI is correctly synced
-        Self::sync_ui_state(self.clone());
+        self.sync_ui_state();
     }
 
-    fn sync_ui_state(this: Self) {
-        let self_ = SwApplicationWindowPrivate::from_instance(&this);
+    fn sync_ui_state(&self) {
+        let self_ = SwApplicationWindowPrivate::from_instance(self);
         get_widget!(self_.window_builder, libhandy::Deck, window_deck);
         get_widget!(self_.window_builder, gtk::Revealer, toolbar_controller_revealer);
 
@@ -390,7 +390,7 @@ impl SwApplicationWindow {
         }
 
         debug!("Setting current view as {:?}", &current_view);
-        this.update_view(current_view);
+        self.update_view(current_view);
     }
 
     fn update_view(&self, view: View) {
