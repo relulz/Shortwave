@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-06-11 18:54+0000\n"
-"PO-Revision-Date: 2020-06-12 07:38+0300\n"
+"POT-Creation-Date: 2020-08-02 15:56+0000\n"
+"PO-Revision-Date: 2020-08-02 21:06+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -27,7 +27,7 @@ msgstr "Параметри станції"
 msgid "Language"
 msgstr "Мова"
 
-#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:119
+#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:175
 msgid "Tags"
 msgstr "Мітки"
 
@@ -39,15 +39,15 @@ msgstr "Кодек"
 msgid "Homepage"
 msgstr "Домашня сторінка"
 
-#: data/gtk/discover.ui:55
+#: data/gtk/discover.ui:54
 msgid "Most voted stations"
 msgstr "Станції із найвищим рейтингом"
 
-#: data/gtk/discover.ui:89
+#: data/gtk/discover.ui:88
 msgid "Trending"
 msgstr "Тренди"
 
-#: data/gtk/discover.ui:123
+#: data/gtk/discover.ui:122
 msgid "Other users are listening to…"
 msgstr "Інші користувачі слухають…"
 
@@ -85,6 +85,7 @@ msgid "An error occurred"
 msgstr "Сталася помилка"
 
 #: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
+#: data/gtk/toolbar_controller.ui:74
 msgid "No playback"
 msgstr "Немає відтворення"
 
@@ -149,8 +150,27 @@ msgid "Appearance"
 msgstr "Вигляд"
 
 #: data/gtk/settings_window.ui:19
-msgid "Enable dark mode"
-msgstr "Увімкнути темний режим"
+msgid "Dark Mode"
+msgstr "Темний режим"
+
+#: data/gtk/settings_window.ui:20
+msgid "Whether the application should use a dark theme"
+msgstr "Чи слід віддавати перевагу у програмі темній темі"
+
+#: data/gtk/settings_window.ui:36
+#| msgid "Features:"
+msgid "Features"
+msgstr "Можливості"
+
+#: data/gtk/settings_window.ui:40
+#| msgid "Locations"
+msgid "Notifications"
+msgstr "Сповіщення"
+
+#: data/gtk/settings_window.ui:41
+msgid "Show desktop notifications when a new song gets played"
+msgstr ""
+"Показувати сповіщення на стільниці при переході до наступної композиції"
 
 #: data/gtk/shortcuts.ui:12
 msgid "General"
@@ -166,27 +186,33 @@ msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "Пошук станцій"
 
-#: data/gtk/storefront.ui:29
+#: data/gtk/storefront.ui:21 data/gtk/library.ui:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Коротка хвиля"
+
+#: data/gtk/storefront.ui:85
 msgid "Discover"
 msgstr "Виявлення"
 
-#: data/gtk/storefront.ui:44
+#: data/gtk/storefront.ui:100
 msgid "Search"
 msgstr "Пошук"
 
-#: data/gtk/storefront.ui:69
+#: data/gtk/storefront.ui:125
 msgid "Locations"
 msgstr "Місця"
 
-#: data/gtk/storefront.ui:94
+#: data/gtk/storefront.ui:150
 msgid "Languages"
 msgstr "Мови"
 
-#: data/gtk/library.ui:53
+#: data/gtk/library.ui:121
 msgid "Receiving station data…"
 msgstr "Отримання даних щодо станції…"
 
-#: data/gtk/library.ui:151
+#: data/gtk/library.ui:217
 msgid "Discover new stations"
 msgstr "Виявити нові станції"
 
@@ -220,38 +246,34 @@ msgstr "Збережені пісні можна буде знайти у тец
 msgid "Open"
 msgstr "Відкрити"
 
-#: data/gtk/player.ui:97
+#: data/gtk/player.ui:135
 msgid "Connected with"
 msgstr "З'єднано з"
 
-#: data/gtk/window.ui:213
-msgid "Library"
-msgstr "Бібліотека"
-
-#: src/audio/player.rs:157
+#: src/audio/player.rs:167
 msgid "This station cannot be played because the stream is offline."
 msgstr ""
 "Відтворення цієї станції неможливе, оскільки потік даних від неї не "
 "надходить."
 
-#: src/audio/player.rs:175
+#: src/audio/player.rs:185
 msgid "Station cannot be streamed."
 msgstr "Станцію не можна транслювати."
 
-#: src/audio/player.rs:175
+#: src/audio/player.rs:185
 msgid "URL is not valid."
 msgstr "Некоректна адреса."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:55
+#: src/database/library.rs:60
 msgid "Welcome to {}"
 msgstr "Вітаємо у {}"
 
-#: src/database/library.rs:145
+#: src/database/library.rs:156
 msgid "No longer existing station removed from library."
 msgstr "Запис станції, якої вже не існує, вилучено з бібліотеки."
 
-#: src/database/library.rs:149 src/discover/pages/discover.rs:127
+#: src/database/library.rs:160 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Не вдалося отримати дані станції."
@@ -289,7 +311,7 @@ msgstr "Прослуховування інтернет-радіо"
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
 
-#: src/utils.rs:122
+#: src/utils.rs:110
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} голос"
@@ -297,18 +319,13 @@ msgstr[1] "{} голоси"
 msgstr[2] "{} голосів"
 msgstr[3] "{} голос"
 
-#: src/utils.rs:124
+#: src/utils.rs:112
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} голос"
 msgstr[1] "{} · {} голоси"
 msgstr[2] "{} · {} голосів"
 msgstr[3] "{} · {} голос"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "Shortwave"
-msgstr "Коротка хвиля"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
 msgid "Felix Häcker"
@@ -360,6 +377,12 @@ msgstr "Безшовна інтеграція до стільничного се
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;градіо;жрадіо;радіо;потік;трансляція;хвиля;"
+
+#~ msgid "Enable dark mode"
+#~ msgstr "Увімкнути темний режим"
+
+#~ msgid "Library"
+#~ msgstr "Бібліотека"
 
 #~ msgid "Import from Gradio"
 #~ msgstr "Імпортувати з Gradio"
