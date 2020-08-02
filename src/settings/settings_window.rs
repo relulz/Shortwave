@@ -45,5 +45,8 @@ impl SettingsWindow {
     fn setup_signals(&self) {
         get_widget!(self.builder, gtk::Switch, dark_mode_button);
         settings_manager::bind_property(Key::DarkMode, &dark_mode_button, "active");
+
+        get_widget!(self.builder, gtk::Switch, show_notifications_button);
+        settings_manager::bind_property(Key::Notifications, &show_notifications_button, "active");
     }
 }

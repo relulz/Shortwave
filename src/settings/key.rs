@@ -22,6 +22,7 @@ pub enum Key {
 
     /* User Interface */
     DarkMode,
+    Notifications,
     WindowWidth,
     WindowHeight,
     ViewSorting,

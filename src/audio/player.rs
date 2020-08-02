@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use gio::prelude::*;
 use glib::Sender;
 use gtk::prelude::*;
 
@@ -25,7 +26,7 @@ use std::rc::Rc;
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
-use crate::api::Station;
+use crate::api::{FaviconDownloader, Station};
 use crate::app::Action;
 use crate::audio::backend::*;
 #[cfg(unix)]
@@ -76,18 +77,19 @@ pub struct Player {
     pub header: gtk::HeaderBar,
     pub toolbar_controller_widget: gtk::Box,
     pub mini_controller_widget: gtk::Box,
-    controller: Rc<Vec<Box<dyn Controller>>>,
+    controller: Vec<Box<dyn Controller>>,
     gcast_controller: Rc<GCastController>,
 
     backend: Arc<Mutex<Backend>>,
-    song_title: Rc<RefCell<SongTitle>>,
+    current_station: RefCell<Option<Station>>,
+    song_title: RefCell<SongTitle>,
 
     builder: gtk::Builder,
     sender: Sender<Action>,
 }
 
 impl Player {
-    pub fn new(sender: Sender<Action>) -> Self {
+    pub fn new(sender: Sender<Action>) -> Rc<Self> {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/player.ui");
         get_widget!(builder, gtk::Box, player);
         get_widget!(builder, gtk::HeaderBar, header);
@@ -120,7 +122,7 @@ impl Player {
         let gcast_controller = GCastController::new(sender.clone());
         controller.push(Box::new(gcast_controller.clone()));
 
-        let controller: Rc<Vec<Box<dyn Controller>>> = Rc::new(controller);
+        let controller: Vec<Box<dyn Controller>> = controller;
 
         // Backend
         let backend = Backend::new(sender.clone());
@@ -128,10 +130,13 @@ impl Player {
         player_box.reorder_child(&backend.song.listbox.widget, 3);
         let backend = Arc::new(Mutex::new(backend));
 
-        // Song title -> [Current Song] - [Previous Song]
-        let song_title = Rc::new(RefCell::new(SongTitle::new()));
+        // Current station (needed for notifications)
+        let current_station = RefCell::new(None);
 
-        let player = Self {
+        // Song title -> [Current Song] - [Previous Song]
+        let song_title = RefCell::new(SongTitle::new());
+
+        let player = Rc::new(Self {
             widget: player,
             header,
             toolbar_controller_widget,
@@ -139,20 +144,22 @@ impl Player {
             controller,
             gcast_controller,
             backend,
+            current_station,
             song_title,
             builder,
             sender,
-        };
+        });
 
         // Set volume
         let volume = settings_manager::get_double(Key::PlaybackVolume);
         player.set_volume(volume);
 
-        player.setup_signals();
+        player.clone().setup_signals();
         player
     }
 
     pub fn set_station(&self, station: Station) {
+        *self.current_station.borrow_mut() = Some(station.clone());
         self.set_playback(PlaybackState::Stopped);
 
         // Station is broken, we refuse to play it
@@ -249,13 +256,10 @@ impl Player {
         self.widget.set_hexpand(expand);
     }
 
-    fn setup_signals(&self) {
+    fn setup_signals(self: Rc<Self>) {
         // Wait for new messages from the Gstreamer backend
-        let song_title = self.song_title.clone();
-        let controller = self.controller.clone();
-        let backend = self.backend.clone();
         let receiver = self.backend.clone().lock().unwrap().gstreamer_receiver.take().unwrap();
-        receiver.attach(None, move |message| Self::process_gst_message(message, song_title.clone(), controller.clone(), backend.clone()));
+        receiver.attach(None, clone!(@strong self as this => move |message| this.clone().process_gst_message(message)));
 
         // Disconnect from gcast device
         get_widget!(self.builder, gtk::Button, disconnect_button);
@@ -264,10 +268,10 @@ impl Player {
         }));
     }
 
-    fn process_gst_message(message: GstreamerMessage, song_title: Rc<RefCell<SongTitle>>, controller: Rc<Vec<Box<dyn Controller>>>, backend: Arc<Mutex<Backend>>) -> glib::Continue {
+    fn process_gst_message(&self, message: GstreamerMessage) -> glib::Continue {
         match message {
             GstreamerMessage::SongTitleChanged(title) => {
-                let backend = &mut backend.lock().unwrap();
+                let backend = &mut self.backend.lock().unwrap();
                 debug!("Song title has changed to: \"{}\"", title);
 
                 // If we're already recording something, we need to stop it first.
@@ -278,7 +282,7 @@ impl Player {
                         backend.gstreamer.stop_recording(false);
 
                         let duration = Duration::from_secs(duration.try_into().unwrap());
-                        let song = song_title.borrow().create_song(duration).expect("Unable to create new song");
+                        let song = self.song_title.borrow().create_song(duration).expect("Unable to create new song");
 
                         backend.song.add_song(song);
                     } else {
@@ -288,32 +292,59 @@ impl Player {
                 }
 
                 // Set new song title
-                song_title.borrow_mut().set_current_title(title.clone());
-                for con in &*controller {
+                self.song_title.borrow_mut().set_current_title(title.clone());
+                for con in &*self.controller {
                     con.set_song_title(&title);
                 }
 
                 // Start recording new song
                 // We don't start recording the "first" detected song, since it is going to be incomplete
-                if !song_title.borrow().is_first_song() {
-                    backend.gstreamer.start_recording(song_title.borrow().get_path().expect("Unable to get song path"));
+                if !self.song_title.borrow().is_first_song() {
+                    backend.gstreamer.start_recording(self.song_title.borrow().get_path().expect("Unable to get song path"));
                 } else {
                     debug!("Song will not be recorded because it may be incomplete (first song for this station).")
                 }
+
+                // Show desktop notification
+                if settings_manager::get_boolean(Key::Notifications) {
+                    self.show_song_notification();
+                }
             }
             GstreamerMessage::PlaybackStateChanged(state) => {
-                for con in &*controller {
+                for con in &*self.controller {
                     con.set_playback_state(&state);
                 }
 
                 // Discard recorded data when a failure occurs,
                 // since the song has not been recorded completely.
-                if backend.lock().unwrap().gstreamer.is_recording() && matches!(state, PlaybackState::Failure(_)) {
-                    backend.lock().unwrap().gstreamer.stop_recording(true);
+                if self.backend.lock().unwrap().gstreamer.is_recording() && matches!(state, PlaybackState::Failure(_)) {
+                    self.backend.lock().unwrap().gstreamer.stop_recording(true);
                 }
             }
         }
         glib::Continue(true)
+    }
+
+    fn show_song_notification(&self) {
+        let current_station = self.current_station.borrow().clone().unwrap();
+        let notification = gio::Notification::new(&self.song_title.borrow().get_current_title().unwrap());
+        notification.set_body(Some(&current_station.name));
+        //notification.add_button("Record and save this song", "app.record-and-save-song");
+
+        /* Icons won't work at the moment, no idea
+        current_station.favicon.map(|favicon| {
+            FaviconDownloader::get_file(&favicon).map(|file| {
+                let path = file.get_path().unwrap().to_str().unwrap().to_owned();
+                dbg!(&path);
+                let file = gio::File::new_for_path(&path);
+                let icon = gio::FileIcon::new(&file);
+                notification.set_icon(&icon);
+            })
+        });
+        */
+
+        let app = self.builder.get_application().unwrap();
+        app.send_notification(None, &notification);
     }
 }
 
@@ -337,6 +368,10 @@ impl SongTitle {
             self.previous_title = self.current_title.take();
             self.current_title = Some(title);
         }
+    }
+
+    pub fn get_current_title(&self) -> Option<String> {
+        self.current_title.clone()
     }
 
     /// Returns song for current title

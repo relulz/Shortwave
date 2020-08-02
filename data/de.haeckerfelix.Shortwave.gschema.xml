@@ -7,6 +7,9 @@
     <key name="dark-mode" type="b">
       <default>false</default>
     </key>
+    <key name="notifications" type="b">
+      <default>true</default>
+    </key>
     <key name="window-width" type="i">
       <default>1000</default>
     </key>

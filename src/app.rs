@@ -66,7 +66,7 @@ pub struct SwApplicationPrivate {
     receiver: RefCell<Option<Receiver<Action>>>,
 
     window: RefCell<Option<SwApplicationWindow>>,
-    pub player: Player,
+    pub player: Rc<Player>,
     pub library: Library,
     pub storefront: StoreFront,
 
