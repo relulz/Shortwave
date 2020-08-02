@@ -37,11 +37,14 @@ pub struct StationRequest {
 
 impl StationRequest {
     pub fn search_for_name(name: &str, limit: u32) -> Self {
-        let mut search = Self::default();
-        search.name = Some(name.to_string());
-        search.limit = Some(limit);
-        search.hidebroken = Some(true);
-        search
+        Self {
+            name: Some(name.to_string()),
+            limit: Some(limit),
+            hidebroken: Some(true),
+            order: Some(String::from("votes")),
+            reverse: Some(true),
+            ..Self::default()
+        }
     }
 
     pub fn url_encode(&self) -> String {
