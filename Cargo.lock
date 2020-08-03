@@ -397,9 +397,9 @@ dependencies = [
 
 [[package]]
 name = "error-chain"
-version = "0.12.3"
+version = "0.12.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "be51ed50e75656c17216bdd4326914466db0c91b9b246b12962a00284d06566b"
+checksum = "2d2f06b9cac1506ece98fe3231e3cc9c4410ec3d5b1f24ae1c8946f0742cdefc"
 dependencies = [
  "backtrace",
  "version_check",
@@ -1110,7 +1110,7 @@ dependencies = [
 [[package]]
 name = "libhandy"
 version = "1.0.0"
-source = "git+https://gitlab.gnome.org/haecker-felix/libhandy-rs#1782939a46666bf5b2235c9350fb5f3cdfa6aec2"
+source = "git+https://gitlab.gnome.org/haecker-felix/libhandy-rs#c5ed9d1bf5aab9c29a3e7e7904347159c2518d59"
 dependencies = [
  "bitflags",
  "gdk",
@@ -1131,7 +1131,7 @@ dependencies = [
 [[package]]
 name = "libhandy-sys"
 version = "1.0.0"
-source = "git+https://gitlab.gnome.org/haecker-felix/libhandy-rs#1782939a46666bf5b2235c9350fb5f3cdfa6aec2"
+source = "git+https://gitlab.gnome.org/haecker-felix/libhandy-rs#c5ed9d1bf5aab9c29a3e7e7904347159c2518d59"
 dependencies = [
  "gdk",
  "gdk-pixbuf-sys",
