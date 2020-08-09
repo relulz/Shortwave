@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-06-11 18:54+0000\n"
-"PO-Revision-Date: 2020-06-14 13:35+0200\n"
+"POT-Creation-Date: 2020-08-02 15:56+0000\n"
+"PO-Revision-Date: 2020-08-09 10:52+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -27,7 +27,7 @@ msgstr "Informacje o stacji"
 msgid "Language"
 msgstr "Język"
 
-#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:119
+#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:175
 msgid "Tags"
 msgstr "Etykiety"
 
@@ -39,15 +39,15 @@ msgstr "Kodek"
 msgid "Homepage"
 msgstr "Strona domowa"
 
-#: data/gtk/discover.ui:55
+#: data/gtk/discover.ui:54
 msgid "Most voted stations"
 msgstr "Stacje z największą liczbą głosów"
 
-#: data/gtk/discover.ui:89
+#: data/gtk/discover.ui:88
 msgid "Trending"
 msgstr "Na czasie"
 
-#: data/gtk/discover.ui:123
+#: data/gtk/discover.ui:122
 msgid "Other users are listening to…"
 msgstr "Inni użytkownicy słuchają…"
 
@@ -84,6 +84,7 @@ msgid "An error occurred"
 msgstr "Wystąpił błąd"
 
 #: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
+#: data/gtk/toolbar_controller.ui:74
 msgid "No playback"
 msgstr "Brak odtwarzania"
 
@@ -148,8 +149,24 @@ msgid "Appearance"
 msgstr "Wygląd"
 
 #: data/gtk/settings_window.ui:19
-msgid "Enable dark mode"
+msgid "Dark Mode"
 msgstr "Tryb ciemny"
+
+#: data/gtk/settings_window.ui:20
+msgid "Whether the application should use a dark theme"
+msgstr "Czy program ma używać ciemnego motywu"
+
+#: data/gtk/settings_window.ui:36
+msgid "Features"
+msgstr "Funkcje"
+
+#: data/gtk/settings_window.ui:40
+msgid "Notifications"
+msgstr "Powiadomienia"
+
+#: data/gtk/settings_window.ui:41
+msgid "Show desktop notifications when a new song gets played"
+msgstr "Powiadomienia na pulpicie, kiedy odtwarzany jest nowy utwór"
 
 #: data/gtk/shortcuts.ui:12
 msgid "General"
@@ -165,27 +182,33 @@ msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "Wyszukiwanie stacji"
 
-#: data/gtk/storefront.ui:29
+#: data/gtk/storefront.ui:21 data/gtk/library.ui:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Shortwave"
+
+#: data/gtk/storefront.ui:85
 msgid "Discover"
 msgstr "Odkrywaj"
 
-#: data/gtk/storefront.ui:44
+#: data/gtk/storefront.ui:100
 msgid "Search"
 msgstr "Wyszukaj"
 
-#: data/gtk/storefront.ui:69
+#: data/gtk/storefront.ui:125
 msgid "Locations"
 msgstr "Położenia"
 
-#: data/gtk/storefront.ui:94
+#: data/gtk/storefront.ui:150
 msgid "Languages"
 msgstr "Języki"
 
-#: data/gtk/library.ui:53
+#: data/gtk/library.ui:121
 msgid "Receiving station data…"
 msgstr "Odbieranie danych stacji…"
 
-#: data/gtk/library.ui:151
+#: data/gtk/library.ui:217
 msgid "Discover new stations"
 msgstr "Odkrywaj nowe stacje"
 
@@ -220,36 +243,32 @@ msgstr "Zapisane utwory znajdują się w katalogu Muzyka."
 msgid "Open"
 msgstr "Otwórz"
 
-#: data/gtk/player.ui:97
+#: data/gtk/player.ui:135
 msgid "Connected with"
 msgstr "Połączono z urządzeniem"
 
-#: data/gtk/window.ui:213
-msgid "Library"
-msgstr "Kolekcja"
-
-#: src/audio/player.rs:157
+#: src/audio/player.rs:167
 msgid "This station cannot be played because the stream is offline."
 msgstr "Nie można odtwarzać tej stacji, ponieważ strumień jest rozłączony."
 
-#: src/audio/player.rs:175
+#: src/audio/player.rs:185
 msgid "Station cannot be streamed."
 msgstr "Nie można odtwarzać stacji."
 
-#: src/audio/player.rs:175
+#: src/audio/player.rs:185
 msgid "URL is not valid."
 msgstr "Adres URL jest nieprawidłowy."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:55
+#: src/database/library.rs:60
 msgid "Welcome to {}"
 msgstr "Witamy w programie {}"
 
-#: src/database/library.rs:145
+#: src/database/library.rs:156
 msgid "No longer existing station removed from library."
 msgstr "Usunięto już nieistniejącą stację z kolekcji."
 
-#: src/database/library.rs:149 src/discover/pages/discover.rs:127
+#: src/database/library.rs:160 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Nie można odebrać danych stacji."
@@ -289,24 +308,19 @@ msgstr ""
 "Piotr Drąg <piotrdrag@gmail.com>, 2020\n"
 "Aviary.pl <community-poland@mozilla.org>, 2020"
 
-#: src/utils.rs:122
+#: src/utils.rs:110
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} głos"
 msgstr[1] "{} głosy"
 msgstr[2] "{} głosów"
 
-#: src/utils.rs:124
+#: src/utils.rs:112
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} głos"
 msgstr[1] "{} · {} głosy"
 msgstr[2] "{} · {} głosów"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "Shortwave"
-msgstr "Shortwave"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
 msgid "Felix Häcker"
