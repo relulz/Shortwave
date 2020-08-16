@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-05-31 14:43+0000\n"
-"PO-Revision-Date: 2020-06-08 12:30+0300\n"
+"POT-Creation-Date: 2020-08-02 15:56+0000\n"
+"PO-Revision-Date: 2020-08-16 15:51+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -16,17 +16,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: data/gtk/station_dialog.ui:10
 msgid "Station details"
 msgstr "Aseman tiedot"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:225
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:169
 msgid "Language"
 msgstr "Kieli"
 
-#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:119
+#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:175
 msgid "Tags"
 msgstr "Tunnisteet"
 
@@ -38,19 +38,19 @@ msgstr "Koodekki"
 msgid "Homepage"
 msgstr "Verkkosivusto"
 
-#: data/gtk/discover.ui:55
+#: data/gtk/discover.ui:54
 msgid "Most voted stations"
 msgstr "Eniten ääniä keränneet asemat"
 
-#: data/gtk/discover.ui:89
+#: data/gtk/discover.ui:88
 msgid "Trending"
 msgstr "Nousussa"
 
-#: data/gtk/discover.ui:123
+#: data/gtk/discover.ui:122
 msgid "Other users are listening to…"
 msgstr "Muut käyttäjät kuuntelevat…"
 
-#: data/gtk/song_row.ui:17
+#: data/gtk/song_row.ui:18
 msgid "Save recorded song"
 msgstr "Tallenna nauhoitettu kappale"
 
@@ -82,64 +82,56 @@ msgstr "Virheen lisätiedot"
 msgid "An error occurred"
 msgstr "Tapahtui virhe"
 
-#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:57
+#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
+#: data/gtk/toolbar_controller.ui:74
 msgid "No playback"
 msgstr "Mitään ei toisteta"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:192
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:136
 msgid "Sorting"
 msgstr "Järjestys"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:150
-#: data/gtk/window.ui:41
-msgid "Library"
-msgstr "Kirjasto"
-
-#: data/gtk/menu/app_menu.ui:57
+#: data/gtk/menu/app_menu.ui:43
 msgid "Open radio-browser.info <sup>↗</sup>"
 msgstr "Avaa radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/menu/app_menu.ui:72
+#: data/gtk/menu/app_menu.ui:58
 msgid "Create new station"
 msgstr "Luo uusi asema"
 
-#: data/gtk/menu/app_menu.ui:97
+#: data/gtk/menu/app_menu.ui:83
 msgid "Preferences"
 msgstr "Asetukset"
 
-#: data/gtk/menu/app_menu.ui:111
+#: data/gtk/menu/app_menu.ui:97
 msgid "Keyboard Shortcuts"
 msgstr "Pikanäppäimet"
 
-#: data/gtk/menu/app_menu.ui:125
+#: data/gtk/menu/app_menu.ui:111
 msgid "About Shortwave"
 msgstr "Tietoja - Shortwave"
 
-#: data/gtk/menu/app_menu.ui:167
-msgid "Import from Gradio"
-msgstr "Tuo Gradiosta"
-
-#: data/gtk/menu/app_menu.ui:210
+#: data/gtk/menu/app_menu.ui:154
 msgid "Name"
 msgstr "Nimi"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:184
 msgid "Country"
 msgstr "Maa"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:199
 msgid "State"
 msgstr "Tila"
 
-#: data/gtk/menu/app_menu.ui:270
+#: data/gtk/menu/app_menu.ui:214
 msgid "Votes"
 msgstr "Äänet"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:240
 msgid "Ascending"
 msgstr "Nouseva"
 
-#: data/gtk/menu/app_menu.ui:311
+#: data/gtk/menu/app_menu.ui:255
 msgid "Descending"
 msgstr "Laskeva"
 
@@ -147,13 +139,33 @@ msgstr "Laskeva"
 msgid "Show station details"
 msgstr "Näytä aseman tiedot"
 
+#: data/gtk/menu/player_menu.ui:58
+msgid "Enable mini player"
+msgstr "Käytä pienoissoitinta"
+
 #: data/gtk/settings_window.ui:15
 msgid "Appearance"
 msgstr "Ulkoasu"
 
 #: data/gtk/settings_window.ui:19
-msgid "Enable dark mode"
-msgstr "Käytä tummaa teemaa"
+msgid "Dark Mode"
+msgstr "Tumma tila"
+
+#: data/gtk/settings_window.ui:20
+msgid "Whether the application should use a dark theme"
+msgstr "Käyttääkö sovellus tummaa teemaa vai ei"
+
+#: data/gtk/settings_window.ui:36
+msgid "Features"
+msgstr "Ominaisuudet"
+
+#: data/gtk/settings_window.ui:40
+msgid "Notifications"
+msgstr "Ilmoitukset"
+
+#: data/gtk/settings_window.ui:41
+msgid "Show desktop notifications when a new song gets played"
+msgstr "Näytä työpöytäilmoitus kun uusi kappale alkaa soida"
 
 #: data/gtk/shortcuts.ui:12
 msgid "General"
@@ -169,33 +181,35 @@ msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "Etsi asemia"
 
-#: data/gtk/storefront.ui:29
+#: data/gtk/storefront.ui:21 data/gtk/library.ui:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Shortwave"
+
+#: data/gtk/storefront.ui:85
 msgid "Discover"
 msgstr "Löydä"
 
-#: data/gtk/storefront.ui:44
+#: data/gtk/storefront.ui:100
 msgid "Search"
 msgstr "Etsi"
 
-#: data/gtk/storefront.ui:69
+#: data/gtk/storefront.ui:125
 msgid "Locations"
 msgstr "Sijainnit"
 
-#: data/gtk/storefront.ui:94
+#: data/gtk/storefront.ui:150
 msgid "Languages"
 msgstr "Kielet"
 
-#: data/gtk/library.ui:53
+#: data/gtk/library.ui:121
 msgid "Receiving station data…"
 msgstr "Vastaanotetaan aseman tietoja…"
 
-#: data/gtk/library.ui:151
+#: data/gtk/library.ui:217
 msgid "Discover new stations"
 msgstr "Löydä uusia asemia"
-
-#: data/gtk/library.ui:176
-msgid "Import stations from Gradio"
-msgstr "Tuo asemia Gradio-sovelluksesta"
 
 #: data/gtk/song_listbox.ui:34
 msgid ""
@@ -219,40 +233,40 @@ msgstr "Havaitut kappaleet näkyvät tässä."
 msgid "How does this work?"
 msgstr "Miten tämä toimii?"
 
-#: data/gtk/song_listbox.ui:205
+#: data/gtk/song_listbox.ui:197
 msgid "Saved songs are located in your Music folder."
 msgstr "Tallennetut kappaleet sijaitsevat Musiikki-kansiossa."
 
-#: data/gtk/song_listbox.ui:223
+#: data/gtk/song_listbox.ui:215
 msgid "Open"
 msgstr "Avaa"
 
-#: data/gtk/player.ui:97
+#: data/gtk/player.ui:135
 msgid "Connected with"
 msgstr "Yhdistettynä"
 
-#: src/audio/player.rs:146
+#: src/audio/player.rs:167
 msgid "This station cannot be played because the stream is offline."
 msgstr "Asemaa ei voida toistaa, koska aseman suoratoisto ei ole käynnissä."
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:185
 msgid "Station cannot be streamed."
 msgstr "Asemaa ei voi suoratoistaa."
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:185
 msgid "URL is not valid."
 msgstr "Osoite ei ole kelvollinen."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:55
+#: src/database/library.rs:60
 msgid "Welcome to {}"
 msgstr "Tervetuloa, käytössäsi on {}"
 
-#: src/database/library.rs:145
+#: src/database/library.rs:156
 msgid "No longer existing station removed from library."
 msgstr "Toimintansa lopettanut asema poistettiin kirjastosta."
 
-#: src/database/library.rs:149 src/discover/pages/discover.rs:127
+#: src/database/library.rs:160 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Aseman tietoja ei voitu vastaanottaa."
@@ -262,7 +276,6 @@ msgid "Show statistics"
 msgstr "Näytä tilastot"
 
 #: src/discover/pages/discover.rs:58
-#| msgid "Discover new stations"
 msgid "Browse over 25,500 stations"
 msgstr "Selaa yli 25 500 asemaa"
 
@@ -291,38 +304,17 @@ msgstr "Kuuntele internetradiota"
 msgid "translator-credits"
 msgstr "Jiri Grönroos"
 
-#: src/ui/import_dialog.rs:26
-msgid "Select database to import"
-msgstr "Valitse tuotava tietokanta"
-
-#: src/ui/import_dialog.rs:29
-msgid "Cancel"
-msgstr "Peru"
-
-#: src/ui/import_dialog.rs:29
-msgid "Import"
-msgstr "Tuo"
-
-#: src/ui/window.rs:279
-msgid "Could not import library."
-msgstr "Kirjastoa ei voitu tuoda."
-
-#: src/utils.rs:122
+#: src/utils.rs:110
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} ääni"
 msgstr[1] "{} ääntä"
 
-#: src/utils.rs:124
+#: src/utils.rs:112
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} ääni"
 msgstr[1] "{} · {} ääntä"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "Shortwave"
-msgstr "Shortwave"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
 msgid "Felix Häcker"
@@ -374,6 +366,30 @@ msgstr "Saumaton integraatio Gnome-työpöytäympäristöön"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;suoratoisto;nettiradio;"
+
+#~ msgid "Library"
+#~ msgstr "Kirjasto"
+
+#~ msgid "Import from Gradio"
+#~ msgstr "Tuo Gradiosta"
+
+#~ msgid "Enable dark mode"
+#~ msgstr "Käytä tummaa teemaa"
+
+#~ msgid "Import stations from Gradio"
+#~ msgstr "Tuo asemia Gradio-sovelluksesta"
+
+#~ msgid "Select database to import"
+#~ msgstr "Valitse tuotava tietokanta"
+
+#~ msgid "Cancel"
+#~ msgstr "Peru"
+
+#~ msgid "Import"
+#~ msgstr "Tuo"
+
+#~ msgid "Could not import library."
+#~ msgstr "Kirjastoa ei voitu tuoda."
 
 #~ msgid "Converting data…"
 #~ msgstr "Muunnetaan tietoja…"
