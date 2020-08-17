@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-06-11 18:54+0000\n"
-"PO-Revision-Date: 2020-07-31 19:52+0700\n"
-"Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
+"POT-Creation-Date: 2020-08-02 15:56+0000\n"
+"PO-Revision-Date: 2020-08-17 20:47+0700\n"
+"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: data/gtk/station_dialog.ui:10
 msgid "Station details"
@@ -26,7 +26,7 @@ msgstr "Rincian stasiun"
 msgid "Language"
 msgstr "Bahasa"
 
-#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:119
+#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:175
 msgid "Tags"
 msgstr "Tag"
 
@@ -38,15 +38,15 @@ msgstr "Kodek"
 msgid "Homepage"
 msgstr "Beranda"
 
-#: data/gtk/discover.ui:55
+#: data/gtk/discover.ui:54
 msgid "Most voted stations"
 msgstr "Stasiun paling banyak dipilih"
 
-#: data/gtk/discover.ui:89
+#: data/gtk/discover.ui:88
 msgid "Trending"
 msgstr "Tren"
 
-#: data/gtk/discover.ui:123
+#: data/gtk/discover.ui:122
 msgid "Other users are listening to…"
 msgstr "Pengguna lain sedang mendengarkan…"
 
@@ -83,6 +83,7 @@ msgid "An error occurred"
 msgstr "Terjadi kesalahan"
 
 #: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
+#: data/gtk/toolbar_controller.ui:74
 msgid "No playback"
 msgstr "Tidak ada pemutaran"
 
@@ -147,8 +148,24 @@ msgid "Appearance"
 msgstr "Penampilan"
 
 #: data/gtk/settings_window.ui:19
-msgid "Enable dark mode"
-msgstr "Fungsikan mode gelap"
+msgid "Dark Mode"
+msgstr "Mode Gelap"
+
+#: data/gtk/settings_window.ui:20
+msgid "Whether the application should use a dark theme"
+msgstr "Apakah aplikasi mesti menggunakan tema gelap"
+
+#: data/gtk/settings_window.ui:36
+msgid "Features"
+msgstr "Fitur"
+
+#: data/gtk/settings_window.ui:40
+msgid "Notifications"
+msgstr "Notifikasi"
+
+#: data/gtk/settings_window.ui:41
+msgid "Show desktop notifications when a new song gets played"
+msgstr "Tampilkan pemberitahuan desktop ketika sebuah lagu baru mulai diputar"
 
 #: data/gtk/shortcuts.ui:12
 msgid "General"
@@ -164,27 +181,33 @@ msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "Mencari stasiun"
 
-#: data/gtk/storefront.ui:29
+#: data/gtk/storefront.ui:21 data/gtk/library.ui:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Shortwave"
+
+#: data/gtk/storefront.ui:85
 msgid "Discover"
 msgstr "Temukan"
 
-#: data/gtk/storefront.ui:44
+#: data/gtk/storefront.ui:100
 msgid "Search"
 msgstr "Cari"
 
-#: data/gtk/storefront.ui:69
+#: data/gtk/storefront.ui:125
 msgid "Locations"
 msgstr "Lokasi"
 
-#: data/gtk/storefront.ui:94
+#: data/gtk/storefront.ui:150
 msgid "Languages"
 msgstr "Bahasa"
 
-#: data/gtk/library.ui:53
+#: data/gtk/library.ui:121
 msgid "Receiving station data…"
 msgstr "Menerima data stasiun…"
 
-#: data/gtk/library.ui:151
+#: data/gtk/library.ui:217
 msgid "Discover new stations"
 msgstr "Temukan stasiun baru"
 
@@ -218,36 +241,32 @@ msgstr "Lagu tersimpan berada di folder Musik Anda."
 msgid "Open"
 msgstr "Buka"
 
-#: data/gtk/player.ui:97
+#: data/gtk/player.ui:135
 msgid "Connected with"
 msgstr "Terhubung dengan"
 
-#: data/gtk/window.ui:213
-msgid "Library"
-msgstr "Pustaka"
-
-#: src/audio/player.rs:157
+#: src/audio/player.rs:167
 msgid "This station cannot be played because the stream is offline."
 msgstr "Stasiun ini tidak dapat diputar karena stream sedang luring."
 
-#: src/audio/player.rs:175
+#: src/audio/player.rs:185
 msgid "Station cannot be streamed."
 msgstr "Stasiun tidak dapat di-stream."
 
-#: src/audio/player.rs:175
+#: src/audio/player.rs:185
 msgid "URL is not valid."
 msgstr "URL tidak valid."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:55
+#: src/database/library.rs:60
 msgid "Welcome to {}"
 msgstr "Selamat datang di {}"
 
-#: src/database/library.rs:145
+#: src/database/library.rs:156
 msgid "No longer existing station removed from library."
 msgstr "Stasiun yang tidak ada lagi dihapus dari pustaka."
 
-#: src/database/library.rs:149 src/discover/pages/discover.rs:127
+#: src/database/library.rs:160 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Data stasiun tidak dapat diterima."
@@ -287,22 +306,17 @@ msgstr ""
 "Andika Triwidada <andika@gmail.com>, 2020.\n"
 "Kukuh Syafat <kukuhsyafaat@gnome.org>, 2020."
 
-#: src/utils.rs:122
+#: src/utils.rs:110
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} Suara"
 msgstr[1] "{} Suara"
 
-#: src/utils.rs:124
+#: src/utils.rs:112
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} Suara"
 msgstr[1] "{} · {} Suara"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "Shortwave"
-msgstr "Shortwave"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
 msgid "Felix Häcker"
@@ -355,6 +369,12 @@ msgstr "Integrasi mulus ke dalam lingkungan desktop GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Gelombang;"
+
+#~ msgid "Enable dark mode"
+#~ msgstr "Fungsikan mode gelap"
+
+#~ msgid "Library"
+#~ msgstr "Pustaka"
 
 #~ msgid "Import from Gradio"
 #~ msgstr "Impor dari Gradio"
