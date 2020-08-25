@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-06-11 18:54+0000\n"
-"PO-Revision-Date: 2020-07-19 08:37-0300\n"
+"POT-Creation-Date: 2020-08-02 15:56+0000\n"
+"PO-Revision-Date: 2020-08-25 09:17-0300\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -26,7 +26,7 @@ msgstr "Detalhes da estação"
 msgid "Language"
 msgstr "Idioma"
 
-#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:119
+#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:175
 msgid "Tags"
 msgstr "Etiquetas"
 
@@ -38,15 +38,15 @@ msgstr "Codec"
 msgid "Homepage"
 msgstr "Site"
 
-#: data/gtk/discover.ui:55
+#: data/gtk/discover.ui:54
 msgid "Most voted stations"
 msgstr "Estações mais votadas"
 
-#: data/gtk/discover.ui:89
+#: data/gtk/discover.ui:88
 msgid "Trending"
 msgstr "Em alta"
 
-#: data/gtk/discover.ui:123
+#: data/gtk/discover.ui:122
 msgid "Other users are listening to…"
 msgstr "Outros usuários estão ouvindo…"
 
@@ -83,6 +83,7 @@ msgid "An error occurred"
 msgstr "Ocorreu um erro"
 
 #: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
+#: data/gtk/toolbar_controller.ui:74
 msgid "No playback"
 msgstr "Nenhuma reprodução"
 
@@ -147,8 +148,26 @@ msgid "Appearance"
 msgstr "Aparência"
 
 #: data/gtk/settings_window.ui:19
-msgid "Enable dark mode"
-msgstr "Habilitar modo escuro"
+msgid "Dark Mode"
+msgstr "Modo escuro"
+
+#: data/gtk/settings_window.ui:20
+msgid "Whether the application should use a dark theme"
+msgstr "Se o aplicativo deve usar um tema escuro."
+
+#: data/gtk/settings_window.ui:36
+#| msgid "Features:"
+msgid "Features"
+msgstr "Recursos"
+
+#: data/gtk/settings_window.ui:40
+#| msgid "Locations"
+msgid "Notifications"
+msgstr "Notificações"
+
+#: data/gtk/settings_window.ui:41
+msgid "Show desktop notifications when a new song gets played"
+msgstr "Mostra notificações quando uma nova música é reproduzida"
 
 #: data/gtk/shortcuts.ui:12
 msgid "General"
@@ -164,27 +183,33 @@ msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "Pesquisa por estações"
 
-#: data/gtk/storefront.ui:29
+#: data/gtk/storefront.ui:21 data/gtk/library.ui:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Shortwave"
+
+#: data/gtk/storefront.ui:85
 msgid "Discover"
 msgstr "Descobrir"
 
-#: data/gtk/storefront.ui:44
+#: data/gtk/storefront.ui:100
 msgid "Search"
 msgstr "Pesquisar"
 
-#: data/gtk/storefront.ui:69
+#: data/gtk/storefront.ui:125
 msgid "Locations"
 msgstr "Locais"
 
-#: data/gtk/storefront.ui:94
+#: data/gtk/storefront.ui:150
 msgid "Languages"
 msgstr "Idiomas"
 
-#: data/gtk/library.ui:53
+#: data/gtk/library.ui:121
 msgid "Receiving station data…"
 msgstr "Recebendo dados da estação…"
 
-#: data/gtk/library.ui:151
+#: data/gtk/library.ui:217
 msgid "Discover new stations"
 msgstr "Descobrir novas estações"
 
@@ -218,37 +243,33 @@ msgstr "As músicas salvas ficarão disponíveis na sua pasta Música."
 msgid "Open"
 msgstr "Abrir"
 
-#: data/gtk/player.ui:97
+#: data/gtk/player.ui:135
 msgid "Connected with"
 msgstr "Conectado com"
 
-#: data/gtk/window.ui:213
-msgid "Library"
-msgstr "Biblioteca"
-
-#: src/audio/player.rs:157
+#: src/audio/player.rs:167
 msgid "This station cannot be played because the stream is offline."
 msgstr ""
 "Esta estação não pode ser reproduzida porque o stream está desconectado."
 
-#: src/audio/player.rs:175
+#: src/audio/player.rs:185
 msgid "Station cannot be streamed."
 msgstr "A estação não pode ser reproduzida."
 
-#: src/audio/player.rs:175
+#: src/audio/player.rs:185
 msgid "URL is not valid."
 msgstr "A URL não é válida."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:55
+#: src/database/library.rs:60
 msgid "Welcome to {}"
 msgstr "Bem-vindo(a) ao {}"
 
-#: src/database/library.rs:145
+#: src/database/library.rs:156
 msgid "No longer existing station removed from library."
 msgstr "Estação inexistente removida da biblioteca."
 
-#: src/database/library.rs:149 src/discover/pages/discover.rs:127
+#: src/database/library.rs:160 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Os dados da estação não puderam ser recebidos."
@@ -258,7 +279,6 @@ msgid "Show statistics"
 msgstr "Mostrar estatísticas"
 
 #: src/discover/pages/discover.rs:58
-#| msgid "Browse over 25.500 stations"
 msgid "Browse over 25,500 stations"
 msgstr "Navegue por mais de 25.500 estações"
 
@@ -267,7 +287,6 @@ msgid "Add new station"
 msgstr "Adicionar nova estação"
 
 #: src/discover/pages/discover.rs:61
-#| msgid "Your favourite station is missing?"
 msgid "Your favorite station is missing?"
 msgstr "Sua estação favorita não está aqui?"
 
@@ -288,22 +307,17 @@ msgstr "Ouça a rádios da Internet"
 msgid "translator-credits"
 msgstr "Rafael Fontenelle <rafaelff@gnome.org>"
 
-#: src/utils.rs:122
+#: src/utils.rs:110
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} voto"
 msgstr[1] "{} votos"
 
-#: src/utils.rs:124
+#: src/utils.rs:112
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} voto"
 msgstr[1] "{} · {} votos"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "Shortwave"
-msgstr "Shortwave"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
 msgid "Felix Häcker"
@@ -322,7 +336,6 @@ msgid "Features:"
 msgstr "Recursos:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-#| msgid "Create your own library where you can add your favourite stations"
 msgid "Create your own library where you can add your favorite stations"
 msgstr ""
 "Crie sua própria biblioteca à qual você pode adicionar suas estações "
@@ -359,6 +372,12 @@ msgstr "Integração perfeita no ambiente GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Rádio;Radio;Stream;Fluxo;Wave;"
+
+#~ msgid "Enable dark mode"
+#~ msgstr "Habilitar modo escuro"
+
+#~ msgid "Library"
+#~ msgstr "Biblioteca"
 
 #~ msgid "Import from Gradio"
 #~ msgstr "Importar do Gradio"
