@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-08-02 15:56+0000\n"
+"POT-Creation-Date: 2020-08-13 09:14+0000\n"
 "PO-Revision-Date: 2020-08-13 10:53+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
@@ -158,12 +158,10 @@ msgid "Whether the application should use a dark theme"
 msgstr "Indica si la aplicación usa un tema oscuro"
 
 #: data/gtk/settings_window.ui:36
-#| msgid "Features:"
 msgid "Features"
 msgstr "Características"
 
 #: data/gtk/settings_window.ui:40
-#| msgid "Locations"
 msgid "Notifications"
 msgstr "Notificaciones"
 
@@ -265,7 +263,7 @@ msgstr "El URL no es válido."
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
 #: src/database/library.rs:60
 msgid "Welcome to {}"
-msgstr "Bienvenido a {}"
+msgstr "Bienvenido/a a {}"
 
 #: src/database/library.rs:156
 msgid "No longer existing station removed from library."
