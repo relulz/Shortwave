@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-04-19 10:22+0000\n"
-"PO-Revision-Date: 2020-05-05 16:52+0300\n"
+"POT-Creation-Date: 2020-08-02 15:56+0000\n"
+"PO-Revision-Date: 2020-09-06 01:46+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -24,11 +24,11 @@ msgstr ""
 msgid "Station details"
 msgstr "İstasyon ayrıntıları"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:225
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:169
 msgid "Language"
 msgstr "Dil"
 
-#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:119
+#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:175
 msgid "Tags"
 msgstr "Etiketler"
 
@@ -40,19 +40,19 @@ msgstr "Kodlayıcı"
 msgid "Homepage"
 msgstr "Başlangıç sayfası"
 
-#: data/gtk/discover.ui:55
+#: data/gtk/discover.ui:54
 msgid "Most voted stations"
 msgstr "En çok oylanan istasyonlar"
 
-#: data/gtk/discover.ui:89
+#: data/gtk/discover.ui:88
 msgid "Trending"
 msgstr "Gündemdekiler"
 
-#: data/gtk/discover.ui:123
+#: data/gtk/discover.ui:122
 msgid "Other users are listening to…"
 msgstr "Diğer kullanıcılar dinliyor…"
 
-#: data/gtk/song_row.ui:17
+#: data/gtk/song_row.ui:18
 msgid "Save recorded song"
 msgstr "Kaydedilen şarkıyı sakla"
 
@@ -84,64 +84,56 @@ msgstr "Hata ayrıntıları"
 msgid "An error occurred"
 msgstr "Hata oluştu"
 
-#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:57
+#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
+#: data/gtk/toolbar_controller.ui:74
 msgid "No playback"
 msgstr "Kayıttan yürütme yok"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:192
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:136
 msgid "Sorting"
 msgstr "Sıralama"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:150
-#: data/gtk/window.ui:41
-msgid "Library"
-msgstr "Kitaplık"
-
-#: data/gtk/menu/app_menu.ui:57
+#: data/gtk/menu/app_menu.ui:43
 msgid "Open radio-browser.info <sup>↗</sup>"
 msgstr "radio-browser.info’yu aç <sup>↗</sup>"
 
-#: data/gtk/menu/app_menu.ui:72
+#: data/gtk/menu/app_menu.ui:58
 msgid "Create new station"
 msgstr "Yeni istasyon oluştur"
 
-#: data/gtk/menu/app_menu.ui:97
+#: data/gtk/menu/app_menu.ui:83
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: data/gtk/menu/app_menu.ui:111
+#: data/gtk/menu/app_menu.ui:97
 msgid "Keyboard Shortcuts"
 msgstr "Klavye Kısayolları"
 
-#: data/gtk/menu/app_menu.ui:125
+#: data/gtk/menu/app_menu.ui:111
 msgid "About Shortwave"
 msgstr "Kısa Dalga Hakkında"
 
-#: data/gtk/menu/app_menu.ui:167
-msgid "Import from Gradio"
-msgstr "Gradio’dan içe aktar"
-
-#: data/gtk/menu/app_menu.ui:210
+#: data/gtk/menu/app_menu.ui:154
 msgid "Name"
 msgstr "Ad"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:184
 msgid "Country"
 msgstr "Ülke"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:199
 msgid "State"
 msgstr "Eyalet"
 
-#: data/gtk/menu/app_menu.ui:270
+#: data/gtk/menu/app_menu.ui:214
 msgid "Votes"
 msgstr "Oylar"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:240
 msgid "Ascending"
 msgstr "Artan"
 
-#: data/gtk/menu/app_menu.ui:311
+#: data/gtk/menu/app_menu.ui:255
 msgid "Descending"
 msgstr "Azalan"
 
@@ -149,13 +141,33 @@ msgstr "Azalan"
 msgid "Show station details"
 msgstr "İstasyon ayrıntılarını göster"
 
+#: data/gtk/menu/player_menu.ui:58
+msgid "Enable mini player"
+msgstr "Küçük çalıcıyı etkinleştir"
+
 #: data/gtk/settings_window.ui:15
 msgid "Appearance"
 msgstr "Görünüm"
 
 #: data/gtk/settings_window.ui:19
-msgid "Enable dark mode"
-msgstr "Koyu kipi etkinleştir"
+msgid "Dark Mode"
+msgstr "Karanlık Kip"
+
+#: data/gtk/settings_window.ui:20
+msgid "Whether the application should use a dark theme"
+msgstr "Uygulamanın karanlık kipi kullanıp kullanmayacağı"
+
+#: data/gtk/settings_window.ui:36
+msgid "Features"
+msgstr "Özellikler"
+
+#: data/gtk/settings_window.ui:40
+msgid "Notifications"
+msgstr "Bildirimler"
+
+#: data/gtk/settings_window.ui:41
+msgid "Show desktop notifications when a new song gets played"
+msgstr "Yeni parça çalınırken masaüstü bildirimi göster"
 
 #: data/gtk/shortcuts.ui:12
 msgid "General"
@@ -171,33 +183,35 @@ msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "İstasyon ara"
 
-#: data/gtk/storefront.ui:29
+#: data/gtk/storefront.ui:21 data/gtk/library.ui:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Kısa Dalga"
+
+#: data/gtk/storefront.ui:85
 msgid "Discover"
 msgstr "Keşfet"
 
-#: data/gtk/storefront.ui:44
+#: data/gtk/storefront.ui:100
 msgid "Search"
 msgstr "Ara"
 
-#: data/gtk/storefront.ui:69
+#: data/gtk/storefront.ui:125
 msgid "Locations"
 msgstr "Konumlar"
 
-#: data/gtk/storefront.ui:94
+#: data/gtk/storefront.ui:150
 msgid "Languages"
 msgstr "Diller"
 
-#: data/gtk/library.ui:53
+#: data/gtk/library.ui:121
 msgid "Receiving station data…"
 msgstr "İstasyon bilgisi alınıyor…"
 
-#: data/gtk/library.ui:151
+#: data/gtk/library.ui:217
 msgid "Discover new stations"
 msgstr "Yeni istasyonları keşfet"
-
-#: data/gtk/library.ui:176
-msgid "Import stations from Gradio"
-msgstr "İstasyonları Gradio’dan içe aktar"
 
 #: data/gtk/song_listbox.ui:34
 msgid ""
@@ -221,40 +235,40 @@ msgstr "Algılanan şarkılar burada görünür."
 msgid "How does this work?"
 msgstr "Bu nasıl çalışır?"
 
-#: data/gtk/song_listbox.ui:205
+#: data/gtk/song_listbox.ui:197
 msgid "Saved songs are located in your Music folder."
 msgstr "Kaydedilen şarkılar Müzik klasörünüzde konumlanır."
 
-#: data/gtk/song_listbox.ui:223
+#: data/gtk/song_listbox.ui:215
 msgid "Open"
 msgstr "Aç"
 
-#: data/gtk/player.ui:97
+#: data/gtk/player.ui:135
 msgid "Connected with"
 msgstr "Şununla bağlı"
 
-#: src/audio/player.rs:146
+#: src/audio/player.rs:167
 msgid "This station cannot be played because the stream is offline."
 msgstr "Yayın çevrim dışı olduğundan bu istasyon çalınamıyor."
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:185
 msgid "Station cannot be streamed."
 msgstr "İstasyon yayını bulunamadı."
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:185
 msgid "URL is not valid."
 msgstr "URL geçersiz."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:55
+#: src/database/library.rs:60
 msgid "Welcome to {}"
 msgstr "{} uygulamasına hoş geldiniz"
 
-#: src/database/library.rs:145
+#: src/database/library.rs:156
 msgid "No longer existing station removed from library."
 msgstr "Var olan istasyon kütüphaneden kaldırılmadı."
 
-#: src/database/library.rs:149 src/discover/pages/discover.rs:127
+#: src/database/library.rs:160 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "İstasyon bilgisi alınamadı."
@@ -264,15 +278,15 @@ msgid "Show statistics"
 msgstr "İstatistikleri göster"
 
 #: src/discover/pages/discover.rs:58
-msgid "Browse over 25.500 stations"
-msgstr "25.000’i aşkın istasyona göz at"
+msgid "Browse over 25,500 stations"
+msgstr "25000’i aşkın istasyona göz at"
 
 #: src/discover/pages/discover.rs:60
 msgid "Add new station"
 msgstr "Yeni istasyon ekle"
 
 #: src/discover/pages/discover.rs:61
-msgid "Your favourite station is missing?"
+msgid "Your favorite station is missing?"
 msgstr "Gözde istasyonunuz eksik mi?"
 
 #: src/discover/pages/discover.rs:63
@@ -288,52 +302,19 @@ msgstr "radio-browser.info ile güçlendirildi"
 msgid "Listen to internet radio"
 msgstr "İnternet radyolarını dinle"
 
-#: src/ui/import_dialog.rs:32
-msgid "Select database to import"
-msgstr "İçe aktarılacak veri tabanını seç"
+#: src/ui/about_dialog.rs:34
+msgid "translator-credits"
+msgstr "Emin Tufan Çetin <etcetin@gmail.com>"
 
-#: src/ui/import_dialog.rs:35
-msgid "Import"
-msgstr "İçe aktar"
-
-#: src/ui/import_dialog.rs:36
-msgid "Cancel"
-msgstr "İptal et"
-
-#. Get station identifiers
-#: src/ui/import_dialog.rs:50
-msgid "Converting data…"
-msgstr "Veri dönüştürülüyor…"
-
-#. Get actual stations from identifiers
-#: src/ui/import_dialog.rs:56
-msgid "Importing {} station…"
-msgid_plural "Importing {} stations…"
-msgstr[0] "{} istasyon içe aktarılıyor…"
-
-#: src/ui/import_dialog.rs:70
-msgid "Imported {} station!"
-msgid_plural "Imported {} stations!"
-msgstr[0] "{} istasyon içe aktarıldı!"
-
-#: src/ui/window.rs:273
-msgid "Could not import library."
-msgstr "Kitaplık içe aktarılamadı."
-
-#: src/utils.rs:122
+#: src/utils.rs:110
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} Oy"
 
-#: src/utils.rs:124
+#: src/utils.rs:112
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} Oy"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "Shortwave"
-msgstr "Kısa Dalga"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
 msgid "Felix Häcker"
@@ -352,7 +333,7 @@ msgid "Features:"
 msgstr "Özellikler:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favourite stations"
+msgid "Create your own library where you can add your favorite stations"
 msgstr "Beğendiğiniz istasyonları ekleyerek kendi kitaplığınızı oluşturun"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
@@ -381,3 +362,38 @@ msgstr "GNOME masaüstü ortamı ile kusursuz tümleşim"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radyo;Yayın;Akış;Dalga;Kısa dalga;İstasyon;"
+
+#~ msgid "Library"
+#~ msgstr "Kitaplık"
+
+#~ msgid "Import from Gradio"
+#~ msgstr "Gradio’dan içe aktar"
+
+#~ msgid "Enable dark mode"
+#~ msgstr "Koyu kipi etkinleştir"
+
+#~ msgid "Import stations from Gradio"
+#~ msgstr "İstasyonları Gradio’dan içe aktar"
+
+#~ msgid "Select database to import"
+#~ msgstr "İçe aktarılacak veri tabanını seç"
+
+#~ msgid "Import"
+#~ msgstr "İçe aktar"
+
+#~ msgid "Cancel"
+#~ msgstr "İptal et"
+
+#~ msgid "Converting data…"
+#~ msgstr "Veri dönüştürülüyor…"
+
+#~ msgid "Importing {} station…"
+#~ msgid_plural "Importing {} stations…"
+#~ msgstr[0] "{} istasyon içe aktarılıyor…"
+
+#~ msgid "Imported {} station!"
+#~ msgid_plural "Imported {} stations!"
+#~ msgstr[0] "{} istasyon içe aktarıldı!"
+
+#~ msgid "Could not import library."
+#~ msgstr "Kitaplık içe aktarılamadı."
