@@ -1,14 +1,14 @@
 # Basque translation for shortwave.
 # Copyright (C) 2020 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
-# Asier Sarasua Garmendia <asier.sarasua@gmail.com>, 2020.
+# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2020.
 #
 msgid ""
 msgstr "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-04-10 09:24+0000\n"
-"PO-Revision-Date: 2020-04-10 10:00+0000\n"
-"Last-Translator: Asier Sarasua Garmendia <asier.sarasua@gmail.com>\n"
+"POT-Creation-Date: 2020-08-02 15:56+0000\n"
+"PO-Revision-Date: 2020-09-06 10:00+0000\n"
+"Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
@@ -20,11 +20,11 @@ msgstr "Project-Id-Version: shortwave master\n"
 msgid "Station details"
 msgstr "Irrati-estazioaren xehetasunak"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:210
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:169
 msgid "Language"
 msgstr "Hizkuntza"
 
-#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:119
+#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:175
 msgid "Tags"
 msgstr "Etiketak"
 
@@ -36,19 +36,19 @@ msgstr "Kodeka"
 msgid "Homepage"
 msgstr "Webgune nagusia"
 
-#: data/gtk/discover.ui:39
+#: data/gtk/discover.ui:54
 msgid "Most voted stations"
 msgstr "Boto gehien dituen estazioa"
 
-#: data/gtk/discover.ui:73
+#: data/gtk/discover.ui:88
 msgid "Trending"
 msgstr "Modan daudenak"
 
-#: data/gtk/discover.ui:107
+#: data/gtk/discover.ui:122
 msgid "Other users are listening to…"
 msgstr "Beste erabiltzaileak entzuten ari direnak…"
 
-#: data/gtk/song_row.ui:17
+#: data/gtk/song_row.ui:18
 msgid "Save recorded song"
 msgstr "Gorde grabatutako abestia"
 
@@ -80,60 +80,56 @@ msgstr "Errore-xehetasunak"
 msgid "An error occurred"
 msgstr "Errorea gertatu da"
 
-#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:57
+#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
+#: data/gtk/toolbar_controller.ui:74
 msgid "No playback"
 msgstr "Ez dago erreprodukziorik"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:177
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:136
 msgid "Sorting"
 msgstr "Ordenatzen"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:135
-#: data/gtk/window.ui:41
-msgid "Library"
-msgstr "Liburutegia"
+#: data/gtk/menu/app_menu.ui:43
+msgid "Open radio-browser.info <sup>↗</sup>"
+msgstr "Ireki radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/menu/app_menu.ui:57
+#: data/gtk/menu/app_menu.ui:58
 msgid "Create new station"
 msgstr "Sortu irrati-estazio berria"
 
-#: data/gtk/menu/app_menu.ui:82
+#: data/gtk/menu/app_menu.ui:83
 msgid "Preferences"
 msgstr "Hobespenak"
 
-#: data/gtk/menu/app_menu.ui:96
+#: data/gtk/menu/app_menu.ui:97
 msgid "Keyboard Shortcuts"
 msgstr "Laster-teklak"
 
-#: data/gtk/menu/app_menu.ui:110
+#: data/gtk/menu/app_menu.ui:111
 msgid "About Shortwave"
 msgstr "Shortwave aplikazioari buruz"
 
-#: data/gtk/menu/app_menu.ui:152
-msgid "Import from Gradio"
-msgstr "Inportatu Gradio aplikaziotik"
-
-#: data/gtk/menu/app_menu.ui:195
+#: data/gtk/menu/app_menu.ui:154
 msgid "Name"
 msgstr "Izena"
 
-#: data/gtk/menu/app_menu.ui:225
+#: data/gtk/menu/app_menu.ui:184
 msgid "Country"
 msgstr "Herrialdea"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:199
 msgid "State"
 msgstr "Egoera"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:214
 msgid "Votes"
 msgstr "Botoak"
 
-#: data/gtk/menu/app_menu.ui:281
+#: data/gtk/menu/app_menu.ui:240
 msgid "Ascending"
 msgstr "Gorantz"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:255
 msgid "Descending"
 msgstr "Beherantz"
 
@@ -141,13 +137,33 @@ msgstr "Beherantz"
 msgid "Show station details"
 msgstr "Erakutsi estazioaren xehetasunak"
 
+#: data/gtk/menu/player_menu.ui:58
+msgid "Enable mini player"
+msgstr "Gaitu mini erreproduzigailua"
+
 #: data/gtk/settings_window.ui:15
 msgid "Appearance"
 msgstr "Itxura"
 
 #: data/gtk/settings_window.ui:19
-msgid "Enable dark mode"
-msgstr "Gaitu modu iluna"
+msgid "Dark Mode"
+msgstr "Modu iluna"
+
+#: data/gtk/settings_window.ui:20
+msgid "Whether the application should use a dark theme"
+msgstr "Aplikazioak gai iluna erabiliko duen ala ez"
+
+#: data/gtk/settings_window.ui:36
+msgid "Features"
+msgstr "Ezaugarriak"
+
+#: data/gtk/settings_window.ui:40
+msgid "Notifications"
+msgstr "Jakinarazpenak"
+
+#: data/gtk/settings_window.ui:41
+msgid "Show desktop notifications when a new song gets played"
+msgstr "Erakutsi mahaiganeko jakinarazpenak abesti berriak erreproduzitzen direnean"
 
 #: data/gtk/shortcuts.ui:12
 msgid "General"
@@ -163,33 +179,35 @@ msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "Bilatu estazioak"
 
-#: data/gtk/storefront.ui:29
+#: data/gtk/storefront.ui:21 data/gtk/library.ui:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Shortwave"
+
+#: data/gtk/storefront.ui:85
 msgid "Discover"
 msgstr "Aurkitu"
 
-#: data/gtk/storefront.ui:44
+#: data/gtk/storefront.ui:100
 msgid "Search"
 msgstr "Bilatu"
 
-#: data/gtk/storefront.ui:69
+#: data/gtk/storefront.ui:125
 msgid "Locations"
 msgstr "Kokalekuak"
 
-#: data/gtk/storefront.ui:94
+#: data/gtk/storefront.ui:150
 msgid "Languages"
 msgstr "Hizkuntzak"
 
-#: data/gtk/library.ui:53
+#: data/gtk/library.ui:121
 msgid "Receiving station data…"
 msgstr "Estazioaren datuak jasotzen…"
 
-#: data/gtk/library.ui:151
+#: data/gtk/library.ui:217
 msgid "Discover new stations"
 msgstr "Aurkitu irrati-estazio berriak"
-
-#: data/gtk/library.ui:176
-msgid "Import stations from Gradio"
-msgstr "Inportatu estazioak Gradio aplikaziotik"
 
 #: data/gtk/song_listbox.ui:34
 msgid ""
@@ -212,99 +230,88 @@ msgstr "Detektatutako abestiak hemen agertuko dira."
 msgid "How does this work?"
 msgstr "Nola funtzionatzen du?"
 
-#: data/gtk/song_listbox.ui:205
+#: data/gtk/song_listbox.ui:197
 msgid "Saved songs are located in your Music folder."
 msgstr "Gordetako abestiak zure 'Musika' karpetan egongo dira."
 
-#: data/gtk/song_listbox.ui:223
+#: data/gtk/song_listbox.ui:215
 msgid "Open"
 msgstr "Ireki"
 
-#: data/gtk/player.ui:97
+#: data/gtk/player.ui:135
 msgid "Connected with"
 msgstr "Honekin konektatua:"
 
-#: src/audio/player.rs:142
+#: src/audio/player.rs:167
 msgid "This station cannot be played because the stream is offline."
 msgstr "Estazio hau ezin da erreproduzitu korrontea lineaz kanpo dagoelako."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:185
 msgid "Station cannot be streamed."
 msgstr "Estazioa ezin da korronte bidez eskaini."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:185
 msgid "URL is not valid."
 msgstr "URLa ez da baliozkoa."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:55
+#: src/database/library.rs:60
 msgid "Welcome to {}"
 msgstr "Ongi etorri {} aplikaziora"
 
-#: src/database/library.rs:145
+#: src/database/library.rs:156
 msgid "No longer existing station removed from library."
 msgstr "Dagoeneko existitzen ez den estazioa liburutegitik kendu da."
 
-#: src/database/library.rs:149 src/discover/pages/discover.rs:104
+#: src/database/library.rs:160 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Estazioaren datuak ezin izan dira jaso."
+
+#: src/discover/pages/discover.rs:57
+msgid "Show statistics"
+msgstr "Erakutsi estatistikak"
+
+#: src/discover/pages/discover.rs:58
+msgid "Browse over 25,500 stations"
+msgstr "Arakatu 25.000 irrati-estazio"
+
+#: src/discover/pages/discover.rs:60
+msgid "Add new station"
+msgstr "Gehitu estazio berria"
+
+#: src/discover/pages/discover.rs:61
+msgid "Your favorite station is missing?"
+msgstr "Zure irratirik gogokoena falta al da?"
+
+#: src/discover/pages/discover.rs:63
+msgid "Open website"
+msgstr "Ireki webgunea"
+
+#: src/discover/pages/discover.rs:64
+msgid "Powered by radio-browser.info"
+msgstr "radio-browser.info darabil"
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
 msgid "Listen to internet radio"
 msgstr "Entzun interneteko irrratiak"
 
-#: src/ui/import_dialog.rs:32
-msgid "Select database to import"
-msgstr "Hautatu inportatuko den datu-basea"
+#: src/ui/about_dialog.rs:34
+msgid "translator-credits"
+msgstr "translator-credits"
 
-#: src/ui/import_dialog.rs:35
-msgid "Import"
-msgstr "Inportatu"
-
-#: src/ui/import_dialog.rs:36
-msgid "Cancel"
-msgstr "Utzi"
-
-#. Get station identifiers
-#: src/ui/import_dialog.rs:50
-msgid "Converting data…"
-msgstr "Datuak bihurtzen…"
-
-#. Get actual stations from identifiers
-#: src/ui/import_dialog.rs:56
-msgid "Importing {} station…"
-msgid_plural "Importing {} stations…"
-msgstr[0] "Estazio {} inportatzen…"
-msgstr[1] "{} estazio inportatzen…"
-
-#: src/ui/import_dialog.rs:70
-msgid "Imported {} station!"
-msgid_plural "Imported {} stations!"
-msgstr[0] "Estazio {} inportatu da!"
-msgstr[1] "{} estazio inportatu dira!"
-
-#: src/ui/window.rs:268
-msgid "Could not import library."
-msgstr "Ezin izan da liburutegia inportatu."
-
-#: src/utils.rs:122
+#: src/utils.rs:110
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "Boto {}"
 msgstr[1] "{} boto"
 
-#: src/utils.rs:124
+#: src/utils.rs:112
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · Boto {}"
 msgstr[1] "{} · {} boto"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "Shortwave"
-msgstr "Shortwave"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
 msgid "Felix Häcker"
@@ -321,7 +328,7 @@ msgid "Features:"
 msgstr "Eginbideak:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favourite stations"
+msgid "Create your own library where you can add your favorite stations"
 msgstr "Sortu zure liburutegi propioa zure gogoko estazioak gehitzeko"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
@@ -350,3 +357,40 @@ msgstr "Josturatik gabeko integrazioa GNOME mahaigaineko ingurunearekin"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Irratia;Korrontea;Wave;"
+
+#~ msgid "Library"
+#~ msgstr "Liburutegia"
+
+#~ msgid "Import from Gradio"
+#~ msgstr "Inportatu Gradio aplikaziotik"
+
+#~ msgid "Enable dark mode"
+#~ msgstr "Gaitu modu iluna"
+
+#~ msgid "Import stations from Gradio"
+#~ msgstr "Inportatu estazioak Gradio aplikaziotik"
+
+#~ msgid "Select database to import"
+#~ msgstr "Hautatu inportatuko den datu-basea"
+
+#~ msgid "Import"
+#~ msgstr "Inportatu"
+
+#~ msgid "Cancel"
+#~ msgstr "Utzi"
+
+#~ msgid "Converting data…"
+#~ msgstr "Datuak bihurtzen…"
+
+#~ msgid "Importing {} station…"
+#~ msgid_plural "Importing {} stations…"
+#~ msgstr[0] "Estazio {} inportatzen…"
+#~ msgstr[1] "{} estazio inportatzen…"
+
+#~ msgid "Imported {} station!"
+#~ msgid_plural "Imported {} stations!"
+#~ msgstr[0] "Estazio {} inportatu da!"
+#~ msgstr[1] "{} estazio inportatu dira!"
+
+#~ msgid "Could not import library."
+#~ msgstr "Ezin izan da liburutegia inportatu."
