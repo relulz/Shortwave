@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-06-11 18:54+0000\n"
-"PO-Revision-Date: 2020-07-30 12:26+0200\n"
+"POT-Creation-Date: 2020-08-02 15:56+0000\n"
+"PO-Revision-Date: 2020-09-07 13:59+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <gnome-se-list@gnome.org>\n"
 "Language: sv\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: data/gtk/station_dialog.ui:10
 msgid "Station details"
@@ -26,7 +26,7 @@ msgstr "Stationsdetaljer"
 msgid "Language"
 msgstr "Språk"
 
-#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:119
+#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:175
 msgid "Tags"
 msgstr "Taggar"
 
@@ -38,15 +38,15 @@ msgstr "Kodek"
 msgid "Homepage"
 msgstr "Webbsida"
 
-#: data/gtk/discover.ui:55
+#: data/gtk/discover.ui:54
 msgid "Most voted stations"
 msgstr "Stationer med flest röster"
 
-#: data/gtk/discover.ui:89
+#: data/gtk/discover.ui:88
 msgid "Trending"
 msgstr "Populärt just nu"
 
-#: data/gtk/discover.ui:123
+#: data/gtk/discover.ui:122
 msgid "Other users are listening to…"
 msgstr "Andra användare lyssnar på…"
 
@@ -83,6 +83,7 @@ msgid "An error occurred"
 msgstr "Ett fel uppstod"
 
 #: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
+#: data/gtk/toolbar_controller.ui:74
 msgid "No playback"
 msgstr "Ingen uppspelning"
 
@@ -147,8 +148,24 @@ msgid "Appearance"
 msgstr "Utseende"
 
 #: data/gtk/settings_window.ui:19
-msgid "Enable dark mode"
-msgstr "Aktivera mörkt läge"
+msgid "Dark Mode"
+msgstr "Mörkt läge"
+
+#: data/gtk/settings_window.ui:20
+msgid "Whether the application should use a dark theme"
+msgstr "Huruvida programmet ska använda ett mörkt tema"
+
+#: data/gtk/settings_window.ui:36
+msgid "Features"
+msgstr "Funktioner"
+
+#: data/gtk/settings_window.ui:40
+msgid "Notifications"
+msgstr "Aviseringar"
+
+#: data/gtk/settings_window.ui:41
+msgid "Show desktop notifications when a new song gets played"
+msgstr "Visa skrivbordsaviseringar när en ny låt spelas"
 
 #: data/gtk/shortcuts.ui:12
 msgid "General"
@@ -164,27 +181,33 @@ msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "Sök stationer"
 
-#: data/gtk/storefront.ui:29
+#: data/gtk/storefront.ui:21 data/gtk/library.ui:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Shortwave"
+
+#: data/gtk/storefront.ui:85
 msgid "Discover"
 msgstr "Upptäck"
 
-#: data/gtk/storefront.ui:44
+#: data/gtk/storefront.ui:100
 msgid "Search"
 msgstr "Sök"
 
-#: data/gtk/storefront.ui:69
+#: data/gtk/storefront.ui:125
 msgid "Locations"
 msgstr "Platser"
 
-#: data/gtk/storefront.ui:94
+#: data/gtk/storefront.ui:150
 msgid "Languages"
 msgstr "Språk"
 
-#: data/gtk/library.ui:53
+#: data/gtk/library.ui:121
 msgid "Receiving station data…"
 msgstr "Erhåller stationsdata…"
 
-#: data/gtk/library.ui:151
+#: data/gtk/library.ui:217
 msgid "Discover new stations"
 msgstr "Upptäck nya stationer"
 
@@ -218,36 +241,32 @@ msgstr "Sparade låtar finns i din mapp Musik."
 msgid "Open"
 msgstr "Öppna"
 
-#: data/gtk/player.ui:97
+#: data/gtk/player.ui:135
 msgid "Connected with"
 msgstr "Ansluten till"
 
-#: data/gtk/window.ui:213
-msgid "Library"
-msgstr "Bibliotek"
-
-#: src/audio/player.rs:157
+#: src/audio/player.rs:167
 msgid "This station cannot be played because the stream is offline."
 msgstr "Denna station kan inte spelas eftersom strömmen är frånkopplad."
 
-#: src/audio/player.rs:175
+#: src/audio/player.rs:185
 msgid "Station cannot be streamed."
 msgstr "Stationen kan inte strömmas."
 
-#: src/audio/player.rs:175
+#: src/audio/player.rs:185
 msgid "URL is not valid."
 msgstr "URL är inte giltig."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:55
+#: src/database/library.rs:60
 msgid "Welcome to {}"
 msgstr "Välkommen till {}"
 
-#: src/database/library.rs:145
+#: src/database/library.rs:156
 msgid "No longer existing station removed from library."
 msgstr "Station som inte längre finns borttagen från bibliotek."
 
-#: src/database/library.rs:149 src/discover/pages/discover.rs:127
+#: src/database/library.rs:160 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Kunde inte erhålla stationsdata."
@@ -289,22 +308,17 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>"
 
-#: src/utils.rs:122
+#: src/utils.rs:110
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} röst"
 msgstr[1] "{} röster"
 
-#: src/utils.rs:124
+#: src/utils.rs:112
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} röst"
 msgstr[1] "{} · {} röster"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "Shortwave"
-msgstr "Shortwave"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
 msgid "Felix Häcker"
@@ -353,6 +367,12 @@ msgstr "Sömlös integration med skrivbordsmiljön GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Ström;Stream;Wave;"
+
+#~ msgid "Enable dark mode"
+#~ msgstr "Aktivera mörkt läge"
+
+#~ msgid "Library"
+#~ msgstr "Bibliotek"
 
 #~ msgid "Import from Gradio"
 #~ msgstr "Importera från Gradio"
