@@ -96,7 +96,7 @@ where
 }
 
 pub fn simplify_string(s: String) -> String {
-    s.replace(&['/', '\\0', '\\', ':', '<', '>', '\"', '|', '?', '*', '.'] as &[_], "")
+    s.replace(&['/', '\0', '\\', ':', '<', '>', '\"', '|', '?', '*', '.'] as &[_], "")
 }
 
 pub fn station_subtitle(country: &str, state: &str, votes: i32) -> String {

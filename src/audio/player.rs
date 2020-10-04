@@ -26,7 +26,7 @@ use std::rc::Rc;
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
-use crate::api::{FaviconDownloader, Station};
+use crate::api::Station;
 use crate::app::Action;
 use crate::audio::backend::*;
 #[cfg(unix)]
@@ -386,12 +386,12 @@ impl SongTitle {
     /// Returns path for current title
     fn get_path(&self) -> Option<PathBuf> {
         if let Some(title) = &self.current_title {
-            // Remove unsupported characters from the file name 
+            // Remove unsupported characters from the file name
             let title_raw = utils::simplify_string(title.to_string());
             // Limit file name to 200 chars
             let title_vec = title_raw.chars().collect::<Vec<_>>();
             let cut_to_length = title_vec.len().min(200);
-            let title = text_vec[..cut_to_length].iter().cloned().collect::<String>();
+            let title = title_vec[..cut_to_length].iter().cloned().collect::<String>();
 
             let mut path = path::CACHE.clone();
             path.push("recording");

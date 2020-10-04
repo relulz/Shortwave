@@ -373,7 +373,7 @@ impl GstreamerBackend {
                     // while and our closure here might've been called from the main UI thread
                     let recorderbin_sinkpad = recorderbin_sinkpad.clone();
                     recorderbin.call_async(move |_| {
-                        recorderbin_sinkpad.send_event(Event::new_eos().build());
+                        recorderbin_sinkpad.send_event(gstreamer::event::Eos::new());
                         debug!("Sent EOS event to recorderbin sinkpad");
                     });
                 }else{

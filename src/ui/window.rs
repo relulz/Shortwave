@@ -40,7 +40,8 @@ pub enum View {
 
 pub struct SwApplicationWindowPrivate {
     window_builder: gtk::Builder,
-    sidebar_flap: libhandy::Flap,
+    //sidebar_flap: libhandy::Flap,
+    sidebar_flap: gtk::Box,
     current_notification: RefCell<Option<Rc<Notification>>>,
 }
 
@@ -56,7 +57,9 @@ impl ObjectSubclass for SwApplicationWindowPrivate {
         let window_builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/window.ui");
         let current_notification = RefCell::new(None);
 
-        let sidebar_flap = libhandy::Flap::new();
+        // TODO: Re-add HdyFlap as soon it gets merged in libhandy
+        //let sidebar_flap = libhandy::Flap::new();
+        let sidebar_flap = gtk::Box::new(gtk::Orientation::Horizontal, 0);
 
         Self {
             window_builder,
@@ -133,10 +136,11 @@ impl SwApplicationWindow {
         get_widget!(self_.window_builder, gtk::Overlay, overlay);
 
         self_.sidebar_flap.add(&window_deck);
-        self_.sidebar_flap.set_reveal_flap(false);
-        self_.sidebar_flap.set_locked(true);
-        self_.sidebar_flap.set_flap_position(gtk::PackType::End);
-        self_.sidebar_flap.set_flap(&app_private.player.widget);
+        //self_.sidebar_flap.set_reveal_flap(false);
+        //self_.sidebar_flap.set_locked(true);
+        //self_.sidebar_flap.set_flap_position(gtk::PackType::End);
+        //self_.sidebar_flap.set_flap(&app_private.player.widget);
+        self_.sidebar_flap.add(&app_private.player.widget);
 
         overlay.add(&self_.sidebar_flap);
         overlay.show_all();
@@ -173,9 +177,9 @@ impl SwApplicationWindow {
         s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme", gio::SettingsBindFlags::GET);
 
         // flap
-        self_.sidebar_flap.connect_property_folded_notify(clone!(@strong self as this => move |_| {
-            this.sync_ui_state();
-        }));
+        //self_.sidebar_flap.connect_property_folded_notify(clone!(@strong self as this => move |_| {
+        //    this.sync_ui_state();
+        //}));
 
         // window gets closed
         self.connect_delete_event(move |window, _| {
@@ -313,7 +317,7 @@ impl SwApplicationWindow {
         toolbar_controller_revealer.set_visible(true);
 
         // Unlock player sidebar flap
-        self_.sidebar_flap.set_locked(false);
+        //self_.sidebar_flap.set_locked(false);
 
         self.sync_ui_state();
     }
@@ -350,12 +354,14 @@ impl SwApplicationWindow {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
 
         // Check if current view = player sidebar
-        if self_.sidebar_flap.get_folded() && self_.sidebar_flap.get_reveal_flap() {
-            self_.sidebar_flap.set_reveal_flap(false);
-        } else {
-            get_widget!(self_.window_builder, libhandy::Deck, window_deck);
-            window_deck.navigate(libhandy::NavigationDirection::Back);
-        }
+        //if self_.sidebar_flap.get_folded() && self_.sidebar_flap.get_reveal_flap() {
+        //    self_.sidebar_flap.set_reveal_flap(false);
+        //} else {
+        //    get_widget!(self_.window_builder, libhandy::Deck, window_deck);
+        //    window_deck.navigate(libhandy::NavigationDirection::Back);
+        //}
+        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
+        window_deck.navigate(libhandy::NavigationDirection::Back);
 
         // Make sure that the rest of the UI is correctly synced
         self.sync_ui_state();
@@ -370,24 +376,25 @@ impl SwApplicationWindow {
 
         // Check in which state the sidebar flap is,
         // and set the corresponding view (Library|Storefront|Player)
-        let current_view = if self_.sidebar_flap.get_folded() && self_.sidebar_flap.get_reveal_flap() {
-            View::Player
-        } else {
-            if deck_child_name == "storefront" {
-                View::Storefront
-            } else {
-                View::Library
-            }
-        };
+        //let current_view = if self_.sidebar_flap.get_folded() && self_.sidebar_flap.get_reveal_flap() {
+        //    View::Player
+        //} else {
+        //    if deck_child_name == "storefront" {
+        //        View::Storefront
+        //    } else {
+        //        View::Library
+        //    }
+        //};
+        let current_view = if deck_child_name == "storefront" { View::Storefront } else { View::Library };
 
         // Show bottom player controller toolbar when sidebar flap is folded and player widget is not revealed
-        let show_toolbar_controller = self_.sidebar_flap.get_folded() && !self_.sidebar_flap.get_reveal_flap();
-        toolbar_controller_revealer.set_reveal_child(show_toolbar_controller);
+        //let show_toolbar_controller = self_.sidebar_flap.get_folded() && !self_.sidebar_flap.get_reveal_flap();
+        //toolbar_controller_revealer.set_reveal_child(show_toolbar_controller);
 
         // Ensure that player sidebar gets revealed
-        if !show_toolbar_controller && !self_.sidebar_flap.get_locked() {
-            self_.sidebar_flap.set_reveal_flap(true);
-        }
+        //if !show_toolbar_controller && !self_.sidebar_flap.get_locked() {
+        //    self_.sidebar_flap.set_reveal_flap(true);
+        //}
 
         debug!("Setting current view as {:?}", &current_view);
         self.update_view(current_view);
@@ -403,9 +410,9 @@ impl SwApplicationWindow {
         let app_priv = SwApplicationPrivate::from_instance(&app);
 
         // Don't reveal sidebar flap by default
-        if !self_.sidebar_flap.get_locked() && self_.sidebar_flap.get_folded() {
-            self_.sidebar_flap.set_reveal_flap(false);
-        }
+        //if !self_.sidebar_flap.get_locked() && self_.sidebar_flap.get_folded() {
+        //    self_.sidebar_flap.set_reveal_flap(false);
+        //}
 
         // Show requested view / page
         match view {
@@ -419,7 +426,7 @@ impl SwApplicationWindow {
             }
             View::Player => {
                 app_priv.player.set_expand_widget(true);
-                self_.sidebar_flap.set_reveal_flap(true);
+                //self_.sidebar_flap.set_reveal_flap(true);
             }
         }
     }

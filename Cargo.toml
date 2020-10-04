@@ -41,7 +41,7 @@ gtk = { version = "0.9.0", features = ["v3_22"] }
 gio = { version = "0.9.0", features = ["v2_46"] }
 gdk-pixbuf = { version = "0.9.0", features = ["v2_36"] }
 gettext-rs = { version = "0.4.4", features = ["gettext-system"] }
-libhandy = { git="https://gitlab.gnome.org/haecker-felix/libhandy-rs", features = ["v1_0"] }
+libhandy = "0.7.1"
 gtk-macros = "0.2.0"
 
 [target.'cfg(unix)'.dependencies]

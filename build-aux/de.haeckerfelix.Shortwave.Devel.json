@@ -67,8 +67,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/libhandy",
-                    "branch" : "wip/haecker-felix/flap-widget"
+                    "url" : "https://gitlab.gnome.org/GNOME/libhandy"
                 }
             ]
         },
