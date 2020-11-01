@@ -2,15 +2,15 @@
 # Copyright (C) 2020 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
 # scootergrisen, 2020.
-#
+# 
 # scootergrisen: tjek om "station data" skal oversættes til "data om stationer", "data om station" eller "stationsdata"
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-03-12 22:17+0000\n"
-"PO-Revision-Date: 2020-04-14 00:00+0000\n"
+"POT-Creation-Date: 2020-08-02 15:56+0000\n"
+"PO-Revision-Date: 2020-10-10 00:00+0200\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "Station details"
 msgstr "Detaljer om stationen"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:210
+#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:169
 msgid "Language"
 msgstr "Sprog"
 
-#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:119
+#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:175
 msgid "Tags"
 msgstr "Mærkater"
 
@@ -39,19 +39,19 @@ msgstr "Codec"
 msgid "Homepage"
 msgstr "Hjemmeside"
 
-#: data/gtk/discover.ui:39
+#: data/gtk/discover.ui:54
 msgid "Most voted stations"
 msgstr "Stationer med flest stemmer"
 
-#: data/gtk/discover.ui:73
+#: data/gtk/discover.ui:88
 msgid "Trending"
 msgstr "Trend"
 
-#: data/gtk/discover.ui:107
+#: data/gtk/discover.ui:122
 msgid "Other users are listening to…"
 msgstr "Andre brugere lytter til …"
 
-#: data/gtk/song_row.ui:17
+#: data/gtk/song_row.ui:18
 msgid "Save recorded song"
 msgstr "Gem sang som er blevet optaget"
 
@@ -64,8 +64,9 @@ msgid "Devices which implement the Google Cast protocol are supported."
 msgstr "Enheder som implementerer Google Cast-protokollen understøttes."
 
 #: data/gtk/streaming_dialog.ui:209
-msgid "No devices found "
-msgstr "Ingen enheder fundet "
+#| msgid "No devices found "
+msgid "No devices found"
+msgstr "Ingen enheder fundet"
 
 #: data/gtk/streaming_dialog.ui:224
 msgid "Retry search"
@@ -83,60 +84,56 @@ msgstr "Detaljer om fejlen"
 msgid "An error occurred"
 msgstr "Der opstod en fejl"
 
-#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:57
+#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
+#: data/gtk/toolbar_controller.ui:74
 msgid "No playback"
 msgstr "Ingen afspilning"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:177
+#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:136
 msgid "Sorting"
 msgstr "Sortering"
 
-#: data/gtk/menu/app_menu.ui:31 data/gtk/menu/app_menu.ui:135
-#: data/gtk/window.ui:41
-msgid "Library"
-msgstr "Bibliotek"
+#: data/gtk/menu/app_menu.ui:43
+msgid "Open radio-browser.info <sup>↗</sup>"
+msgstr "Åbn radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/menu/app_menu.ui:57
+#: data/gtk/menu/app_menu.ui:58
 msgid "Create new station"
 msgstr "Opret ny station"
 
-#: data/gtk/menu/app_menu.ui:82
+#: data/gtk/menu/app_menu.ui:83
 msgid "Preferences"
 msgstr "Indstillinger"
 
-#: data/gtk/menu/app_menu.ui:96
+#: data/gtk/menu/app_menu.ui:97
 msgid "Keyboard Shortcuts"
 msgstr "Tastaturgenveje"
 
-#: data/gtk/menu/app_menu.ui:110
+#: data/gtk/menu/app_menu.ui:111
 msgid "About Shortwave"
 msgstr "Om Shortwave"
 
-#: data/gtk/menu/app_menu.ui:152
-msgid "Import from Gradio"
-msgstr "Importér fra Gradio"
-
-#: data/gtk/menu/app_menu.ui:195
+#: data/gtk/menu/app_menu.ui:154
 msgid "Name"
 msgstr "Navn"
 
-#: data/gtk/menu/app_menu.ui:225
+#: data/gtk/menu/app_menu.ui:184
 msgid "Country"
 msgstr "Land"
 
-#: data/gtk/menu/app_menu.ui:240
+#: data/gtk/menu/app_menu.ui:199
 msgid "State"
 msgstr "Stat"
 
-#: data/gtk/menu/app_menu.ui:255
+#: data/gtk/menu/app_menu.ui:214
 msgid "Votes"
 msgstr "Stemmer"
 
-#: data/gtk/menu/app_menu.ui:281
+#: data/gtk/menu/app_menu.ui:240
 msgid "Ascending"
 msgstr "Stigende"
 
-#: data/gtk/menu/app_menu.ui:296
+#: data/gtk/menu/app_menu.ui:255
 msgid "Descending"
 msgstr "Faldende"
 
@@ -144,13 +141,35 @@ msgstr "Faldende"
 msgid "Show station details"
 msgstr "Vis detaljer om stationen"
 
+#: data/gtk/menu/player_menu.ui:58
+msgid "Enable mini player"
+msgstr "Aktivér miniafspiller"
+
 #: data/gtk/settings_window.ui:15
 msgid "Appearance"
 msgstr "Udseende"
 
 #: data/gtk/settings_window.ui:19
-msgid "Enable dark mode"
-msgstr "Aktivér mørk tilstand"
+msgid "Dark Mode"
+msgstr "Mørk tilstand"
+
+#: data/gtk/settings_window.ui:20
+msgid "Whether the application should use a dark theme"
+msgstr "Om programmet skal bruge et mørkt tema"
+
+#: data/gtk/settings_window.ui:36
+#| msgid "Features:"
+msgid "Features"
+msgstr "Funktioner"
+
+#: data/gtk/settings_window.ui:40
+#| msgid "Locations"
+msgid "Notifications"
+msgstr "Underretninger"
+
+#: data/gtk/settings_window.ui:41
+msgid "Show desktop notifications when a new song gets played"
+msgstr "Vis skrivebordsunderretninger når der afspilles en ny sang"
 
 #: data/gtk/shortcuts.ui:12
 msgid "General"
@@ -166,41 +185,47 @@ msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "Søg efter stationer"
 
-#: data/gtk/storefront.ui:29
+#: data/gtk/storefront.ui:21 data/gtk/library.ui:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Shortwave"
+
+#: data/gtk/storefront.ui:85
 msgid "Discover"
 msgstr "Opdag"
 
-#: data/gtk/storefront.ui:44
+#: data/gtk/storefront.ui:100
 msgid "Search"
 msgstr "Søg"
 
-#: data/gtk/storefront.ui:69
+#: data/gtk/storefront.ui:125
 msgid "Locations"
 msgstr "Steder"
 
-#: data/gtk/storefront.ui:94
+#: data/gtk/storefront.ui:150
 msgid "Languages"
 msgstr "Sprog"
 
-#: data/gtk/library.ui:53
+#: data/gtk/library.ui:121
 msgid "Receiving station data…"
 msgstr "Modtager stationsdata …"
 
-#: data/gtk/library.ui:151
+#: data/gtk/library.ui:217
 msgid "Discover new stations"
 msgstr "Opdag nye stationer"
 
-#: data/gtk/library.ui:176
-msgid "Import stations from Gradio"
-msgstr "Importér stationer fra Gradio"
-
 #: data/gtk/song_listbox.ui:34
+#| msgid ""
+#| "Songs are automatically recognized using the stream metadata. \n"
+#| "\n"
+#| "If the station does not send any metadata, no songs can be recognized."
 msgid ""
-"Songs are automatically recognized using the stream metadata. \n"
+"Songs are automatically recognized using the stream metadata.\n"
 "\n"
 "If the station does not send any metadata, no songs can be recognized."
 msgstr ""
-"Sangene genkendes automatisk med strømmens metadata. \n"
+"Sangene genkendes automatisk med strømmens metadata.\n"
 "\n"
 "Hvis stationen ikke sender nogen metadata, så kan sangene ikke genkendes."
 
@@ -216,91 +241,91 @@ msgstr "Registrerede sange vises her."
 msgid "How does this work?"
 msgstr "Hvordan virker det?"
 
-#: data/gtk/player.ui:97
+#: data/gtk/song_listbox.ui:197
+msgid "Saved songs are located in your Music folder."
+msgstr "Gemte sange findes i din musikmappe."
+
+#: data/gtk/song_listbox.ui:215
+msgid "Open"
+msgstr "Åbn"
+
+#: data/gtk/player.ui:135
 msgid "Connected with"
 msgstr "Forbundet med"
 
-#: src/audio/player.rs:142
+#: src/audio/player.rs:167
 msgid "This station cannot be played because the stream is offline."
 msgstr "Stationen kan ikke afspilles, da strømmen er offline."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:185
 msgid "Station cannot be streamed."
 msgstr "Kan ikke streame stationen."
 
-#: src/audio/player.rs:157
+#: src/audio/player.rs:185
 msgid "URL is not valid."
 msgstr "URL'en er ikke gyldig."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:55
+#: src/database/library.rs:60
 msgid "Welcome to {}"
 msgstr "Velkommen til {}"
 
-#: src/database/library.rs:149
+#: src/database/library.rs:156
 msgid "No longer existing station removed from library."
 msgstr "Fjernede station, som ikke længere findes, fra biblioteket."
 
-#: src/database/library.rs:153 src/discover/pages/discover.rs:108
-#: src/discover/pages/search.rs:99
+#: src/database/library.rs:160 src/discover/pages/discover.rs:127
+#: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Kunne ikke modtage stationsdata."
+
+#: src/discover/pages/discover.rs:57
+#| msgid "Show station details"
+msgid "Show statistics"
+msgstr "Vis statistik"
+
+#: src/discover/pages/discover.rs:58
+#| msgid "Discover new stations"
+msgid "Browse over 25,500 stations"
+msgstr "Gennemse over 25.500 stationer"
+
+#: src/discover/pages/discover.rs:60
+#| msgid "Create new station"
+msgid "Add new station"
+msgstr "Tilføj ny station"
+
+#: src/discover/pages/discover.rs:61
+msgid "Your favorite station is missing?"
+msgstr "Mangler din favoritstation?"
+
+#: src/discover/pages/discover.rs:63
+msgid "Open website"
+msgstr "Åbn websted"
+
+#: src/discover/pages/discover.rs:64
+msgid "Powered by radio-browser.info"
+msgstr "Anvender radio-browser.info"
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
 msgid "Listen to internet radio"
 msgstr "Lyt til internetradio"
 
-#: src/ui/import_dialog.rs:32
-msgid "Select database to import"
-msgstr "Vælg database som skal importeres"
+#: src/ui/about_dialog.rs:34
+msgid "translator-credits"
+msgstr "scootergrisen"
 
-#: src/ui/import_dialog.rs:35
-msgid "Import"
-msgstr "Importér"
-
-#: src/ui/import_dialog.rs:36
-msgid "Cancel"
-msgstr "Annuller"
-
-#. Get station identifiers
-#: src/ui/import_dialog.rs:50
-msgid "Converting data…"
-msgstr "Konverterer data …"
-
-#. Get actual stations from identifiers
-#: src/ui/import_dialog.rs:56
-msgid "Importing {} station…"
-msgid_plural "Importing {} stations…"
-msgstr[0] "Importerer {} station …"
-msgstr[1] "Importerer {} stationer …"
-
-#: src/ui/import_dialog.rs:70
-msgid "Imported {} station!"
-msgid_plural "Imported {} stations!"
-msgstr[0] "Importerede {} station!"
-msgstr[1] "Importerede {} stationer!"
-
-#: src/ui/window.rs:268
-msgid "Could not import library."
-msgstr "Kunne ikke importere bibliotek."
-
-#: src/utils.rs:122
+#: src/utils.rs:110
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} stemme"
 msgstr[1] "{} stemmer"
 
-#: src/utils.rs:124
+#: src/utils.rs:112
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} stemme"
 msgstr[1] "{} · {} stemmer"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "Shortwave"
-msgstr "Shortwave"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
 msgid "Felix Häcker"
@@ -319,7 +344,8 @@ msgid "Features:"
 msgstr "Funktioner:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favourite stations"
+#| msgid "Create your own library where you can add your favourite stations"
+msgid "Create your own library where you can add your favorite stations"
 msgstr "Opret dit eget bibliotek hvor du kan tilføje dine favoritstationer"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
@@ -339,7 +365,8 @@ msgstr "Programlayoutet tilpasser sig automatisk på både små og store skærme
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
 msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
-msgstr "Afspil lyd på understøttede netværksenheder (f.eks. Google Chromecasts)"
+msgstr ""
+"Afspil lyd på understøttede netværksenheder (f.eks. Google Chromecasts)"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
 msgid "Seamless integration into the GNOME desktop environment"
