@@ -20,7 +20,7 @@ use glib::subclass::prelude::*;
 use glib::translate::*;
 use glib::Sender;
 use gtk::prelude::*;
-use gtk::subclass::prelude::{BinImpl, ContainerImpl, WidgetImpl, WindowImpl};
+use gtk::subclass::prelude::*;
 use libhandy::prelude::*;
 
 use std::cell::RefCell;
