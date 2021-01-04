@@ -98,7 +98,7 @@ impl Notification {
     }
 
     fn destroy(r: gtk::Revealer) {
-        gtk::timeout_add(1000, move || {
+        glib::source::timeout_add(1000, move || {
             //TODO: r.destroy();
             glib::Continue(false)
         });
