@@ -179,7 +179,7 @@ impl SwApplication {
         // Load custom styling
         let p = gtk::CssProvider::new();
         gtk::CssProvider::load_from_resource(&p, "/de/haeckerfelix/Shortwave/gtk/style.css");
-        gtk::StyleContext::add_provider_for_screen(&gdk::Screen::get_default().unwrap(), &p, 500);
+        gtk::StyleContext::add_provider_for_display(&gdk::Display::get_default().unwrap(), &p, 500);
 
         // Set initial view
         window.set_view(View::Library);
