@@ -105,9 +105,7 @@ impl ObjectSubclass for SwApplicationPrivate {
 }
 
 // Implement GLib.OBject for SwApplication
-impl ObjectImpl for SwApplicationPrivate {
-    glib_object_impl!();
-}
+impl ObjectImpl for SwApplicationPrivate {}
 
 // Implement Gtk.Application for SwApplication
 impl GtkApplicationImpl for SwApplicationPrivate {}

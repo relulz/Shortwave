@@ -70,9 +70,7 @@ impl ObjectSubclass for SwApplicationWindowPrivate {
 }
 
 // Implement GLib.OBject for SwApplicationWindow
-impl ObjectImpl for SwApplicationWindowPrivate {
-    glib_object_impl!();
-}
+impl ObjectImpl for SwApplicationWindowPrivate {}
 
 // Implement Gtk.Widget for SwApplicationWindow
 impl WidgetImpl for SwApplicationWindowPrivate {}
