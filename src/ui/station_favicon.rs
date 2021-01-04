@@ -87,7 +87,7 @@ impl StationFavicon {
 
     // Based on the custom drawing by GNOME Games
     // https://gitlab.gnome.org/GNOME/gnome-games/blob/de7e39e6c75423fe7357cdba48c1c3d73a2eea03/src/ui/savestate-listbox-row.vala#L106
-    pub fn draw_image(image: &gtk::DrawingArea, cr: &Context, pixbuf: Rc<RefCell<Option<Pixbuf>>>, size: FaviconSize) -> gtk::Inhibit {
+    pub fn draw_image(image: &gtk::DrawingArea, cr: &Context, pixbuf: Rc<RefCell<Option<Pixbuf>>>, size: FaviconSize) -> glib::signal::Inhibit {
         let scale_factor = image.get_scale_factor() as f64;
 
         let width = image.get_allocated_width();
@@ -109,9 +109,9 @@ impl StationFavicon {
                 cr.set_source_pixbuf(&pixbuf, x_offset, y_offset);
                 cr.mask_surface(&mask, 0.0, 0.0);
                 cr.restore();
-                gtk::Inhibit(false)
+                glib::signal::Inhibit(false)
             }
-            None => gtk::Inhibit(false),
+            None => glib::signal::Inhibit(false),
         }
     }
 

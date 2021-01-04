@@ -181,7 +181,7 @@ impl SwApplicationWindow {
 
             settings_manager::set_integer(Key::WindowWidth, width);
             settings_manager::set_integer(Key::WindowHeight, height);
-            Inhibit(false)
+            glib::signal::Inhibit(false)
         });
 
         // back button (mouse)
@@ -189,7 +189,7 @@ impl SwApplicationWindow {
             if event.get_button() == 8 {
                 send!(sender, Action::ViewShowLibrary);
             }
-            Inhibit(false)
+            glib::signal::Inhibit(false)
         }));
     }
 
