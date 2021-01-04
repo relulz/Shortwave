@@ -92,7 +92,7 @@ where
     F: FnMut(T::Item) + 'static,
 {
     let mut data = data.into_iter();
-    gtk::idle_add(move || data.next().map(|x| func(x)).map(|_| glib::Continue(true)).unwrap_or_else(|| glib::Continue(false)));
+    glib::idle_add_local(move || data.next().map(|x| func(x)).map(|_| glib::Continue(true)).unwrap_or_else(|| glib::Continue(false)));
 }
 
 pub fn simplify_string(s: String) -> String {
