@@ -40,7 +40,7 @@ pub struct ToolbarController {
     playback_button_stack: gtk::Stack,
     start_playback_button: gtk::Button,
     stop_playback_button: gtk::Button,
-    eventbox: gtk::EventBox,
+    toolbox_gesture: gtk::GestureClick,
 }
 
 impl ToolbarController {
@@ -54,7 +54,7 @@ impl ToolbarController {
         get_widget!(builder, gtk::Stack, playback_button_stack);
         get_widget!(builder, gtk::Button, start_playback_button);
         get_widget!(builder, gtk::Button, stop_playback_button);
-        get_widget!(builder, gtk::EventBox, eventbox);
+        get_widget!(builder, gtk::GestureClick, toolbox_gesture);
 
         let station = Rc::new(RefCell::new(None));
 
@@ -74,7 +74,7 @@ impl ToolbarController {
             playback_button_stack,
             start_playback_button,
             stop_playback_button,
-            eventbox,
+            toolbox_gesture,
         };
 
         controller.setup_signals();
@@ -93,9 +93,8 @@ impl ToolbarController {
         }));
 
         // show_player_button
-        self.eventbox.connect_button_release_event(clone!(@strong self.sender as sender => move |_, _| {
+        self.toolbox_gesture.connect_pressed(clone!(@strong self.sender as sender => move |_, _, _, _| {
             send!(sender, Action::ViewShowPlayer);
-            glib::signal::Inhibit(false)
         }));
     }
 }

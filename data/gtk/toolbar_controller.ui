@@ -23,22 +23,62 @@
         <property name="can_focus">False</property>
         <property name="hexpand">True</property>
         <child>
-          <object class="GtkEventBox" id="eventbox">
+          <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <child>
+              <object class="GtkGestureClick" id="toolbox_gesture">
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="favicon_box">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">center</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparator">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
             <child>
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="valign">center</property>
+                <property name="margin_start">6</property>
+                <property name="margin_end">6</property>
+                <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkBox" id="favicon_box">
+                  <object class="GtkLabel" id="title_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <placeholder/>
-                    </child>
+                    <property name="halign">start</property>
+                    <property name="label" translatable="yes">No playback</property>
+                    <property name="justify">center</property>
+                    <property name="wrap">True</property>
+                    <property name="ellipsize">end</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -47,10 +87,21 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSeparator">
+                  <object class="GtkRevealer" id="subtitle_revealer">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel" id="subtitle_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="label">subtitle</property>
+                        <property name="justify">center</property>
+                        <property name="wrap">True</property>
+                        <property name="ellipsize">end</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -58,72 +109,14 @@
                     <property name="position">1</property>
                   </packing>
                 </child>
-                <child>
-                  <object class="GtkBox">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="valign">center</property>
-                    <property name="margin_start">6</property>
-                    <property name="margin_end">6</property>
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkLabel" id="title_label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="halign">start</property>
-                        <property name="label" translatable="yes">No playback</property>
-                        <property name="justify">center</property>
-                        <property name="wrap">True</property>
-                        <property name="ellipsize">end</property>
-                        <property name="xalign">0</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkRevealer" id="subtitle_revealer">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <child>
-                          <object class="GtkLabel" id="subtitle_label">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="halign">start</property>
-                            <property name="label">subtitle</property>
-                            <property name="justify">center</property>
-                            <property name="wrap">True</property>
-                            <property name="ellipsize">end</property>
-                            <property name="xalign">0</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">3</property>
-                  </packing>
-                </child>
               </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkRevealer" id="action_revealer">
