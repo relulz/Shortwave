@@ -84,11 +84,11 @@
       </packing>
     </child>
   </object>
-  <object class="HdyDeck" id="window_deck">
+  <object class="HdyLeaflet" id="window_leaflet">
+    <property name="can_unfold">False</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="hexpand">True</property>
-    <property name="visible_child_name">library</property>
     <property name="can_swipe_back">True</property>
     <child>
       <object class="GtkBox" id="library_page">

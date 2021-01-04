@@ -124,10 +124,10 @@ impl SwApplicationWindow {
         get_widget!(self_.window_builder, gtk::Box, library_page);
         get_widget!(self_.window_builder, gtk::Box, storefront_page);
         get_widget!(self_.window_builder, gtk::Box, toolbar_controller_box);
-        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
+        get_widget!(self_.window_builder, libhandy::Leaflet, window_leaflet);
         get_widget!(self_.window_builder, gtk::Overlay, overlay);
 
-        self_.sidebar_flap.add(&window_deck);
+        self_.sidebar_flap.add(&window_leaflet);
         //self_.sidebar_flap.set_reveal_flap(false);
         //self_.sidebar_flap.set_locked(true);
         //self_.sidebar_flap.set_flap_position(gtk::PackType::End);
@@ -349,11 +349,11 @@ impl SwApplicationWindow {
         //if self_.sidebar_flap.get_folded() && self_.sidebar_flap.get_reveal_flap() {
         //    self_.sidebar_flap.set_reveal_flap(false);
         //} else {
-        //    get_widget!(self_.window_builder, libhandy::Deck, window_deck);
-        //    window_deck.navigate(libhandy::NavigationDirection::Back);
+        //    get_widget!(self_.window_builder, libhandy::Leaflet, window_leaflet);
+        //    window_leaflet.navigate(libhandy::NavigationDirection::Back);
         //}
-        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
-        window_deck.navigate(libhandy::NavigationDirection::Back);
+        get_widget!(self_.window_builder, libhandy::Leaflet, window_leaflet);
+        window_leaflet.navigate(libhandy::NavigationDirection::Back);
 
         // Make sure that the rest of the UI is correctly synced
         self.sync_ui_state();
@@ -361,23 +361,23 @@ impl SwApplicationWindow {
 
     fn sync_ui_state(&self) {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
-        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
+        get_widget!(self_.window_builder, libhandy::Leaflet, window_leaflet);
         get_widget!(self_.window_builder, gtk::Revealer, toolbar_controller_revealer);
 
-        let deck_child_name = window_deck.get_visible_child_name().unwrap();
+        let leaflet_child_name = window_leaflet.get_visible_child_name().unwrap();
 
         // Check in which state the sidebar flap is,
         // and set the corresponding view (Library|Storefront|Player)
         //let current_view = if self_.sidebar_flap.get_folded() && self_.sidebar_flap.get_reveal_flap() {
         //    View::Player
         //} else {
-        //    if deck_child_name == "storefront" {
+        //    if leaflet_child_name == "storefront" {
         //        View::Storefront
         //    } else {
         //        View::Library
         //    }
         //};
-        let current_view = if deck_child_name == "storefront" { View::Storefront } else { View::Library };
+        let current_view = if leaflet_child_name == "storefront" { View::Storefront } else { View::Library };
 
         // Show bottom player controller toolbar when sidebar flap is folded and player widget is not revealed
         //let show_toolbar_controller = self_.sidebar_flap.get_folded() && !self_.sidebar_flap.get_reveal_flap();
@@ -396,7 +396,7 @@ impl SwApplicationWindow {
         debug!("Set view to {:?}", &view);
 
         let self_ = SwApplicationWindowPrivate::from_instance(self);
-        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
+        get_widget!(self_.window_builder, libhandy::Leaflet, window_leaflet);
 
         let app = self.get_application().unwrap();
         let app_priv = SwApplicationPrivate::from_instance(&app);
@@ -409,11 +409,11 @@ impl SwApplicationWindow {
         // Show requested view / page
         match view {
             View::Storefront => {
-                window_deck.set_visible_child_name("storefront");
+                window_leaflet.set_visible_child_name("storefront");
                 app_priv.player.set_expand_widget(false);
             }
             View::Library => {
-                window_deck.set_visible_child_name("library");
+                window_leaflet.set_visible_child_name("library");
                 app_priv.player.set_expand_widget(false);
             }
             View::Player => {
