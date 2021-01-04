@@ -149,16 +149,9 @@ impl ApplicationImpl for SwApplicationPrivate {
 }
 
 // Wrap SwApplicationPrivate into a usable gtk-rs object
-glib_wrapper! {
-    pub struct SwApplication(
-        Object<subclass::simple::InstanceStruct<SwApplicationPrivate>,
-        subclass::simple::ClassStruct<SwApplicationPrivate>,
-        SwApplicationClass>)
+glib::wrapper! {
+    pub struct SwApplication(ObjectSubclass<SwApplicationPrivate>)
         @extends gio::Application, gtk::Application;
-
-    match fn {
-        get_type => || SwApplicationPrivate::get_type().to_glib(),
-    }
 }
 
 // SwApplication implementation itself

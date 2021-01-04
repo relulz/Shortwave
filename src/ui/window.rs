@@ -91,16 +91,10 @@ impl gtk::subclass::prelude::ApplicationWindowImpl for SwApplicationWindowPrivat
 impl libhandy::subclass::prelude::ApplicationWindowImpl for SwApplicationWindowPrivate {}
 
 // Wrap SwApplicationWindowPrivate into a usable gtk-rs object
-glib_wrapper! {
+glib::wrapper! {
     pub struct SwApplicationWindow(
-        Object<subclass::simple::InstanceStruct<SwApplicationWindowPrivate>,
-        subclass::simple::ClassStruct<SwApplicationWindowPrivate>,
-        SwApplicationWindowClass>)
+        ObjectSubclass<SwApplicationWindowPrivate>)
         @extends gtk::Widget, gtk::Container, gtk::Bin, gtk::Window, gtk::ApplicationWindow, libhandy::ApplicationWindow;
-
-    match fn {
-        get_type => || SwApplicationWindowPrivate::get_type().to_glib(),
-    }
 }
 
 // SwApplicationWindow implementation itself
