@@ -71,7 +71,6 @@ impl StationFavicon {
             size,
         };
 
-        favicon.setup_signals();
         favicon
     }
 
@@ -152,10 +151,5 @@ impl StationFavicon {
         cr.arc(x + radius, y + height - radius, radius, arc1, arc2);
         cr.arc(x + radius, y + radius, radius, arc2, arc3);
         cr.close_path();
-    }
-
-    fn setup_signals(&self) {
-        self.image
-            .connect_draw(clone!(@strong self.pixbuf as pixbuf, @strong self.size as size => @default-panic, move |dr, ctx| {Self::draw_image(dr, ctx, pixbuf.clone(), size)}));
     }
 }
