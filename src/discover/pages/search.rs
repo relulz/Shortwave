@@ -105,7 +105,7 @@ impl Search {
 
     fn setup_signals(&self) {
         get_widget!(self.builder, gtk::SearchEntry, search_entry);
-        search_entry.connect_search_changed(clone!(@strong self.sender as sender => move |entry| {
+        search_entry.connect_search_changed(glib::clone!(@strong self.sender as sender => move |entry| {
             let request = StationRequest::search_for_name(&entry.get_text(), 250);
             send!(sender, Action::SearchFor(request));
         }));
