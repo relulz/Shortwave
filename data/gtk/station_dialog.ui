@@ -38,32 +38,36 @@
                 <property name="transition_type">crossfade</property>
                 <property name="interpolate_size">True</property>
                 <child>
-                  <object class="GtkButton" id="remove_button">
-                    <property name="label">Remove from Library</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <style>
-                      <class name="destructive-action"/>
-                    </style>
-                  </object>
-                  <packing>
+                  <object class="GtkStackPage">
                     <property name="name">library-remove</property>
-                  </packing>
+                    <property name="child">
+                      <object class="GtkButton" id="remove_button">
+                        <property name="label">Remove from Library</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <style>
+                          <class name="destructive-action"/>
+                        </style>
+                      </object>
+                    </property>
+                  </object>
                 </child>
                 <child>
-                  <object class="GtkButton" id="add_button">
-                    <property name="label">Add to library</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <style>
-                      <class name="suggested-action"/>
-                    </style>
-                  </object>
-                  <packing>
+                  <object class="GtkStackPage">
                     <property name="name">library-add</property>
-                  </packing>
+                    <property name="child">
+                      <object class="GtkButton" id="add_button">
+                        <property name="label">Add to library</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <style>
+                          <class name="suggested-action"/>
+                        </style>
+                      </object>
+                    </property>
+                  </object>
                 </child>
               </object>
               <packing>
