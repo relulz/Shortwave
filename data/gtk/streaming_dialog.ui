@@ -132,7 +132,6 @@
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="border_width">6</property>
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkImage">
@@ -172,7 +171,6 @@
               <object class="GtkFrame">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="border_width">6</property>
                 <property name="label_xalign">0</property>
                 <child>
                   <object class="GtkStack" id="stream_stack">

@@ -56,7 +56,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="maximum_size">1600</property>
-                    <property name="border_width">12</property>
                     <child>
                       <object class="GtkBox" id="results_box">
                         <property name="visible">True</property>
