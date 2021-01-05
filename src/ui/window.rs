@@ -392,7 +392,7 @@ impl SwApplicationWindow {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
         get_widget!(self_.window_builder, libhandy::Leaflet, window_leaflet);
 
-        let app = self.get_application().unwrap();
+        let app: SwApplication = self.get_application().unwrap().downcast().unwrap();
         let app_priv = SwApplicationPrivate::from_instance(&app);
 
         // Don't reveal sidebar flap by default
