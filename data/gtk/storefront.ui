@@ -65,91 +65,101 @@
             <property name="transition_type">crossfade</property>
             <property name="interpolate_size">True</property>
             <child>
-              <object class="GtkBox" id="discover_box">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
+              <object class="GtkStackPage">
                 <property name="name">discover</property>
                 <property name="title" translatable="yes">Discover</property>
                 <property name="icon_name">view-grid-symbolic</property>
-              </packing>
+                <property name="child">
+                  <object class="GtkBox" id="discover_box">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                </property>
+              </object>
             </child>
             <child>
-              <object class="GtkBox" id="search_box">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
+              <object class="GtkStackPage">
                 <property name="name">search</property>
                 <property name="title" translatable="yes">Search</property>
                 <property name="icon_name">system-search-symbolic</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="locations_box">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <child>
-                  <object class="GtkLabel">
+                <property name="child">
+                  <object class="GtkBox" id="search_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label">Locations page</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
                   </object>
-                </child>
+                </property>
               </object>
-              <packing>
+            </child>
+            <child>
+              <object class="GtkStackPage">
                 <property name="name">locations</property>
                 <property name="title" translatable="yes">Locations</property>
                 <property name="icon_name">mark-location-symbolic</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="languages_box">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <child>
-                  <object class="GtkLabel">
+                <property name="child">
+                  <object class="GtkBox" id="locations_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label">Languages page</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label">Locations page</property>
+                      </object>
+                    </child>
                   </object>
-                </child>
+                </property>
               </object>
-              <packing>
+            </child>
+            <child>
+              <object class="GtkStackPage">
                 <property name="name">languages</property>
                 <property name="title" translatable="yes">Languages</property>
                 <property name="icon_name">preferences-desktop-locale-symbolic</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="tags_box">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <child>
-                  <object class="GtkLabel">
+                <property name="child">
+                  <object class="GtkBox" id="languages_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label">Location page</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label">Languages page</property>
+                      </object>
+                    </child>
                   </object>
-                </child>
+                </property>
               </object>
-              <packing>
+            </child>
+            <child>
+              <object class="GtkStackPage">
                 <property name="name">tags</property>
                 <property name="title" translatable="yes">Tags</property>
                 <property name="icon_name">view-paged-symbolic</property>
-              </packing>
+                <property name="child">
+                  <object class="GtkBox" id="tags_box">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label">Location page</property>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
             </child>
           </object>
         </child>
