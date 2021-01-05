@@ -52,11 +52,6 @@
           </object>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
     </child>
     <child>
       <object class="GtkBox" id="content">
@@ -97,7 +92,6 @@
                 <property name="name">search</property>
                 <property name="title" translatable="yes">Search</property>
                 <property name="icon_name">system-search-symbolic</property>
-                <property name="position">1</property>
               </packing>
             </child>
             <child>
@@ -111,18 +105,12 @@
                     <property name="can_focus">False</property>
                     <property name="label">Locations page</property>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
               </object>
               <packing>
                 <property name="name">locations</property>
                 <property name="title" translatable="yes">Locations</property>
                 <property name="icon_name">mark-location-symbolic</property>
-                <property name="position">2</property>
               </packing>
             </child>
             <child>
@@ -136,18 +124,12 @@
                     <property name="can_focus">False</property>
                     <property name="label">Languages page</property>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
               </object>
               <packing>
                 <property name="name">languages</property>
                 <property name="title" translatable="yes">Languages</property>
                 <property name="icon_name">preferences-desktop-locale-symbolic</property>
-                <property name="position">3</property>
               </packing>
             </child>
             <child>
@@ -161,26 +143,15 @@
                     <property name="can_focus">False</property>
                     <property name="label">Location page</property>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
               </object>
               <packing>
                 <property name="name">tags</property>
                 <property name="title" translatable="yes">Tags</property>
                 <property name="icon_name">view-paged-symbolic</property>
-                <property name="position">4</property>
               </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="HdyViewSwitcherBar" id="bottom_viewswitcher">
@@ -189,18 +160,8 @@
             <property name="stack">storefront_stack</property>
             <property name="reveal" bind-source="header_viewswitcher" bind-property="title-visible" bind-flags="sync-create">False</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
         </child>
       </object>
-      <packing>
-        <property name="expand">True</property>
-        <property name="fill">True</property>
-        <property name="position">1</property>
-      </packing>
     </child>
   </object>
 </interface>
