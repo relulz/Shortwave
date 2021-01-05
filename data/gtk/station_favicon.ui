@@ -13,29 +13,33 @@
         <property name="valign">center</property>
         <property name="transition_type">crossfade</property>
         <child>
-          <object class="GtkImage" id="placeholder">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="pixel_size">42</property>
-            <property name="icon_name">emblem-music-symbolic</property>
-            <style>
-              <class name="dim-label"/>
-            </style>
-          </object>
-          <packing>
+          <object class="GtkStackPage">
             <property name="name">placeholder</property>
-          </packing>
+            <property name="child">
+              <object class="GtkImage" id="placeholder">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="pixel_size">42</property>
+                <property name="icon_name">emblem-music-symbolic</property>
+                <style>
+                  <class name="dim-label"/>
+                </style>
+              </object>
+            </property>
+          </object>
         </child>
         <child>
-          <object class="GtkDrawingArea" id="image">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="halign">center</property>
-            <property name="valign">center</property>
-          </object>
-          <packing>
+          <object class="GtkStackPage">
             <property name="name">image</property>
-          </packing>
+            <property name="child">
+              <object class="GtkDrawingArea" id="image">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+              </object>
+            </property>
+          </object>
         </child>
       </object>
     </child>
