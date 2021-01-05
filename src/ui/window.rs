@@ -75,12 +75,6 @@ impl ObjectImpl for SwApplicationWindowPrivate {}
 // Implement Gtk.Widget for SwApplicationWindow
 impl WidgetImpl for SwApplicationWindowPrivate {}
 
-// Implement Gtk.Container for SwApplicationWindow
-impl ContainerImpl for SwApplicationWindowPrivate {}
-
-// Implement Gtk.Bin for SwApplicationWindow
-impl BinImpl for SwApplicationWindowPrivate {}
-
 // Implement Gtk.Window for SwApplicationWindow
 impl WindowImpl for SwApplicationWindowPrivate {}
 
@@ -94,7 +88,7 @@ impl libhandy::subclass::prelude::ApplicationWindowImpl for SwApplicationWindowP
 glib::wrapper! {
     pub struct SwApplicationWindow(
         ObjectSubclass<SwApplicationWindowPrivate>)
-        @extends gtk::Widget, gtk::Container, gtk::Bin, gtk::Window, gtk::ApplicationWindow, libhandy::ApplicationWindow;
+        @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, libhandy::ApplicationWindow;
 }
 
 // SwApplicationWindow implementation itself
