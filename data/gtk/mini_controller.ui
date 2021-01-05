@@ -69,15 +69,9 @@
                   </object>
                   <packing>
                     <property name="name">start_playback</property>
-                    <property name="position">1</property>
                   </packing>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkVolumeButton" id="volume_button">
@@ -117,18 +111,8 @@ audio-volume-medium-symbolic</property>
                   <class name="mini-controller-button"/>
                 </style>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox">
@@ -150,11 +134,6 @@ audio-volume-medium-symbolic</property>
                   <class name="dim-label"/>
                 </style>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkBox">
@@ -176,11 +155,6 @@ audio-volume-medium-symbolic</property>
                       <attribute name="font-desc" value="Nimbus Mono PS Bold 14"/>
                     </attributes>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkRevealer" id="subtitle_revealer">
@@ -200,29 +174,14 @@ audio-volume-medium-symbolic</property>
                       </object>
                     </child>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
               </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">3</property>
-              </packing>
             </child>
             <style>
               <class name="frame"/>
               <class name="mini-controller-display"/>
             </style>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox">
@@ -252,11 +211,6 @@ audio-volume-medium-symbolic</property>
                   <class name="mini-controller-button"/>
                 </style>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkButton" id="resize_button">
@@ -278,25 +232,10 @@ audio-volume-medium-symbolic</property>
                   <class name="mini-controller-button"/>
                 </style>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">5</property>
-          </packing>
         </child>
       </object>
-      <packing>
-        <property name="expand">True</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
     </child>
     <style>
       <class name="mini-controller"/>
