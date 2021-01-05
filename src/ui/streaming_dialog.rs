@@ -66,7 +66,7 @@ impl StreamingDialog {
                         loading_revealer.set_reveal_child(true);
                     }
                     GCastDiscovererMessage::DiscoverEnded => {
-                        if devices_listbox.get_children().is_empty() {
+                        if devices_listbox.get_last_child().is_none() {
                             stream_stack.set_visible_child_name("no-devices");
                         } else {
                             stream_stack.set_visible_child_name("results");

@@ -65,15 +65,15 @@ impl SongListBox {
     }
 
     pub fn remove_last_row(&self) {
-        let mut children = self.listbox.get_children();
-        let widget = children.pop().unwrap();
-        self.listbox.remove(&widget);
+        if let Some(child) = self.listbox.get_last_child() {
+            self.listbox.remove(&child);
+        }
 
         self.update_stack();
     }
 
     fn update_stack(&self) {
-        if !self.listbox.get_children().is_empty() {
+        if !self.listbox.get_last_child().is_none() {
             self.stack.set_visible_child_name("content");
         } else {
             self.stack.set_visible_child_name("empty");
