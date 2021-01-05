@@ -89,7 +89,7 @@
         </child>
       </object>
     </child>
-    <child internal-child="vbox">
+    <child>
       <object class="GtkBox">
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
