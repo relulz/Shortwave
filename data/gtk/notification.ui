@@ -41,7 +41,7 @@
                     <property name="no_show_all">True</property>
                     <property name="valign">start</property>
                     <property name="margin_left">6</property>
-                    <property name="relief">none</property>
+                    <property name="has_frame">False</property>
                     <child>
                       <object class="GtkImage">
                         <property name="visible">True</property>

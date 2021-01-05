@@ -17,7 +17,7 @@
             <property name="receives_default">True</property>
             <property name="tooltip_text" translatable="yes">Save recorded song</property>
             <property name="valign">center</property>
-            <property name="relief">none</property>
+            <property name="has_frame">False</property>
             <child>
               <object class="GtkImage">
                 <property name="visible">True</property>
@@ -36,7 +36,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="valign">center</property>
-            <property name="relief">none</property>
+            <property name="has_frame">False</property>
             <child>
               <object class="GtkImage">
                 <property name="visible">True</property>

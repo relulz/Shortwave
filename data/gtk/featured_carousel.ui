@@ -140,7 +140,7 @@
             <property name="receives_default">True</property>
             <property name="no_show_all">True</property>
             <property name="halign">center</property>
-            <property name="relief">none</property>
+            <property name="has_frame">False</property>
             <child>
               <object class="GtkBox">
                 <property name="visible">True</property>

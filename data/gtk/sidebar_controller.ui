@@ -156,7 +156,6 @@
                 <property name="receives_default">True</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
-                <property name="relief">none</property>
                 <property name="orientation">vertical</property>
                 <property name="value">1</property>
                 <property name="icons">audio-volume-muted-symbolic
@@ -169,7 +168,7 @@ audio-volume-medium-symbolic</property>
                     <property name="receives_default">True</property>
                     <property name="halign">center</property>
                     <property name="valign">center</property>
-                    <property name="relief">none</property>
+                    <property name="has_frame">False</property>
                   </object>
                 </child>
                 <child internal-child="minus_button">
@@ -178,7 +177,7 @@ audio-volume-medium-symbolic</property>
                     <property name="receives_default">True</property>
                     <property name="halign">center</property>
                     <property name="valign">center</property>
-                    <property name="relief">none</property>
+                    <property name="has_frame">False</property>
                   </object>
                 </child>
               </object>
@@ -266,7 +265,7 @@ audio-volume-medium-symbolic</property>
                 <property name="receives_default">True</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
-                <property name="relief">none</property>
+                <property name="has_frame">False</property>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
