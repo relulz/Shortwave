@@ -35,8 +35,8 @@
           <object class="GtkBox" id="paginator_overlay">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_left">1</property>
-            <property name="margin_right">1</property>
+            <property name="margin_start">1</property>
+            <property name="margin_end">1</property>
             <property name="margin_bottom">12</property>
             <child>
               <object class="GtkButton" id="previous_button">
@@ -119,8 +119,8 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">center</property>
-            <property name="margin_left">10</property>
-            <property name="margin_right">10</property>
+            <property name="margin_start">10</property>
+            <property name="margin_end">10</property>
             <property name="label">title label</property>
             <property name="justify">center</property>
             <property name="wrap">True</property>
