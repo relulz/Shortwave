@@ -10,7 +10,6 @@
     <property name="title" translatable="yes">Station details</property>
     <property name="default_width">375</property>
     <property name="default_height">450</property>
-    <property name="type_hint">normal</property>
     <child>
       <placeholder/>
     </child>
