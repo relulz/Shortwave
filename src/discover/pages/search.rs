@@ -48,7 +48,7 @@ impl Search {
 
         get_widget!(builder, gtk::Box, results_box);
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        results_box.add(&flowbox.widget);
+        results_box.append(&flowbox.widget);
 
         let timeout_id = Rc::new(RefCell::new(None));
 

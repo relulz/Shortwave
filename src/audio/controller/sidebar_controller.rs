@@ -67,7 +67,7 @@ impl SidebarController {
 
         get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = Rc::new(StationFavicon::new(FaviconSize::Big));
-        favicon_box.add(&station_favicon.widget);
+        favicon_box.append(&station_favicon.widget);
 
         // volume_button | We need the volume_signal_id later to block the signal
         let volume_signal_id = volume_button.connect_value_changed(clone!(@strong sender => move |_, value| {

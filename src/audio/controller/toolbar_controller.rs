@@ -60,7 +60,7 @@ impl ToolbarController {
 
         get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = Rc::new(StationFavicon::new(FaviconSize::Mini));
-        favicon_box.add(&station_favicon.widget);
+        favicon_box.append(&station_favicon.widget);
 
         let controller = Self {
             widget: toolbar_controller,

@@ -43,12 +43,12 @@ impl StoreFront {
         // Discover
         get_widget!(builder, gtk::Box, discover_box);
         let discover = Discover::new(sender.clone());
-        discover_box.add(&discover.widget);
+        discover_box.append(&discover.widget);
 
         // Search
         get_widget!(builder, gtk::Box, search_box);
         let search = Search::new(sender);
-        search_box.add(&search.widget);
+        search_box.append(&search.widget);
 
         let storefront = Self {
             widget: storefront,

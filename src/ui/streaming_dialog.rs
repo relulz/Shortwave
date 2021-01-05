@@ -85,7 +85,7 @@ impl StreamingDialog {
                         name_label.set_text(&device.name);
                         ip_label.set_text(&device.ip.to_string());
 
-                        devices_listbox.add(&device_row);
+                        devices_listbox.append(&device_row);
                     }
                 }
 

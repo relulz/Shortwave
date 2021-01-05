@@ -65,7 +65,7 @@ impl Library {
         appmenu_button.set_popover(Some(&popover_menu));
 
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        content_box.add(&flowbox.widget);
+        content_box.append(&flowbox.widget);
 
         let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
 

@@ -98,8 +98,7 @@ impl Player {
         // Sidebar Controller
         let sidebar_controller = SidebarController::new(sender.clone());
         get_widget!(builder, gtk::Box, player_box);
-        player_box.add(&sidebar_controller.widget);
-        player_box.reorder_child(&sidebar_controller.widget, 0);
+        player_box.prepend(&sidebar_controller.widget);
         controller.push(Box::new(sidebar_controller));
 
         // Toolbar Controller
@@ -126,7 +125,7 @@ impl Player {
 
         // Backend
         let backend = Backend::new(sender.clone());
-        player_box.add(&backend.song.listbox.widget);
+        player_box.append(&backend.song.listbox.widget);
         player_box.reorder_child(&backend.song.listbox.widget, 3);
         let backend = Arc::new(Mutex::new(backend));
 

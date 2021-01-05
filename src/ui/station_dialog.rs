@@ -62,7 +62,7 @@ impl StationDialog {
         // Download & set station favicon
         get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = StationFavicon::new(FaviconSize::Big);
-        favicon_box.add(&station_favicon.widget);
+        favicon_box.append(&station_favicon.widget);
         if let Some(favicon) = station.favicon.as_ref() {
             let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Big as i32).map(move |pixbuf| {
                 if let Ok(pixbuf) = pixbuf {

@@ -52,7 +52,7 @@ impl Discover {
         // Featured Carousel
         let carousel = FeaturedCarousel::new();
         get_widget!(builder, gtk::Box, carousel_box);
-        carousel_box.add(&carousel.widget);
+        carousel_box.append(&carousel.widget);
 
         let _action = featured_carousel::Action::new("win.show-server-stats", &i18n("Show statistics"));
         carousel.add_page(&i18n("Browse over 25,500 stations"), "26,95,180", None);
@@ -66,17 +66,17 @@ impl Discover {
         // Most voted stations
         get_widget!(builder, gtk::Box, votes_box);
         let votes_flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        votes_box.add(&votes_flowbox.widget);
+        votes_box.append(&votes_flowbox.widget);
 
         // Trending
         get_widget!(builder, gtk::Box, trending_box);
         let trending_flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        trending_box.add(&trending_flowbox.widget);
+        trending_box.append(&trending_flowbox.widget);
 
         // Other users are listening to...
         get_widget!(builder, gtk::Box, clicked_box);
         let clicked_flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        clicked_box.add(&clicked_flowbox.widget);
+        clicked_box.append(&clicked_flowbox.widget);
 
         let discover = Self {
             widget: discover,
