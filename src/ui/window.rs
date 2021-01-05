@@ -168,7 +168,7 @@ impl SwApplicationWindow {
         //}));
 
         // window gets closed
-        self.connect_delete_event(move |window, _| {
+        self.connect_close_request(move |window| {
             debug!("Saving window geometry.");
             let width = window.get_default_size().0;
             let height = window.get_default_size().1;

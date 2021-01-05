@@ -144,8 +144,7 @@ impl StreamingDialog {
         }));
 
         // hide on delete
-        self.widget.connect_delete_event(|widget, _| {
-            widget.hide_on_delete();
+        self.widget.connect_close_request(|widget| {
             widget.hide();
             glib::signal::Inhibit(true)
         });
