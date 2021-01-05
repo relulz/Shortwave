@@ -20,22 +20,12 @@
             <property name="label" translatable="yes">Sorting</property>
             <property name="menu_name">sorting</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkSeparator">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -46,11 +36,6 @@
             <property name="label" translatable="yes">Open radio-browser.info &lt;sup&gt;↗&lt;/sup&gt;</property>
             <property name="use-markup">True</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">3</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -60,22 +45,12 @@
             <property name="action_name">win.create-new-station</property>
             <property name="label" translatable="yes">Create new station</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">4</property>
-          </packing>
         </child>
         <child>
           <object class="GtkSeparator">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">5</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -85,11 +60,6 @@
             <property name="action_name">win.show-preferences</property>
             <property name="label" translatable="yes">Preferences</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">6</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -99,11 +69,6 @@
             <property name="action_name">win.show-help-overlay</property>
             <property name="label" translatable="yes">Keyboard Shortcuts</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">7</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -113,16 +78,10 @@
             <property name="action_name">win.about</property>
             <property name="label" translatable="yes">About Shortwave</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">8</property>
-          </packing>
         </child>
       </object>
       <packing>
         <property name="submenu">main</property>
-        <property name="position">1</property>
       </packing>
     </child>
     <child>
@@ -144,11 +103,6 @@
             <property name="inverted">True</property>
             <property name="centered">True</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -159,11 +113,6 @@
             <property name="action_target">'Name'</property>
             <property name="label" translatable="yes">Name</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -174,11 +123,6 @@
             <property name="action_target">'Language'</property>
             <property name="label" translatable="yes">Language</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -189,11 +133,6 @@
             <property name="action_target">'Country'</property>
             <property name="label" translatable="yes">Country</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">3</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -204,11 +143,6 @@
             <property name="action_target">'State'</property>
             <property name="label" translatable="yes">State</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">4</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -219,22 +153,12 @@
             <property name="action_target">'Votes'</property>
             <property name="label" translatable="yes">Votes</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">5</property>
-          </packing>
         </child>
         <child>
           <object class="GtkSeparator">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">6</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -245,11 +169,6 @@
             <property name="action_target">'Ascending'</property>
             <property name="label" translatable="yes">Ascending</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">7</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -260,16 +179,10 @@
             <property name="action_target">'Descending'</property>
             <property name="label" translatable="yes">Descending</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">8</property>
-          </packing>
         </child>
       </object>
       <packing>
         <property name="submenu">sorting</property>
-        <property name="position">3</property>
       </packing>
     </child>
   </object>
