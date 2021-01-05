@@ -10,12 +10,12 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkModelButton">
+          <object class="GtkButton">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="receives_default">False</property>
             <property name="action_name">player.show-details</property>
-            <property name="text" translatable="yes">Show station details</property>
+            <property name="label" translatable="yes">Show station details</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -24,12 +24,12 @@
           </packing>
         </child>
         <child>
-          <object class="GtkModelButton">
+          <object class="GtkButton">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="receives_default">False</property>
             <property name="action_name">player.stream-audio</property>
-            <property name="text" translatable="yes">Stream to a device</property>
+            <property name="label" translatable="yes">Stream to a device</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -49,12 +49,12 @@
           </packing>
         </child>
         <child>
-          <object class="GtkModelButton">
+          <object class="GtkButton">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="receives_default">False</property>
             <property name="action_name">win.enable-mini-player</property>
-            <property name="text" translatable="yes">Enable mini player</property>
+            <property name="label" translatable="yes">Enable mini player</property>
           </object>
           <packing>
             <property name="expand">False</property>
