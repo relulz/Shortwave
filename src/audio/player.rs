@@ -342,7 +342,7 @@ impl Player {
         });
         */
 
-        let app = self.builder.get_application().unwrap();
+        let app = gio::Application::get_default().unwrap();
         app.send_notification(None, &notification);
     }
 }
