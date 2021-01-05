@@ -38,11 +38,13 @@
             <property name="margin_start">1</property>
             <property name="margin_end">1</property>
             <property name="margin_bottom">12</property>
+            <property name="homogeneous">True</property>
             <child>
               <object class="GtkButton" id="previous_button">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="halign">start</property>
                 <property name="valign">center</property>
                 <child>
                   <object class="GtkImage">
@@ -62,6 +64,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="halign">end</property>
                 <property name="valign">center</property>
                 <child>
                   <object class="GtkImage">
