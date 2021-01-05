@@ -78,6 +78,7 @@ impl ObjectSubclass for SwApplicationPrivate {
     type ParentType = gtk::Application;
     type Instance = subclass::simple::InstanceStruct<Self>;
     type Class = subclass::simple::ClassStruct<Self>;
+    type Type = super::SwApplication;
 
     glib::object_subclass!();
 
@@ -112,7 +113,7 @@ impl GtkApplicationImpl for SwApplicationPrivate {}
 
 // Implement Gio.Application for SwApplication
 impl ApplicationImpl for SwApplicationPrivate {
-    fn activate(&self, _app: &gio::Application) {
+    fn activate(&self, _app: &Self::Type) {
         debug!("gio::Application -> activate()");
 
         // If the window already exists,

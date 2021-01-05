@@ -50,6 +50,7 @@ impl ObjectSubclass for SwApplicationWindowPrivate {
     type ParentType = libhandy::ApplicationWindow;
     type Instance = subclass::simple::InstanceStruct<Self>;
     type Class = subclass::simple::ClassStruct<Self>;
+    type Type = super::SwApplicationWindow;
 
     glib::object_subclass!();
 
