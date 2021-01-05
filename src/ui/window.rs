@@ -179,11 +179,9 @@ impl SwApplicationWindow {
         });
 
         // back button (mouse)
-        self.connect_button_press_event(clone!(@strong sender => move |_, event|{
-            if event.get_button() == 8 {
-                send!(sender, Action::ViewShowLibrary);
-            }
-            glib::signal::Inhibit(false)
+        get_widget!(self_.window_builder, gtk::GestureClick, back_button_gesture);
+        back_button_gesture.connect_pressed(clone!(@strong sender => move |_, _ ,_ , _| {
+            send!(sender, Action::ViewShowLibrary);
         }));
     }
 

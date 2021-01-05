@@ -8,6 +8,11 @@
     <property name="can_focus">False</property>
     <property name="orientation">vertical</property>
     <child>
+      <object class="GtkGestureClick" id="back_button_gesture">
+        <property name="button">8</property>
+      </object>
+    </child>
+    <child>
       <object class="HdySqueezer" id="window_squeezer">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
