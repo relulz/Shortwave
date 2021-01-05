@@ -83,30 +83,34 @@
     <property name="hexpand">True</property>
     <property name="can_swipe_back">True</property>
     <child>
-      <object class="GtkBox" id="library_page">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <child>
-          <placeholder/>
-        </child>
-      </object>
-      <packing>
+      <object class="HdyLeafletPage">
         <property name="name">library</property>
-      </packing>
+        <property name="child">
+          <object class="GtkBox" id="library_page">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+        </property>
+      </object>
     </child>
     <child>
-      <object class="GtkBox" id="storefront_page">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <child>
-          <placeholder/>
-        </child>
-      </object>
-      <packing>
+      <object class="HdyLeafletPage">
         <property name="name">storefront</property>
-      </packing>
+        <property name="child">
+          <object class="GtkBox" id="storefront_page">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+        </property>
+      </object>
     </child>
   </object>
 </interface>
