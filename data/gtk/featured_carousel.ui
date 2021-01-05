@@ -56,11 +56,6 @@
                   <class name="carousel-left-button"/>
                 </style>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkButton" id="next_button">
@@ -81,10 +76,7 @@
                 </style>
               </object>
               <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
                 <property name="pack_type">end</property>
-                <property name="position">1</property>
               </packing>
             </child>
           </object>
@@ -93,11 +85,6 @@
           </packing>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
     </child>
   </object>
   <object class="GtkBox" id="page_box">
@@ -127,11 +114,6 @@
               <attribute name="font-desc" value="Cantarell Ultra-Bold 20"/>
             </attributes>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton" id="action_button">
@@ -151,11 +133,6 @@
                     <property name="can_focus">False</property>
                     <property name="icon_name">go-next-symbolic</property>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="action_label">
@@ -163,11 +140,6 @@
                     <property name="can_focus">False</property>
                     <property name="label">action label</property>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
               </object>
             </child>
@@ -175,18 +147,8 @@
               <class name="flat"/>
             </style>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
     </child>
     <style>
       <class name="carousel-banner"/>
