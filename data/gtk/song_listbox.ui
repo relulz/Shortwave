@@ -20,11 +20,6 @@
               <class name="dim-label"/>
             </style>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel">
@@ -39,11 +34,6 @@ If the station does not send any metadata, no songs can be recognized.</property
             <property name="xalign">0</property>
             <property name="yalign">0</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
         </child>
       </object>
     </child>
@@ -79,11 +69,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                 <property name="pixel_size">64</property>
                 <property name="icon_name">dialog-information-symbolic</property>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkLabel">
@@ -96,11 +81,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                   <attribute name="scale" value="1.2"/>
                 </attributes>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
             </child>
             <child>
               <object class="GtkLabel">
@@ -110,11 +90,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                 <property name="justify">center</property>
                 <property name="wrap">True</property>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
             </child>
             <child>
               <object class="GtkMenuButton">
@@ -132,11 +107,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">3</property>
-              </packing>
             </child>
             <style>
               <class name="dim-label"/>
@@ -161,11 +131,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                   <class name="preferences"/>
                 </style>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkImage">
@@ -178,11 +143,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                   <class name="dim-label"/>
                 </style>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
             </child>
             <child>
               <object class="GtkLabel">
@@ -203,11 +163,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                   <class name="dim-label"/>
                 </style>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
             </child>
             <child>
               <object class="GtkButton" id="open_music_folder_button">
@@ -222,27 +177,16 @@ If the station does not send any metadata, no songs can be recognized.</property
                   <class name="dim-label"/>
                 </style>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">3</property>
-              </packing>
             </child>
           </object>
           <packing>
             <property name="name">content</property>
-            <property name="position">1</property>
           </packing>
         </child>
         <style>
           <class name="songlistbox"/>
         </style>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
     </child>
   </object>
 </interface>
