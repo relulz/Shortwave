@@ -126,7 +126,6 @@ impl Player {
         // Backend
         let backend = Backend::new(sender.clone());
         player_box.append(&backend.song.listbox.widget);
-        player_box.reorder_child(&backend.song.listbox.widget, 3);
         let backend = Arc::new(Mutex::new(backend));
 
         // Current station (needed for notifications)
