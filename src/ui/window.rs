@@ -151,7 +151,7 @@ impl SwApplicationWindow {
         // Restore window geometry
         let width = settings_manager::get_integer(Key::WindowWidth);
         let height = settings_manager::get_integer(Key::WindowHeight);
-        self.resize(width, height);
+        self.set_default_size(width, height);
     }
 
     fn setup_signals(&self, sender: Sender<Action>) {
@@ -170,8 +170,8 @@ impl SwApplicationWindow {
         // window gets closed
         self.connect_delete_event(move |window, _| {
             debug!("Saving window geometry.");
-            let width = window.get_size().0;
-            let height = window.get_size().1;
+            let width = window.get_default_size().0;
+            let height = window.get_default_size().1;
 
             settings_manager::set_integer(Key::WindowWidth, width);
             settings_manager::set_integer(Key::WindowHeight, height);
@@ -329,9 +329,9 @@ impl SwApplicationWindow {
     pub fn enable_mini_player(&self, enable: bool) {
         if enable {
             self.unmaximize();
-            self.resize(425, 125);
+            self.set_default_size(425, 125);
         } else {
-            self.resize(700, 500);
+            self.set_default_size(700, 500);
         }
     }
 
