@@ -42,7 +42,8 @@
                     <property name="name">library-remove</property>
                     <property name="child">
                       <object class="GtkButton" id="remove_button">
-                        <property name="label">Remove from Library</property>
+                        <property name="label" translatable="yes">_Remove from Library</property>
+                        <property name="use_underline">True</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -58,7 +59,8 @@
                     <property name="name">library-add</property>
                     <property name="child">
                       <object class="GtkButton" id="add_button">
-                        <property name="label">Add to library</property>
+                        <property name="label" translatable="yes">_Add to library</property>
+                        <property name="use_underline">True</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
