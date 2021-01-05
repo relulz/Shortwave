@@ -15,7 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use gio::subclass::prelude::ApplicationImpl;
-use gio::{self, prelude::*, ApplicationFlags, SettingsExt};
+use gio::{self, prelude::*, SettingsExt};
 use glib::subclass;
 use glib::subclass::prelude::*;
 use glib::translate::*;
@@ -163,10 +163,7 @@ impl SwApplication {
         info!("Isahc version: {}", isahc::version());
 
         // Create new GObject and downcast it into SwApplication
-        let app = glib::Object::new(SwApplication::static_type(), &[("application-id", &Some(config::APP_ID)), ("flags", &ApplicationFlags::empty())])
-            .unwrap()
-            .downcast::<SwApplication>()
-            .unwrap();
+        let app = glib::Object::new::<SwApplication>(&[("application-id", &Some(config::APP_ID)), ("flags", &gio::ApplicationFlags::empty())]).unwrap();
 
         // Start running gtk::Application
         let args: Vec<String> = env::args().collect();
