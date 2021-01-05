@@ -19,11 +19,6 @@
             <property name="icon_name">face-sad-symbolic</property>
             <property name="icon_size">6</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel">
@@ -34,11 +29,6 @@
               <attribute name="weight" value="bold"/>
             </attributes>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="error_label">
@@ -55,11 +45,6 @@
               <class name="dim-label"/>
             </style>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
         </child>
       </object>
     </child>
@@ -81,11 +66,6 @@
           <placeholder/>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
     </child>
     <child>
       <object class="GtkLabel" id="title_label">
@@ -104,11 +84,6 @@
           <attribute name="scale" value="1.2"/>
         </attributes>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">1</property>
-      </packing>
     </child>
     <child>
       <object class="GtkRevealer" id="subtitle_revealer">
@@ -129,11 +104,6 @@
           </object>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">2</property>
-      </packing>
     </child>
     <child>
       <object class="GtkRevealer" id="action_revealer">
@@ -180,11 +150,6 @@ audio-volume-medium-symbolic</property>
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkStack" id="playback_button_stack">
@@ -224,7 +189,6 @@ audio-volume-medium-symbolic</property>
                   </object>
                   <packing>
                     <property name="name">start_playback</property>
-                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
@@ -247,15 +211,9 @@ audio-volume-medium-symbolic</property>
                   </object>
                   <packing>
                     <property name="name">error</property>
-                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
             </child>
             <child>
               <object class="GtkMenuButton" id="playermenu_button">
@@ -273,20 +231,10 @@ audio-volume-medium-symbolic</property>
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
             </child>
           </object>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">3</property>
-      </packing>
     </child>
   </object>
 </interface>
