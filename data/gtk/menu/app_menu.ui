@@ -1,189 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="3.22"/>
-  <object class="GtkPopoverMenu" id="popover_menu">
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="margin_end">12</property>
-        <property name="margin_start">12</property>
-        <property name="margin_top">12</property>
-        <property name="margin_bottom">12</property>
-        <child>
-          <object class="GtkMenuButton" id="sorting_mbutton">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="receives_default">False</property>
-            <property name="label" translatable="yes">Sorting</property>
-            <property name="menu_name">sorting</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkSeparator">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="receives_default">False</property>
-            <property name="action_name">win.open-radio-browser-info</property>
-            <property name="label" translatable="yes">Open radio-browser.info &lt;sup&gt;↗&lt;/sup&gt;</property>
-            <property name="use-markup">True</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="receives_default">False</property>
-            <property name="action_name">win.create-new-station</property>
-            <property name="label" translatable="yes">Create new station</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkSeparator">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="receives_default">False</property>
-            <property name="action_name">win.show-preferences</property>
-            <property name="label" translatable="yes">Preferences</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="receives_default">False</property>
-            <property name="action_name">win.show-help-overlay</property>
-            <property name="label" translatable="yes">Keyboard Shortcuts</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="receives_default">False</property>
-            <property name="action_name">win.about</property>
-            <property name="label" translatable="yes">About Shortwave</property>
-          </object>
-        </child>
-      </object>
-      <packing>
-        <property name="submenu">main</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="margin_end">12</property>
-        <property name="margin_start">12</property>
-        <property name="margin_top">12</property>
-        <property name="margin_bottom">12</property>
-        <child>
-          <object class="GtkMenuButton">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="label" translatable="yes">Sorting</property>
-            <property name="menu_name">main</property>
-            <property name="inverted">True</property>
-            <property name="centered">True</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="action_name">win.view-sorting</property>
-            <property name="action_target">'Name'</property>
-            <property name="label" translatable="yes">Name</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="action_name">win.view-sorting</property>
-            <property name="action_target">'Language'</property>
-            <property name="label" translatable="yes">Language</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="action_name">win.view-sorting</property>
-            <property name="action_target">'Country'</property>
-            <property name="label" translatable="yes">Country</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="action_name">win.view-sorting</property>
-            <property name="action_target">'State'</property>
-            <property name="label" translatable="yes">State</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="action_name">win.view-sorting</property>
-            <property name="action_target">'Votes'</property>
-            <property name="label" translatable="yes">Votes</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkSeparator">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="action_name">win.view-order</property>
-            <property name="action_target">'Ascending'</property>
-            <property name="label" translatable="yes">Ascending</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="action_name">win.view-order</property>
-            <property name="action_target">'Descending'</property>
-            <property name="label" translatable="yes">Descending</property>
-          </object>
-        </child>
-      </object>
-      <packing>
-        <property name="submenu">sorting</property>
-      </packing>
-    </child>
-  </object>
+  <menu id="app_menu">
+    <section>
+      <submenu>
+        <attribute name="label" translatable="yes">_Sorting</attribute>
+        <section>
+          <item>
+            <attribute name="label" translatable="yes">_Name</attribute>
+            <attribute name="action">win.view-sorting</attribute>
+            <attribute name="target">Name</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">_Language</attribute>
+            <attribute name="action">win.view-sorting</attribute>
+            <attribute name="target">Language</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">_Country</attribute>
+            <attribute name="action">win.view-sorting</attribute>
+            <attribute name="target">Country</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">S_tate</attribute>
+            <attribute name="action">win.view-sorting</attribute>
+            <attribute name="target">State</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">_Votes</attribute>
+            <attribute name="action">win.view-sorting</attribute>
+            <attribute name="target">Votes</attribute>
+          </item>
+        </section>
+        <section>
+          <item>
+            <attribute name="label" translatable="yes">_Ascending</attribute>
+            <attribute name="action">win.view-order</attribute>
+            <attribute name="target">Ascending</attribute>
+          </item>
+          <item>
+            <attribute name="label" translatable="yes">_Descending</attribute>
+            <attribute name="action">win.view-order</attribute>
+            <attribute name="target">Descending</attribute>
+          </item>
+        </section>
+      </submenu>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Open radio-browser.info &lt;sup&gt;↗&lt;/sup&gt;</attribute>
+        <attribute name="action">win.open-radio-browser-info</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Create new station</attribute>
+        <attribute name="action">win.create-new-station</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Preferences</attribute>
+        <attribute name="action">win.show-preferences</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+        <attribute name="action">win.show-help-overlay</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_About Shortwave</attribute>
+        <attribute name="action">win.about</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>

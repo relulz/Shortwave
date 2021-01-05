@@ -60,9 +60,9 @@ impl Library {
         welcome_text.set_text(i18n_f("Welcome to {}", &[config::NAME]).as_str());
 
         // Set hamburger menu
-        get_widget!(menu_builder, gtk::PopoverMenu, popover_menu);
+        get_widget!(menu_builder, gio::MenuModel, app_menu);
         get_widget!(builder, gtk::MenuButton, appmenu_button);
-        appmenu_button.set_popover(Some(&popover_menu));
+        appmenu_button.set_menu_model(Some(&app_menu));
 
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
         content_box.append(&flowbox.widget);
