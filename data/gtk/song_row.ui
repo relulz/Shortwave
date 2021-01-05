@@ -11,43 +11,47 @@
         <property name="can_focus">False</property>
         <property name="valign">center</property>
         <child>
-          <object class="GtkButton" id="save_button">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="tooltip_text" translatable="yes">Save recorded song</property>
-            <property name="valign">center</property>
-            <property name="has_frame">False</property>
-            <child>
-              <object class="GtkImage">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="icon_name">document-save-symbolic</property>
-              </object>
-            </child>
-          </object>
-          <packing>
+          <object class="GtkStackPage">
             <property name="name">save</property>
-          </packing>
+            <property name="child">
+              <object class="GtkButton" id="save_button">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">Save recorded song</property>
+                <property name="valign">center</property>
+                <property name="has_frame">False</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="icon_name">document-save-symbolic</property>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
         </child>
         <child>
-          <object class="GtkButton" id="open_button">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="valign">center</property>
-            <property name="has_frame">False</property>
-            <child>
-              <object class="GtkImage">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="icon_name">media-playback-start-symbolic</property>
-              </object>
-            </child>
-          </object>
-          <packing>
+          <object class="GtkStackPage">
             <property name="name">open</property>
-          </packing>
+            <property name="child">
+              <object class="GtkButton" id="open_button">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="valign">center</property>
+                <property name="has_frame">False</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="icon_name">media-playback-start-symbolic</property>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
         </child>
       </object>
       <packing>
