@@ -57,7 +57,7 @@
                 </style>
               </object>
             </child>
-            <child>
+            <child type="end">
               <object class="GtkButton" id="next_button">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -75,9 +75,6 @@
                   <class name="carousel-right-button"/>
                 </style>
               </object>
-              <packing>
-                <property name="pack_type">end</property>
-              </packing>
             </child>
           </object>
           <packing>
