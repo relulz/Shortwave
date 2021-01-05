@@ -129,9 +129,9 @@ impl StreamingDialog {
 
             if let Some(active_row) = devices_listbox.get_selected_row() {
                 // Very hackish way to get the selected ip address
-                let box1: gtk::Box = active_row.get_children()[0].clone().downcast().unwrap();
-                let box2: gtk::Box = box1.get_children()[0].clone().downcast().unwrap();
-                let ip_label: gtk::Label = box2.get_children()[1].clone().downcast().unwrap();
+                let box1: gtk::Box = active_row.get_first_child().unwrap().clone().downcast().unwrap();
+                let box2: gtk::Box = box1.get_first_child().unwrap().clone().downcast().unwrap();
+                let ip_label: gtk::Label = box2.get_last_child().unwrap().clone().downcast().unwrap();
                 let ip_addr: IpAddr = IpAddr::from_str(ip_label.get_text().to_string().as_str()).unwrap();
 
                 // Get GCastDevice
