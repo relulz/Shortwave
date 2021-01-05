@@ -256,7 +256,6 @@
                               <object class="GtkViewport">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="shadow_type">none</property>
                                 <child>
                                   <object class="GtkListBox" id="devices_listbox">
                                     <property name="visible">True</property>

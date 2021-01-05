@@ -18,7 +18,7 @@
         <property name="valign">center</property>
         <property name="label_xalign">0</property>
         <property name="label_yalign">0</property>
-        <property name="shadow_type">none</property>
+        <property name="has_frame">False</property>
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
