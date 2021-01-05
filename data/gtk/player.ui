@@ -9,7 +9,7 @@
     <property name="vexpand">True</property>
     <property name="orientation">vertical</property>
     <child>
-      <object class="HdyWindowHandle" id="header_handle">
+      <object class="GtkWindowHandle" id="header_handle">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
