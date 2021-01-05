@@ -130,7 +130,6 @@ impl SwApplicationWindow {
         self_.sidebar_flap.append(&app_private.player.widget);
 
         overlay.set_child(Some(&self_.sidebar_flap));
-        overlay.show_all();
 
         mini_controller_box.append(&app_private.player.mini_controller_widget);
         library_page.append(&app_private.library.widget);
