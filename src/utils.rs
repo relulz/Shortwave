@@ -118,10 +118,9 @@ pub fn station_subtitle(country: &str, state: &str, votes: i32) -> String {
 // Removes all child items
 pub fn remove_all_items<T>(container: &T)
 where
-    T: IsA<gtk::Container> + gtk::ContainerExt,
+    T: IsA<gtk::FlowBox>,
 {
-    let children = container.get_children();
-    for widget in children {
-        container.remove(&widget);
+    while let Some(child) = container.upcast::<gtk::Widget>().get_first_child() {
+        container.remove(&child);
     }
 }
