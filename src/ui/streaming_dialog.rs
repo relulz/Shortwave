@@ -24,7 +24,6 @@ use std::str::FromStr;
 use crate::app::{Action, SwApplication};
 use crate::audio::GCastDiscoverer;
 use crate::audio::GCastDiscovererMessage;
-use crate::utils;
 
 pub struct StreamingDialog {
     pub widget: gtk::Dialog,
@@ -61,7 +60,9 @@ impl StreamingDialog {
 
                 match message {
                     GCastDiscovererMessage::DiscoverStarted => {
-                        utils::remove_all_items(&devices_listbox);
+                        while let Some(child) = devices_listbox.get_first_child() {
+                            devices_listbox.remove(&child);
+                        }
                         stream_stack.set_visible_child_name("loading");
                         loading_revealer.set_reveal_child(true);
                     }
