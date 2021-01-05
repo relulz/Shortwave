@@ -47,15 +47,11 @@
           </object>
           <packing>
             <property name="name">open</property>
-            <property name="position">1</property>
           </packing>
         </child>
       </object>
       <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
         <property name="pack_type">end</property>
-        <property name="position">0</property>
       </packing>
     </child>
     <child>
@@ -74,11 +70,6 @@
             <property name="single_line_mode">True</property>
             <property name="xalign">0</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="duration_label">
@@ -94,18 +85,8 @@
               <class name="dim-label"/>
             </style>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">1</property>
-      </packing>
     </child>
     <style>
       <class name="header"/>
