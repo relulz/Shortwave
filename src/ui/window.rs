@@ -17,11 +17,9 @@
 use gio::prelude::*;
 use glib::subclass;
 use glib::subclass::prelude::*;
-use glib::translate::*;
 use glib::Sender;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
-use libhandy::prelude::*;
 
 use std::cell::RefCell;
 use std::rc::Rc;

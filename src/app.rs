@@ -18,7 +18,6 @@ use gio::subclass::prelude::ApplicationImpl;
 use gio::{self, prelude::*, SettingsExt};
 use glib::subclass;
 use glib::subclass::prelude::*;
-use glib::translate::*;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
 use gtk::subclass::application::GtkApplicationImpl;

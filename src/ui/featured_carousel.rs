@@ -15,7 +15,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use gtk::prelude::*;
-use libhandy::prelude::*;
 use libhandy::Carousel;
 
 use std::cell::RefCell;
