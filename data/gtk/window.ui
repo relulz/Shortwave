@@ -27,6 +27,15 @@
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
+              <object class="GtkOverlay" id="overlay">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+            </child>
+            <child>
               <object class="GtkRevealer" id="toolbar_controller_revealer">
                 <property name="can_focus">False</property>
                 <property name="no_show_all">True</property>
@@ -40,18 +49,6 @@
                       <placeholder/>
                     </child>
                   </object>
-                </child>
-              </object>
-              <packing>
-                <property name="pack_type">end</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkOverlay" id="overlay">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <child>
-                  <placeholder/>
                 </child>
               </object>
             </child>
