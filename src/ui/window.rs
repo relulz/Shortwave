@@ -112,7 +112,7 @@ impl SwApplicationWindow {
 
         // Add headerbar/content to the window itself
         get_widget!(self_.window_builder, gtk::Box, window);
-        self.add(&window);
+        libhandy::ApplicationWindowExt::set_child(self.upcast_ref::<libhandy::ApplicationWindow>(), Some(&window));
 
         // Wire everything up
         get_widget!(self_.window_builder, gtk::Box, mini_controller_box);
@@ -122,20 +122,20 @@ impl SwApplicationWindow {
         get_widget!(self_.window_builder, libhandy::Leaflet, window_leaflet);
         get_widget!(self_.window_builder, gtk::Overlay, overlay);
 
-        self_.sidebar_flap.add(&window_leaflet);
+        self_.sidebar_flap.append(&window_leaflet);
         //self_.sidebar_flap.set_reveal_flap(false);
         //self_.sidebar_flap.set_locked(true);
         //self_.sidebar_flap.set_flap_position(gtk::PackType::End);
         //self_.sidebar_flap.set_flap(&app_private.player.widget);
-        self_.sidebar_flap.add(&app_private.player.widget);
+        self_.sidebar_flap.append(&app_private.player.widget);
 
-        overlay.add(&self_.sidebar_flap);
+        overlay.set_child(Some(&self_.sidebar_flap));
         overlay.show_all();
 
-        mini_controller_box.add(&app_private.player.mini_controller_widget);
-        library_page.add(&app_private.library.widget);
-        storefront_page.add(&app_private.storefront.widget);
-        toolbar_controller_box.add(&app_private.player.toolbar_controller_widget);
+        mini_controller_box.append(&app_private.player.mini_controller_widget);
+        library_page.append(&app_private.library.widget);
+        storefront_page.append(&app_private.storefront.widget);
+        toolbar_controller_box.append(&app_private.player.toolbar_controller_widget);
 
         // Make sure that the headerbars are correctly synced
         let headergroup = libhandy::HeaderGroup::new();
