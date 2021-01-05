@@ -64,11 +64,10 @@ pub fn station_cmp(a: &Station, b: &Station, sorting: Sorting, order: Order) -> 
 //
 // Source: gnome-podcasts (GPLv3)
 // https://gitlab.gnome.org/World/podcasts/blob/7856b6fd27cb071583b87f55f3e47d9d8af9acb6/podcasts-gtk/src/utils.rs
-pub(crate) fn lazy_load<T, C, F, W>(data: T, container: WeakRef<C>, mut contructor: F)
+pub(crate) fn lazy_load<T, F, W>(data: T, container: WeakRef<gtk::FlowBox>, mut contructor: F)
 where
     T: IntoIterator + 'static,
     T::Item: 'static,
-    C: IsA<glib::Object> + ContainerExt + 'static,
     F: FnMut(T::Item) -> W + 'static,
     W: IsA<gtk::Widget> + WidgetExt,
 {
@@ -79,7 +78,7 @@ where
         };
 
         let widget = contructor(x);
-        container.add(&widget);
+        container.insert(&widget, -1);
         widget.show();
     };
     lazy_load_full(data, func);
@@ -116,11 +115,8 @@ pub fn station_subtitle(country: &str, state: &str, votes: i32) -> String {
 }
 
 // Removes all child items
-pub fn remove_all_items<T>(container: &T)
-where
-    T: IsA<gtk::FlowBox>,
-{
-    while let Some(child) = container.upcast::<gtk::Widget>().get_first_child() {
+pub fn remove_all_items(container: &gtk::FlowBox) {
+    while let Some(child) = container.get_first_child() {
         container.remove(&child);
     }
 }
