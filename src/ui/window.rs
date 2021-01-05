@@ -160,7 +160,7 @@ impl SwApplicationWindow {
         // dark mode
         let s = settings_manager::get_settings();
         let gtk_s = gtk::Settings::get_default().unwrap();
-        s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme", gio::SettingsBindFlags::GET);
+        s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme").flags(gio::SettingsBindFlags::GET).build();
 
         // flap
         //self_.sidebar_flap.connect_property_folded_notify(clone!(@strong self as this => move |_| {
