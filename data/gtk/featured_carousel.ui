@@ -7,6 +7,7 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="orientation">vertical</property>
+    <property name="spacing">12</property>
     <child>
       <object class="GtkOverlay" id="overlay">
         <property name="visible">True</property>
@@ -49,6 +50,11 @@
             </style>
           </object>
         </child>
+      </object>
+    </child>
+    <child>
+      <object class="HdyCarouselIndicatorLines">
+        <property name="carousel">paginator</property>
       </object>
     </child>
   </object>
