@@ -40,10 +40,6 @@ gtk-macros = "0.2.0"
 [target.'cfg(unix)'.dependencies]
 mpris-player = "0.6.0"
 
-[dependencies.cairo]
-git = "https://github.com/gtk-rs/gtk-rs/"
-package = "cairo-rs"
-
 [dependencies.glib]
 git = "https://github.com/gtk-rs/gtk-rs/"
 features = ["v2_64"]

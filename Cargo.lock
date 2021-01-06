@@ -1968,7 +1968,6 @@ name = "shortwave"
 version = "0.0.0"
 dependencies = [
  "async-std",
- "cairo-rs",
  "chrono",
  "diesel",
  "diesel_migrations",

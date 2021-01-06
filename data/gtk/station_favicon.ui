@@ -32,7 +32,7 @@
           <object class="GtkStackPage">
             <property name="name">image</property>
             <property name="child">
-              <object class="GtkDrawingArea" id="image">
+              <object class="GtkPicture" id="image">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">center</property>
