@@ -6,11 +6,14 @@
     <property name="can_focus">False</property>
     <property name="hexpand">True</property>
     <property name="vexpand">True</property>
-    <property name="orientation">vertical</property>
     <child>
       <object class="GtkBox">
         <property name="can_focus">False</property>
         <property name="spacing">12</property>
+        <property name="margin_start">12</property>
+        <property name="margin_end">12</property>
+        <property name="margin_top">6</property>
+        <property name="margin_bottom">6</property>
         <child>
           <object class="GtkBox">
             <property name="can_focus">False</property>
@@ -103,12 +106,12 @@ audio-volume-medium-symbolic</property>
           <object class="GtkBox">
             <property name="height_request">90</property>
             <property name="can_focus">False</property>
-            <property name="valign">center</property>
             <property name="orientation">vertical</property>
+            <property name="hexpand">True</property>
             <child>
               <object class="GtkLabel">
                 <property name="can_focus">False</property>
-                <property name="label">SHORTWAVE INTERNET RADIO</property>
+                <property name="label" translatable="yes">SHORTWAVE INTERNET RADIO</property>
                 <attributes>
                   <attribute name="font-desc" value="Cantarell Bold 9"/>
                   <attribute name="style" value="italic"/>
@@ -128,10 +131,8 @@ audio-volume-medium-symbolic</property>
                   <object class="GtkLabel" id="title_label">
                     <property name="can_focus">False</property>
                     <property name="halign">center</property>
-                    <property name="valign">center</property>
                     <property name="label" translatable="yes">No playback</property>
                     <property name="ellipsize">end</property>
-                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="font-desc" value="Nimbus Mono PS Bold 14"/>
                     </attributes>
