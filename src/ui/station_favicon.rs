@@ -26,7 +26,7 @@ pub enum FaviconSize {
 
 pub struct StationFavicon {
     pub widget: gtk::Box,
-    image: gtk::Picture,
+    image: gtk::Image,
     stack: gtk::Stack,
 }
 
@@ -34,7 +34,7 @@ impl StationFavicon {
     pub fn new(size: FaviconSize) -> Self {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/station_favicon.ui");
         get_widget!(builder, gtk::Box, station_favicon);
-        get_widget!(builder, gtk::Picture, image);
+        get_widget!(builder, gtk::Image, image);
         get_widget!(builder, gtk::Stack, stack);
         get_widget!(builder, gtk::Image, placeholder);
 
@@ -51,7 +51,7 @@ impl StationFavicon {
     }
 
     pub fn set_pixbuf(&self, pixbuf: Pixbuf) {
-        self.image.set_pixbuf(Some(&pixbuf));
+        self.image.set_from_pixbuf(Some(&pixbuf));
         self.stack.set_visible_child_name("image");
     }
 

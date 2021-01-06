@@ -29,10 +29,7 @@
           <object class="GtkStackPage">
             <property name="name">image</property>
             <property name="child">
-              <object class="GtkPicture" id="image">
-                <property name="can_focus">False</property>
-                <property name="halign">center</property>
-                <property name="valign">center</property>
+              <object class="GtkImage" id="image">
               </object>
             </property>
           </object>
