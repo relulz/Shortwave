@@ -35,13 +35,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="icon_name">media-playback-stop-symbolic</property>
-                          </object>
-                        </child>
+                        <property name="icon_name">media-playback-stop-symbolic</property>
                         <style>
                           <class name="mini-controller-button"/>
                           <class name="circular"/>
@@ -60,13 +54,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="icon_name">media-playback-start-symbolic</property>
-                          </object>
-                        </child>
+                        <property name="icon_name">media-playback-start-symbolic</property>
                         <style>
                           <class name="mini-controller-button"/>
                           <class name="circular"/>
@@ -203,13 +191,7 @@ audio-volume-medium-symbolic</property>
                 <property name="receives_default">True</property>
                 <property name="valign">center</property>
                 <property name="action_name">win.quit</property>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="icon_name">window-close-symbolic</property>
-                  </object>
-                </child>
+                <property name="icon_name">window-close-symbolic</property>
                 <style>
                   <class name="circular"/>
                   <class name="mini-controller-button"/>
@@ -224,13 +206,7 @@ audio-volume-medium-symbolic</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="action_name">win.disable-mini-player</property>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="icon_name">focus-windows-symbolic</property>
-                  </object>
-                </child>
+                <property name="icon_name">focus-windows-symbolic</property>
                 <style>
                   <class name="circular"/>
                   <class name="mini-controller-button"/>

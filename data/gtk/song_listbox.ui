@@ -100,14 +100,8 @@ If the station does not send any metadata, no songs can be recognized.</property
                     <property name="receives_default">True</property>
                     <property name="halign">center</property>
                     <property name="popover">description_popover</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">How does this work?</property>
-                        <property name="wrap">True</property>
-                      </object>
-                    </child>
+                    <property name="label" translatable="yes">_How does this work?</property>
+                    <property name="use_underline">True</property>
                   </object>
                 </child>
                 <style>
@@ -170,7 +164,8 @@ If the station does not send any metadata, no songs can be recognized.</property
                 </child>
                 <child>
                   <object class="GtkButton" id="open_music_folder_button">
-                    <property name="label" translatable="yes">Open</property>
+                    <property name="label" translatable="yes">_Open</property>
+                    <property name="use_underline">True</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
