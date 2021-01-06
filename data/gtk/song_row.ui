@@ -54,9 +54,6 @@
           </object>
         </child>
       </object>
-      <packing>
-        <property name="pack_type">end</property>
-      </packing>
     </child>
     <child>
       <object class="GtkBox">
