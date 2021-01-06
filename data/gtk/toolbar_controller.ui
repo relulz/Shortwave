@@ -13,10 +13,10 @@
     <child>
       <object class="GtkBox">
         <property name="can_focus">False</property>
-        <property name="hexpand">True</property>
         <child>
           <object class="GtkBox">
             <property name="can_focus">False</property>
+            <property name="hexpand">True</property>
             <child>
               <object class="GtkGestureClick" id="toolbox_gesture">
               </object>
@@ -41,8 +41,8 @@
               <object class="GtkBox">
                 <property name="can_focus">False</property>
                 <property name="valign">center</property>
-                <property name="margin_start">6</property>
-                <property name="margin_end">6</property>
+                <property name="margin_start">12</property>
+                <property name="margin_end">12</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="title_label">
@@ -78,11 +78,11 @@
             </child>
           </object>
         </child>
-        <child type="end">
+        <child>
           <object class="GtkRevealer" id="action_revealer">
             <property name="can_focus">False</property>
             <property name="valign">center</property>
-            <property name="margin_end">6</property>
+            <property name="margin_end">12</property>
             <property name="transition_type">slide-left</property>
             <child>
               <object class="GtkStack" id="playback_button_stack">
