@@ -66,34 +66,9 @@
               <object class="GtkVolumeButton" id="volume_button">
                 <property name="width_request">35</property>
                 <property name="height_request">35</property>
-                <property name="can_focus">True</property>
-                <property name="focus_on_click">False</property>
                 <property name="receives_default">True</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
-                <property name="orientation">vertical</property>
-                <property name="icons">audio-volume-muted-symbolic
-audio-volume-high-symbolic
-audio-volume-low-symbolic
-audio-volume-medium-symbolic</property>
-                <child internal-child="plus_button">
-                  <object class="GtkButton">
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
-                    <property name="has_frame">False</property>
-                  </object>
-                </child>
-                <child internal-child="minus_button">
-                  <object class="GtkButton">
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
-                    <property name="has_frame">False</property>
-                  </object>
-                </child>
                 <style>
                   <class name="circular"/>
                   <class name="mini-controller-button"/>
