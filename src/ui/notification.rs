@@ -97,7 +97,7 @@ impl Notification {
         Self::destroy(self.revealer.clone());
     }
 
-    fn destroy(r: gtk::Revealer) {
+    fn destroy(_r: gtk::Revealer) {
         glib::source::timeout_add_seconds(1, move || {
             //TODO: r.destroy();
             glib::Continue(false)
