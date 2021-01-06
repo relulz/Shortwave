@@ -15,7 +15,6 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="icon_name">emblem-music-symbolic</property>
-            <property name="icon_size">6</property>
             <style>
               <class name="dim-label"/>
             </style>
@@ -136,7 +135,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                     <property name="can_focus">False</property>
                     <property name="margin_top">22</property>
                     <property name="icon_name">dialog-information-symbolic</property>
-                    <property name="icon_size">3</property>
                     <style>
                       <class name="dim-label"/>
                     </style>
