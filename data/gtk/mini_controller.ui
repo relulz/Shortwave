@@ -29,8 +29,6 @@
                     <property name="name">stop_playback</property>
                     <property name="child">
                       <object class="GtkButton" id="stop_playback_button">
-                        <property name="width_request">35</property>
-                        <property name="height_request">35</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="icon_name">media-playback-stop-symbolic</property>
@@ -47,8 +45,6 @@
                     <property name="name">start_playback</property>
                     <property name="child">
                       <object class="GtkButton" id="start_playback_button">
-                        <property name="width_request">35</property>
-                        <property name="height_request">35</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="icon_name">media-playback-start-symbolic</property>
@@ -64,14 +60,11 @@
             </child>
             <child>
               <object class="GtkVolumeButton" id="volume_button">
-                <property name="width_request">35</property>
-                <property name="height_request">35</property>
                 <property name="receives_default">True</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
                 <style>
-                  <class name="circular"/>
-                  <class name="mini-controller-button"/>
+                  <class name="mini-controller-volume-button"/>
                 </style>
               </object>
             </child>
@@ -146,8 +139,6 @@
             <property name="spacing">6</property>
             <child>
               <object class="GtkButton" id="close_button">
-                <property name="width_request">35</property>
-                <property name="height_request">35</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="valign">center</property>
@@ -161,8 +152,6 @@
             </child>
             <child>
               <object class="GtkButton" id="resize_button">
-                <property name="width_request">35</property>
-                <property name="height_request">35</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="action_name">win.disable-mini-player</property>

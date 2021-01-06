@@ -107,9 +107,14 @@
 	0px -1px 0px 0px alpha(black, 0.15);
 }
 
-.mini-controller-button {
+.mini-controller-button, scalebutton.mini-controller-volume-button > button {
   background-image: url('resource://de/haeckerfelix/Shortwave/images/metal.png');
   background-size: cover;
   color: black;
   border: 1px solid alpha(black, 1);
+}
+
+scalebutton.mini-controller-volume-button > button {
+  border-radius: 100%;
+  min-width: 22px;
 }
