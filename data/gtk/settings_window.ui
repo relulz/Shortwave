@@ -14,7 +14,8 @@
             <property name="title" translatable="yes">Appearance</property>
             <child>
               <object class="HdyActionRow">
-                <property name="title" translatable="yes">Dark Mode</property>
+                <property name="title" translatable="yes">_Dark Mode</property>
+                <property name="use_underline">True</property>
                 <property name="subtitle" translatable="yes">Whether the application should use a dark theme</property>
                 <property name="activatable_widget">dark_mode_button</property>
                 <child>
@@ -32,7 +33,8 @@
             <property name="title" translatable="yes">Features</property>
             <child>
               <object class="HdyActionRow">
-                <property name="title" translatable="yes">Notifications</property>
+                <property name="title" translatable="yes">_Notifications</property>
+                <property name="use_underline">True</property>
                 <property name="subtitle" translatable="yes">Show desktop notifications when a new song gets played</property>
                 <property name="activatable_widget">show_notifications_button</property>
                 <child>
