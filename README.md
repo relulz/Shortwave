@@ -23,11 +23,11 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
 - **Is Shortwave compatible with the Librem 5?**
 
-    Yes! We use the awesome [libhandy](https://source.puri.sm/Librem5/libhandy) library to make the interface adaptive.
+    Yes! We use the awesome [libhandy](https://gitlab.gnome.org/GNOME/libhandy/) library to make the interface adaptive.
 
 - **Which database does Shortwave use?**
 
-    [radio-browser.info](http://www.radio-browser.info/gui/#/). It's a community database. Everybody can add/edit information.
+    [radio-browser.info](http://www.radio-browser.info/gui/#/). It's a community database. Everybody can add information.
     
 - **How I can get debug information?**
     Run Shortwave using `RUST_BACKTRACE=1 RUST_LOG=shortwave=debug flatpak run de.haeckerfelix.Shortwave` (`.Devel`).
@@ -47,17 +47,6 @@ You can install stable builds of Shortwave from Flathub by using this command:
 
 <a href="https://flathub.org/apps/details/de.haeckerfelix.Shortwave"><img src="https://flathub.org/assets/badges/flathub-badge-en.png" width="200"/></a>
 
-If you haven't installed Flatpak yet, you can download it from [here](https://flatpak.org/setup/).
-
-
-#### Beta builds
-You can install beta builds of Shortwave from the Flathub Beta repository by using this command:
-
-`flatpak install https://flathub.org/beta-repo/appstream/de.haeckerfelix.Shortwave.flatpakref`
-
-<a href="https://flathub.org/beta-repo/appstream/de.haeckerfelix.Shortwave.flatpakref"><img src="https://flathub.org/assets/badges/flathub-badge-en.png" width="200"/></a>
-
-You can get more information about beta builds [here](https://blogs.gnome.org/haeckerfelix/).
 If you haven't installed Flatpak yet, you can download it from [here](https://flatpak.org/setup/).
 
 
