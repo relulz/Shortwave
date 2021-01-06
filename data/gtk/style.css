@@ -86,30 +86,30 @@
 .mini-controller-display {
 	background-image: linear-gradient(#b6bfb6, #dae6da);
 	border-radius: 8px;
-	border: 1px solid alpha (black, 1);
+	border: 1px solid alpha(black, 1);
 	padding-top: 3px;
 	box-shadow:
-	inset 0px 1px 8px 0px alpha (black, 0.5),
-	inset 0px 0px 2px 1px alpha (black, 0.5),
-	0px 1px 0px 0px alpha (white, 0.3),
-	0px -1px 0px 0px alpha (black, 0.15);
+	inset 0px 1px 8px 0px alpha(black, 0.5),
+	inset 0px 0px 2px 1px alpha(black, 0.5),
+	0px 1px 0px 0px alpha(white, 0.3),
+	0px -1px 0px 0px alpha(black, 0.15);
 }
 
 .mini-controller-display {
 	background-image: linear-gradient(#b6bfb6, #dae6da);
 	border-radius: 8px;
-	border: 1px solid alpha (black, 1);
+	border: 1px solid alpha(black, 1);
 	padding-top: 3px;
 	box-shadow:
-	inset 0px 1px 8px 0px alpha (black, 0.5),
-	inset 0px 0px 2px 1px alpha (black, 0.5),
-	0px 1px 0px 0px alpha (white, 0.3),
-	0px -1px 0px 0px alpha (black, 0.15);
+	inset 0px 1px 8px 0px alpha(black, 0.5),
+	inset 0px 0px 2px 1px alpha(black, 0.5),
+	0px 1px 0px 0px alpha(white, 0.3),
+	0px -1px 0px 0px alpha(black, 0.15);
 }
 
 .mini-controller-button {
   background-image: url('resource://de/haeckerfelix/Shortwave/images/metal.png');
   background-size: cover;
   color: black;
-  border: 1px solid alpha (black, 1);
+  border: 1px solid alpha(black, 1);
 }
