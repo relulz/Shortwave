@@ -40,19 +40,6 @@ impl StationFavicon {
         get_widget!(builder, gtk::Stack, stack);
         get_widget!(builder, gtk::Image, placeholder);
 
-        let ctx = station_favicon.get_style_context();
-
-        match size {
-            FaviconSize::Mini => {
-                ctx.add_class("favicon-mini");
-            }
-            FaviconSize::Small => {
-                ctx.add_class("favicon-small");
-            }
-            FaviconSize::Big => {
-                ctx.add_class("favicon-big");
-            }
-        };
         image.set_size_request(size as i32, size as i32);
         placeholder.set_pixel_size(((size as i32) as f64 * 0.5) as i32);
 

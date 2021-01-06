@@ -18,6 +18,10 @@
         <child>
           <object class="GtkBox" id="favicon_box">
             <property name="halign">center</property>
+            <property name="overflow">hidden</property>
+            <style>
+              <class name="favicon-big"/>
+            </style>
           </object>
         </child>
         <child>
