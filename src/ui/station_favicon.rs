@@ -17,12 +17,10 @@
 use gdk_pixbuf::Pixbuf;
 use gtk::prelude::*;
 
-use std::f64;
-
 #[derive(Clone, Copy, PartialEq)]
 pub enum FaviconSize {
-    Mini = 46,
-    Small = 62,
+    Mini = 48,
+    Small = 64,
     Big = 192,
 }
 
@@ -41,7 +39,7 @@ impl StationFavicon {
         get_widget!(builder, gtk::Image, placeholder);
 
         image.set_size_request(size as i32, size as i32);
-        placeholder.set_pixel_size(((size as i32) as f64 * 0.5) as i32);
+        placeholder.set_pixel_size((size as i32).div_euclid(2));
 
         let favicon = Self {
             widget: station_favicon,

@@ -16,7 +16,7 @@
             <property name="child">
               <object class="GtkImage" id="placeholder">
                 <property name="can_focus">False</property>
-                <property name="pixel_size">42</property>
+                <property name="pixel_size">48</property>
                 <property name="icon_name">emblem-music-symbolic</property>
                 <style>
                   <class name="dim-label"/>
