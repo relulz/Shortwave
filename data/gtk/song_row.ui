@@ -3,11 +3,9 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkBox" id="song_row">
-    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <child>
       <object class="GtkStack" id="button_stack">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="valign">center</property>
         <child>
@@ -15,7 +13,6 @@
             <property name="name">save</property>
             <property name="child">
               <object class="GtkButton" id="save_button">
-                <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="tooltip_text" translatable="yes">Save recorded song</property>
@@ -31,7 +28,6 @@
             <property name="name">open</property>
             <property name="child">
               <object class="GtkButton" id="open_button">
-                <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="valign">center</property>
@@ -45,13 +41,11 @@
     </child>
     <child>
       <object class="GtkBox">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="valign">center</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkLabel" id="title_label">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label">title</property>
             <property name="selectable">True</property>
@@ -62,7 +56,6 @@
         </child>
         <child>
           <object class="GtkLabel" id="duration_label">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label">duration</property>
             <property name="justify">center</property>

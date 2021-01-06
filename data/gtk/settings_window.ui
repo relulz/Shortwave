@@ -9,22 +9,18 @@
       <object class="HdyPreferencesPage">
         <property name="icon_name">preferences-system-symbolic</property>
         <property name="title">General</property>
-        <property name="visible">True</property>
         <child>
           <object class="HdyPreferencesGroup">
             <property name="title" translatable="yes">Appearance</property>
-            <property name="visible">True</property>
             <child>
               <object class="HdyActionRow">
                 <property name="title" translatable="yes">Dark Mode</property>
                 <property name="subtitle" translatable="yes">Whether the application should use a dark theme</property>
                 <property name="activatable_widget">dark_mode_button</property>
-                <property name="visible">True</property>
                 <child>
                   <object class="GtkSwitch" id="dark_mode_button">
                     <property name="can_focus">True</property>
                     <property name="valign">center</property>
-                    <property name="visible">True</property>
                   </object>
                 </child>
               </object>
@@ -34,18 +30,15 @@
         <child>
           <object class="HdyPreferencesGroup">
             <property name="title" translatable="yes">Features</property>
-            <property name="visible">True</property>
             <child>
               <object class="HdyActionRow">
                 <property name="title" translatable="yes">Notifications</property>
                 <property name="subtitle" translatable="yes">Show desktop notifications when a new song gets played</property>
                 <property name="activatable_widget">show_notifications_button</property>
-                <property name="visible">True</property>
                 <child>
                   <object class="GtkSwitch" id="show_notifications_button">
                     <property name="can_focus">True</property>
                     <property name="valign">center</property>
-                    <property name="visible">True</property>
                   </object>
                 </child>
               </object>

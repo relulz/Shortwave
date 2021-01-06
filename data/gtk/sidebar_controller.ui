@@ -6,7 +6,6 @@
     <property name="can_focus">False</property>
     <child>
       <object class="GtkBox">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="halign">center</property>
         <property name="valign">center</property>
@@ -14,14 +13,12 @@
         <property name="spacing">6</property>
         <child>
           <object class="GtkImage">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="icon_name">face-sad-symbolic</property>
           </object>
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">An error occurred</property>
             <attributes>
@@ -31,7 +28,6 @@
         </child>
         <child>
           <object class="GtkLabel" id="error_label">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label"> </property>
             <property name="justify">center</property>
@@ -49,7 +45,6 @@
     </child>
   </object>
   <object class="GtkBox" id="sidebar_controller">
-    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="margin_start">12</property>
     <property name="margin_end">12</property>
@@ -57,7 +52,6 @@
     <property name="spacing">3</property>
     <child>
       <object class="GtkBox" id="favicon_box">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="halign">center</property>
         <property name="orientation">vertical</property>
@@ -69,7 +63,6 @@
     </child>
     <child>
       <object class="GtkLabel" id="title_label">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="margin_top">12</property>
         <property name="label" translatable="yes">No playback</property>
@@ -87,11 +80,9 @@
     </child>
     <child>
       <object class="GtkRevealer" id="subtitle_revealer">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
           <object class="GtkLabel" id="subtitle_label">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_bottom">6</property>
             <property name="label">subtitle</property>
@@ -107,11 +98,9 @@
     </child>
     <child>
       <object class="GtkRevealer" id="action_revealer">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
           <object class="GtkBox">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">center</property>
             <property name="margin_top">6</property>
@@ -119,7 +108,6 @@
             <property name="homogeneous">True</property>
             <child>
               <object class="GtkVolumeButton" id="volume_button">
-                <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="focus_on_click">False</property>
                 <property name="receives_default">True</property>
@@ -154,7 +142,6 @@ audio-volume-medium-symbolic</property>
             <child>
               <object class="GtkStack" id="playback_button_stack">
                 <property name="width_request">70</property>
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">center</property>
                 <child>
@@ -162,7 +149,6 @@ audio-volume-medium-symbolic</property>
                     <property name="name">stop_playback</property>
                     <property name="child">
                       <object class="GtkButton" id="stop_playback_button">
-                        <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="icon_name">media-playback-stop-symbolic</property>
@@ -175,7 +161,6 @@ audio-volume-medium-symbolic</property>
                     <property name="name">start_playback</property>
                     <property name="child">
                       <object class="GtkButton" id="start_playback_button">
-                        <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="icon_name">media-playback-start-symbolic</property>
@@ -188,7 +173,6 @@ audio-volume-medium-symbolic</property>
                     <property name="name">error</property>
                     <property name="child">
                       <object class="GtkMenuButton">
-                        <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="popover">error_popover</property>
@@ -204,7 +188,6 @@ audio-volume-medium-symbolic</property>
             </child>
             <child>
               <object class="GtkMenuButton" id="playermenu_button">
-                <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="halign">center</property>

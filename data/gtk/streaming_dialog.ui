@@ -7,19 +7,16 @@
     <property name="can_focus">False</property>
     <child>
       <object class="GtkBox">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkBox">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="valign">center</property>
             <property name="margin_start">6</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="name_label">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label">label</property>
                 <property name="xalign">0</property>
@@ -30,7 +27,6 @@
             </child>
             <child>
               <object class="GtkLabel" id="ip_label">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label">label</property>
                 <property name="xalign">0</property>
@@ -54,7 +50,6 @@
     <property name="deletable">False</property>
     <child type="titlebar">
       <object class="GtkHeaderBar">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="title-widget">
           <object class="GtkLabel">
@@ -71,7 +66,6 @@
           <object class="GtkButton" id="cancel_button">
             <property name="label">_Cancel</property>
             <property name="use_underline">True</property>
-            <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
           </object>
@@ -80,7 +74,6 @@
           <object class="GtkButton" id="connect_button">
             <property name="label">_Connect</property>
             <property name="use_underline">True</property>
-            <property name="visible">True</property>
             <property name="sensitive">False</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
@@ -101,18 +94,15 @@
         <property name="margin_top">12</property>
         <child>
           <object class="GtkBox">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <property name="spacing">12</property>
             <child>
               <object class="GtkBox">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkImage">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="valign">start</property>
                     <property name="icon_name">network-wireless-symbolic</property>
@@ -120,7 +110,6 @@
                 </child>
                 <child>
                   <object class="GtkLabel">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Devices which implement the Google Cast protocol are supported.</property>
                     <property name="wrap">True</property>
@@ -131,12 +120,10 @@
             </child>
             <child>
               <object class="GtkFrame">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label_xalign">0</property>
                 <child>
                   <object class="GtkStack" id="stream_stack">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="hhomogeneous">False</property>
                     <property name="vhomogeneous">False</property>
@@ -146,14 +133,12 @@
                         <property name="name">no-devices</property>
                         <property name="child">
                           <object class="GtkBox" id="no_devices">
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">center</property>
                             <property name="valign">center</property>
                             <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkImage">
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="pixel_size">128</property>
                                 <property name="icon_name">network-wireless-offline-symbolic</property>
@@ -161,7 +146,6 @@
                             </child>
                             <child>
                               <object class="GtkLabel">
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="margin_top">22</property>
                                 <property name="label" translatable="yes">No devices found</property>
@@ -176,7 +160,6 @@
                               <object class="GtkButton" id="retry_button">
                                 <property name="label" translatable="yes">_Retry search</property>
                                 <property name="use_underline">True</property>
-                                <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="halign">center</property>
@@ -196,21 +179,17 @@
                         <property name="name">results</property>
                         <property name="child">
                           <object class="GtkBox" id="results">
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkScrolledWindow">
-                                <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <child>
                                   <object class="GtkViewport">
-                                    <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="vexpand">True</property>
                                     <child>
                                       <object class="GtkListBox" id="devices_listbox">
-                                        <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                       </object>
                                     </child>
@@ -220,23 +199,19 @@
                             </child>
                             <child>
                               <object class="GtkRevealer" id="loading_revealer">
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="transition_type">slide-up</property>
                                 <child>
                                   <object class="GtkBox">
-                                    <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="orientation">vertical</property>
                                     <child>
                                       <object class="GtkSeparator">
-                                        <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                       </object>
                                     </child>
                                     <child>
                                       <object class="GtkLabel">
-                                        <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="margin_top">6</property>
                                         <property name="margin_bottom">6</property>
@@ -259,7 +234,6 @@
                         <property name="name">loading</property>
                         <property name="child">
                           <object class="GtkBox" id="loading">
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">center</property>
                             <property name="valign">center</property>
@@ -267,7 +241,6 @@
                             <property name="spacing">22</property>
                             <child>
                               <object class="GtkImage">
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="pixel_size">128</property>
                                 <property name="icon_name">network-wireless-symbolic</property>
@@ -275,7 +248,6 @@
                             </child>
                             <child>
                               <object class="GtkLabel">
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Searching for devices…</property>
                                 <property name="wrap">True</property>

@@ -4,24 +4,20 @@
   <requires lib="gtk+" version="3.22"/>
   <requires lib="libhandy" version="1.0"/>
   <object class="GtkBox" id="discover">
-    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="hexpand">True</property>
     <property name="vexpand">True</property>
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkScrolledWindow" id="scrolledwindow">
-        <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="hscrollbar_policy">never</property>
         <child>
           <object class="GtkViewport">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="vexpand">True</property>
             <child>
               <object class="HdyClamp">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="maximum_size">1600</property>
                 <property name="margin_top">12</property>
@@ -30,14 +26,12 @@
                 <property name="margin_end">12</property>
                 <child>
                   <object class="GtkBox">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="valign">start</property>
                     <property name="orientation">vertical</property>
                     <property name="spacing">12</property>
                     <child>
                       <object class="GtkBox" id="carousel_box">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
@@ -47,7 +41,6 @@
                     </child>
                     <child>
                       <object class="GtkLabel">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Most voted stations</property>
                         <property name="wrap">True</property>
@@ -60,7 +53,6 @@
                     </child>
                     <child>
                       <object class="GtkBox" id="votes_box">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
@@ -70,7 +62,6 @@
                     </child>
                     <child>
                       <object class="GtkLabel">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_top">12</property>
                         <property name="label" translatable="yes">Trending</property>
@@ -84,7 +75,6 @@
                     </child>
                     <child>
                       <object class="GtkBox" id="trending_box">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
@@ -94,7 +84,6 @@
                     </child>
                     <child>
                       <object class="GtkLabel">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_top">12</property>
                         <property name="label" translatable="yes">Other users are listening to…</property>
@@ -108,7 +97,6 @@
                     </child>
                     <child>
                       <object class="GtkBox" id="clicked_box">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>

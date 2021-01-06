@@ -4,7 +4,6 @@
   <requires lib="gtk+" version="3.22"/>
   <requires lib="libhandy" version="3.22"/>
   <object class="GtkBox" id="window">
-    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="orientation">vertical</property>
     <child>
@@ -14,7 +13,6 @@
     </child>
     <child>
       <object class="HdySqueezer" id="window_squeezer">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="transition_type">crossfade</property>
@@ -23,12 +21,10 @@
           <object class="GtkBox" id="window_box">
             <property name="width_request">350</property>
             <property name="height_request">175</property>
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkOverlay" id="overlay">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
                   <placeholder/>
@@ -41,7 +37,6 @@
                 <property name="transition_type">slide-up</property>
                 <child>
                   <object class="GtkBox" id="toolbar_controller_box">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
@@ -55,11 +50,9 @@
         </child>
         <child>
           <object class="GtkWindowHandle" id="mini_controller_handle">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
               <object class="GtkBox" id="mini_controller_box">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
@@ -74,7 +67,6 @@
   </object>
   <object class="HdyLeaflet" id="window_leaflet">
     <property name="can_unfold">False</property>
-    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="hexpand">True</property>
     <property name="can_swipe_back">True</property>
@@ -83,7 +75,6 @@
         <property name="name">library</property>
         <property name="child">
           <object class="GtkBox" id="library_page">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
@@ -98,7 +89,6 @@
         <property name="name">storefront</property>
         <property name="child">
           <object class="GtkBox" id="storefront_page">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>

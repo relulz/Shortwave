@@ -5,22 +5,18 @@
   <requires lib="libhandy" version="1.0"/>
   <object class="GtkBox" id="library">
     <property name="width_request">350</property>
-    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="hexpand">True</property>
     <property name="vexpand">True</property>
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkWindowHandle" id="header_handle">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
           <object class="GtkHeaderBar" id="header">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
               <object class="GtkButton" id="add_button">
-                <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="valign">center</property>
@@ -30,7 +26,6 @@
             </child>
             <child type="end">
               <object class="GtkMenuButton" id="appmenu_button">
-                <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="valign">center</property>
@@ -46,12 +41,10 @@
     </child>
     <child>
       <object class="GtkBox" id="content">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkStack" id="library_stack">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="hhomogeneous">False</property>
             <property name="vhomogeneous">False</property>
@@ -61,12 +54,10 @@
                 <property name="name">loading</property>
                 <property name="child">
                   <object class="GtkBox" id="loading_box">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkBox">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">center</property>
                         <property name="valign">center</property>
@@ -76,7 +67,6 @@
                           <object class="GtkSpinner">
                             <property name="width_request">40</property>
                             <property name="height_request">40</property>
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">center</property>
                             <property name="valign">center</property>
@@ -84,7 +74,6 @@
                         </child>
                         <child>
                           <object class="GtkLabel">
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">Receiving station data…</property>
                           </object>
@@ -103,22 +92,18 @@
                 <property name="name">empty</property>
                 <property name="child">
                   <object class="GtkBox" id="empty_box">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkScrolledWindow">
-                        <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="hscrollbar_policy">never</property>
                         <child>
                           <object class="GtkViewport">
                             <property name="vexpand">True</property>
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
                               <object class="GtkBox">
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">center</property>
                                 <property name="valign">center</property>
@@ -127,7 +112,6 @@
                                 <property name="spacing">6</property>
                                 <child>
                                   <object class="GtkImage" id="logo_image">
-                                    <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="pixel_size">256</property>
                                     <property name="icon_name">de.haeckerfelix.Shortwave.Devel</property>
@@ -135,7 +119,6 @@
                                 </child>
                                 <child>
                                   <object class="GtkLabel" id="welcome_text">
-                                    <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label">welcome label</property>
                                     <property name="wrap">True</property>
@@ -146,7 +129,6 @@
                                 </child>
                                 <child>
                                   <object class="GtkBox">
-                                    <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="halign">center</property>
                                     <property name="margin_top">40</property>
@@ -154,7 +136,6 @@
                                     <property name="spacing">12</property>
                                     <child>
                                       <object class="GtkButton" id="discover_button">
-                                        <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
                                         <property name="action_name">win.show-discover</property>
@@ -182,21 +163,17 @@
                 <property name="name">content</property>
                 <property name="child">
                   <object class="GtkBox">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkScrolledWindow" id="scrolledwindow">
-                        <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <child>
                           <object class="GtkViewport">
                             <property name="vexpand">True</property>
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
                               <object class="HdyClamp">
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="maximum_size">1600</property>
                                 <property name="margin_top">12</property>
@@ -205,7 +182,6 @@
                                 <property name="margin_end">12</property>
                                 <child>
                                   <object class="GtkBox" id="content_box">
-                                    <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="orientation">vertical</property>
                                     <child>

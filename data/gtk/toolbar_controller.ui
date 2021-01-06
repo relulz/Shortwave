@@ -3,23 +3,19 @@
 <interface>
   <requires lib="gtk+" version="3.22"/>
   <object class="GtkBox" id="toolbar_controller">
-    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkSeparator">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
       </object>
     </child>
     <child>
       <object class="GtkBox">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="hexpand">True</property>
         <child>
           <object class="GtkBox">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
               <object class="GtkGestureClick" id="toolbox_gesture">
@@ -27,7 +23,6 @@
             </child>
             <child>
               <object class="GtkBox" id="favicon_box">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">center</property>
                 <property name="orientation">vertical</property>
@@ -38,14 +33,12 @@
             </child>
             <child>
               <object class="GtkSeparator">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
               </object>
             </child>
             <child>
               <object class="GtkBox">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="valign">center</property>
                 <property name="margin_start">6</property>
@@ -53,7 +46,6 @@
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="title_label">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>
                     <property name="label" translatable="yes">No playback</property>
@@ -68,11 +60,9 @@
                 </child>
                 <child>
                   <object class="GtkRevealer" id="subtitle_revealer">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkLabel" id="subtitle_label">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
                         <property name="label">subtitle</property>
@@ -90,21 +80,18 @@
         </child>
         <child type="end">
           <object class="GtkRevealer" id="action_revealer">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="valign">center</property>
             <property name="margin_end">6</property>
             <property name="transition_type">slide-left</property>
             <child>
               <object class="GtkStack" id="playback_button_stack">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkStackPage">
                     <property name="name">stop_playback</property>
                     <property name="child">
                       <object class="GtkButton" id="stop_playback_button">
-                        <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="icon_name">media-playback-stop-symbolic</property>
@@ -117,7 +104,6 @@
                     <property name="name">start_playback</property>
                     <property name="child">
                       <object class="GtkButton" id="start_playback_button">
-                        <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="icon_name">media-playback-start-symbolic</property>

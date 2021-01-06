@@ -4,18 +4,15 @@
   <requires lib="gtk+" version="3.20"/>
   <requires lib="libhandy" version="1.0"/>
   <object class="GtkBox" id="featured_carousel">
-    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="orientation">vertical</property>
     <property name="spacing">12</property>
     <child>
       <object class="GtkOverlay" id="overlay">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
           <object class="HdyCarousel" id="paginator">
             <property name="height_request">150</property>
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="spacing">12</property>
             <property name="animation_duration">400</property>
@@ -59,13 +56,11 @@
     </child>
   </object>
   <object class="GtkBox" id="page_box">
-    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="hexpand">True</property>
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkBox">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="valign">center</property>
         <property name="vexpand">True</property>
@@ -73,7 +68,6 @@
         <property name="spacing">12</property>
         <child>
           <object class="GtkLabel" id="title_label">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">center</property>
             <property name="margin_start">10</property>
@@ -95,19 +89,16 @@
             <property name="has_frame">False</property>
             <child>
               <object class="GtkBox">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkImage">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="icon_name">go-next-symbolic</property>
                   </object>
                 </child>
                 <child>
                   <object class="GtkLabel" id="action_label">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label">action label</property>
                   </object>

@@ -4,19 +4,16 @@
   <requires lib="gtk+" version="3.22"/>
   <requires lib="libhandy" version="1.0"/>
   <object class="GtkBox" id="search">
-    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="hexpand">True</property>
     <property name="vexpand">True</property>
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkBox">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkSearchBar" id="search_bar">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">fill</property>
             <property name="valign">start</property>
@@ -25,11 +22,9 @@
             <property name="search-mode-enabled">True</property>
             <child>
               <object class="HdyClamp">
-                <property name="visible">True</property>
                 <property name="maximum_size">1600</property>
                 <child>
                   <object class="GtkSearchEntry" id="search_entry">
-                    <property name="visible">True</property>
                     <property name="hexpand">True</property>
                   </object>
                 </child>
@@ -39,17 +34,14 @@
         </child>
         <child>
           <object class="GtkScrolledWindow" id="scrolledwindow">
-            <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="hscrollbar_policy">never</property>
             <child>
               <object class="GtkViewport">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="vexpand">True</property>
                 <child>
                   <object class="HdyClamp">
-                    <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="maximum_size">1600</property>
                     <property name="margin_top">12</property>
@@ -58,7 +50,6 @@
                     <property name="margin_end">12</property>
                     <child>
                       <object class="GtkBox" id="results_box">
-                        <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
