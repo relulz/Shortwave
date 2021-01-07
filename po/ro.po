@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-06-11 18:54+0000\n"
-"PO-Revision-Date: 2020-07-13 15:13+0300\n"
+"POT-Creation-Date: 2020-08-02 15:56+0000\n"
+"PO-Revision-Date: 2021-01-07 16:11+0200\n"
 "Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: data/gtk/station_dialog.ui:10
 msgid "Station details"
@@ -27,7 +27,7 @@ msgstr "Detaliile stației"
 msgid "Language"
 msgstr "Limbă"
 
-#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:119
+#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:175
 msgid "Tags"
 msgstr "Etichete"
 
@@ -39,15 +39,15 @@ msgstr "Codec"
 msgid "Homepage"
 msgstr "Pagină principală"
 
-#: data/gtk/discover.ui:55
+#: data/gtk/discover.ui:54
 msgid "Most voted stations"
 msgstr "Cele mai votate stații"
 
-#: data/gtk/discover.ui:89
+#: data/gtk/discover.ui:88
 msgid "Trending"
 msgstr "La modă"
 
-#: data/gtk/discover.ui:123
+#: data/gtk/discover.ui:122
 msgid "Other users are listening to…"
 msgstr "Alți utilizatori ascultă la…"
 
@@ -84,6 +84,7 @@ msgid "An error occurred"
 msgstr "A apărut o eroare"
 
 #: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
+#: data/gtk/toolbar_controller.ui:74
 msgid "No playback"
 msgstr "Fără redare"
 
@@ -148,8 +149,24 @@ msgid "Appearance"
 msgstr "Aparență"
 
 #: data/gtk/settings_window.ui:19
-msgid "Enable dark mode"
-msgstr "Activează modul întunecat"
+msgid "Dark Mode"
+msgstr "Mod întunecat"
+
+#: data/gtk/settings_window.ui:20
+msgid "Whether the application should use a dark theme"
+msgstr "Dacă aplicația ar trebui să utilizeze o temă întunecată"
+
+#: data/gtk/settings_window.ui:36
+msgid "Features"
+msgstr "Funcționalități"
+
+#: data/gtk/settings_window.ui:40
+msgid "Notifications"
+msgstr "Înștiințări"
+
+#: data/gtk/settings_window.ui:41
+msgid "Show desktop notifications when a new song gets played"
+msgstr "Arată înștiințările de pe desktop când se redă o melodie nouă"
 
 #: data/gtk/shortcuts.ui:12
 msgid "General"
@@ -165,27 +182,33 @@ msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "Caută după stații"
 
-#: data/gtk/storefront.ui:29
+#: data/gtk/storefront.ui:21 data/gtk/library.ui:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Shortwave"
+
+#: data/gtk/storefront.ui:85
 msgid "Discover"
 msgstr "Descoperă"
 
-#: data/gtk/storefront.ui:44
+#: data/gtk/storefront.ui:100
 msgid "Search"
 msgstr "Caută"
 
-#: data/gtk/storefront.ui:69
+#: data/gtk/storefront.ui:125
 msgid "Locations"
 msgstr "Locații"
 
-#: data/gtk/storefront.ui:94
+#: data/gtk/storefront.ui:150
 msgid "Languages"
 msgstr "Limbi"
 
-#: data/gtk/library.ui:53
+#: data/gtk/library.ui:121
 msgid "Receiving station data…"
 msgstr "Se primesc date despre stație…"
 
-#: data/gtk/library.ui:151
+#: data/gtk/library.ui:217
 msgid "Discover new stations"
 msgstr "Descoperă noi stații"
 
@@ -219,36 +242,32 @@ msgstr "Piesele salvate sunt localizate în dosarul Muzică."
 msgid "Open"
 msgstr "Deschide"
 
-#: data/gtk/player.ui:97
+#: data/gtk/player.ui:135
 msgid "Connected with"
 msgstr "Conectat cu"
 
-#: data/gtk/window.ui:213
-msgid "Library"
-msgstr "Bibliotecă"
-
-#: src/audio/player.rs:157
+#: src/audio/player.rs:167
 msgid "This station cannot be played because the stream is offline."
 msgstr "Această stație nu poate fi redată pentru că fluxul este offline."
 
-#: src/audio/player.rs:175
+#: src/audio/player.rs:185
 msgid "Station cannot be streamed."
 msgstr "Stația nu poate fi redată."
 
-#: src/audio/player.rs:175
+#: src/audio/player.rs:185
 msgid "URL is not valid."
 msgstr "URL-ul nu este valid."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:55
+#: src/database/library.rs:60
 msgid "Welcome to {}"
 msgstr "Bine ați venit la {}"
 
-#: src/database/library.rs:145
+#: src/database/library.rs:156
 msgid "No longer existing station removed from library."
 msgstr "Stație care nu mai există a fost eliminată din bibliotecă."
 
-#: src/database/library.rs:149 src/discover/pages/discover.rs:127
+#: src/database/library.rs:160 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
 msgstr "Datele stației nu pot fi primite."
@@ -286,26 +305,21 @@ msgstr "Ascultați la stația de radio prin internet"
 msgid "translator-credits"
 msgstr ""
 "Florentina Mușat <florentina [dot] musat [dot] 28 [at] gmail [dot] com>, "
-"2020"
+"2020-2021"
 
-#: src/utils.rs:122
+#: src/utils.rs:110
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} vot"
 msgstr[1] "{} voturi"
 msgstr[2] "{} de voturi"
 
-#: src/utils.rs:124
+#: src/utils.rs:112
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} vot"
 msgstr[1] "{} · {} voturi"
 msgstr[2] "{} · {} de voturi"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "Shortwave"
-msgstr "Shortwave"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
 msgid "Felix Häcker"
@@ -355,6 +369,12 @@ msgstr "Integrare unitară în mediul desktop GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;"
+
+#~ msgid "Enable dark mode"
+#~ msgstr "Activează modul întunecat"
+
+#~ msgid "Library"
+#~ msgstr "Bibliotecă"
 
 #~ msgid "Import from Gradio"
 #~ msgstr "Importă din Gradio"
