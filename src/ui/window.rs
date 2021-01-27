@@ -119,6 +119,7 @@ impl SwApplicationWindow {
 
         self_.sidebar_flap.set_content(Some(&window_leaflet));
         self_.sidebar_flap.set_reveal_flap(false);
+        self_.sidebar_flap.set_separator(Some(&gtk::Separator::new(gtk::Orientation::Vertical)));
         self_.sidebar_flap.set_locked(true);
         self_.sidebar_flap.set_flap_position(gtk::PackType::End);
         self_.sidebar_flap.set_vexpand(true);
