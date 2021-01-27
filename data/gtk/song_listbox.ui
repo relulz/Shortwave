@@ -113,7 +113,7 @@ If the station does not send any metadata, no songs can be recognized.</property
                     <property name="selection_mode">none</property>
                     <property name="activate_on_single_click">False</property>
                     <style>
-                      <class name="preferences"/>
+                      <class name="content"/>
                     </style>
                   </object>
                 </child>
