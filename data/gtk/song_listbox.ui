@@ -3,16 +3,20 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkPopover" id="description_popover">
-    <property name="can_focus">False</property>
     <child>
       <object class="GtkBox">
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
+        <property name="margin_bottom">6</property>
+        <property name="margin_end">6</property>
+        <property name="margin_start">6</property>
+        <property name="margin_top">6</property>
         <child>
           <object class="GtkImage">
             <property name="can_focus">False</property>
             <property name="icon_name">emblem-music-symbolic</property>
+            <property name="pixel_size">48</property>
             <style>
               <class name="dim-label"/>
             </style>
@@ -107,6 +111,8 @@ If the station does not send any metadata, no songs can be recognized.</property
               <object class="GtkBox">
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
+                <property name="margin_top">22</property>
+                <property name="spacing">12</property>
                 <child>
                   <object class="GtkListBox" id="listbox">
                     <property name="can_focus">False</property>
@@ -120,8 +126,8 @@ If the station does not send any metadata, no songs can be recognized.</property
                 <child>
                   <object class="GtkImage">
                     <property name="can_focus">False</property>
-                    <property name="margin_top">22</property>
                     <property name="icon_name">dialog-information-symbolic</property>
+                    <property name="pixel_size">64</property>
                     <style>
                       <class name="dim-label"/>
                     </style>
@@ -133,8 +139,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                     <property name="halign">center</property>
                     <property name="margin_start">6</property>
                     <property name="margin_end">6</property>
-                    <property name="margin_top">6</property>
-                    <property name="margin_bottom">6</property>
                     <property name="label" translatable="yes">Saved songs are located in your Music folder.</property>
                     <property name="justify">center</property>
                     <property name="wrap">True</property>
@@ -153,8 +157,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="halign">center</property>
-                    <property name="margin_top">6</property>
-                    <property name="margin_bottom">6</property>
                     <style>
                       <class name="dim-label"/>
                     </style>
