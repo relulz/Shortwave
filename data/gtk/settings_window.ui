@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk+" version="3.0"/>
-  <object class="HdyPreferencesWindow" id="settings_window">
+  <object class="AdwPreferencesWindow" id="settings_window">
     <property name="default_height">400</property>
     <property name="default_width">640</property>
     <property name="width_request">300</property>
     <child>
-      <object class="HdyPreferencesPage">
+      <object class="AdwPreferencesPage">
         <property name="icon_name">preferences-system-symbolic</property>
         <property name="title">General</property>
         <child>
-          <object class="HdyPreferencesGroup">
+          <object class="AdwPreferencesGroup">
             <property name="title" translatable="yes">Appearance</property>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="title" translatable="yes">_Dark Mode</property>
                 <property name="use_underline">True</property>
                 <property name="subtitle" translatable="yes">Whether the application should use a dark theme</property>
@@ -29,10 +29,10 @@
           </object>
         </child>
         <child>
-          <object class="HdyPreferencesGroup">
+          <object class="AdwPreferencesGroup">
             <property name="title" translatable="yes">Features</property>
             <child>
-              <object class="HdyActionRow">
+              <object class="AdwActionRow">
                 <property name="title" translatable="yes">_Notifications</property>
                 <property name="use_underline">True</property>
                 <property name="subtitle" translatable="yes">Show desktop notifications when a new song gets played</property>

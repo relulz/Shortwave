@@ -52,7 +52,7 @@
             ]
         },
         {
-            "name" : "libhandy",
+            "name" : "libadwaita",
             "buildsystem" : "meson",
             "config-opts" : [
                 "-Dintrospection=enabled",
@@ -68,8 +68,8 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://gitlab.gnome.org/exalm/libhandy",
-                    "branch" : "gtk4"
+                    "url" : "https://gitlab.gnome.org/exalm/libadwaita",
+                    "branch" : "main"
                 }
             ]
         },

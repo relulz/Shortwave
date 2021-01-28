@@ -59,6 +59,6 @@ git = "https://github.com/gtk-rs/gtk-rs/"
 git = "https://github.com/gtk-rs/gtk-rs/"
 features = ["v2_64"]
 
-[dependencies.libhandy]
-git = "https://gitlab.gnome.org/bilelmoussaoui/libhandy4-rs"
-package = "libhandy4"
+[dependencies.adw]
+git = "https://gitlab.gnome.org/bilelmoussaoui/libadwaita-rs"
+package = "libadwaita"

@@ -2,7 +2,6 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
-  <requires lib="libhandy" version="1.0"/>
   <object class="GtkBox" id="search">
     <property name="can_focus">False</property>
     <property name="hexpand">True</property>
@@ -21,7 +20,7 @@
             <property name="show-close-button">False</property>
             <property name="search-mode-enabled">True</property>
             <child>
-              <object class="HdyClamp">
+              <object class="AdwClamp">
                 <property name="maximum_size">1600</property>
                 <property name="hexpand">True</property>
                 <child>
@@ -42,7 +41,7 @@
                 <property name="can_focus">False</property>
                 <property name="vexpand">True</property>
                 <child>
-                  <object class="HdyClamp">
+                  <object class="AdwClamp">
                     <property name="can_focus">False</property>
                     <property name="maximum_size">1600</property>
                     <property name="margin_top">12</property>

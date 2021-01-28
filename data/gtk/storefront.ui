@@ -2,7 +2,6 @@
 <!-- Generated with glade 3.36.0 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
-  <requires lib="libhandy" version="1.0"/>
   <object class="GtkBox" id="storefront">
     <property name="width_request">350</property>
     <property name="can_focus">False</property>
@@ -16,7 +15,7 @@
           <object class="GtkHeaderBar" id="header">
             <property name="can_focus">False</property>
             <child type="title">
-              <object class="HdyViewSwitcherTitle" id="header_viewswitcher">
+              <object class="AdwViewSwitcherTitle" id="header_viewswitcher">
                 <property name="can_focus">False</property>
                 <property name="policy">auto</property>
                 <property name="stack">storefront_stack</property>
@@ -140,7 +139,7 @@
           </object>
         </child>
         <child>
-          <object class="HdyViewSwitcherBar" id="bottom_viewswitcher">
+          <object class="AdwViewSwitcherBar" id="bottom_viewswitcher">
             <property name="can_focus">False</property>
             <property name="stack">storefront_stack</property>
             <property name="reveal" bind-source="header_viewswitcher" bind-property="title-visible" bind-flags="sync-create">False</property>

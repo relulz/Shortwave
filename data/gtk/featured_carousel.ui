@@ -2,7 +2,6 @@
 <!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <requires lib="libhandy" version="1.0"/>
   <object class="GtkBox" id="featured_carousel">
     <property name="can_focus">False</property>
     <property name="orientation">vertical</property>
@@ -11,7 +10,7 @@
       <object class="GtkOverlay" id="overlay">
         <property name="can_focus">False</property>
         <child>
-          <object class="HdyCarousel" id="paginator">
+          <object class="AdwCarousel" id="paginator">
             <property name="height_request">150</property>
             <property name="can_focus">False</property>
             <property name="spacing">12</property>
@@ -50,7 +49,7 @@
       </object>
     </child>
     <child>
-      <object class="HdyCarouselIndicatorLines">
+      <object class="AdwCarouselIndicatorLines">
         <property name="carousel">paginator</property>
       </object>
     </child>

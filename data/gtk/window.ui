@@ -2,7 +2,6 @@
 <!-- Generated with glade 3.36.0 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
-  <requires lib="libhandy" version="3.22"/>
   <object class="GtkBox" id="window">
     <property name="can_focus">False</property>
     <property name="orientation">vertical</property>
@@ -12,7 +11,7 @@
       </object>
     </child>
     <child>
-      <object class="HdySqueezer" id="window_squeezer">
+      <object class="AdwSqueezer" id="window_squeezer">
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="transition_type">crossfade</property>
@@ -65,13 +64,13 @@
       </object>
     </child>
   </object>
-  <object class="HdyLeaflet" id="window_leaflet">
+  <object class="AdwLeaflet" id="window_leaflet">
     <property name="can_unfold">False</property>
     <property name="can_focus">False</property>
     <property name="hexpand">True</property>
     <property name="can_swipe_back">True</property>
     <child>
-      <object class="HdyLeafletPage">
+      <object class="AdwLeafletPage">
         <property name="name">library</property>
         <property name="child">
           <object class="GtkBox" id="library_page">
@@ -85,7 +84,7 @@
       </object>
     </child>
     <child>
-      <object class="HdyLeafletPage">
+      <object class="AdwLeafletPage">
         <property name="name">storefront</property>
         <property name="child">
           <object class="GtkBox" id="storefront_page">

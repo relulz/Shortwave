@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use adw::PreferencesWindow;
 use gtk::prelude::*;
-use libhandy::PreferencesWindow;
 
 use crate::settings::{settings_manager, Key};
 

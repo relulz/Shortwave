@@ -38,13 +38,13 @@ pub enum View {
 
 pub struct SwApplicationWindowPrivate {
     window_builder: gtk::Builder,
-    sidebar_flap: libhandy::Flap,
+    sidebar_flap: adw::Flap,
     current_notification: RefCell<Option<Rc<Notification>>>,
 }
 
 impl ObjectSubclass for SwApplicationWindowPrivate {
     const NAME: &'static str = "SwApplicationWindow";
-    type ParentType = libhandy::ApplicationWindow;
+    type ParentType = adw::ApplicationWindow;
     type Instance = subclass::simple::InstanceStruct<Self>;
     type Class = subclass::simple::ClassStruct<Self>;
     type Type = super::SwApplicationWindow;
@@ -55,7 +55,7 @@ impl ObjectSubclass for SwApplicationWindowPrivate {
         let window_builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/window.ui");
         let current_notification = RefCell::new(None);
 
-        let sidebar_flap = libhandy::Flap::new();
+        let sidebar_flap = adw::Flap::new();
 
         Self {
             window_builder,
@@ -77,14 +77,14 @@ impl WindowImpl for SwApplicationWindowPrivate {}
 // Implement Gtk.ApplicationWindow for SwApplicationWindow
 impl gtk::subclass::prelude::ApplicationWindowImpl for SwApplicationWindowPrivate {}
 
-// Implement Hdy.ApplicationWindow for SwApplicationWindow
-impl libhandy::subclass::prelude::ApplicationWindowImpl for SwApplicationWindowPrivate {}
+// Implement Adw.ApplicationWindow for SwApplicationWindow
+impl adw::subclass::prelude::AdwApplicationWindowImpl for SwApplicationWindowPrivate {}
 
 // Wrap SwApplicationWindowPrivate into a usable gtk-rs object
 glib::wrapper! {
     pub struct SwApplicationWindow(
         ObjectSubclass<SwApplicationWindowPrivate>)
-        @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, libhandy::ApplicationWindow;
+        @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::ApplicationWindow;
 }
 
 // SwApplicationWindow implementation itself
@@ -107,14 +107,14 @@ impl SwApplicationWindow {
 
         // Add headerbar/content to the window itself
         get_widget!(self_.window_builder, gtk::Box, window);
-        libhandy::ApplicationWindowExt::set_child(self.upcast_ref::<libhandy::ApplicationWindow>(), Some(&window));
+        adw::ApplicationWindowExt::set_child(self.upcast_ref::<adw::ApplicationWindow>(), Some(&window));
 
         // Wire everything up
         get_widget!(self_.window_builder, gtk::Box, mini_controller_box);
         get_widget!(self_.window_builder, gtk::Box, library_page);
         get_widget!(self_.window_builder, gtk::Box, storefront_page);
         get_widget!(self_.window_builder, gtk::Box, toolbar_controller_box);
-        get_widget!(self_.window_builder, libhandy::Leaflet, window_leaflet);
+        get_widget!(self_.window_builder, adw::Leaflet, window_leaflet);
         get_widget!(self_.window_builder, gtk::Overlay, overlay);
 
         self_.sidebar_flap.set_content(Some(&window_leaflet));
@@ -131,12 +131,6 @@ impl SwApplicationWindow {
         library_page.append(&app_private.library.widget);
         storefront_page.append(&app_private.storefront.widget);
         toolbar_controller_box.append(&app_private.player.toolbar_controller_widget);
-
-        // Make sure that the headerbars are correctly synced
-        let headergroup = libhandy::HeaderGroup::new();
-        headergroup.add_gtk_header_bar(&app_private.library.header);
-        headergroup.add_gtk_header_bar(&app_private.storefront.header);
-        headergroup.add_gtk_header_bar(&app_private.player.header);
 
         // Add devel style class for development or beta builds
         if config::PROFILE == "development" || config::PROFILE == "beta" {
@@ -182,7 +176,7 @@ impl SwApplicationWindow {
     }
 
     fn setup_gactions(&self, sender: Sender<Action>) {
-        // We need to upcast from SwApplicationWindow to libhandy::ApplicationWindow, because SwApplicationWindow
+        // We need to upcast from SwApplicationWindow to adw::ApplicationWindow, because SwApplicationWindow
         // currently doesn't implement GLib.ActionMap, since it's not supported in gtk-rs for subclassing (13-01-2020)
         let window = self.clone().upcast::<gtk::ApplicationWindow>();
         let app = window.get_application().unwrap();
@@ -337,11 +331,11 @@ impl SwApplicationWindow {
         if self_.sidebar_flap.get_folded() && self_.sidebar_flap.get_reveal_flap() {
             self_.sidebar_flap.set_reveal_flap(false);
         } else {
-            get_widget!(self_.window_builder, libhandy::Leaflet, window_leaflet);
-            window_leaflet.navigate(libhandy::NavigationDirection::Back);
+            get_widget!(self_.window_builder, adw::Leaflet, window_leaflet);
+            window_leaflet.navigate(adw::NavigationDirection::Back);
         }
-        get_widget!(self_.window_builder, libhandy::Leaflet, window_leaflet);
-        window_leaflet.navigate(libhandy::NavigationDirection::Back);
+        get_widget!(self_.window_builder, adw::Leaflet, window_leaflet);
+        window_leaflet.navigate(adw::NavigationDirection::Back);
 
         // Make sure that the rest of the UI is correctly synced
         self.sync_ui_state();
@@ -349,7 +343,7 @@ impl SwApplicationWindow {
 
     fn sync_ui_state(&self) {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
-        get_widget!(self_.window_builder, libhandy::Leaflet, window_leaflet);
+        get_widget!(self_.window_builder, adw::Leaflet, window_leaflet);
         get_widget!(self_.window_builder, gtk::Revealer, toolbar_controller_revealer);
 
         let leaflet_child_name = window_leaflet.get_visible_child_name().unwrap();
@@ -383,7 +377,7 @@ impl SwApplicationWindow {
         debug!("Set view to {:?}", &view);
 
         let self_ = SwApplicationWindowPrivate::from_instance(self);
-        get_widget!(self_.window_builder, libhandy::Leaflet, window_leaflet);
+        get_widget!(self_.window_builder, adw::Leaflet, window_leaflet);
 
         let app: SwApplication = self.get_application().unwrap().downcast().unwrap();
         let app_priv = SwApplicationPrivate::from_instance(&app);

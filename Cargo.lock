@@ -1193,6 +1193,39 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
+name = "libadwaita"
+version = "0.1.0"
+source = "git+https://gitlab.gnome.org/bilelmoussaoui/libadwaita-rs#771704c112d67c705c0769b53888e814aed7a4d9"
+dependencies = [
+ "bitflags",
+ "gdk-pixbuf",
+ "gdk4",
+ "gio",
+ "glib 0.13.0",
+ "gtk4",
+ "lazy_static",
+ "libadwaita-sys",
+ "libc",
+ "pango",
+]
+
+[[package]]
+name = "libadwaita-sys"
+version = "0.1.0"
+source = "git+https://gitlab.gnome.org/bilelmoussaoui/libadwaita-rs#771704c112d67c705c0769b53888e814aed7a4d9"
+dependencies = [
+ "gdk-pixbuf-sys",
+ "gdk4-sys",
+ "gio-sys",
+ "glib-sys 0.13.0",
+ "gobject-sys 0.13.0",
+ "gtk4-sys",
+ "libc",
+ "pango-sys",
+ "system-deps 2.0.2",
+]
+
+[[package]]
 name = "libc"
 version = "0.2.74"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1205,39 +1238,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dc12a3bc971424edbbf7edaf6e5740483444db63aa8e23d3751ff12a30f306f0"
 dependencies = [
  "pkg-config",
-]
-
-[[package]]
-name = "libhandy4"
-version = "0.1.0"
-source = "git+https://gitlab.gnome.org/bilelmoussaoui/libhandy4-rs#ea059551d1e0c2f77a483f37ad83eb5b358d4c5d"
-dependencies = [
- "bitflags",
- "gdk-pixbuf",
- "gdk4",
- "gio",
- "glib 0.13.0",
- "gtk4",
- "lazy_static",
- "libc",
- "libhandy4-sys",
- "pango",
-]
-
-[[package]]
-name = "libhandy4-sys"
-version = "0.1.0"
-source = "git+https://gitlab.gnome.org/bilelmoussaoui/libhandy4-rs#ea059551d1e0c2f77a483f37ad83eb5b358d4c5d"
-dependencies = [
- "gdk-pixbuf-sys",
- "gdk4-sys",
- "gio-sys",
- "glib-sys 0.13.0",
- "gobject-sys 0.13.0",
- "gtk4-sys",
- "libc",
- "pango-sys",
- "system-deps 2.0.2",
 ]
 
 [[package]]
@@ -1986,7 +1986,7 @@ dependencies = [
  "indexmap",
  "isahc",
  "lazy_static",
- "libhandy4",
+ "libadwaita",
  "log",
  "matches",
  "mdns",

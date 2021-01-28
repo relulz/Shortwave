@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use adw::Carousel;
 use gtk::prelude::*;
-use libhandy::Carousel;
 
 use std::cell::RefCell;
 use std::convert::TryInto;
