@@ -46,6 +46,7 @@ impl ObjectSubclass for SwApplicationWindowPrivate {
     const NAME: &'static str = "SwApplicationWindow";
     type ParentType = adw::ApplicationWindow;
     type Instance = subclass::simple::InstanceStruct<Self>;
+    type Interfaces = ();
     type Class = subclass::simple::ClassStruct<Self>;
     type Type = super::SwApplicationWindow;
 

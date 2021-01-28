@@ -76,6 +76,7 @@ impl ObjectSubclass for SwApplicationPrivate {
     const NAME: &'static str = "SwApplication";
     type ParentType = gtk::Application;
     type Instance = subclass::simple::InstanceStruct<Self>;
+    type Interfaces = ();
     type Class = subclass::simple::ClassStruct<Self>;
     type Type = super::SwApplication;
 
