@@ -83,7 +83,6 @@
           <object class="GtkButton" id="action_button">
             <property name="visible">False</property>
             <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
             <property name="halign">center</property>
             <property name="has_frame">False</property>
             <child>

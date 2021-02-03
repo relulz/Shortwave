@@ -181,7 +181,6 @@
                       <object class="GtkButton" id="remove_button">
                         <property name="label" translatable="yes">_Remove from Library</property>
                         <property name="use_underline">True</property>
-                        <property name="receives_default">True</property>
                         <style>
                           <class name="destructive-action"/>
                         </style>
@@ -196,7 +195,6 @@
                       <object class="GtkButton" id="add_button">
                         <property name="label" translatable="yes">_Add to library</property>
                         <property name="use_underline">True</property>
-                        <property name="receives_default">True</property>
                         <style>
                           <class name="suggested-action"/>
                         </style>

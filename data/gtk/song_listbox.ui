@@ -90,7 +90,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                 <child>
                   <object class="GtkMenuButton">
                     <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
                     <property name="halign">center</property>
                     <property name="popover">description_popover</property>
                     <property name="label" translatable="yes">_How does this work?</property>
@@ -155,7 +154,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                     <property name="label" translatable="yes">_Open</property>
                     <property name="use_underline">True</property>
                     <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
                     <property name="halign">center</property>
                     <style>
                       <class name="dim-label"/>

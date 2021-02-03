@@ -20,7 +20,6 @@
                 <child>
                   <object class="GtkButton" id="back_button">
                     <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
                     <property name="valign">center</property>
                     <property name="action_name">win.go-back</property>
                     <property name="icon_name">go-previous-symbolic</property>
@@ -81,7 +80,6 @@
                                     <child>
                                       <object class="GtkButton" id="disconnect_button">
                                         <property name="can_focus">True</property>
-                                        <property name="receives_default">True</property>
                                         <child>
                                           <object class="GtkBox">
                                             <property name="can_focus">False</property>

@@ -14,7 +14,6 @@
             <property name="child">
               <object class="GtkButton" id="save_button">
                 <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
                 <property name="tooltip_text" translatable="yes">Save recorded song</property>
                 <property name="valign">center</property>
                 <property name="has_frame">False</property>
@@ -29,7 +28,6 @@
             <property name="child">
               <object class="GtkButton" id="open_button">
                 <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
                 <property name="valign">center</property>
                 <property name="has_frame">False</property>
                 <property name="icon_name">media-playback-start-symbolic</property>

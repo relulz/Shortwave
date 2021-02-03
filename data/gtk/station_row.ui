@@ -64,7 +64,6 @@
                 <property name="width_request">36</property>
                 <property name="height_request">36</property>
                 <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
                 <property name="valign">center</property>
                 <property name="icon_name">media-playback-start-symbolic</property>
               </object>
