@@ -344,6 +344,9 @@ impl SwApplicationWindow {
 
     fn sync_ui_state(&self) {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
+        let app: SwApplication = self.get_application().unwrap().downcast().unwrap();
+        let app_priv = SwApplicationPrivate::from_instance(&app);
+
         get_widget!(self_.window_builder, adw::Leaflet, window_leaflet);
         get_widget!(self_.window_builder, gtk::Revealer, toolbar_controller_revealer);
 
@@ -361,8 +364,10 @@ impl SwApplicationWindow {
             }
         };
 
-        // Show bottom player controller toolbar when sidebar flap is folded and player widget is not revealed
-        let show_toolbar_controller = self_.sidebar_flap.get_folded() && !self_.sidebar_flap.get_reveal_flap();
+        // Show bottom player controller toolbar when
+        // sidebar flap is folded, player widget is not revealed,
+        // and there is a selected station.
+        let show_toolbar_controller = self_.sidebar_flap.get_folded() && !self_.sidebar_flap.get_reveal_flap() && app_priv.player.has_station();
         toolbar_controller_revealer.set_reveal_child(show_toolbar_controller);
 
         // Ensure that player sidebar gets revealed

@@ -247,6 +247,10 @@ impl Player {
         self.gcast_controller.disconnect_from_device();
     }
 
+    pub fn has_station(&self) -> bool {
+        self.current_station.borrow().is_some()
+    }
+
     pub fn set_expand_widget(&self, expand: bool) {
         get_widget!(self.builder, gtk::Button, back_button);
 
