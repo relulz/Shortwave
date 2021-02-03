@@ -9,27 +9,22 @@
         <property name="vexpand">True</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkWindowHandle" id="header_handle">
+          <object class="GtkHeaderBar" id="header">
             <property name="can_focus">False</property>
+            <property name="title-widget">
+              <object class="AdwWindowTitle"/>
+            </property>
             <child>
-              <object class="GtkHeaderBar" id="header">
-                <property name="can_focus">False</property>
-                <property name="title-widget">
-                  <object class="AdwWindowTitle"/>
-                </property>
-                <child>
-                  <object class="GtkButton" id="back_button">
-                    <property name="can_focus">True</property>
-                    <property name="valign">center</property>
-                    <property name="action_name">win.go-back</property>
-                    <property name="icon_name">go-previous-symbolic</property>
-                  </object>
-                </child>
-                <style>
-                  <class name="titlebar"/>
-                </style>
+              <object class="GtkButton" id="back_button">
+                <property name="can_focus">True</property>
+                <property name="valign">center</property>
+                <property name="action_name">win.go-back</property>
+                <property name="icon_name">go-previous-symbolic</property>
               </object>
             </child>
+            <style>
+              <class name="titlebar"/>
+            </style>
           </object>
         </child>
         <child>

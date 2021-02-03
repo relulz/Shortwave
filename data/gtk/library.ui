@@ -9,31 +9,26 @@
     <property name="vexpand">True</property>
     <property name="orientation">vertical</property>
     <child>
-      <object class="GtkWindowHandle" id="header_handle">
+      <object class="GtkHeaderBar" id="header">
         <property name="can_focus">False</property>
         <child>
-          <object class="GtkHeaderBar" id="header">
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkButton" id="add_button">
-                <property name="can_focus">True</property>
-                <property name="valign">center</property>
-                <property name="action_name">win.show-discover</property>
-                <property name="icon_name">list-add-symbolic</property>
-              </object>
-            </child>
-            <child type="end">
-              <object class="GtkMenuButton" id="appmenu_button">
-                <property name="can_focus">True</property>
-                <property name="valign">center</property>
-                <property name="icon_name">open-menu-symbolic</property>
-              </object>
-            </child>
-            <style>
-              <class name="titlebar"/>
-            </style>
+          <object class="GtkButton" id="add_button">
+            <property name="can_focus">True</property>
+            <property name="valign">center</property>
+            <property name="action_name">win.show-discover</property>
+            <property name="icon_name">list-add-symbolic</property>
           </object>
         </child>
+        <child type="end">
+          <object class="GtkMenuButton" id="appmenu_button">
+            <property name="can_focus">True</property>
+            <property name="valign">center</property>
+            <property name="icon_name">open-menu-symbolic</property>
+          </object>
+        </child>
+        <style>
+          <class name="titlebar"/>
+        </style>
       </object>
     </child>
     <child>

@@ -9,32 +9,27 @@
     <property name="vexpand">True</property>
     <property name="orientation">vertical</property>
     <child>
-      <object class="GtkWindowHandle" id="header_handle">
+      <object class="GtkHeaderBar" id="header">
         <property name="can_focus">False</property>
-        <child>
-          <object class="GtkHeaderBar" id="header">
+        <child type="title">
+          <object class="AdwViewSwitcherTitle" id="header_viewswitcher">
             <property name="can_focus">False</property>
-            <child type="title">
-              <object class="AdwViewSwitcherTitle" id="header_viewswitcher">
-                <property name="can_focus">False</property>
-                <property name="policy">auto</property>
-                <property name="stack">storefront_stack</property>
-                <property name="title">Shortwave</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkButton" id="back_button">
-                <property name="can_focus">True</property>
-                <property name="valign">center</property>
-                <property name="action_name">win.go-back</property>
-                <property name="icon_name">go-previous-symbolic</property>
-              </object>
-            </child>
-            <style>
-              <class name="titlebar"/>
-            </style>
+            <property name="policy">auto</property>
+            <property name="stack">storefront_stack</property>
+            <property name="title">Shortwave</property>
           </object>
         </child>
+        <child>
+          <object class="GtkButton" id="back_button">
+            <property name="can_focus">True</property>
+            <property name="valign">center</property>
+            <property name="action_name">win.go-back</property>
+            <property name="icon_name">go-previous-symbolic</property>
+          </object>
+        </child>
+        <style>
+          <class name="titlebar"/>
+        </style>
       </object>
     </child>
     <child>
