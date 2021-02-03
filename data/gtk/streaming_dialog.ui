@@ -51,14 +51,8 @@
       <object class="GtkHeaderBar">
         <property name="can_focus">False</property>
         <property name="title-widget">
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Stream to a device</property>
-            <property name="single-line-mode">True</property>
-            <property name="ellipsize">end</property>
-            <property name="width-chars">5</property>
-            <style>
-              <class name="title"/>
-            </style>
+          <object class="AdwWindowTitle">
+            <property name="title" translatable="yes">Stream to a device</property>
           </object>
         </property>
         <child>
