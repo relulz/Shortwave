@@ -39,6 +39,7 @@
               <object class="GtkViewport">
                 <property name="can_focus">False</property>
                 <property name="vexpand">True</property>
+                <property name="scroll-to-focus">True</property>
                 <child>
                   <object class="AdwClamp">
                     <property name="can_focus">False</property>
