@@ -4,7 +4,6 @@
   <object class="GtkPopover" id="description_popover">
     <child>
       <object class="GtkBox">
-        <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <property name="margin_bottom">6</property>
@@ -13,7 +12,6 @@
         <property name="margin_top">6</property>
         <child>
           <object class="GtkImage">
-            <property name="can_focus">False</property>
             <property name="icon_name">emblem-music-symbolic</property>
             <property name="pixel_size">48</property>
             <style>
@@ -23,7 +21,6 @@
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Songs are automatically recognized using the stream metadata.
 
 If the station does not send any metadata, no songs can be recognized.</property>
@@ -38,13 +35,11 @@ If the station does not send any metadata, no songs can be recognized.</property
     </child>
   </object>
   <object class="GtkBox" id="song_listbox">
-    <property name="can_focus">False</property>
     <property name="margin_top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkStack" id="stack">
-        <property name="can_focus">False</property>
         <property name="hhomogeneous">False</property>
         <property name="vhomogeneous">False</property>
         <property name="transition_type">crossfade</property>
@@ -54,14 +49,12 @@ If the station does not send any metadata, no songs can be recognized.</property
             <property name="name">empty</property>
             <property name="child">
               <object class="GtkBox">
-                <property name="can_focus">False</property>
                 <property name="margin_top">30</property>
                 <property name="margin_bottom">30</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkImage">
-                    <property name="can_focus">False</property>
                     <property name="margin_bottom">6</property>
                     <property name="pixel_size">64</property>
                     <property name="icon_name">dialog-information-symbolic</property>
@@ -69,7 +62,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                 </child>
                 <child>
                   <object class="GtkLabel">
-                    <property name="can_focus">False</property>
                     <property name="label" translatable="yes">No songs detected</property>
                     <property name="wrap">True</property>
                     <attributes>
@@ -80,7 +72,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                 </child>
                 <child>
                   <object class="GtkLabel">
-                    <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Detected songs will appear here.</property>
                     <property name="justify">center</property>
                     <property name="wrap">True</property>
@@ -88,7 +79,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                 </child>
                 <child>
                   <object class="GtkMenuButton">
-                    <property name="can_focus">True</property>
                     <property name="halign">center</property>
                     <property name="popover">description_popover</property>
                     <property name="label" translatable="yes">_How does this work?</property>
@@ -107,13 +97,11 @@ If the station does not send any metadata, no songs can be recognized.</property
             <property name="name">content</property>
             <property name="child">
               <object class="GtkBox">
-                <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <property name="margin_top">22</property>
                 <property name="spacing">12</property>
                 <child>
                   <object class="GtkListBox" id="listbox">
-                    <property name="can_focus">False</property>
                     <property name="selection_mode">none</property>
                     <property name="activate_on_single_click">False</property>
                     <style>
@@ -123,7 +111,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                 </child>
                 <child>
                   <object class="GtkImage">
-                    <property name="can_focus">False</property>
                     <property name="icon_name">dialog-information-symbolic</property>
                     <property name="pixel_size">64</property>
                     <style>
@@ -133,7 +120,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                 </child>
                 <child>
                   <object class="GtkLabel">
-                    <property name="can_focus">False</property>
                     <property name="halign">center</property>
                     <property name="margin_start">6</property>
                     <property name="margin_end">6</property>
@@ -152,7 +138,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                   <object class="GtkButton" id="open_music_folder_button">
                     <property name="label" translatable="yes">_Open</property>
                     <property name="use_underline">True</property>
-                    <property name="can_focus">True</property>
                     <property name="halign">center</property>
                     <style>
                       <class name="dim-label"/>

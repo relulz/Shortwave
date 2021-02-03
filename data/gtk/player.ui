@@ -4,19 +4,16 @@
   <object class="GtkBox" id="player">
     <child>
       <object class="GtkBox">
-        <property name="can_focus">False</property>
         <property name="vexpand">True</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="AdwHeaderBar" id="header">
-            <property name="can_focus">False</property>
             <property name="show-end-title-buttons">False</property>
             <property name="title-widget">
               <object class="AdwWindowTitle"/>
             </property>
             <child>
               <object class="GtkButton" id="back_button">
-                <property name="can_focus">True</property>
                 <property name="valign">center</property>
                 <property name="action_name">win.go-back</property>
                 <property name="icon_name">go-previous-symbolic</property>
@@ -29,28 +26,23 @@
         </child>
         <child>
           <object class="GtkBox" id="content">
-            <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkScrolledWindow">
-                <property name="can_focus">True</property>
                 <property name="hscrollbar_policy">never</property>
                 <child>
                   <object class="GtkViewport">
                     <property name="vexpand">True</property>
-                    <property name="can_focus">False</property>
                     <property name="scroll-to-focus">True</property>
                     <child>
                       <object class="AdwClamp">
                         <property name="width_request">275</property>
-                        <property name="can_focus">False</property>
                         <property name="margin_start">6</property>
                         <property name="margin_end">6</property>
                         <property name="maximum_size">400</property>
                         <property name="tightening_threshold">0</property>
                         <child>
                           <object class="GtkBox" id="player_box">
-                            <property name="can_focus">False</property>
                             <property name="margin_top">22</property>
                             <property name="margin_bottom">22</property>
                             <property name="orientation">vertical</property>
@@ -59,15 +51,12 @@
                             </child>
                             <child>
                               <object class="GtkRevealer" id="stream_revealer">
-                                <property name="can_focus">False</property>
                                 <child>
                                   <object class="GtkBox">
-                                    <property name="can_focus">False</property>
                                     <property name="orientation">vertical</property>
                                     <child>
                                       <object class="GtkSeparator">
                                         <property name="width_request">100</property>
-                                        <property name="can_focus">False</property>
                                         <property name="halign">center</property>
                                         <property name="margin_top">12</property>
                                         <property name="margin_bottom">12</property>
@@ -75,20 +64,16 @@
                                     </child>
                                     <child>
                                       <object class="GtkButton" id="disconnect_button">
-                                        <property name="can_focus">True</property>
                                         <child>
                                           <object class="GtkBox">
-                                            <property name="can_focus">False</property>
                                             <property name="orientation">vertical</property>
                                             <child>
                                               <object class="GtkImage">
-                                                <property name="can_focus">False</property>
                                                 <property name="icon_name">network-wireless-symbolic</property>
                                               </object>
                                             </child>
                                             <child>
                                               <object class="GtkLabel">
-                                                <property name="can_focus">False</property>
                                                 <property name="label" translatable="yes">Connected with</property>
                                                 <property name="justify">center</property>
                                                 <property name="wrap">True</property>
@@ -100,7 +85,6 @@
                                             </child>
                                             <child>
                                               <object class="GtkLabel" id="device_name">
-                                                <property name="can_focus">False</property>
                                                 <property name="label">label</property>
                                                 <property name="justify">center</property>
                                                 <property name="wrap">True</property>
@@ -124,7 +108,6 @@
                             <child>
                               <object class="GtkSeparator">
                                 <property name="width_request">100</property>
-                                <property name="can_focus">False</property>
                                 <property name="halign">center</property>
                                 <property name="margin_top">12</property>
                                 <property name="margin_bottom">12</property>

@@ -2,7 +2,6 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <object class="GtkFlowBox" id="station_flowbox">
-    <property name="can_focus">False</property>
     <property name="homogeneous">True</property>
     <property name="column_spacing">12</property>
     <property name="row_spacing">12</property>

@@ -2,7 +2,6 @@
 <!-- Generated with glade 3.36.0 -->
 <interface>
   <object class="GtkBox" id="window">
-    <property name="can_focus">False</property>
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkGestureClick" id="back_button_gesture">
@@ -11,7 +10,6 @@
     </child>
     <child>
       <object class="AdwSqueezer" id="window_squeezer">
-        <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="transition_type">crossfade</property>
         <property name="interpolate_size">True</property>
@@ -19,11 +17,9 @@
           <object class="GtkBox" id="window_box">
             <property name="width_request">350</property>
             <property name="height_request">175</property>
-            <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkOverlay" id="overlay">
-                <property name="can_focus">False</property>
                 <child>
                   <placeholder/>
                 </child>
@@ -31,11 +27,9 @@
             </child>
             <child>
               <object class="GtkRevealer" id="toolbar_controller_revealer">
-                <property name="can_focus">False</property>
                 <property name="transition_type">slide-up</property>
                 <child>
                   <object class="GtkBox" id="toolbar_controller_box">
-                    <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <placeholder/>
@@ -48,10 +42,8 @@
         </child>
         <child>
           <object class="GtkWindowHandle" id="mini_controller_handle">
-            <property name="can_focus">False</property>
             <child>
               <object class="GtkBox" id="mini_controller_box">
-                <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <placeholder/>
@@ -65,7 +57,6 @@
   </object>
   <object class="AdwLeaflet" id="window_leaflet">
     <property name="can_unfold">False</property>
-    <property name="can_focus">False</property>
     <property name="hexpand">True</property>
     <property name="can_swipe_back">True</property>
     <child>
@@ -73,7 +64,6 @@
         <property name="name">library</property>
         <property name="child">
           <object class="GtkBox" id="library_page">
-            <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
               <placeholder/>
@@ -87,7 +77,6 @@
         <property name="name">storefront</property>
         <property name="child">
           <object class="GtkBox" id="storefront_page">
-            <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
               <placeholder/>

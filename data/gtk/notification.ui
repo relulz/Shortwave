@@ -2,7 +2,6 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <object class="GtkRevealer" id="revealer">
-    <property name="can_focus">False</property>
     <property name="halign">center</property>
     <property name="valign">start</property>
     <property name="margin_start">6</property>
@@ -10,7 +9,6 @@
     <property name="reveal_child">True</property>
     <child>
       <object class="GtkFrame">
-        <property name="can_focus">False</property>
         <property name="halign">center</property>
         <property name="valign">center</property>
         <property name="label_xalign">0</property>
@@ -18,18 +16,15 @@
         <property name="has_frame">False</property>
         <child>
           <object class="GtkBox">
-            <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkBox">
-                <property name="can_focus">False</property>
                 <property name="valign">center</property>
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkButton" id="close_button">
                     <property name="width_request">34</property>
                     <property name="height_request">34</property>
-                    <property name="can_focus">True</property>
                     <property name="focus_on_click">False</property>
                     <property name="no_show_all">True</property>
                     <property name="valign">start</property>
@@ -48,7 +43,6 @@
                   <object class="GtkBox" id="spinner">
                     <property name="width_request">34</property>
                     <property name="height_request">34</property>
-                    <property name="can_focus">False</property>
                     <property name="no_show_all">True</property>
                     <property name="margin_end">6</property>
                     <property name="orientation">vertical</property>
@@ -56,7 +50,6 @@
                       <object class="GtkSpinner">
                         <property name="width_request">20</property>
                         <property name="height_request">20</property>
-                        <property name="can_focus">False</property>
                         <property name="halign">center</property>
                         <property name="valign">center</property>
                         <property name="active">True</property>
@@ -66,7 +59,6 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="text_label">
-                    <property name="can_focus">False</property>
                     <property name="valign">center</property>
                     <property name="label">text</property>
                     <property name="wrap">True</property>
@@ -79,17 +71,14 @@
             </child>
             <child>
               <object class="GtkBox" id="error_box">
-                <property name="can_focus">False</property>
                 <property name="no_show_all">True</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkSeparator">
-                    <property name="can_focus">False</property>
                   </object>
                 </child>
                 <child>
                   <object class="GtkLabel">
-                    <property name="can_focus">False</property>
                     <property name="margin_top">6</property>
                     <property name="margin_bottom">6</property>
                     <property name="label" translatable="yes">Error details</property>
@@ -102,7 +91,6 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="error_label">
-                    <property name="can_focus">False</property>
                     <property name="label">label</property>
                     <property name="wrap">True</property>
                     <property name="max_width_chars">70</property>

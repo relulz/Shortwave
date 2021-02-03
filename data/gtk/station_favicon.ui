@@ -2,10 +2,8 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <object class="GtkBox" id="station_favicon">
-    <property name="can_focus">False</property>
     <child>
       <object class="GtkStack" id="stack">
-        <property name="can_focus">False</property>
         <property name="halign">center</property>
         <property name="valign">center</property>
         <property name="transition_type">crossfade</property>
@@ -14,7 +12,6 @@
             <property name="name">placeholder</property>
             <property name="child">
               <object class="GtkImage" id="placeholder">
-                <property name="can_focus">False</property>
                 <property name="pixel_size">48</property>
                 <property name="icon_name">emblem-music-symbolic</property>
                 <style>

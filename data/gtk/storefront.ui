@@ -3,16 +3,13 @@
 <interface>
   <object class="GtkBox" id="storefront">
     <property name="width_request">350</property>
-    <property name="can_focus">False</property>
     <property name="hexpand">True</property>
     <property name="vexpand">True</property>
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkHeaderBar" id="header">
-        <property name="can_focus">False</property>
         <child type="title">
           <object class="AdwViewSwitcherTitle" id="header_viewswitcher">
-            <property name="can_focus">False</property>
             <property name="policy">auto</property>
             <property name="stack">storefront_stack</property>
             <property name="title">Shortwave</property>
@@ -20,7 +17,6 @@
         </child>
         <child>
           <object class="GtkButton" id="back_button">
-            <property name="can_focus">True</property>
             <property name="valign">center</property>
             <property name="action_name">win.go-back</property>
             <property name="icon_name">go-previous-symbolic</property>
@@ -33,11 +29,9 @@
     </child>
     <child>
       <object class="GtkBox" id="content">
-        <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkStack" id="storefront_stack">
-            <property name="can_focus">False</property>
             <property name="transition_type">crossfade</property>
             <property name="interpolate_size">True</property>
             <child>
@@ -47,7 +41,6 @@
                 <property name="icon_name">view-grid-symbolic</property>
                 <property name="child">
                   <object class="GtkBox" id="discover_box">
-                    <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <placeholder/>
@@ -63,7 +56,6 @@
                 <property name="icon_name">system-search-symbolic</property>
                 <property name="child">
                   <object class="GtkBox" id="search_box">
-                    <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <placeholder/>
@@ -79,11 +71,9 @@
                 <property name="icon_name">mark-location-symbolic</property>
                 <property name="child">
                   <object class="GtkBox" id="locations_box">
-                    <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="can_focus">False</property>
                         <property name="label">Locations page</property>
                       </object>
                     </child>
@@ -98,11 +88,9 @@
                 <property name="icon_name">preferences-desktop-locale-symbolic</property>
                 <property name="child">
                   <object class="GtkBox" id="languages_box">
-                    <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="can_focus">False</property>
                         <property name="label">Languages page</property>
                       </object>
                     </child>
@@ -117,11 +105,9 @@
                 <property name="icon_name">view-paged-symbolic</property>
                 <property name="child">
                   <object class="GtkBox" id="tags_box">
-                    <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="can_focus">False</property>
                         <property name="label">Location page</property>
                       </object>
                     </child>
@@ -133,7 +119,6 @@
         </child>
         <child>
           <object class="AdwViewSwitcherBar" id="bottom_viewswitcher">
-            <property name="can_focus">False</property>
             <property name="stack">storefront_stack</property>
             <property name="reveal" bind-source="header_viewswitcher" bind-property="title-visible" bind-flags="sync-create">False</property>
           </object>

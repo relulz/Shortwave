@@ -2,12 +2,10 @@
 <!-- Generated with glade 3.36.0 -->
 <interface>
   <object class="GtkBox" id="mini_controller">
-    <property name="can_focus">False</property>
     <property name="hexpand">True</property>
     <property name="vexpand">True</property>
     <child>
       <object class="GtkBox">
-        <property name="can_focus">False</property>
         <property name="spacing">12</property>
         <property name="margin_start">12</property>
         <property name="margin_end">12</property>
@@ -15,20 +13,17 @@
         <property name="margin_bottom">6</property>
         <child>
           <object class="GtkBox">
-            <property name="can_focus">False</property>
             <property name="valign">center</property>
             <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
               <object class="GtkStack" id="playback_button_stack">
-                <property name="can_focus">False</property>
                 <property name="halign">center</property>
                 <child>
                   <object class="GtkStackPage">
                     <property name="name">stop_playback</property>
                     <property name="child">
                       <object class="GtkButton" id="stop_playback_button">
-                        <property name="can_focus">True</property>
                         <property name="icon_name">media-playback-stop-symbolic</property>
                         <style>
                           <class name="mini-controller-button"/>
@@ -43,7 +38,6 @@
                     <property name="name">start_playback</property>
                     <property name="child">
                       <object class="GtkButton" id="start_playback_button">
-                        <property name="can_focus">True</property>
                         <property name="icon_name">media-playback-start-symbolic</property>
                         <style>
                           <class name="mini-controller-button"/>
@@ -69,12 +63,10 @@
         <child>
           <object class="GtkBox">
             <property name="height_request">90</property>
-            <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <property name="hexpand">True</property>
             <child>
               <object class="GtkLabel">
-                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">SHORTWAVE INTERNET RADIO</property>
                 <attributes>
                   <attribute name="font-desc" value="Cantarell Bold 9"/>
@@ -87,7 +79,6 @@
             </child>
             <child>
               <object class="GtkBox">
-                <property name="can_focus">False</property>
                 <property name="valign">center</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">6</property>
@@ -95,7 +86,6 @@
                 <property name="valign">center</property>
                 <child>
                   <object class="GtkLabel" id="title_label">
-                    <property name="can_focus">False</property>
                     <property name="halign">center</property>
                     <property name="label" translatable="yes">No playback</property>
                     <property name="ellipsize">end</property>
@@ -106,10 +96,8 @@
                 </child>
                 <child>
                   <object class="GtkRevealer" id="subtitle_revealer">
-                    <property name="can_focus">False</property>
                     <child>
                       <object class="GtkLabel" id="subtitle_label">
-                        <property name="can_focus">False</property>
                         <property name="halign">center</property>
                         <property name="label">subtitle</property>
                         <property name="ellipsize">end</property>
@@ -131,13 +119,11 @@
         </child>
         <child>
           <object class="GtkBox">
-            <property name="can_focus">False</property>
             <property name="valign">center</property>
             <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
               <object class="GtkButton" id="close_button">
-                <property name="can_focus">True</property>
                 <property name="valign">center</property>
                 <property name="action_name">win.quit</property>
                 <property name="icon_name">window-close-symbolic</property>
@@ -149,7 +135,6 @@
             </child>
             <child>
               <object class="GtkButton" id="resize_button">
-                <property name="can_focus">True</property>
                 <property name="action_name">win.disable-mini-player</property>
                 <property name="icon_name">focus-windows-symbolic</property>
                 <style>

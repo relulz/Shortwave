@@ -19,7 +19,6 @@
                 <property name="activatable_widget">dark_mode_button</property>
                 <child>
                   <object class="GtkSwitch" id="dark_mode_button">
-                    <property name="can_focus">True</property>
                     <property name="valign">center</property>
                   </object>
                 </child>
@@ -38,7 +37,6 @@
                 <property name="activatable_widget">show_notifications_button</property>
                 <child>
                   <object class="GtkSwitch" id="show_notifications_button">
-                    <property name="can_focus">True</property>
                     <property name="valign">center</property>
                   </object>
                 </child>
