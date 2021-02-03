@@ -251,7 +251,6 @@ impl Player {
         get_widget!(self.builder, gtk::Button, back_button);
 
         back_button.set_visible(expand);
-        self.widget.set_hexpand(expand);
     }
 
     fn setup_signals(self: Rc<Self>) {
