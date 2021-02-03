@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="3.0"/>
   <object class="AdwPreferencesWindow" id="settings_window">
     <property name="default_height">400</property>
     <property name="default_width">640</property>
