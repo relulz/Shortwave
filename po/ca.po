@@ -138,7 +138,7 @@ msgstr "Descendent"
 
 #: data/gtk/menu/player_menu.ui:19
 msgid "Show station details"
-msgstr "Mostra els detalls de la emissora"
+msgstr "Mostra els detalls de l'emissora"
 
 #: data/gtk/menu/player_menu.ui:58
 msgid "Enable mini player"
@@ -222,7 +222,7 @@ msgstr ""
 "Les cançons es reconeixen automàticament utilitzant les metadades del "
 "flux.\n"
 "\n"
-"Si la emissora no envia cap metadada, no es pot reconèixer cap cançó."
+"Si l'emissora no envia cap metadada, no es pot reconèixer cap cançó."
 
 #: data/gtk/song_listbox.ui:93
 msgid "No songs detected"
@@ -255,11 +255,11 @@ msgstr ""
 
 #: src/audio/player.rs:185
 msgid "Station cannot be streamed."
-msgstr "No es pot transmetre la emissora."
+msgstr "No es pot transmetre l'emissora."
 
 #: src/audio/player.rs:185
 msgid "URL is not valid."
-msgstr "La URL no és vàlida."
+msgstr "El URL no és vàlid."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
 #: src/database/library.rs:60
@@ -268,12 +268,12 @@ msgstr "Benvingut/da a {}"
 
 #: src/database/library.rs:156
 msgid "No longer existing station removed from library."
-msgstr "La emissora que ja no existeix ha sigut eliminada de la biblioteca."
+msgstr "L'emissora que ja no existeix ha sigut eliminada de la biblioteca."
 
 #: src/database/library.rs:160 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
 msgid "Station data could not be received."
-msgstr "Les dades de la emissora no han pogut ser rebudes."
+msgstr "Les dades de l'emissora no han pogut ser rebudes."
 
 #: src/discover/pages/discover.rs:57
 msgid "Show statistics"
