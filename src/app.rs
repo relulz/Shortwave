@@ -41,6 +41,7 @@ pub enum Action {
     ViewGoBack,
     ViewShowDiscover,
     ViewShowLibrary,
+    ViewShowSearch,
     ViewShowPlayer,
     ViewEnableMiniPlayer,
     ViewDisableMiniPlayer,
@@ -196,8 +197,12 @@ impl SwApplication {
 
         match action {
             Action::ViewGoBack => self_.window.borrow().as_ref().unwrap().go_back(),
-            Action::ViewShowDiscover => self_.window.borrow().as_ref().unwrap().set_view(View::Storefront),
+            Action::ViewShowDiscover => {
+                self_.window.borrow().as_ref().unwrap().set_view(View::Storefront);
+                self_.storefront.show_discover();
+            }
             Action::ViewShowLibrary => self_.window.borrow().as_ref().unwrap().set_view(View::Library),
+            Action::ViewShowSearch => self_.window.borrow().as_ref().unwrap().set_view(View::Search),
             Action::ViewShowPlayer => self_.window.borrow().as_ref().unwrap().set_view(View::Player),
             Action::ViewRaise => self_.window.borrow().as_ref().unwrap().present_with_time((glib::get_monotonic_time() / 1000) as u32),
             Action::ViewEnableMiniPlayer => self_.window.borrow().as_ref().unwrap().enable_mini_player(true),

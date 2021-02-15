@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.36.0 -->
 <interface>
   <object class="GtkBox" id="window">
     <property name="orientation">vertical</property>
@@ -38,11 +37,14 @@
                   </object>
                 </child>
                 <child type="end">
-                  <object class="GtkToggleButton" id="search_button">
+                  <object class="GtkButton" id="search_button">
                     <property name="action_name">win.show-search</property>
                     <property name="icon_name">system-search-symbolic</property>
                   </object>
                 </child>
+                <style>
+                  <class name="titlebar"/>
+                </style>
               </object>
             </child>
             <child>

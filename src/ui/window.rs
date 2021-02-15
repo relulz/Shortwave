@@ -24,6 +24,7 @@ use gtk::subclass::prelude::*;
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use crate::api::StationRequest;
 use crate::app::{Action, SwApplication, SwApplicationPrivate};
 use crate::config;
 use crate::settings::{settings_manager, Key, SettingsWindow};
@@ -34,6 +35,7 @@ pub enum View {
     Storefront,
     Library,
     Player,
+    Search,
 }
 
 pub struct SwApplicationWindowPrivate {
@@ -231,7 +233,18 @@ impl SwApplicationWindow {
                 send!(sender, Action::ViewShowDiscover);
             })
         );
-        app.set_accels_for_action("win.show-discover", &["<primary>f"]);
+
+        // win.show-search
+        action!(
+            window,
+            "show-search",
+            clone!(@strong sender => move |_, _| {
+                let r = StationRequest::search_for_name("", 0);
+                send!(sender, Action::SearchFor(r));
+                send!(sender, Action::ViewShowSearch);
+            })
+        );
+        app.set_accels_for_action("win.show-search", &["<primary>f"]);
 
         // win.show-library
         action!(
@@ -402,6 +415,11 @@ impl SwApplicationWindow {
             }
             View::Player => {
                 window_flap.set_reveal_flap(true);
+                back_button.set_visible(true);
+                add_button.set_visible(false);
+            }
+            View::Search => {
+                window_leaflet.set_visible_child_name("storefront");
                 back_button.set_visible(true);
                 add_button.set_visible(false);
             }

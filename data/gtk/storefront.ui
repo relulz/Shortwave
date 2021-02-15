@@ -7,27 +7,6 @@
     <property name="vexpand">True</property>
     <property name="orientation">vertical</property>
     <child>
-      <object class="GtkHeaderBar" id="header">
-        <child type="title">
-          <object class="AdwViewSwitcherTitle" id="header_viewswitcher">
-            <property name="policy">auto</property>
-            <property name="stack">storefront_stack</property>
-            <property name="title">Shortwave</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton" id="back_button">
-            <property name="valign">center</property>
-            <property name="action_name">win.go-back</property>
-            <property name="icon_name">go-previous-symbolic</property>
-          </object>
-        </child>
-        <style>
-          <class name="titlebar"/>
-        </style>
-      </object>
-    </child>
-    <child>
       <object class="GtkBox" id="content">
         <property name="orientation">vertical</property>
         <child>
@@ -64,63 +43,6 @@
                 </property>
               </object>
             </child>
-            <child>
-              <object class="GtkStackPage">
-                <property name="name">locations</property>
-                <property name="title" translatable="yes">Locations</property>
-                <property name="icon_name">mark-location-symbolic</property>
-                <property name="child">
-                  <object class="GtkBox" id="locations_box">
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label">Locations page</property>
-                      </object>
-                    </child>
-                  </object>
-                </property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkStackPage">
-                <property name="name">languages</property>
-                <property name="title" translatable="yes">Languages</property>
-                <property name="icon_name">preferences-desktop-locale-symbolic</property>
-                <property name="child">
-                  <object class="GtkBox" id="languages_box">
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label">Languages page</property>
-                      </object>
-                    </child>
-                  </object>
-                </property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkStackPage">
-                <property name="name">tags</property>
-                <property name="title" translatable="yes">Tags</property>
-                <property name="icon_name">view-paged-symbolic</property>
-                <property name="child">
-                  <object class="GtkBox" id="tags_box">
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label">Location page</property>
-                      </object>
-                    </child>
-                  </object>
-                </property>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="AdwViewSwitcherBar" id="bottom_viewswitcher">
-            <property name="stack">storefront_stack</property>
-            <property name="reveal" bind-source="header_viewswitcher" bind-property="title-visible" bind-flags="sync-create">False</property>
           </object>
         </child>
       </object>
