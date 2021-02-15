@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.36.0 -->
 <interface>
   <object class="GtkFlowBoxChild" id="station_row">
     <property name="width_request">300</property>

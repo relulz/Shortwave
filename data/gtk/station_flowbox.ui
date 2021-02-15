@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
 <interface>
   <object class="GtkFlowBox" id="station_flowbox">
     <property name="homogeneous">True</property>
