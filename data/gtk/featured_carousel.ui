@@ -66,9 +66,9 @@
             <property name="label">title label</property>
             <property name="justify">center</property>
             <property name="wrap">True</property>
-            <attributes>
-              <attribute name="font-desc" value="Cantarell Ultra-Bold 20"/>
-            </attributes>
+            <style>
+              <class name="title-1"/>
+            </style>
           </object>
         </child>
         <child>
