@@ -103,6 +103,12 @@ impl SwApplicationWindow {
         get_widget!(self_.builder, gtk::Box, window);
         adw::ApplicationWindowExt::set_child(self.upcast_ref::<adw::ApplicationWindow>(), Some(&window));
 
+        // Set hamburger menu
+        let menu_builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/menu/app_menu.ui");
+        get_widget!(menu_builder, gio::MenuModel, app_menu);
+        get_widget!(self_.builder, gtk::MenuButton, appmenu_button);
+        appmenu_button.set_menu_model(Some(&app_menu));
+
         // Wire everything up
         get_widget!(self_.builder, gtk::Box, mini_controller_box);
         get_widget!(self_.builder, gtk::Box, library_page);
@@ -374,6 +380,8 @@ impl SwApplicationWindow {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
         get_widget!(self_.builder, adw::Leaflet, window_leaflet);
         get_widget!(self_.builder, adw::Flap, window_flap);
+        get_widget!(self_.builder, gtk::Button, back_button);
+        get_widget!(self_.builder, gtk::Button, add_button);
 
         // Don't reveal sidebar flap by default
         if !window_flap.get_locked() && window_flap.get_folded() {
@@ -384,12 +392,18 @@ impl SwApplicationWindow {
         match view {
             View::Storefront => {
                 window_leaflet.set_visible_child_name("storefront");
+                back_button.set_visible(true);
+                add_button.set_visible(false);
             }
             View::Library => {
                 window_leaflet.set_visible_child_name("library");
+                back_button.set_visible(false);
+                add_button.set_visible(true);
             }
             View::Player => {
                 window_flap.set_reveal_flap(true);
+                back_button.set_visible(true);
+                add_button.set_visible(false);
             }
         }
     }
