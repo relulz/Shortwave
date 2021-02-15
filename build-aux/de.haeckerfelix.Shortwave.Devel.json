@@ -22,7 +22,8 @@
         "--filesystem=~/.config/dconf:ro",
         "--talk-name=ca.desrt.dconf",
         "--talk-name=org.a11y.Bus",
-        "--env=DCONF_USER_CONFIG_DIR=.config/dconf"
+        "--env=DCONF_USER_CONFIG_DIR=.config/dconf",
+        "--env=RUST_LOG=shortwave=debug"
     ],
     "build-options" : {
         "append-path" : "/usr/lib/sdk/rust-stable/bin",
@@ -31,7 +32,6 @@
         ],
         "env" : {
             "G_MESSAGES_DEBUG" : "none",
-            "RUSTFLAGS" : "--remap-path-prefix =../",
             "CARGO_HOME" : "/run/build/Shortwave/cargo",
             "RUST_BACKTRACE" : "1",
             "RUST_LOG" : "shortwave=debug"

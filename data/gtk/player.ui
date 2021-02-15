@@ -3,133 +3,93 @@
 <interface>
   <object class="GtkBox" id="player">
     <child>
-      <object class="GtkBox">
-        <property name="vexpand">True</property>
-        <property name="orientation">vertical</property>
+      <object class="GtkScrolledWindow">
+        <property name="hscrollbar_policy">never</property>
         <child>
-          <object class="AdwHeaderBar" id="header">
-            <property name="show-end-title-buttons">False</property>
-            <property name="title-widget">
-              <object class="AdwWindowTitle"/>
-            </property>
+          <object class="AdwClamp">
+            <property name="width_request">275</property>
+            <property name="margin_start">6</property>
+            <property name="margin_end">6</property>
+            <property name="maximum_size">400</property>
+            <property name="tightening_threshold">0</property>
             <child>
-              <object class="GtkButton" id="back_button">
-                <property name="valign">center</property>
-                <property name="action_name">win.go-back</property>
-                <property name="icon_name">go-previous-symbolic</property>
-              </object>
-            </child>
-            <style>
-              <class name="titlebar"/>
-            </style>
-          </object>
-        </child>
-        <child>
-          <object class="GtkBox" id="content">
-            <property name="orientation">vertical</property>
-            <child>
-              <object class="GtkScrolledWindow">
-                <property name="hscrollbar_policy">never</property>
+              <object class="GtkBox" id="player_box">
+                <property name="margin_top">22</property>
+                <property name="margin_bottom">22</property>
+                <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkViewport">
-                    <property name="vexpand">True</property>
-                    <property name="scroll-to-focus">True</property>
+                  <placeholder/>
+                </child>
+                <child>
+                  <object class="GtkRevealer" id="stream_revealer">
                     <child>
-                      <object class="AdwClamp">
-                        <property name="width_request">275</property>
-                        <property name="margin_start">6</property>
-                        <property name="margin_end">6</property>
-                        <property name="maximum_size">400</property>
-                        <property name="tightening_threshold">0</property>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkBox" id="player_box">
-                            <property name="margin_top">22</property>
-                            <property name="margin_bottom">22</property>
-                            <property name="orientation">vertical</property>
+                          <object class="GtkSeparator">
+                            <property name="width_request">100</property>
+                            <property name="halign">center</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="disconnect_button">
                             <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <object class="GtkRevealer" id="stream_revealer">
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
                                 <child>
-                                  <object class="GtkBox">
-                                    <property name="orientation">vertical</property>
-                                    <child>
-                                      <object class="GtkSeparator">
-                                        <property name="width_request">100</property>
-                                        <property name="halign">center</property>
-                                        <property name="margin_top">12</property>
-                                        <property name="margin_bottom">12</property>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="GtkButton" id="disconnect_button">
-                                        <child>
-                                          <object class="GtkBox">
-                                            <property name="orientation">vertical</property>
-                                            <child>
-                                              <object class="GtkImage">
-                                                <property name="icon_name">network-wireless-symbolic</property>
-                                              </object>
-                                            </child>
-                                            <child>
-                                              <object class="GtkLabel">
-                                                <property name="label" translatable="yes">Connected with</property>
-                                                <property name="justify">center</property>
-                                                <property name="wrap">True</property>
-                                                <property name="wrap_mode">char</property>
-                                                <style>
-                                                  <class name="dim-label"/>
-                                                </style>
-                                              </object>
-                                            </child>
-                                            <child>
-                                              <object class="GtkLabel" id="device_name">
-                                                <property name="label">label</property>
-                                                <property name="justify">center</property>
-                                                <property name="wrap">True</property>
-                                                <property name="wrap_mode">char</property>
-                                                <attributes>
-                                                  <attribute name="weight" value="bold"/>
-                                                </attributes>
-                                              </object>
-                                            </child>
-                                          </object>
-                                        </child>
-                                        <style>
-                                          <class name="suggested-action"/>
-                                        </style>
-                                      </object>
-                                    </child>
+                                  <object class="GtkImage">
+                                    <property name="icon_name">network-wireless-symbolic</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="yes">Connected with</property>
+                                    <property name="justify">center</property>
+                                    <property name="wrap">True</property>
+                                    <property name="wrap_mode">char</property>
+                                    <style>
+                                      <class name="dim-label"/>
+                                    </style>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="device_name">
+                                    <property name="label">label</property>
+                                    <property name="justify">center</property>
+                                    <property name="wrap">True</property>
+                                    <property name="wrap_mode">char</property>
+                                    <attributes>
+                                      <attribute name="weight" value="bold"/>
+                                    </attributes>
                                   </object>
                                 </child>
                               </object>
                             </child>
-                            <child>
-                              <object class="GtkSeparator">
-                                <property name="width_request">100</property>
-                                <property name="halign">center</property>
-                                <property name="margin_top">12</property>
-                                <property name="margin_bottom">12</property>
-                              </object>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
+                            <style>
+                              <class name="suggested-action"/>
+                            </style>
                           </object>
                         </child>
                       </object>
                     </child>
                   </object>
                 </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <property name="width_request">100</property>
+                    <property name="halign">center</property>
+                    <property name="margin_top">12</property>
+                    <property name="margin_bottom">12</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
         </child>
-        <style>
-          <class name="sidebar"/>
-        </style>
       </object>
     </child>
   </object>
 </interface>
+
