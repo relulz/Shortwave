@@ -1,5 +1,5 @@
 // Shortwave - about_dialog.rs
-// Copyright (C) 2020  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ pub fn show_about_dialog(window: gtk::ApplicationWindow) {
     dialog.set_program_name(config::NAME);
     dialog.set_logo_icon_name(Some(config::APP_ID));
     dialog.set_comments(Some(&i18n("Listen to internet radio")));
-    dialog.set_copyright(Some("© 2020 Felix Häcker"));
+    dialog.set_copyright(Some("© 2021 Felix Häcker"));
     dialog.set_translator_credits(Some(&i18n("translator-credits")));
     dialog.set_license_type(gtk::License::Gpl30);
     dialog.set_version(Some(version.as_str()));
