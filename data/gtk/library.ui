@@ -54,58 +54,18 @@
             <property name="name">empty</property>
             <property name="child">
               <object class="GtkBox" id="empty_box">
-                <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkScrolledWindow">
-                    <property name="hscrollbar_policy">never</property>
+                  <object class="AdwStatusPage" id="status_page">
+                    <property name="hexpand">True</property>
                     <child>
-                      <object class="GtkViewport">
-                        <property name="vexpand">True</property>
-                        <property name="scroll-to-focus">True</property>
-                        <child>
-                          <object class="GtkBox">
-                            <property name="halign">center</property>
-                            <property name="valign">center</property>
-                            <property name="margin_bottom">12</property>
-                            <property name="margin_start">12</property>
-                            <property name="margin_end">12</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">6</property>
-                            <child>
-                              <object class="GtkImage" id="logo_image">
-                                <property name="pixel_size">256</property>
-                                <property name="icon_name">de.haeckerfelix.Shortwave.Devel</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="welcome_text">
-                                <property name="label">welcome label</property>
-                                <property name="wrap">True</property>
-                                <attributes>
-                                  <attribute name="font-desc" value="Cantarell Ultra-Bold 24"/>
-                                </attributes>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkBox">
-                                <property name="halign">center</property>
-                                <property name="margin_top">40</property>
-                                <property name="orientation">vertical</property>
-                                <property name="spacing">12</property>
-                                <child>
-                                  <object class="GtkButton" id="discover_button">
-                                    <property name="action_name">win.show-discover</property>
-                                    <property name="label" translatable="yes">_Discover new stations</property>
-                                    <property name="use_underline">True</property>
-                                    <style>
-                                      <class name="suggested-action"/>
-                                    </style>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
+                      <object class="GtkButton" id="discover_button">
+                        <property name="action_name">win.show-discover</property>
+                        <property name="halign">center</property>
+                        <property name="label" translatable="yes">_Discover new stations</property>
+                        <property name="use_underline">True</property>
+                        <style>
+                          <class name="suggested-action"/>
+                        </style>
                       </object>
                     </child>
                   </object>

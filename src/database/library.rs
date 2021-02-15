@@ -50,11 +50,10 @@ impl Library {
         get_widget!(builder, gtk::Stack, library_stack);
 
         // Setup empty state page
-        get_widget!(builder, gtk::Image, logo_image);
-        logo_image.set_from_icon_name(Some(config::APP_ID));
-        get_widget!(builder, gtk::Label, welcome_text);
+        get_widget!(builder, adw::StatusPage, status_page);
+        status_page.set_icon_name(Some(&config::APP_ID));
         // Welcome text which gets displayed when the library is empty. "{}" is the application name.
-        welcome_text.set_text(i18n_f("Welcome to {}", &[config::NAME]).as_str());
+        status_page.set_title(Some(&i18n_f("Welcome to {}", &[config::NAME]).as_str()));
 
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
         content_box.append(&flowbox.widget);
