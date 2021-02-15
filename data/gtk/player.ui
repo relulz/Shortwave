@@ -90,6 +90,8 @@
         </child>
       </object>
     </child>
+    <style>
+      <class name="sidebar"/>
+    </style>
   </object>
 </interface>
-

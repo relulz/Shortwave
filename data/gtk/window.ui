@@ -55,6 +55,9 @@
                     <property name="locked">True</property>
                     <property name="flap-position">end</property>
                     <property name="vexpand">True</property>
+                    <property name="separator">
+                      <object class="GtkSeparator"/>
+                    </property>
                     <child>
                       <object class="AdwLeaflet" id="window_leaflet">
                         <property name="can_unfold">False</property>
@@ -103,4 +106,3 @@
     </child>
   </object>
 </interface>
-
