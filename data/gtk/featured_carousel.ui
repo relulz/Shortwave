@@ -3,6 +3,7 @@
   <object class="GtkBox" id="featured_carousel">
     <property name="orientation">vertical</property>
     <property name="spacing">12</property>
+    <property name="hexpand">True</property>
     <child>
       <object class="GtkOverlay" id="overlay">
         <child>
@@ -11,9 +12,6 @@
             <property name="spacing">12</property>
             <property name="animation_duration">400</property>
             <property name="allow_mouse_drag">True</property>
-            <child>
-              <placeholder/>
-            </child>
             <style>
               <class name="discover-paginator"/>
             </style>

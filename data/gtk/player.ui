@@ -17,9 +17,6 @@
                 <property name="margin_bottom">22</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
                   <object class="GtkRevealer" id="stream_revealer">
                     <child>
                       <object class="GtkBox">

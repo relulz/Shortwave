@@ -24,12 +24,7 @@
                     <property name="orientation">vertical</property>
                     <property name="spacing">12</property>
                     <child>
-                      <object class="GtkBox" id="carousel_box">
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
+                      <object class="GtkBox" id="carousel_box"/>
                     </child>
                     <child>
                       <object class="GtkLabel">
@@ -43,12 +38,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkBox" id="votes_box">
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
+                      <object class="GtkBox" id="votes_box"/>
                     </child>
                     <child>
                       <object class="GtkLabel">
@@ -63,12 +53,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkBox" id="trending_box">
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
+                      <object class="GtkBox" id="trending_box"/>
                     </child>
                     <child>
                       <object class="GtkLabel">
@@ -83,12 +68,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkBox" id="clicked_box">
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
+                      <object class="GtkBox" id="clicked_box"/>
                     </child>
                   </object>
                 </child>

@@ -42,12 +42,7 @@
                     <property name="margin_start">12</property>
                     <property name="margin_end">12</property>
                     <child>
-                      <object class="GtkBox" id="results_box">
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
+                      <object class="GtkBox" id="results_box"/>
                     </child>
                   </object>
                 </child>

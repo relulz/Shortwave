@@ -224,9 +224,6 @@
                     </child>
                   </object>
                 </child>
-                <child type="label_item">
-                  <placeholder/>
-                </child>
               </object>
             </child>
           </object>

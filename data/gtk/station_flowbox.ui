@@ -7,6 +7,7 @@
     <property name="min_children_per_line">1</property>
     <property name="max_children_per_line">3</property>
     <property name="selection_mode">none</property>
+    <property name="valign">start</property>
     <style>
       <class name="transparent"/>
     </style>

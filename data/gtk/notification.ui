@@ -76,9 +76,6 @@
             </child>
           </object>
         </child>
-        <child type="label_item">
-          <placeholder/>
-        </child>
         <style>
           <class name="app-notification"/>
         </style>
