@@ -48,7 +48,7 @@ impl Search {
 
         get_widget!(builder, gtk::Box, results_box);
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        results_box.add(&flowbox.widget);
+        results_box.append(&flowbox.widget);
 
         let timeout_id = Rc::new(RefCell::new(None));
 
@@ -105,8 +105,8 @@ impl Search {
 
     fn setup_signals(&self) {
         get_widget!(self.builder, gtk::SearchEntry, search_entry);
-        search_entry.connect_search_changed(clone!(@strong self.sender as sender => move |entry| {
-            let request = StationRequest::search_for_name(&entry.get_text(), 250);
+        search_entry.connect_search_changed(glib::clone!(@strong self.sender as sender => move |entry| {
+            let request = StationRequest::search_for_name(&entry.get_text().unwrap().to_string(), 250);
             send!(sender, Action::SearchFor(request));
         }));
     }

@@ -1,174 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.2 -->
 <interface>
-  <requires lib="gtk+" version="3.20"/>
-  <requires lib="libhandy" version="1.0"/>
   <object class="GtkBox" id="featured_carousel">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
     <property name="orientation">vertical</property>
+    <property name="spacing">12</property>
+    <property name="hexpand">True</property>
     <child>
       <object class="GtkOverlay" id="overlay">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <child>
-          <object class="HdyCarousel" id="paginator">
+          <object class="AdwCarousel" id="paginator">
             <property name="height_request">150</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="spacing">12</property>
             <property name="animation_duration">400</property>
             <property name="allow_mouse_drag">True</property>
-            <child>
-              <placeholder/>
-            </child>
             <style>
               <class name="discover-paginator"/>
             </style>
           </object>
-          <packing>
-            <property name="pass_through">True</property>
-            <property name="index">-1</property>
-          </packing>
         </child>
         <child type="overlay">
-          <object class="GtkBox" id="paginator_overlay">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_left">1</property>
-            <property name="margin_right">1</property>
-            <property name="margin_bottom">12</property>
-            <child>
-              <object class="GtkButton" id="previous_button">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="valign">center</property>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="icon_name">go-previous-symbolic</property>
-                  </object>
-                </child>
-                <style>
-                  <class name="osd"/>
-                  <class name="carousel-left-button"/>
-                </style>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="next_button">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="valign">center</property>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="icon_name">go-next-symbolic</property>
-                  </object>
-                </child>
-                <style>
-                  <class name="osd"/>
-                  <class name="carousel-right-button"/>
-                </style>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="pack_type">end</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
+          <object class="GtkButton" id="previous_button">
+            <property name="halign">start</property>
+            <property name="valign">center</property>
+            <property name="icon_name">go-previous-symbolic</property>
+            <style>
+              <class name="osd"/>
+              <class name="carousel-left-button"/>
+            </style>
           </object>
-          <packing>
-            <property name="pass_through">True</property>
-          </packing>
+        </child>
+        <child type="overlay">
+          <object class="GtkButton" id="next_button">
+            <property name="halign">end</property>
+            <property name="valign">center</property>
+            <property name="icon_name">go-next-symbolic</property>
+            <style>
+              <class name="osd"/>
+              <class name="carousel-right-button"/>
+            </style>
+          </object>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
+    </child>
+    <child>
+      <object class="AdwCarouselIndicatorLines">
+        <property name="carousel">paginator</property>
+      </object>
     </child>
   </object>
   <object class="GtkBox" id="page_box">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
     <property name="hexpand">True</property>
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <property name="valign">center</property>
         <property name="vexpand">True</property>
-        <property name="border_width">12</property>
         <property name="orientation">vertical</property>
         <property name="spacing">12</property>
         <child>
           <object class="GtkLabel" id="title_label">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="halign">center</property>
-            <property name="margin_left">10</property>
-            <property name="margin_right">10</property>
+            <property name="margin_start">12</property>
+            <property name="margin_end">12</property>
             <property name="label">title label</property>
             <property name="justify">center</property>
             <property name="wrap">True</property>
-            <attributes>
-              <attribute name="font-desc" value="Cantarell Ultra-Bold 20"/>
-            </attributes>
+            <style>
+              <class name="title-1"/>
+            </style>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton" id="action_button">
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="no_show_all">True</property>
+            <property name="visible">False</property>
             <property name="halign">center</property>
-            <property name="relief">none</property>
+            <property name="has_frame">False</property>
             <child>
               <object class="GtkBox">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
                     <property name="icon_name">go-next-symbolic</property>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="action_label">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
                     <property name="label">action label</property>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
               </object>
             </child>
@@ -176,18 +93,8 @@
               <class name="flat"/>
             </style>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
     </child>
     <style>
       <class name="carousel-banner"/>

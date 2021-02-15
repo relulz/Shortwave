@@ -74,7 +74,6 @@ pub enum PlaybackState {
 
 pub struct Player {
     pub widget: gtk::Box,
-    pub header: gtk::HeaderBar,
     pub toolbar_controller_widget: gtk::Box,
     pub mini_controller_widget: gtk::Box,
     controller: Vec<Box<dyn Controller>>,
@@ -92,14 +91,12 @@ impl Player {
     pub fn new(sender: Sender<Action>) -> Rc<Self> {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/player.ui");
         get_widget!(builder, gtk::Box, player);
-        get_widget!(builder, gtk::HeaderBar, header);
         let mut controller: Vec<Box<dyn Controller>> = Vec::new();
 
         // Sidebar Controller
         let sidebar_controller = SidebarController::new(sender.clone());
         get_widget!(builder, gtk::Box, player_box);
-        player_box.add(&sidebar_controller.widget);
-        player_box.reorder_child(&sidebar_controller.widget, 0);
+        player_box.prepend(&sidebar_controller.widget);
         controller.push(Box::new(sidebar_controller));
 
         // Toolbar Controller
@@ -126,8 +123,7 @@ impl Player {
 
         // Backend
         let backend = Backend::new(sender.clone());
-        player_box.add(&backend.song.listbox.widget);
-        player_box.reorder_child(&backend.song.listbox.widget, 3);
+        player_box.append(&backend.song.listbox.widget);
         let backend = Arc::new(Mutex::new(backend));
 
         // Current station (needed for notifications)
@@ -138,7 +134,6 @@ impl Player {
 
         let player = Rc::new(Self {
             widget: player,
-            header,
             toolbar_controller_widget,
             mini_controller_widget,
             controller,
@@ -249,11 +244,8 @@ impl Player {
         self.gcast_controller.disconnect_from_device();
     }
 
-    pub fn set_expand_widget(&self, expand: bool) {
-        get_widget!(self.builder, gtk::Button, back_button);
-
-        back_button.set_visible(expand);
-        self.widget.set_hexpand(expand);
+    pub fn has_station(&self) -> bool {
+        self.current_station.borrow().is_some()
     }
 
     fn setup_signals(self: Rc<Self>) {
@@ -343,7 +335,7 @@ impl Player {
         });
         */
 
-        let app = self.builder.get_application().unwrap();
+        let app = gio::Application::get_default().unwrap();
         app.send_notification(None, &notification);
     }
 }

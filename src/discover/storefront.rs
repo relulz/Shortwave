@@ -24,7 +24,6 @@ use crate::discover::pages::{Discover, Search};
 #[allow(dead_code)]
 pub struct StoreFront {
     pub widget: gtk::Box,
-    pub header: gtk::HeaderBar,
     pub storefront_stack: gtk::Stack,
 
     discover: Discover,
@@ -36,23 +35,21 @@ pub struct StoreFront {
 impl StoreFront {
     pub fn new(sender: Sender<Action>) -> Self {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/storefront.ui");
-        get_widget!(builder, gtk::HeaderBar, header);
         get_widget!(builder, gtk::Box, storefront);
         get_widget!(builder, gtk::Stack, storefront_stack);
 
         // Discover
         get_widget!(builder, gtk::Box, discover_box);
         let discover = Discover::new(sender.clone());
-        discover_box.add(&discover.widget);
+        discover_box.append(&discover.widget);
 
         // Search
         get_widget!(builder, gtk::Box, search_box);
         let search = Search::new(sender);
-        search_box.add(&search.widget);
+        search_box.append(&search.widget);
 
         let storefront = Self {
             widget: storefront,
-            header,
             storefront_stack,
             discover,
             search,
@@ -66,6 +63,10 @@ impl StoreFront {
     pub fn search_for(&self, request: StationRequest) {
         self.storefront_stack.set_visible_child_name("search");
         self.search.search_for(request);
+    }
+
+    pub fn show_discover(&self) {
+        self.storefront_stack.set_visible_child_name("discover");
     }
 
     fn setup_signals(&self) {}

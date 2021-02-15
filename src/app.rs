@@ -15,10 +15,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use gio::subclass::prelude::ApplicationImpl;
-use gio::{self, prelude::*, ApplicationFlags, SettingsExt};
+use gio::{self, prelude::*, SettingsExt};
 use glib::subclass;
 use glib::subclass::prelude::*;
-use glib::translate::*;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
 use gtk::subclass::application::GtkApplicationImpl;
@@ -42,6 +41,7 @@ pub enum Action {
     ViewGoBack,
     ViewShowDiscover,
     ViewShowLibrary,
+    ViewShowSearch,
     ViewShowPlayer,
     ViewEnableMiniPlayer,
     ViewDisableMiniPlayer,
@@ -77,9 +77,11 @@ impl ObjectSubclass for SwApplicationPrivate {
     const NAME: &'static str = "SwApplication";
     type ParentType = gtk::Application;
     type Instance = subclass::simple::InstanceStruct<Self>;
+    type Interfaces = ();
     type Class = subclass::simple::ClassStruct<Self>;
+    type Type = super::SwApplication;
 
-    glib_object_subclass!();
+    glib::object_subclass!();
 
     fn new() -> Self {
         let (sender, r) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
@@ -105,16 +107,14 @@ impl ObjectSubclass for SwApplicationPrivate {
 }
 
 // Implement GLib.OBject for SwApplication
-impl ObjectImpl for SwApplicationPrivate {
-    glib_object_impl!();
-}
+impl ObjectImpl for SwApplicationPrivate {}
 
 // Implement Gtk.Application for SwApplication
 impl GtkApplicationImpl for SwApplicationPrivate {}
 
 // Implement Gio.Application for SwApplication
 impl ApplicationImpl for SwApplicationPrivate {
-    fn activate(&self, _app: &gio::Application) {
+    fn activate(&self, _app: &Self::Type) {
         debug!("gio::Application -> activate()");
 
         // If the window already exists,
@@ -151,16 +151,9 @@ impl ApplicationImpl for SwApplicationPrivate {
 }
 
 // Wrap SwApplicationPrivate into a usable gtk-rs object
-glib_wrapper! {
-    pub struct SwApplication(
-        Object<subclass::simple::InstanceStruct<SwApplicationPrivate>,
-        subclass::simple::ClassStruct<SwApplicationPrivate>,
-        SwApplicationClass>)
+glib::wrapper! {
+    pub struct SwApplication(ObjectSubclass<SwApplicationPrivate>)
         @extends gio::Application, gtk::Application;
-
-    match fn {
-        get_type => || SwApplicationPrivate::get_type().to_glib(),
-    }
 }
 
 // SwApplication implementation itself
@@ -171,10 +164,7 @@ impl SwApplication {
         info!("Isahc version: {}", isahc::version());
 
         // Create new GObject and downcast it into SwApplication
-        let app = glib::Object::new(SwApplication::static_type(), &[("application-id", &Some(config::APP_ID)), ("flags", &ApplicationFlags::empty())])
-            .unwrap()
-            .downcast::<SwApplication>()
-            .unwrap();
+        let app = glib::Object::new::<SwApplication>(&[("application-id", &Some(config::APP_ID)), ("flags", &gio::ApplicationFlags::empty())]).unwrap();
 
         // Start running gtk::Application
         let args: Vec<String> = env::args().collect();
@@ -188,7 +178,7 @@ impl SwApplication {
         // Load custom styling
         let p = gtk::CssProvider::new();
         gtk::CssProvider::load_from_resource(&p, "/de/haeckerfelix/Shortwave/gtk/style.css");
-        gtk::StyleContext::add_provider_for_screen(&gdk::Screen::get_default().unwrap(), &p, 500);
+        gtk::StyleContext::add_provider_for_display(&gdk::Display::get_default().unwrap(), &p, 500);
 
         // Set initial view
         window.set_view(View::Library);
@@ -207,8 +197,12 @@ impl SwApplication {
 
         match action {
             Action::ViewGoBack => self_.window.borrow().as_ref().unwrap().go_back(),
-            Action::ViewShowDiscover => self_.window.borrow().as_ref().unwrap().set_view(View::Storefront),
+            Action::ViewShowDiscover => {
+                self_.window.borrow().as_ref().unwrap().set_view(View::Storefront);
+                self_.storefront.show_discover();
+            }
             Action::ViewShowLibrary => self_.window.borrow().as_ref().unwrap().set_view(View::Library),
+            Action::ViewShowSearch => self_.window.borrow().as_ref().unwrap().set_view(View::Search),
             Action::ViewShowPlayer => self_.window.borrow().as_ref().unwrap().set_view(View::Player),
             Action::ViewRaise => self_.window.borrow().as_ref().unwrap().present_with_time((glib::get_monotonic_time() / 1000) as u32),
             Action::ViewEnableMiniPlayer => self_.window.borrow().as_ref().unwrap().enable_mini_player(true),

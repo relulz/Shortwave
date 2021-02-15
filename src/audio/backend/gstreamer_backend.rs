@@ -16,7 +16,7 @@
 
 use glib::Sender;
 use gstreamer::prelude::*;
-use gstreamer::{Bin, Element, Event, MessageView, PadProbeReturn, PadProbeType, Pipeline, State};
+use gstreamer::{Bin, Element, MessageView, PadProbeReturn, PadProbeType, Pipeline, State};
 use gstreamer_audio::{StreamVolume, StreamVolumeFormat};
 
 use std::path::PathBuf;

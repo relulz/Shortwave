@@ -67,7 +67,7 @@ impl SidebarController {
 
         get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = Rc::new(StationFavicon::new(FaviconSize::Big));
-        favicon_box.add(&station_favicon.widget);
+        favicon_box.append(&station_favicon.widget);
 
         // volume_button | We need the volume_signal_id later to block the signal
         let volume_signal_id = volume_button.connect_value_changed(clone!(@strong sender => move |_, value| {
@@ -76,9 +76,9 @@ impl SidebarController {
 
         // menu button
         let menu_builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/menu/player_menu.ui");
-        get_widget!(menu_builder, gtk::PopoverMenu, popover_menu);
+        get_widget!(menu_builder, gio::MenuModel, player_menu);
         get_widget!(builder, gtk::MenuButton, playermenu_button);
-        playermenu_button.set_popover(Some(&popover_menu));
+        playermenu_button.set_menu_model(Some(&player_menu));
 
         // action group
         let action_group = gio::SimpleActionGroup::new();

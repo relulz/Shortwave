@@ -17,15 +17,14 @@
 use gio::prelude::*;
 use glib::subclass;
 use glib::subclass::prelude::*;
-use glib::translate::*;
 use glib::Sender;
 use gtk::prelude::*;
-use gtk::subclass::prelude::{BinImpl, ContainerImpl, WidgetImpl, WindowImpl};
-use libhandy::prelude::*;
+use gtk::subclass::prelude::*;
 
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use crate::api::StationRequest;
 use crate::app::{Action, SwApplication, SwApplicationPrivate};
 use crate::config;
 use crate::settings::{settings_manager, Key, SettingsWindow};
@@ -36,52 +35,37 @@ pub enum View {
     Storefront,
     Library,
     Player,
+    Search,
 }
 
 pub struct SwApplicationWindowPrivate {
-    window_builder: gtk::Builder,
-    //sidebar_flap: libhandy::Flap,
-    sidebar_flap: gtk::Box,
+    builder: gtk::Builder,
     current_notification: RefCell<Option<Rc<Notification>>>,
 }
 
 impl ObjectSubclass for SwApplicationWindowPrivate {
     const NAME: &'static str = "SwApplicationWindow";
-    type ParentType = libhandy::ApplicationWindow;
+    type ParentType = adw::ApplicationWindow;
     type Instance = subclass::simple::InstanceStruct<Self>;
+    type Interfaces = ();
     type Class = subclass::simple::ClassStruct<Self>;
+    type Type = super::SwApplicationWindow;
 
-    glib_object_subclass!();
+    glib::object_subclass!();
 
     fn new() -> Self {
-        let window_builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/window.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/window.ui");
         let current_notification = RefCell::new(None);
 
-        // TODO: Re-add HdyFlap as soon it gets merged in libhandy
-        //let sidebar_flap = libhandy::Flap::new();
-        let sidebar_flap = gtk::Box::new(gtk::Orientation::Horizontal, 0);
-
-        Self {
-            window_builder,
-            sidebar_flap,
-            current_notification,
-        }
+        Self { builder, current_notification }
     }
 }
 
 // Implement GLib.OBject for SwApplicationWindow
-impl ObjectImpl for SwApplicationWindowPrivate {
-    glib_object_impl!();
-}
+impl ObjectImpl for SwApplicationWindowPrivate {}
 
 // Implement Gtk.Widget for SwApplicationWindow
 impl WidgetImpl for SwApplicationWindowPrivate {}
-
-// Implement Gtk.Container for SwApplicationWindow
-impl ContainerImpl for SwApplicationWindowPrivate {}
-
-// Implement Gtk.Bin for SwApplicationWindow
-impl BinImpl for SwApplicationWindowPrivate {}
 
 // Implement Gtk.Window for SwApplicationWindow
 impl WindowImpl for SwApplicationWindowPrivate {}
@@ -89,27 +73,21 @@ impl WindowImpl for SwApplicationWindowPrivate {}
 // Implement Gtk.ApplicationWindow for SwApplicationWindow
 impl gtk::subclass::prelude::ApplicationWindowImpl for SwApplicationWindowPrivate {}
 
-// Implement Hdy.ApplicationWindow for SwApplicationWindow
-impl libhandy::subclass::prelude::ApplicationWindowImpl for SwApplicationWindowPrivate {}
+// Implement Adw.ApplicationWindow for SwApplicationWindow
+impl adw::subclass::prelude::AdwApplicationWindowImpl for SwApplicationWindowPrivate {}
 
 // Wrap SwApplicationWindowPrivate into a usable gtk-rs object
-glib_wrapper! {
+glib::wrapper! {
     pub struct SwApplicationWindow(
-        Object<subclass::simple::InstanceStruct<SwApplicationWindowPrivate>,
-        subclass::simple::ClassStruct<SwApplicationWindowPrivate>,
-        SwApplicationWindowClass>)
-        @extends gtk::Widget, gtk::Container, gtk::Bin, gtk::Window, gtk::ApplicationWindow, libhandy::ApplicationWindow;
-
-    match fn {
-        get_type => || SwApplicationWindowPrivate::get_type().to_glib(),
-    }
+        ObjectSubclass<SwApplicationWindowPrivate>)
+        @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::ApplicationWindow;
 }
 
 // SwApplicationWindow implementation itself
 impl SwApplicationWindow {
     pub fn new(sender: Sender<Action>, app: SwApplication) -> Self {
         // Create new GObject and downcast it into SwApplicationWindow
-        let window = glib::Object::new(SwApplicationWindow::static_type(), &[]).unwrap().downcast::<SwApplicationWindow>().unwrap();
+        let window = glib::Object::new::<SwApplicationWindow>(&[]).unwrap();
 
         app.add_window(&window.clone());
         window.setup_widgets();
@@ -124,37 +102,29 @@ impl SwApplicationWindow {
         let app_private = SwApplicationPrivate::from_instance(&app);
 
         // Add headerbar/content to the window itself
-        get_widget!(self_.window_builder, gtk::Box, window);
-        self.add(&window);
+        get_widget!(self_.builder, gtk::Box, window);
+        adw::ApplicationWindowExt::set_child(self.upcast_ref::<adw::ApplicationWindow>(), Some(&window));
+
+        // Set hamburger menu
+        let menu_builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/menu/app_menu.ui");
+        get_widget!(menu_builder, gio::MenuModel, app_menu);
+        get_widget!(self_.builder, gtk::MenuButton, appmenu_button);
+        appmenu_button.set_menu_model(Some(&app_menu));
 
         // Wire everything up
-        get_widget!(self_.window_builder, gtk::Box, mini_controller_box);
-        get_widget!(self_.window_builder, gtk::Box, library_page);
-        get_widget!(self_.window_builder, gtk::Box, storefront_page);
-        get_widget!(self_.window_builder, gtk::Box, toolbar_controller_box);
-        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
-        get_widget!(self_.window_builder, gtk::Overlay, overlay);
+        get_widget!(self_.builder, gtk::Box, mini_controller_box);
+        get_widget!(self_.builder, gtk::Box, library_page);
+        get_widget!(self_.builder, gtk::Box, storefront_page);
+        get_widget!(self_.builder, gtk::Box, toolbar_controller_box);
+        get_widget!(self_.builder, adw::Leaflet, window_leaflet);
+        get_widget!(self_.builder, adw::Flap, window_flap);
+        get_widget!(self_.builder, gtk::Overlay, overlay);
 
-        self_.sidebar_flap.add(&window_deck);
-        //self_.sidebar_flap.set_reveal_flap(false);
-        //self_.sidebar_flap.set_locked(true);
-        //self_.sidebar_flap.set_flap_position(gtk::PackType::End);
-        //self_.sidebar_flap.set_flap(&app_private.player.widget);
-        self_.sidebar_flap.add(&app_private.player.widget);
-
-        overlay.add(&self_.sidebar_flap);
-        overlay.show_all();
-
-        mini_controller_box.add(&app_private.player.mini_controller_widget);
-        library_page.add(&app_private.library.widget);
-        storefront_page.add(&app_private.storefront.widget);
-        toolbar_controller_box.add(&app_private.player.toolbar_controller_widget);
-
-        // Make sure that the headerbars are correctly synced
-        let headergroup = libhandy::HeaderGroup::new();
-        headergroup.add_gtk_header_bar(&app_private.library.header);
-        headergroup.add_gtk_header_bar(&app_private.storefront.header);
-        headergroup.add_gtk_header_bar(&app_private.player.header);
+        mini_controller_box.append(&app_private.player.mini_controller_widget);
+        library_page.append(&app_private.library.widget);
+        storefront_page.append(&app_private.storefront.widget);
+        toolbar_controller_box.append(&app_private.player.toolbar_controller_widget);
+        window_flap.set_flap(Some(&app_private.player.widget));
 
         // Add devel style class for development or beta builds
         if config::PROFILE == "development" || config::PROFILE == "beta" {
@@ -165,7 +135,7 @@ impl SwApplicationWindow {
         // Restore window geometry
         let width = settings_manager::get_integer(Key::WindowWidth);
         let height = settings_manager::get_integer(Key::WindowHeight);
-        self.resize(width, height);
+        self.set_default_size(width, height);
     }
 
     fn setup_signals(&self, sender: Sender<Action>) {
@@ -174,35 +144,34 @@ impl SwApplicationWindow {
         // dark mode
         let s = settings_manager::get_settings();
         let gtk_s = gtk::Settings::get_default().unwrap();
-        s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme", gio::SettingsBindFlags::GET);
+        s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme").flags(gio::SettingsBindFlags::GET).build();
 
         // flap
-        //self_.sidebar_flap.connect_property_folded_notify(clone!(@strong self as this => move |_| {
-        //    this.sync_ui_state();
-        //}));
+        get_widget!(self_.builder, adw::Flap, window_flap);
+        window_flap.connect_property_folded_notify(clone!(@strong self as this => move |_| {
+           this.sync_ui_state();
+        }));
 
         // window gets closed
-        self.connect_delete_event(move |window, _| {
+        self.connect_close_request(move |window| {
             debug!("Saving window geometry.");
-            let width = window.get_size().0;
-            let height = window.get_size().1;
+            let width = window.get_default_size().0;
+            let height = window.get_default_size().1;
 
             settings_manager::set_integer(Key::WindowWidth, width);
             settings_manager::set_integer(Key::WindowHeight, height);
-            Inhibit(false)
+            glib::signal::Inhibit(false)
         });
 
         // back button (mouse)
-        self.connect_button_press_event(clone!(@strong sender => move |_, event|{
-            if event.get_button() == 8 {
-                send!(sender, Action::ViewShowLibrary);
-            }
-            Inhibit(false)
+        get_widget!(self_.builder, gtk::GestureClick, back_button_gesture);
+        back_button_gesture.connect_pressed(clone!(@strong sender => move |_, _ ,_ , _| {
+            send!(sender, Action::ViewShowLibrary);
         }));
     }
 
     fn setup_gactions(&self, sender: Sender<Action>) {
-        // We need to upcast from SwApplicationWindow to libhandy::ApplicationWindow, because SwApplicationWindow
+        // We need to upcast from SwApplicationWindow to adw::ApplicationWindow, because SwApplicationWindow
         // currently doesn't implement GLib.ActionMap, since it's not supported in gtk-rs for subclassing (13-01-2020)
         let window = self.clone().upcast::<gtk::ApplicationWindow>();
         let app = window.get_application().unwrap();
@@ -264,7 +233,18 @@ impl SwApplicationWindow {
                 send!(sender, Action::ViewShowDiscover);
             })
         );
-        app.set_accels_for_action("win.show-discover", &["<primary>f"]);
+
+        // win.show-search
+        action!(
+            window,
+            "show-search",
+            clone!(@strong sender => move |_, _| {
+                let r = StationRequest::search_for_name("", 0);
+                send!(sender, Action::SearchFor(r));
+                send!(sender, Action::ViewShowSearch);
+            })
+        );
+        app.set_accels_for_action("win.show-search", &["<primary>f"]);
 
         // win.show-library
         action!(
@@ -313,18 +293,19 @@ impl SwApplicationWindow {
 
     pub fn show_player_widget(&self) {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
-        get_widget!(self_.window_builder, gtk::Revealer, toolbar_controller_revealer);
+        get_widget!(self_.builder, gtk::Revealer, toolbar_controller_revealer);
+        get_widget!(self_.builder, adw::Flap, window_flap);
         toolbar_controller_revealer.set_visible(true);
 
         // Unlock player sidebar flap
-        //self_.sidebar_flap.set_locked(false);
+        window_flap.set_locked(false);
 
         self.sync_ui_state();
     }
 
     pub fn show_notification(&self, notification: Rc<Notification>) {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
-        get_widget!(self_.window_builder, gtk::Overlay, overlay);
+        get_widget!(self_.builder, gtk::Overlay, overlay);
 
         // Remove previous notification
         if let Some(notification) = self_.current_notification.borrow_mut().take() {
@@ -343,25 +324,26 @@ impl SwApplicationWindow {
     pub fn enable_mini_player(&self, enable: bool) {
         if enable {
             self.unmaximize();
-            self.resize(425, 125);
+            self.set_default_size(450, 105);
         } else {
-            self.resize(700, 500);
+            self.set_default_size(700, 500);
         }
     }
 
     pub fn go_back(&self) {
         debug!("Go back to previous view");
         let self_ = SwApplicationWindowPrivate::from_instance(self);
+        get_widget!(self_.builder, adw::Flap, window_flap);
 
         // Check if current view = player sidebar
-        //if self_.sidebar_flap.get_folded() && self_.sidebar_flap.get_reveal_flap() {
-        //    self_.sidebar_flap.set_reveal_flap(false);
-        //} else {
-        //    get_widget!(self_.window_builder, libhandy::Deck, window_deck);
-        //    window_deck.navigate(libhandy::NavigationDirection::Back);
-        //}
-        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
-        window_deck.navigate(libhandy::NavigationDirection::Back);
+        if window_flap.get_folded() && window_flap.get_reveal_flap() {
+            window_flap.set_reveal_flap(false);
+        } else {
+            get_widget!(self_.builder, adw::Leaflet, window_leaflet);
+            window_leaflet.navigate(adw::NavigationDirection::Back);
+        }
+        get_widget!(self_.builder, adw::Leaflet, window_leaflet);
+        window_leaflet.navigate(adw::NavigationDirection::Back);
 
         // Make sure that the rest of the UI is correctly synced
         self.sync_ui_state();
@@ -369,32 +351,37 @@ impl SwApplicationWindow {
 
     fn sync_ui_state(&self) {
         let self_ = SwApplicationWindowPrivate::from_instance(self);
-        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
-        get_widget!(self_.window_builder, gtk::Revealer, toolbar_controller_revealer);
+        let app: SwApplication = self.get_application().unwrap().downcast().unwrap();
+        let app_priv = SwApplicationPrivate::from_instance(&app);
 
-        let deck_child_name = window_deck.get_visible_child_name().unwrap();
+        get_widget!(self_.builder, adw::Leaflet, window_leaflet);
+        get_widget!(self_.builder, gtk::Revealer, toolbar_controller_revealer);
+        get_widget!(self_.builder, adw::Flap, window_flap);
+
+        let leaflet_child_name = window_leaflet.get_visible_child_name().unwrap();
 
         // Check in which state the sidebar flap is,
         // and set the corresponding view (Library|Storefront|Player)
-        //let current_view = if self_.sidebar_flap.get_folded() && self_.sidebar_flap.get_reveal_flap() {
-        //    View::Player
-        //} else {
-        //    if deck_child_name == "storefront" {
-        //        View::Storefront
-        //    } else {
-        //        View::Library
-        //    }
-        //};
-        let current_view = if deck_child_name == "storefront" { View::Storefront } else { View::Library };
+        let current_view = if window_flap.get_folded() && window_flap.get_reveal_flap() {
+            View::Player
+        } else {
+            if leaflet_child_name == "storefront" {
+                View::Storefront
+            } else {
+                View::Library
+            }
+        };
 
-        // Show bottom player controller toolbar when sidebar flap is folded and player widget is not revealed
-        //let show_toolbar_controller = self_.sidebar_flap.get_folded() && !self_.sidebar_flap.get_reveal_flap();
-        //toolbar_controller_revealer.set_reveal_child(show_toolbar_controller);
+        // Show bottom player controller toolbar when
+        // sidebar flap is folded, player widget is not revealed,
+        // and there is a selected station.
+        let show_toolbar_controller = window_flap.get_folded() && !window_flap.get_reveal_flap() && app_priv.player.has_station();
+        toolbar_controller_revealer.set_reveal_child(show_toolbar_controller);
 
         // Ensure that player sidebar gets revealed
-        //if !show_toolbar_controller && !self_.sidebar_flap.get_locked() {
-        //    self_.sidebar_flap.set_reveal_flap(true);
-        //}
+        if !show_toolbar_controller && !window_flap.get_locked() {
+            window_flap.set_reveal_flap(true);
+        }
 
         debug!("Setting current view as {:?}", &current_view);
         self.update_view(current_view);
@@ -404,29 +391,37 @@ impl SwApplicationWindow {
         debug!("Set view to {:?}", &view);
 
         let self_ = SwApplicationWindowPrivate::from_instance(self);
-        get_widget!(self_.window_builder, libhandy::Deck, window_deck);
-
-        let app = self.get_application().unwrap();
-        let app_priv = SwApplicationPrivate::from_instance(&app);
+        get_widget!(self_.builder, adw::Leaflet, window_leaflet);
+        get_widget!(self_.builder, adw::Flap, window_flap);
+        get_widget!(self_.builder, gtk::Button, back_button);
+        get_widget!(self_.builder, gtk::Button, add_button);
 
         // Don't reveal sidebar flap by default
-        //if !self_.sidebar_flap.get_locked() && self_.sidebar_flap.get_folded() {
-        //    self_.sidebar_flap.set_reveal_flap(false);
-        //}
+        if !window_flap.get_locked() && window_flap.get_folded() {
+            window_flap.set_reveal_flap(false);
+        }
 
         // Show requested view / page
         match view {
             View::Storefront => {
-                window_deck.set_visible_child_name("storefront");
-                app_priv.player.set_expand_widget(false);
+                window_leaflet.set_visible_child_name("storefront");
+                back_button.set_visible(true);
+                add_button.set_visible(false);
             }
             View::Library => {
-                window_deck.set_visible_child_name("library");
-                app_priv.player.set_expand_widget(false);
+                window_leaflet.set_visible_child_name("library");
+                back_button.set_visible(false);
+                add_button.set_visible(true);
             }
             View::Player => {
-                app_priv.player.set_expand_widget(true);
-                //self_.sidebar_flap.set_reveal_flap(true);
+                window_flap.set_reveal_flap(true);
+                back_button.set_visible(true);
+                add_button.set_visible(false);
+            }
+            View::Search => {
+                window_leaflet.set_visible_child_name("storefront");
+                back_button.set_visible(true);
+                add_button.set_visible(false);
             }
         }
     }

@@ -21,10 +21,9 @@ use std::net::IpAddr;
 use std::rc::Rc;
 use std::str::FromStr;
 
-use crate::app::Action;
+use crate::app::{Action, SwApplication};
 use crate::audio::GCastDiscoverer;
 use crate::audio::GCastDiscovererMessage;
-use crate::utils;
 
 pub struct StreamingDialog {
     pub widget: gtk::Dialog,
@@ -61,12 +60,14 @@ impl StreamingDialog {
 
                 match message {
                     GCastDiscovererMessage::DiscoverStarted => {
-                        utils::remove_all_items(&devices_listbox);
+                        while let Some(child) = devices_listbox.get_first_child() {
+                            devices_listbox.remove(&child);
+                        }
                         stream_stack.set_visible_child_name("loading");
                         loading_revealer.set_reveal_child(true);
                     }
                     GCastDiscovererMessage::DiscoverEnded => {
-                        if devices_listbox.get_children().is_empty() {
+                        if devices_listbox.get_last_child().is_none() {
                             stream_stack.set_visible_child_name("no-devices");
                         } else {
                             stream_stack.set_visible_child_name("results");
@@ -84,9 +85,8 @@ impl StreamingDialog {
 
                         name_label.set_text(&device.name);
                         ip_label.set_text(&device.ip.to_string());
-                        device_row.show_all();
 
-                        devices_listbox.add(&device_row);
+                        devices_listbox.append(&device_row);
                     }
                 }
 
@@ -99,8 +99,7 @@ impl StreamingDialog {
     }
 
     pub fn show(&self) {
-        let application = self.builder.get_application().unwrap();
-        let window = application.get_active_window().unwrap();
+        let window = gio::Application::get_default().unwrap().downcast_ref::<SwApplication>().unwrap().get_active_window().unwrap();
         self.widget.set_transient_for(Some(&window));
 
         self.widget.set_visible(true);
@@ -131,9 +130,9 @@ impl StreamingDialog {
 
             if let Some(active_row) = devices_listbox.get_selected_row() {
                 // Very hackish way to get the selected ip address
-                let box1: gtk::Box = active_row.get_children()[0].clone().downcast().unwrap();
-                let box2: gtk::Box = box1.get_children()[0].clone().downcast().unwrap();
-                let ip_label: gtk::Label = box2.get_children()[1].clone().downcast().unwrap();
+                let box1: gtk::Box = active_row.get_first_child().unwrap().clone().downcast().unwrap();
+                let box2: gtk::Box = box1.get_first_child().unwrap().clone().downcast().unwrap();
+                let ip_label: gtk::Label = box2.get_last_child().unwrap().clone().downcast().unwrap();
                 let ip_addr: IpAddr = IpAddr::from_str(ip_label.get_text().to_string().as_str()).unwrap();
 
                 // Get GCastDevice
@@ -145,8 +144,7 @@ impl StreamingDialog {
         }));
 
         // hide on delete
-        self.widget.connect_delete_event(|widget, _| {
-            widget.hide_on_delete();
+        self.widget.connect_close_request(|widget| {
             widget.hide();
             glib::signal::Inhibit(true)
         });

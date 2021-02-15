@@ -14,9 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use adw::Carousel;
 use gtk::prelude::*;
-use libhandy::prelude::*;
-use libhandy::Carousel;
 
 use std::cell::RefCell;
 use std::convert::TryInto;
@@ -70,17 +69,15 @@ impl FeaturedCarousel {
 
         // CSS styling
         let css_provider = gtk::CssProvider::new();
-        css_provider
-            .load_from_data(
-                format!(
-                    ".banner{{
+        css_provider.load_from_data(
+            format!(
+                ".banner{{
                         background-color: rgb({});
                     }}",
-                    rgb
-                )
-                .as_bytes(),
+                rgb
             )
-            .unwrap();
+            .as_bytes(),
+        );
 
         let style_ctx = page_box.get_style_context();
         style_ctx.add_class("banner");

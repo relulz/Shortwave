@@ -1,120 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.36.0 -->
 <interface>
-  <requires lib="gtk+" version="3.22"/>
-  <requires lib="libhandy" version="3.22"/>
   <object class="GtkBox" id="window">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
     <property name="orientation">vertical</property>
     <child>
-      <object class="HdySqueezer" id="window_squeezer">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
+      <object class="GtkGestureClick" id="back_button_gesture">
+        <property name="button">8</property>
+      </object>
+    </child>
+    <child>
+      <object class="AdwSqueezer" id="window_squeezer">
         <property name="orientation">vertical</property>
         <property name="transition_type">crossfade</property>
         <property name="interpolate_size">True</property>
         <child>
-          <object class="GtkBox" id="window_box">
+          <object class="GtkBox">
             <property name="width_request">350</property>
             <property name="height_request">175</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkRevealer" id="toolbar_controller_revealer">
-                <property name="can_focus">False</property>
-                <property name="no_show_all">True</property>
-                <property name="transition_type">slide-up</property>
+              <object class="AdwHeaderBar">
                 <child>
-                  <object class="GtkBox" id="toolbar_controller_box">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="orientation">vertical</property>
+                  <object class="GtkButton" id="add_button">
+                    <property name="action_name">win.show-discover</property>
+                    <property name="icon_name">list-add-symbolic</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="back_button">
+                    <property name="action_name">win.go-back</property>
+                    <property name="icon_name">go-previous-symbolic</property>
+                  </object>
+                </child>
+                <child type="end">
+                  <object class="GtkMenuButton" id="appmenu_button">
+                    <property name="icon_name">open-menu-symbolic</property>
+                  </object>
+                </child>
+                <child type="end">
+                  <object class="GtkButton" id="search_button">
+                    <property name="action_name">win.show-search</property>
+                    <property name="icon_name">system-search-symbolic</property>
+                  </object>
+                </child>
+                <style>
+                  <class name="titlebar"/>
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkOverlay" id="overlay">
+                <child>
+                  <object class="AdwFlap" id="window_flap">
+                    <property name="reveal-flap">False</property>
+                    <property name="locked">True</property>
+                    <property name="flap-position">end</property>
+                    <property name="vexpand">True</property>
+                    <property name="separator">
+                      <object class="GtkSeparator"/>
+                    </property>
                     <child>
-                      <placeholder/>
+                      <object class="AdwLeaflet" id="window_leaflet">
+                        <property name="can_unfold">False</property>
+                        <property name="hexpand">True</property>
+                        <property name="can_swipe_back">True</property>
+                        <child>
+                          <object class="AdwLeafletPage">
+                            <property name="name">library</property>
+                            <property name="child">
+                              <object class="GtkBox" id="library_page"/>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwLeafletPage">
+                            <property name="name">storefront</property>
+                            <property name="child">
+                              <object class="GtkBox" id="storefront_page"/>
+                            </property>
+                          </object>
+                        </child>
+                      </object>
                     </child>
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="pack_type">end</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
-              <object class="GtkOverlay" id="overlay">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
+              <object class="GtkRevealer" id="toolbar_controller_revealer">
+                <property name="transition_type">slide-up</property>
                 <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="HdyWindowHandle" id="mini_controller_handle">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkBox" id="mini_controller_box">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <child>
-                  <placeholder/>
+                  <object class="GtkBox" id="toolbar_controller_box"/>
                 </child>
               </object>
             </child>
           </object>
         </child>
-      </object>
-      <packing>
-        <property name="expand">True</property>
-        <property name="fill">True</property>
-        <property name="position">2</property>
-      </packing>
-    </child>
-  </object>
-  <object class="HdyDeck" id="window_deck">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="hexpand">True</property>
-    <property name="visible_child_name">library</property>
-    <property name="can_swipe_back">True</property>
-    <child>
-      <object class="GtkBox" id="library_page">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
         <child>
-          <placeholder/>
+          <object class="GtkWindowHandle" id="mini_controller_handle">
+            <child>
+              <object class="GtkBox" id="mini_controller_box"/>
+            </child>
+          </object>
         </child>
       </object>
-      <packing>
-        <property name="name">library</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkBox" id="storefront_page">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <child>
-          <placeholder/>
-        </child>
-      </object>
-      <packing>
-        <property name="name">storefront</property>
-      </packing>
     </child>
   </object>
 </interface>

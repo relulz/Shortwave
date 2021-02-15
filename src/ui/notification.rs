@@ -20,7 +20,6 @@ use std::rc::Rc;
 #[derive(Debug, Clone)]
 pub struct Notification {
     revealer: gtk::Revealer,
-    spinner: gtk::Box,
     text_label: gtk::Label,
     error_label: gtk::Label,
     close_button: gtk::Button,
@@ -31,7 +30,6 @@ impl Default for Notification {
     fn default() -> Self {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/notification.ui");
         get_widget!(builder, gtk::Revealer, revealer);
-        get_widget!(builder, gtk::Box, spinner);
         get_widget!(builder, gtk::Label, text_label);
         get_widget!(builder, gtk::Label, error_label);
         get_widget!(builder, gtk::Button, close_button);
@@ -45,7 +43,6 @@ impl Default for Notification {
 
         Self {
             revealer,
-            spinner,
             text_label,
             error_label,
             close_button,
@@ -61,16 +58,6 @@ impl Notification {
 
         notification.text_label.set_text(text);
         notification.close_button.set_visible(true);
-
-        Rc::new(notification)
-    }
-
-    // Returns new spinner notification
-    pub fn new_spinner(text: &str) -> Rc<Self> {
-        let notification = Self::default();
-
-        notification.text_label.set_text(text);
-        notification.spinner.set_visible(true);
 
         Rc::new(notification)
     }
@@ -97,8 +84,8 @@ impl Notification {
         Self::destroy(self.revealer.clone());
     }
 
-    fn destroy(r: gtk::Revealer) {
-        gtk::timeout_add(1000, move || {
+    fn destroy(_r: gtk::Revealer) {
+        glib::source::timeout_add_seconds(1, move || {
             //TODO: r.destroy();
             glib::Continue(false)
         });

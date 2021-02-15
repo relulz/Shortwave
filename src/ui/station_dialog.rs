@@ -19,7 +19,7 @@ use glib::Sender;
 use gtk::prelude::*;
 
 use crate::api::{FaviconDownloader, Station};
-use crate::app::Action;
+use crate::app::{Action, SwApplication};
 use crate::database::Library;
 use crate::ui::{FaviconSize, StationFavicon};
 use crate::utils;
@@ -62,7 +62,7 @@ impl StationDialog {
         // Download & set station favicon
         get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = StationFavicon::new(FaviconSize::Big);
-        favicon_box.add(&station_favicon.widget);
+        favicon_box.append(&station_favicon.widget);
         if let Some(favicon) = station.favicon.as_ref() {
             let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Big as i32).map(move |pixbuf| {
                 if let Ok(pixbuf) = pixbuf {
@@ -134,8 +134,7 @@ impl StationDialog {
     }
 
     pub fn show(&self) {
-        let application = self.builder.get_application().unwrap();
-        let window = application.get_active_window().unwrap();
+        let window = gio::Application::get_default().unwrap().downcast_ref::<SwApplication>().unwrap().get_active_window().unwrap();
         self.widget.set_transient_for(Some(&window));
         self.widget.set_visible(true);
     }
