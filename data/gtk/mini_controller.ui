@@ -83,6 +83,8 @@
                 <property name="spacing">6</property>
                 <property name="vexpand">True</property>
                 <property name="valign">center</property>
+                <property name="margin-start">6</property>
+                <property name="margin-end">6</property>
                 <child>
                   <object class="GtkLabel" id="title_label">
                     <property name="halign">center</property>
@@ -151,3 +153,4 @@
     </style>
   </object>
 </interface>
+

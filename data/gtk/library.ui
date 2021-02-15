@@ -20,6 +20,7 @@
                   <object class="GtkBox">
                     <property name="halign">center</property>
                     <property name="valign">center</property>
+                    <property name="vexpand">True</property>
                     <property name="orientation">vertical</property>
                     <property name="spacing">12</property>
                     <child>
@@ -28,11 +29,15 @@
                         <property name="height_request">40</property>
                         <property name="halign">center</property>
                         <property name="valign">center</property>
+                        <property name="spinning">True</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkLabel">
                         <property name="label" translatable="yes">Receiving station data…</property>
+                        <style>
+                          <class name="title-4"/>
+                        </style>
                       </object>
                     </child>
                     <style>

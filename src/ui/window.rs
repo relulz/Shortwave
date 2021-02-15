@@ -324,7 +324,7 @@ impl SwApplicationWindow {
     pub fn enable_mini_player(&self, enable: bool) {
         if enable {
             self.unmaximize();
-            self.set_default_size(425, 125);
+            self.set_default_size(450, 105);
         } else {
             self.set_default_size(700, 500);
         }
