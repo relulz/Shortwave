@@ -14,6 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+// TODO: Update this to the latest version
+// https://crates.io/crates/mdns
+
 use glib::{Receiver, Sender};
 use mdns::{Record, RecordKind};
 

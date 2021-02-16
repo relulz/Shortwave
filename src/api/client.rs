@@ -51,7 +51,7 @@ impl Client {
     pub async fn send_station_request(self, request: StationRequest) -> Result<Vec<Station>, Error> {
         let url = self.build_url(STATION_SEARCH, Some(&request.url_encode()))?;
         debug!("Station request URL: {}", url);
-        let stations: Vec<Station> = HTTP_CLIENT.get_async(url.as_ref()).await?.json()?;
+        let stations: Vec<Station> = HTTP_CLIENT.get_async(url.as_ref()).await?.json().await?;
         debug!("Found {} station(s)!", stations.len());
 
         Ok(stations)
@@ -61,7 +61,7 @@ impl Client {
         let url = self.build_url(&format!("{}{}", STATION_BY_UUID, identifier.stationuuid), None)?;
         debug!("Request station by UUID URL: {}", url);
 
-        let mut data: Vec<Station> = HTTP_CLIENT.get_async(url.as_ref()).await?.json()?;
+        let mut data: Vec<Station> = HTTP_CLIENT.get_async(url.as_ref()).await?.json().await?;
 
         match data.pop() {
             Some(station) => Ok(station),
