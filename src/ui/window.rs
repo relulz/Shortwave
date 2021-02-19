@@ -25,7 +25,6 @@ use gtk::{gio, glib};
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::api::StationRequest;
 use crate::app::{Action, SwApplication, SwApplicationPrivate};
 use crate::config;
 use crate::settings::{settings_manager, Key, SettingsWindow};

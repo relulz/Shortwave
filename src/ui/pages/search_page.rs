@@ -41,6 +41,8 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/search_page.ui")]
     pub struct SwSearchPage {
         #[template_child]
+        pub stack: TemplateChild<gtk::Stack>,
+        #[template_child]
         pub results_box: TemplateChild<gtk::Box>,
         #[template_child]
         pub search_entry: TemplateChild<gtk::SearchEntry>,
@@ -66,6 +68,7 @@ mod imp {
             let timeout_id = Rc::new(RefCell::new(None));
 
             Self {
+                stack: TemplateChild::default(),
                 results_box: TemplateChild::default(),
                 search_entry: TemplateChild::default(),
                 client,
@@ -121,6 +124,8 @@ impl SwSearchPage {
     pub fn show_station_request(&self, request: StationRequest) {
         let imp = imp::SwSearchPage::from_instance(self);
 
+        imp.stack.set_visible_child_name("spinner");
+
         // Reset previous timeout
         let id: Option<glib::source::SourceId> = imp.timeout_id.borrow_mut().take();
         if let Some(id) = id {
@@ -131,6 +136,7 @@ impl SwSearchPage {
         let id = imp.timeout_id.clone();
         let client = imp.client.clone();
         let flowbox = imp.flowbox.clone();
+        let stack = imp.stack.clone();
         let sender = imp.sender.get().unwrap().clone();
         let id = glib::source::timeout_add_seconds_local(1, move || {
             *id.borrow_mut() = None;
@@ -139,15 +145,18 @@ impl SwSearchPage {
 
             let client = client.clone();
             let flowbox = flowbox.clone();
+            let stack = stack.clone();
             let request = request.clone();
             let sender = sender.clone();
             let fut = client.send_station_request(request).map(move |stations| match stations {
                 Ok(s) => {
                     flowbox.get().unwrap().clear();
                     flowbox.get().unwrap().add_stations(s);
+                    stack.set_visible_child_name("results");
                 }
                 Err(err) => {
                     let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
+                    stack.set_visible_child_name("results");
                     send!(sender, Action::ViewShowNotification(notification));
                 }
             });

@@ -29,7 +29,7 @@ use std::env;
 use std::rc::Rc;
 use std::str::FromStr;
 
-use crate::api::{Station, StationRequest};
+use crate::api::Station;
 use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
 use crate::database::Library;

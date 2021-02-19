@@ -6,7 +6,6 @@
       <file compressed="true" preprocess="xml-stripblanks">gtk/window.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/player.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/library.ui</file>
-      <file compressed="true" preprocess="xml-stripblanks">gtk/storefront.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/station_favicon.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/station_dialog.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/station_row.ui</file>
