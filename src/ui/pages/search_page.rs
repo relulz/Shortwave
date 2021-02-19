@@ -84,12 +84,7 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for SwSearchPage {
-        fn constructed(&self, obj: &Self::Type) {
-            self.parent_constructed(obj);
-            obj.setup_signals();
-        }
-    }
+    impl ObjectImpl for SwSearchPage {}
 
     impl WidgetImpl for SwSearchPage {}
 
@@ -110,6 +105,8 @@ impl SwSearchPage {
 
         imp.sender.set(sender).unwrap();
         imp.flowbox.set(flowbox).unwrap();
+
+        self.setup_signals();
     }
 
     fn setup_signals(&self) {

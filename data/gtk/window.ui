@@ -71,12 +71,7 @@
                           </object>
                         </child>
                         <child>
-                          <object class="AdwLeafletPage">
-                            <property name="name">storefront</property>
-                            <property name="child">
-                              <object class="GtkBox" id="storefront_page"/>
-                            </property>
-                          </object>
+                          <object class="SwDiscoverPage" id="discover_page"/>
                         </child>
                         <child>
                           <object class="SwSearchPage" id="search_page"/>

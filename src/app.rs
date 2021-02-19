@@ -33,7 +33,6 @@ use crate::api::{Station, StationRequest};
 use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
 use crate::database::Library;
-use crate::discover::StoreFront;
 use crate::settings::{settings_manager, Key};
 use crate::ui::{Notification, SwApplicationWindow, View};
 use crate::utils::{Order, Sorting};
@@ -59,7 +58,6 @@ pub enum Action {
     PlaybackSaveSong(Song),
     LibraryAddStations(Vec<Station>),
     LibraryRemoveStations(Vec<Station>),
-    SearchFor(StationRequest), // TODO: is this neccessary?,
     SettingsKeyChanged(Key),
 }
 
@@ -70,7 +68,6 @@ pub struct SwApplicationPrivate {
     window: RefCell<Option<SwApplicationWindow>>,
     pub player: Rc<Player>,
     pub library: Library,
-    pub storefront: StoreFront,
 
     settings: gio::Settings,
 }
@@ -92,7 +89,6 @@ impl ObjectSubclass for SwApplicationPrivate {
         let window = RefCell::new(None);
         let player = Player::new(sender.clone());
         let library = Library::new(sender.clone());
-        let storefront = StoreFront::new(sender.clone());
 
         let settings = settings_manager::get_settings();
 
@@ -102,7 +98,6 @@ impl ObjectSubclass for SwApplicationPrivate {
             window,
             player,
             library,
-            storefront,
             settings,
         }
     }
@@ -225,10 +220,7 @@ impl SwApplication {
 
         match action {
             Action::ViewGoBack => self_.window.borrow().as_ref().unwrap().go_back(),
-            Action::ViewShowDiscover => {
-                self_.window.borrow().as_ref().unwrap().set_view(View::Storefront);
-                self_.storefront.show_discover();
-            }
+            Action::ViewShowDiscover => self_.window.borrow().as_ref().unwrap().set_view(View::Discover),
             Action::ViewShowLibrary => self_.window.borrow().as_ref().unwrap().set_view(View::Library),
             Action::ViewShowSearch => self_.window.borrow().as_ref().unwrap().set_view(View::Search),
             Action::ViewShowPlayer => self_.window.borrow().as_ref().unwrap().set_view(View::Player),
@@ -249,7 +241,6 @@ impl SwApplication {
             Action::PlaybackSaveSong(song) => self_.player.save_song(song),
             Action::LibraryAddStations(stations) => self_.library.add_stations(stations),
             Action::LibraryRemoveStations(stations) => self_.library.remove_stations(stations),
-            Action::SearchFor(data) => self_.storefront.search_for(data),
             Action::SettingsKeyChanged(key) => {
                 debug!("Settings key changed: {:?}", &key);
                 match key {

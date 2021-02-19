@@ -55,16 +55,12 @@ sources = files(
   'database/queries.rs',
   'database/schema.rs',
 
-  'discover/pages/discover.rs',
-  'discover/pages/mod.rs',
-  'discover/mod.rs',
-  'discover/storefront.rs',
-
   'settings/key.rs',
   'settings/mod.rs',
   'settings/settings_window.rs',
   'settings/settings_manager.rs',
 
+  'ui/pages/discover_page.rs',
   'ui/pages/mod.rs',
   'ui/pages/search_page.rs',
   'ui/about_dialog.rs',

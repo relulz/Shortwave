@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+mod discover_page;
 mod search_page;
 
+pub use discover_page::SwDiscoverPage;
 pub use search_page::SwSearchPage;
