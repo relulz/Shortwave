@@ -1,4 +1,4 @@
-// Shortwave - mod.rs
+// Shortwave - stats.rs
 // Copyright (C) 2021  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -14,24 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-static STATION_SEARCH: &str = "json/stations/search";
-static STATION_BY_UUID: &str = "json/stations/byuuid/";
-static STATS: &str = "json/stats";
-
-mod client;
-mod error;
-mod favicon_downloader;
-mod object;
-mod station;
-mod station_request;
-mod station_url;
-mod stats;
-
-pub use client::Client;
-pub use error::Error;
-pub use favicon_downloader::FaviconDownloader;
-pub use object::Object;
-pub use station::Station;
-pub use station_request::StationRequest;
-pub use station_url::StationUrl;
-pub use stats::Stats;
+#[derive(Default, Debug, Clone, PartialEq, serde_derive::Deserialize)]
+pub struct Stats {
+    pub supported_version: i64,
+    pub software_version: String,
+    pub status: String,
+    pub stations: i64,
+    pub stations_broken: i64,
+    pub tags: i64,
+    pub clicks_last_hour: i64,
+    pub clicks_last_day: i64,
+    pub languages: i64,
+    pub countries: i64,
+}

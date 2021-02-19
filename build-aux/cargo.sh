@@ -16,11 +16,11 @@ if test "$APP_PROFILE" != "default"
 then
     echo "** DEBUG MODE **"
     cargo build --manifest-path \
-        "$MESON_SOURCE_ROOT"/Cargo.toml --message-format=short && \
+        "$MESON_SOURCE_ROOT"/Cargo.toml && \
         cp "$CARGO_TARGET_DIR"/debug/shortwave $APP_OUTPUT
 else
     echo "** RELEASE MODE **"
     cargo build --manifest-path \
-        "$MESON_SOURCE_ROOT"/Cargo.toml --message-format=short --release && \
+        "$MESON_SOURCE_ROOT"/Cargo.toml --release && \
         cp "$CARGO_TARGET_DIR"/release/shortwave $APP_OUTPUT
 fi

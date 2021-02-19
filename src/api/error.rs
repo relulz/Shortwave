@@ -41,4 +41,7 @@ pub enum Error {
 
     #[error("Cache error")]
     CacheError,
+
+    #[error("No radio-browser.info api server reachable")]
+    NoServerReachable,
 }

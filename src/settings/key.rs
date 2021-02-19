@@ -18,7 +18,7 @@
 #[strum(serialize_all = "kebab_case")]
 pub enum Key {
     /* Client Backend */
-    ApiServer,
+    ApiLookupDomain,
 
     /* User Interface */
     DarkMode,

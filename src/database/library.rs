@@ -16,7 +16,6 @@
 
 use glib::Sender;
 use gtk::prelude::*;
-use url::Url;
 
 use futures::future::join_all;
 use std::rc::Rc;
@@ -58,7 +57,7 @@ impl Library {
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
         content_box.append(&flowbox.widget);
 
-        let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
+        let client = Client::new(settings_manager::get_string(Key::ApiLookupDomain));
 
         let library = Self {
             widget: library,

@@ -33,6 +33,7 @@ sources = files(
   'api/station.rs',
   'api/station_request.rs',
   'api/station_url.rs',
+  'api/stats.rs',
 
   'audio/backend/gstreamer_backend.rs',
   'audio/backend/mod.rs',

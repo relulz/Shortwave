@@ -17,7 +17,6 @@
 use futures_util::future::FutureExt;
 use glib::Sender;
 use gtk::prelude::*;
-use url::Url;
 
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -44,7 +43,7 @@ impl Search {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/search.ui");
         get_widget!(builder, gtk::Box, search);
 
-        let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
+        let client = Client::new(settings_manager::get_string(Key::ApiLookupDomain));
 
         get_widget!(builder, gtk::Box, results_box);
         let flowbox = Rc::new(StationFlowBox::new(sender.clone()));

@@ -17,7 +17,6 @@
 use futures_util::future::FutureExt;
 use glib::Sender;
 use gtk::prelude::*;
-use url::Url;
 
 use std::rc::Rc;
 
@@ -47,7 +46,7 @@ impl Discover {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/discover.ui");
         get_widget!(builder, gtk::Box, discover);
 
-        let client = Client::new(Url::parse(&settings_manager::get_string(Key::ApiServer)).unwrap());
+        let client = Client::new(settings_manager::get_string(Key::ApiLookupDomain));
 
         // Featured Carousel
         let carousel = FeaturedCarousel::new();

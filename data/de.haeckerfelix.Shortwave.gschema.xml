@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <schemalist>
   <schema path="/de/haeckerfelix/Shortwave/" id="de.haeckerfelix.Shortwave" gettext-domain="shortwave">
-    <key name="api-server" type="s">
-      <default>"https://de1.api.radio-browser.info/"</default>
+    <key name="api-lookup-domain" type="s">
+      <default>"all.api.radio-browser.info"</default>
     </key>
     <key name="dark-mode" type="b">
       <default>false</default>
