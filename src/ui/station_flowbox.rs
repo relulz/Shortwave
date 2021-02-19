@@ -30,6 +30,7 @@ use crate::ui::{StationDialog, StationRow};
 use crate::utils;
 use crate::utils::{Order, Sorting};
 
+#[derive(Debug)]
 pub struct StationFlowBox {
     pub widget: gtk::FlowBox,
     stations: Rc<RefCell<IndexMap<String, Station>>>,

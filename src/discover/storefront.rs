@@ -20,7 +20,7 @@ use gtk::prelude::*;
 
 use crate::api::StationRequest;
 use crate::app::Action;
-use crate::discover::pages::{Discover, Search};
+use crate::discover::pages::Discover;
 
 #[allow(dead_code)]
 pub struct StoreFront {
@@ -28,7 +28,6 @@ pub struct StoreFront {
     pub storefront_stack: gtk::Stack,
 
     discover: Discover,
-    search: Search,
 
     builder: gtk::Builder,
 }
@@ -44,16 +43,10 @@ impl StoreFront {
         let discover = Discover::new(sender.clone());
         discover_box.append(&discover.widget);
 
-        // Search
-        get_widget!(builder, gtk::Box, search_box);
-        let search = Search::new(sender);
-        search_box.append(&search.widget);
-
         let storefront = Self {
             widget: storefront,
             storefront_stack,
             discover,
-            search,
             builder,
         };
 
@@ -63,7 +56,7 @@ impl StoreFront {
 
     pub fn search_for(&self, request: StationRequest) {
         self.storefront_stack.set_visible_child_name("search");
-        self.search.search_for(request);
+        //self.search.search_for(request);
     }
 
     pub fn show_discover(&self) {

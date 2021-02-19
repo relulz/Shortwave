@@ -57,7 +57,6 @@ sources = files(
 
   'discover/pages/discover.rs',
   'discover/pages/mod.rs',
-  'discover/pages/search.rs',
   'discover/mod.rs',
   'discover/storefront.rs',
 
@@ -66,6 +65,8 @@ sources = files(
   'settings/settings_window.rs',
   'settings/settings_manager.rs',
 
+  'ui/pages/mod.rs',
+  'ui/pages/search_page.rs',
   'ui/about_dialog.rs',
   'ui/featured_carousel.rs',
   'ui/mod.rs',

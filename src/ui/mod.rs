@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+pub mod pages;
+
 pub mod about_dialog;
 pub mod featured_carousel;
 mod notification;

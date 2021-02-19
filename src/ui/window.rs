@@ -29,6 +29,7 @@ use crate::api::StationRequest;
 use crate::app::{Action, SwApplication, SwApplicationPrivate};
 use crate::config;
 use crate::settings::{settings_manager, Key, SettingsWindow};
+use crate::ui::pages::SwSearchPage;
 use crate::ui::{about_dialog, Notification};
 
 #[derive(Debug, Clone, PartialEq)]
@@ -46,6 +47,9 @@ mod imp {
     #[derive(Debug, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/window.ui")]
     pub struct SwApplicationWindow {
+        #[template_child]
+        pub search_page: TemplateChild<SwSearchPage>,
+
         #[template_child]
         pub mini_controller_box: TemplateChild<gtk::Box>,
         #[template_child]
@@ -84,6 +88,7 @@ mod imp {
             let current_notification = RefCell::new(None);
 
             Self {
+                search_page: TemplateChild::default(),
                 mini_controller_box: TemplateChild::default(),
                 library_page: TemplateChild::default(),
                 storefront_page: TemplateChild::default(),
@@ -137,16 +142,19 @@ impl SwApplicationWindow {
         let window = glib::Object::new::<SwApplicationWindow>(&[]).unwrap();
 
         app.add_window(&window.clone());
-        window.setup_widgets();
+        window.setup_widgets(sender.clone());
         window.setup_signals(sender.clone());
         window.setup_gactions(sender);
         window
     }
 
-    pub fn setup_widgets(&self) {
+    pub fn setup_widgets(&self, sender: Sender<Action>) {
         let imp = imp::SwApplicationWindow::from_instance(self);
         let app: SwApplication = self.get_application().unwrap().downcast::<SwApplication>().unwrap();
         let app_private = SwApplicationPrivate::from_instance(&app);
+
+        // Init pages
+        imp.search_page.init(sender.clone());
 
         // Wire everything up
         imp.mini_controller_box.append(&app_private.player.mini_controller_widget);
@@ -372,15 +380,18 @@ impl SwApplicationWindow {
         let app: SwApplication = self.get_application().unwrap().downcast().unwrap();
         let app_priv = SwApplicationPrivate::from_instance(&app);
 
-        let leaflet_child_name = imp.window_leaflet.get_visible_child_name().unwrap();
+        let leaflet_child_name = imp.window_leaflet.get_visible_child_name().map(|s| s.to_string());
+        let leaflet_child = imp.window_leaflet.get_visible_child().unwrap();
 
         // Check in which state the sidebar flap is,
         // and set the corresponding view (Library|Storefront|Player)
         let current_view = if imp.window_flap.get_folded() && imp.window_flap.get_reveal_flap() {
             View::Player
         } else {
-            if leaflet_child_name == "storefront" {
+            if leaflet_child_name == Some("storefront".to_string()) {
                 View::Storefront
+            } else if leaflet_child == imp.search_page.get() {
+                View::Search
             } else {
                 View::Library
             }
@@ -428,7 +439,7 @@ impl SwApplicationWindow {
                 imp.add_button.set_visible(false);
             }
             View::Search => {
-                imp.window_leaflet.set_visible_child_name("storefront");
+                imp.window_leaflet.set_visible_child(&imp.search_page.get());
                 imp.back_button.set_visible(true);
                 imp.add_button.set_visible(false);
             }

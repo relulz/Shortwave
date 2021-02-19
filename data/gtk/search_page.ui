@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <object class="GtkBox" id="search">
-    <property name="hexpand">True</property>
-    <property name="vexpand">True</property>
-    <property name="orientation">vertical</property>
+  <template class="SwSearchPage" parent="AdwBin">
     <child>
       <object class="GtkBox">
         <property name="orientation">vertical</property>
@@ -52,6 +49,5 @@
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>
-

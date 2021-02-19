@@ -44,7 +44,7 @@ lazy_static! {
         .unwrap();
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Client {
     lookup_domain: String,
     server: OnceCell<Url>,

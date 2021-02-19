@@ -32,6 +32,7 @@
                 <child type="end">
                   <object class="GtkMenuButton" id="appmenu_button">
                     <property name="icon_name">open-menu-symbolic</property>
+                    <property name="menu_model">app_menu</property>
                   </object>
                 </child>
                 <child type="end">
@@ -76,6 +77,9 @@
                               <object class="GtkBox" id="storefront_page"/>
                             </property>
                           </object>
+                        </child>
+                        <child>
+                          <object class="SwSearchPage" id="search_page"/>
                         </child>
                       </object>
                     </child>
