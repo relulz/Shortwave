@@ -14,8 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use glib::clone;
 use glib::Sender;
 use gtk::prelude::*;
+use gtk::{gio, glib};
 
 use std::net::IpAddr;
 use std::rc::Rc;

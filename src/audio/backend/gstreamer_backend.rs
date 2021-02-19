@@ -14,10 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use glib::Sender;
+use glib::clone;
 use gstreamer::prelude::*;
 use gstreamer::{Bin, Element, MessageView, PadProbeReturn, PadProbeType, Pipeline, State};
 use gstreamer_audio::{StreamVolume, StreamVolumeFormat};
+use gtk::glib;
+use gtk::glib::Sender;
 
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};

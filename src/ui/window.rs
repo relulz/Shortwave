@@ -14,12 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use gio::prelude::*;
-use glib::subclass::prelude::*;
+use adw::subclass::prelude::*;
+use glib::clone;
 use glib::Sender;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
+use gtk::{gio, glib};
 
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -116,10 +117,10 @@ mod imp {
     impl WindowImpl for SwApplicationWindow {}
 
     // Implement Gtk.ApplicationWindow for SwApplicationWindow
-    impl gtk::subclass::prelude::ApplicationWindowImpl for SwApplicationWindow {}
+    impl ApplicationWindowImpl for SwApplicationWindow {}
 
     // Implement Adw.ApplicationWindow for SwApplicationWindow
-    impl adw::subclass::prelude::AdwApplicationWindowImpl for SwApplicationWindow {}
+    impl AdwApplicationWindowImpl for SwApplicationWindow {}
 }
 
 // Wrap imp::SwApplicationWindow into a usable gtk-rs object

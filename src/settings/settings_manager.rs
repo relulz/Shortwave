@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use gio::prelude::*;
+use gtk::{gio, glib};
 
 use crate::config;
 use crate::settings::Key;

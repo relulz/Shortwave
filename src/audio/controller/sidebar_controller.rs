@@ -15,9 +15,10 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use futures_util::future::FutureExt;
-use gio::prelude::*;
+use glib::clone;
 use glib::Sender;
 use gtk::prelude::*;
+use gtk::{gio, glib};
 
 use std::cell::RefCell;
 use std::rc::Rc;

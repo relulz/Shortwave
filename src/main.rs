@@ -30,8 +30,6 @@ extern crate diesel_migrations;
 #[macro_use]
 extern crate strum_macros;
 #[macro_use]
-extern crate glib;
-#[macro_use]
 extern crate gtk_macros;
 
 use gettextrs::*;
@@ -51,6 +49,8 @@ mod app;
 mod config;
 mod i18n;
 mod path;
+
+use gtk::{gio, glib};
 
 use crate::app::SwApplication;
 

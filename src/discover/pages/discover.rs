@@ -15,7 +15,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use futures_util::future::FutureExt;
-use glib::Sender;
+use gtk::glib;
+use gtk::glib::Sender;
 use gtk::prelude::*;
 
 use std::rc::Rc;

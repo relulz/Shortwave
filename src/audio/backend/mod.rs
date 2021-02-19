@@ -21,8 +21,10 @@ pub use gstreamer_backend::GstreamerMessage;
 
 use crate::app::Action;
 use crate::settings::{settings_manager, Key};
+
 use glib::{Receiver, Sender};
 use gstreamer_backend::GstreamerBackend;
+use gtk::glib;
 use song_backend::SongBackend;
 use std::convert::TryInto;
 

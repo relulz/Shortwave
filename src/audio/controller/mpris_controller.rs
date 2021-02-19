@@ -15,7 +15,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use gio::prelude::*;
+use glib::clone;
 use glib::Sender;
+use gtk::{gio, glib};
 use mpris_player::{Metadata, MprisPlayer, OrgMprisMediaPlayer2Player, PlaybackStatus};
 
 use std::cell::{Cell, RefCell};

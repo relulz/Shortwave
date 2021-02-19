@@ -18,6 +18,7 @@
 // https://crates.io/crates/mdns
 
 use glib::{Receiver, Sender};
+use gtk::glib;
 use mdns::{Record, RecordKind};
 
 use std::collections::HashMap;

@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use glib::Sender;
+use gtk::glib;
 use gtk::prelude::*;
 
 use crate::api::StationRequest;

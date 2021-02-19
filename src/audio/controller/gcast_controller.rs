@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use gtk::glib;
 use rust_cast::channels::connection::ConnectionResponse;
 use rust_cast::channels::heartbeat::HeartbeatResponse;
 use rust_cast::channels::media::GenericMediaMetadata;
@@ -22,9 +23,9 @@ use rust_cast::channels::media::{Media, StreamType};
 use rust_cast::channels::receiver::Application;
 use rust_cast::channels::receiver::CastDeviceApp;
 use rust_cast::{CastDevice, ChannelMessage};
-use std::str::FromStr;
 
 use std::rc::Rc;
+use std::str::FromStr;
 use std::sync::mpsc::{channel, Receiver, Sender};
 use std::sync::{Arc, Mutex};
 use std::thread;

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use glib::{self, object::WeakRef};
+use gtk::glib::{self, object::WeakRef};
 use gtk::prelude::*;
 
 use crate::api::Station;

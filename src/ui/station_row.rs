@@ -15,7 +15,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use futures_util::future::FutureExt;
+use glib::clone;
 use glib::Sender;
+use gtk::glib;
 use gtk::prelude::*;
 
 use crate::api::{FaviconDownloader, Station};

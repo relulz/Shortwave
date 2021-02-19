@@ -14,9 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use gio::prelude::*;
+use glib::clone;
 use glib::Sender;
 use gtk::prelude::*;
+use gtk::{gio, glib};
 
 use std::cell::RefCell;
 use std::convert::TryInto;

@@ -16,6 +16,7 @@
 
 use crate::config;
 
+use gtk::glib;
 use std::fs;
 use std::path::PathBuf;
 

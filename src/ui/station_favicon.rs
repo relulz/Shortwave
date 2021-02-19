@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use gdk_pixbuf::Pixbuf;
+use gtk::gdk_pixbuf;
 use gtk::prelude::*;
 
 #[derive(Clone, Copy, PartialEq)]

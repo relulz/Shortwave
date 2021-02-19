@@ -15,6 +15,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use adw::Carousel;
+use glib::clone;
+use gtk::glib;
 use gtk::prelude::*;
 
 use std::cell::RefCell;

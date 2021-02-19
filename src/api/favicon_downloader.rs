@@ -18,6 +18,7 @@ use async_std::io::ReadExt;
 use gdk_pixbuf::Pixbuf;
 use gio::prelude::*;
 use gio::DataInputStream;
+use gtk::{gdk_pixbuf, gio, glib};
 use url::Url;
 
 use std::collections::hash_map::DefaultHasher;

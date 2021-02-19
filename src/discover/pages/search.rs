@@ -16,6 +16,7 @@
 
 use futures_util::future::FutureExt;
 use glib::Sender;
+use gtk::glib;
 use gtk::prelude::*;
 
 use std::cell::RefCell;

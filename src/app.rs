@@ -15,12 +15,14 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use gio::subclass::prelude::ApplicationImpl;
-use gio::{self, prelude::*, SettingsExt};
+use gio::SettingsExt;
+use glib::clone;
 use glib::subclass;
 use glib::subclass::prelude::*;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
 use gtk::subclass::application::GtkApplicationImpl;
+use gtk::{gdk, gio, glib};
 
 use std::cell::RefCell;
 use std::env;
