@@ -138,7 +138,7 @@ glib::wrapper! {
 impl SwApplicationWindow {
     pub fn new(sender: Sender<Action>, app: SwApplication) -> Self {
         // Create new GObject and downcast it into SwApplicationWindow
-        let window = glib::Object::new::<SwApplicationWindow>(&[]).unwrap();
+        let window = glib::Object::new::<Self>(&[]).unwrap();
 
         app.add_window(&window.clone());
         window.setup_widgets(sender.clone());

@@ -31,6 +31,7 @@ sources = files(
   'api/mod.rs',
   'api/object.rs',
   'api/station.rs',
+  'api/station_metadata.rs',
   'api/station_request.rs',
   'api/station_url.rs',
   'api/stats.rs',
