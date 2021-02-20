@@ -48,13 +48,13 @@
         </property>
         <child>
           <object class="GtkButton" id="cancel_button">
-            <property name="label">_Cancel</property>
+            <property name="label" translatable="yes">_Cancel</property>
             <property name="use_underline">True</property>
           </object>
         </child>
         <child type="end">
           <object class="GtkButton" id="connect_button">
-            <property name="label">_Connect</property>
+            <property name="label" translatable="yes">_Connect</property>
             <property name="use_underline">True</property>
             <property name="sensitive">False</property>
             <style>
