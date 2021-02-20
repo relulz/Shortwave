@@ -27,7 +27,7 @@ use std::rc::Rc;
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
-use crate::api::Station;
+use crate::api::SwStation;
 use crate::app::Action;
 use crate::audio::backend::*;
 #[cfg(unix)]
@@ -81,7 +81,7 @@ pub struct Player {
     gcast_controller: Rc<GCastController>,
 
     backend: Arc<Mutex<Backend>>,
-    current_station: RefCell<Option<Station>>,
+    current_station: RefCell<Option<SwStation>>,
     song_title: RefCell<SongTitle>,
 
     builder: gtk::Builder,
@@ -154,12 +154,12 @@ impl Player {
         player
     }
 
-    pub fn set_station(&self, station: Station) {
+    pub fn set_station(&self, station: SwStation) {
         *self.current_station.borrow_mut() = Some(station.clone());
         self.set_playback(PlaybackState::Stopped);
 
-        // Station is broken, we refuse to play it
-        if station.lastcheckok != 1 {
+        // SwStation is broken, we refuse to play it
+        if station.metadata().lastcheckok != 1 {
             let notification = Notification::new_info(&i18n("This station cannot be played because the stream is offline."));
             send!(self.sender, Action::ViewShowNotification(notification));
             return;
@@ -172,7 +172,7 @@ impl Player {
         // Reset song title
         self.song_title.borrow_mut().reset();
 
-        match station.url_resolved {
+        match station.metadata().url_resolved {
             Some(url) => {
                 debug!("Start playing new URI: {}", url.to_string());
                 self.backend.lock().unwrap().gstreamer.new_source_uri(&url.to_string());
@@ -321,7 +321,7 @@ impl Player {
     fn show_song_notification(&self) {
         let current_station = self.current_station.borrow().clone().unwrap();
         let notification = gio::Notification::new(&self.song_title.borrow().get_current_title().unwrap());
-        notification.set_body(Some(&current_station.name));
+        notification.set_body(Some(&current_station.metadata().name));
         //notification.add_button("Record and save this song", "app.record-and-save-song");
 
         /* Icons won't work at the moment, no idea

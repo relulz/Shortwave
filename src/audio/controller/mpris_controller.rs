@@ -25,7 +25,7 @@ use std::rc::Rc;
 use std::sync::Arc;
 
 use crate::api::FaviconDownloader;
-use crate::api::Station;
+use crate::api::SwStation;
 use crate::app::Action;
 use crate::audio::Controller;
 use crate::audio::PlaybackState;
@@ -36,7 +36,7 @@ pub struct MprisController {
     mpris: Arc<MprisPlayer>,
 
     song_title: Cell<Option<String>>,
-    station: Cell<Option<Station>>,
+    station: Cell<Option<SwStation>>,
     volume: Rc<RefCell<f64>>,
 }
 
@@ -70,13 +70,13 @@ impl MprisController {
         let song_title = self.song_title.take();
 
         if let Some(station) = station.clone() {
-            station.favicon.map(|favicon| {
+            station.metadata().favicon.map(|favicon| {
                 FaviconDownloader::get_file(&favicon).map(|file| {
                     let path = format!("file://{}", file.get_path().unwrap().to_str().unwrap().to_owned());
                     metadata.art_url = Some(path);
                 })
             });
-            metadata.artist = Some(vec![station.name]);
+            metadata.artist = Some(vec![station.metadata().name]);
         }
         if let Some(song_title) = song_title.clone() {
             metadata.title = Some(song_title);
@@ -130,7 +130,7 @@ impl MprisController {
 }
 
 impl Controller for MprisController {
-    fn set_station(&self, station: Station) {
+    fn set_station(&self, station: SwStation) {
         self.station.set(Some(station));
         self.update_metadata();
     }

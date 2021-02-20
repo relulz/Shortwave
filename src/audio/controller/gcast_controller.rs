@@ -30,7 +30,7 @@ use std::sync::mpsc::{channel, Receiver, Sender};
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-use crate::api::Station;
+use crate::api::{StationMetadata, SwStation};
 use crate::app::Action;
 use crate::audio::{Controller, GCastDevice, PlaybackState};
 
@@ -42,7 +42,7 @@ enum GCastAction {
 }
 
 pub struct GCastController {
-    station: Arc<Mutex<Option<Station>>>,
+    station_metadata: Arc<Mutex<Option<StationMetadata>>>,
     device_ip: Arc<Mutex<String>>,
     gcast_sender: Sender<GCastAction>,
     app_sender: glib::Sender<Action>,
@@ -53,12 +53,12 @@ pub struct GCastController {
 // Oops.
 impl GCastController {
     pub fn new(app_sender: glib::Sender<Action>) -> Rc<Self> {
-        let station = Arc::new(Mutex::new(None));
+        let station_metadata = Arc::new(Mutex::new(None));
         let device_ip = Arc::new(Mutex::new("".to_string()));
 
         let (gcast_sender, gcast_receiver) = channel();
         let gcast_controller = Self {
-            station,
+            station_metadata,
             device_ip,
             gcast_sender,
             app_sender,
@@ -70,7 +70,7 @@ impl GCastController {
     }
 
     fn start_thread(&self, receiver: Receiver<GCastAction>) {
-        let station = self.station.clone();
+        let station_metadata = self.station_metadata.clone();
         let device_ip = self.device_ip.clone();
         let gcast_sender = self.gcast_sender.clone();
 
@@ -112,7 +112,7 @@ impl GCastController {
                             }
                             if let Some(d) = device.as_ref() {
                                 // TODO
-                                let s = station.lock().unwrap().as_ref().unwrap().clone();
+                                let s = station_metadata.lock().unwrap().as_ref().unwrap().clone();
                                 debug!("Transfer media information to gcast device...");
 
                                 let image = Image {
@@ -209,8 +209,8 @@ impl GCastController {
 }
 
 impl Controller for Rc<GCastController> {
-    fn set_station(&self, station: Station) {
-        *self.station.lock().unwrap() = Some(station);
+    fn set_station(&self, station: SwStation) {
+        *self.station_metadata.lock().unwrap() = Some(station.metadata());
 
         if !self.device_ip.lock().unwrap().is_empty() {
             debug!("Set new station on gcast device...");

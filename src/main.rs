@@ -73,7 +73,7 @@ fn main() {
     glib::set_prgname(Some(&config::APP_ID));
     gtk::Window::set_default_icon_name(config::APP_ID);
     env::set_var("PULSE_PROP_application.icon_name", config::APP_ID);
-    env::set_var("PULSE_PROP_application.name", config::NAME);
+    env::set_var("PULSE_PROP_application.metadata().name", config::NAME);
 
     // Setup translations
     setlocale(LocaleCategory::LcAll, "");

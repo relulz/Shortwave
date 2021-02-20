@@ -17,7 +17,7 @@
 use gtk::glib::{self, object::WeakRef};
 use gtk::prelude::*;
 
-use crate::api::Station;
+use crate::api::SwStation;
 use crate::i18n::*;
 
 #[derive(Display, Debug, Clone, EnumString, PartialEq)]
@@ -38,7 +38,7 @@ pub enum Order {
     Descending,
 }
 
-pub fn station_cmp(a: &Station, b: &Station, sorting: Sorting, order: Order) -> std::cmp::Ordering {
+pub fn station_cmp(a: &SwStation, b: &SwStation, sorting: Sorting, order: Order) -> std::cmp::Ordering {
     let mut station_a = a.clone();
     let mut station_b = b.clone();
 
@@ -48,13 +48,13 @@ pub fn station_cmp(a: &Station, b: &Station, sorting: Sorting, order: Order) -> 
 
     match sorting {
         Sorting::Default => std::cmp::Ordering::Equal,
-        Sorting::Name => station_a.name.cmp(&station_b.name),
-        Sorting::Language => station_a.language.cmp(&station_b.language),
-        Sorting::Country => station_a.country.cmp(&station_b.country),
-        Sorting::State => station_a.state.cmp(&station_b.state),
-        Sorting::Codec => station_a.codec.cmp(&station_b.codec),
-        Sorting::Votes => station_a.votes.cmp(&station_b.votes),
-        Sorting::Bitrate => station_a.bitrate.cmp(&station_b.bitrate),
+        Sorting::Name => station_a.metadata().name.cmp(&station_b.metadata().name),
+        Sorting::Language => station_a.metadata().language.cmp(&station_b.metadata().language),
+        Sorting::Country => station_a.metadata().country.cmp(&station_b.metadata().country),
+        Sorting::State => station_a.metadata().state.cmp(&station_b.metadata().state),
+        Sorting::Codec => station_a.metadata().codec.cmp(&station_b.metadata().codec),
+        Sorting::Votes => station_a.metadata().votes.cmp(&station_b.metadata().votes),
+        Sorting::Bitrate => station_a.metadata().bitrate.cmp(&station_b.metadata().bitrate),
     }
 }
 

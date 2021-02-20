@@ -22,7 +22,7 @@ use gtk::prelude::*;
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::api::Station;
+use crate::api::SwStation;
 use crate::app::Action;
 use crate::audio::Controller;
 use crate::audio::PlaybackState;
@@ -30,7 +30,7 @@ use crate::audio::PlaybackState;
 pub struct MiniController {
     pub widget: gtk::Box,
     sender: Sender<Action>,
-    station: Rc<RefCell<Option<Station>>>,
+    station: Rc<RefCell<Option<SwStation>>>,
 
     title_label: gtk::Label,
     subtitle_label: gtk::Label,
@@ -93,9 +93,9 @@ impl MiniController {
 }
 
 impl Controller for MiniController {
-    fn set_station(&self, station: Station) {
-        self.title_label.set_text(&station.name);
-        self.title_label.set_tooltip_text(Some(station.name.as_str()));
+    fn set_station(&self, station: SwStation) {
+        self.title_label.set_text(&station.metadata().name);
+        self.title_label.set_tooltip_text(Some(station.metadata().name.as_str()));
         *self.station.borrow_mut() = Some(station.clone());
 
         self.subtitle_revealer.set_reveal_child(false);

@@ -23,7 +23,7 @@ use gtk::prelude::*;
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::api::{FaviconDownloader, Station};
+use crate::api::{FaviconDownloader, SwStation};
 use crate::app::Action;
 use crate::audio::Controller;
 use crate::audio::PlaybackState;
@@ -32,7 +32,7 @@ use crate::ui::{FaviconSize, StationFavicon};
 pub struct ToolbarController {
     pub widget: gtk::Box,
     sender: Sender<Action>,
-    station: Rc<RefCell<Option<Station>>>,
+    station: Rc<RefCell<Option<SwStation>>>,
 
     station_favicon: Rc<StationFavicon>,
     title_label: gtk::Label,
@@ -102,15 +102,15 @@ impl ToolbarController {
 }
 
 impl Controller for ToolbarController {
-    fn set_station(&self, station: Station) {
+    fn set_station(&self, station: SwStation) {
         self.action_revealer.set_reveal_child(true);
-        self.title_label.set_text(&station.name);
-        self.title_label.set_tooltip_text(Some(station.name.as_str()));
+        self.title_label.set_text(&station.metadata().name);
+        self.title_label.set_tooltip_text(Some(station.metadata().name.as_str()));
         *self.station.borrow_mut() = Some(station.clone());
 
         // Download & set icon
         let station_favicon = self.station_favicon.clone();
-        if let Some(favicon) = station.favicon {
+        if let Some(favicon) = station.metadata().favicon {
             let fut = FaviconDownloader::download(favicon, FaviconSize::Mini as i32).map(move |pixbuf| {
                 if let Ok(pixbuf) = pixbuf {
                     station_favicon.set_pixbuf(pixbuf)

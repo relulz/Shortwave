@@ -58,20 +58,23 @@ impl Client {
         }
     }
 
-    pub async fn send_station_request(self, request: StationRequest) -> Result<Vec<Station>, Error> {
+    pub async fn send_station_request(self, request: StationRequest) -> Result<Vec<SwStation>, Error> {
         let url = self.build_url(STATION_SEARCH, Some(&request.url_encode())).await?;
         debug!("Station request URL: {}", url);
-        let stations: Vec<Station> = HTTP_CLIENT.get_async(url.as_ref()).await?.json().await?;
+        let stations_md: Vec<StationMetadata> = HTTP_CLIENT.get_async(url.as_ref()).await?.json().await?;
+        let stations: Vec<SwStation> = stations_md.into_iter().map(|smd| SwStation::new(smd)).collect();
+
         debug!("Found {} station(s)!", stations.len());
 
         Ok(stations)
     }
 
-    pub async fn get_station_by_identifier(self, identifier: StationIdentifier) -> Result<Station, Error> {
+    pub async fn get_station_by_identifier(self, identifier: StationIdentifier) -> Result<SwStation, Error> {
         let url = self.build_url(&format!("{}{}", STATION_BY_UUID, identifier.stationuuid), None).await?;
         debug!("Request station by UUID URL: {}", url);
 
-        let mut data: Vec<Station> = HTTP_CLIENT.get_async(url.as_ref()).await?.json().await?;
+        let stations_md: Vec<StationMetadata> = HTTP_CLIENT.get_async(url.as_ref()).await?.json().await?;
+        let mut data: Vec<SwStation> = stations_md.into_iter().map(|smd| SwStation::new(smd)).collect();
 
         match data.pop() {
             Some(station) => Ok(station),

@@ -29,7 +29,7 @@ use std::env;
 use std::rc::Rc;
 use std::str::FromStr;
 
-use crate::api::Station;
+use crate::api::SwStation;
 use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
 use crate::database::Library;
@@ -50,14 +50,14 @@ pub enum Action {
     ViewShowNotification(Rc<Notification>),
     PlaybackConnectGCastDevice(GCastDevice),
     PlaybackDisconnectGCastDevice,
-    PlaybackSetStation(Box<Station>),
+    PlaybackSetStation(Box<SwStation>),
     PlaybackStart,
     PlaybackStop,
     PlaybackToggleStartStop,
     PlaybackSetVolume(f64),
     PlaybackSaveSong(Song),
-    LibraryAddStations(Vec<Station>),
-    LibraryRemoveStations(Vec<Station>),
+    LibraryAddStations(Vec<SwStation>),
+    LibraryRemoveStations(Vec<SwStation>),
     SettingsKeyChanged(Key),
 }
 

@@ -32,7 +32,7 @@ pub use client::Client;
 pub use error::Error;
 pub use favicon_downloader::FaviconDownloader;
 pub use object::Object;
-pub use station::{Station, SwStation};
+pub use station::SwStation;
 pub use station_metadata::StationMetadata;
 pub use station_request::StationRequest;
 pub use station_url::StationUrl;

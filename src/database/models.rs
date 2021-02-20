@@ -15,7 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use super::schema::*;
-use crate::api::Station;
+use crate::api::SwStation;
 
 #[derive(Queryable, Insertable, Debug, Clone)]
 #[table_name = "library"]
@@ -25,10 +25,10 @@ pub struct StationIdentifier {
 }
 
 impl StationIdentifier {
-    pub fn from_station(station: &Station) -> Self {
+    pub fn from_station(station: &SwStation) -> Self {
         StationIdentifier {
             id: None,
-            stationuuid: station.stationuuid.clone(),
+            stationuuid: station.metadata().stationuuid.clone(),
         }
     }
     pub fn from_uuid(uuid: String) -> Self {

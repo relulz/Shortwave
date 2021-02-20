@@ -21,7 +21,7 @@ use gtk::prelude::*;
 use futures::future::join_all;
 use std::rc::Rc;
 
-use crate::api::{Client, Error, Station};
+use crate::api::{Client, Error, SwStation};
 use crate::app::Action;
 use crate::config;
 use crate::database::connection;
@@ -72,7 +72,7 @@ impl Library {
         library
     }
 
-    pub fn add_stations(&self, stations: Vec<Station>) {
+    pub fn add_stations(&self, stations: Vec<SwStation>) {
         debug!("Add {} station(s)", stations.len());
         self.flowbox.add_stations(stations.clone());
         for station in stations {
@@ -82,7 +82,7 @@ impl Library {
         Self::update_stack_page(&self.library_stack);
     }
 
-    pub fn remove_stations(&self, stations: Vec<Station>) {
+    pub fn remove_stations(&self, stations: Vec<SwStation>) {
         debug!("Remove {} station(s)", stations.len());
         self.flowbox.remove_stations(stations.clone());
         for station in stations {
@@ -92,7 +92,7 @@ impl Library {
         Self::update_stack_page(&self.library_stack);
     }
 
-    pub fn contains_station(station: &Station) -> bool {
+    pub fn contains_station(station: &SwStation) -> bool {
         // Get station identifier
         let identifier = StationIdentifier::from_station(station);
 

@@ -20,7 +20,7 @@ use glib::Sender;
 use gtk::prelude::*;
 use gtk::{gio, glib};
 
-use crate::api::{FaviconDownloader, Station};
+use crate::api::{FaviconDownloader, SwStation};
 use crate::app::{Action, SwApplication};
 use crate::database::Library;
 use crate::ui::{FaviconSize, StationFavicon};
@@ -28,7 +28,7 @@ use crate::utils;
 
 pub struct StationDialog {
     pub widget: gtk::Dialog,
-    station: Station,
+    station: SwStation,
 
     title_label: gtk::Label,
     subtitle_label: gtk::Label,
@@ -47,7 +47,7 @@ pub struct StationDialog {
 }
 
 impl StationDialog {
-    pub fn new(sender: Sender<Action>, station: Station) -> Self {
+    pub fn new(sender: Sender<Action>, station: SwStation) -> Self {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/station_dialog.ui");
         get_widget!(builder, gtk::Dialog, station_dialog);
         get_widget!(builder, gtk::Label, title_label);
@@ -65,7 +65,7 @@ impl StationDialog {
         get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = StationFavicon::new(FaviconSize::Big);
         favicon_box.append(&station_favicon.widget);
-        if let Some(favicon) = station.favicon.as_ref() {
+        if let Some(favicon) = station.metadata().favicon.as_ref() {
             let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Big as i32).map(move |pixbuf| {
                 if let Ok(pixbuf) = pixbuf {
                     station_favicon.set_pixbuf(pixbuf)
@@ -105,29 +105,29 @@ impl StationDialog {
     }
 
     fn setup(&self) {
-        self.title_label.set_text(&self.station.name);
-        let subtitle = utils::station_subtitle(&self.station.country, &self.station.state, self.station.votes);
+        self.title_label.set_text(&self.station.metadata().name);
+        let subtitle = utils::station_subtitle(&self.station.metadata().country, &self.station.metadata().state, self.station.metadata().votes);
         self.subtitle_label.set_text(&subtitle);
 
-        if self.station.codec != "" {
-            self.codec_label.set_text(&self.station.codec);
+        if self.station.metadata().codec != "" {
+            self.codec_label.set_text(&self.station.metadata().codec);
         } else {
             self.codec_label.hide();
             self.codec_label_label.hide();
         }
-        if self.station.tags != "" {
-            self.tags_label.set_text(&self.station.tags);
+        if self.station.metadata().tags != "" {
+            self.tags_label.set_text(&self.station.metadata().tags);
         } else {
             self.tags_label.hide();
             self.tags_label_label.hide();
         }
-        if self.station.language != "" {
-            self.language_label.set_text(&self.station.language);
+        if self.station.metadata().language != "" {
+            self.language_label.set_text(&self.station.metadata().language);
         } else {
             self.language_label.hide();
             self.language_label_label.hide();
         }
-        if let Some(ref homepage) = self.station.homepage {
+        if let Some(ref homepage) = self.station.metadata().homepage {
             self.homepage_label.set_markup(&format!("<a href=\"{}\">{}</a>", homepage, homepage));
         } else {
             self.homepage_label.hide();

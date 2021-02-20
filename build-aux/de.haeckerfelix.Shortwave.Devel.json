@@ -24,7 +24,8 @@
         "--talk-name=ca.desrt.dconf",
         "--talk-name=org.a11y.Bus",
         "--env=DCONF_USER_CONFIG_DIR=.config/dconf",
-        "--env=RUST_LOG=shortwave=debug"
+        "--env=RUST_LOG=shortwave=debug",
+        "--env=RUST_BACKTRACE=1"
     ],
     "build-options" : {
         "append-path" : "/usr/lib/sdk/rust-stable/bin",

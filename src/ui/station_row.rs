@@ -20,36 +20,36 @@ use glib::Sender;
 use gtk::glib;
 use gtk::prelude::*;
 
-use crate::api::{FaviconDownloader, Station};
+use crate::api::{FaviconDownloader, SwStation};
 use crate::app::Action;
 use crate::ui::{FaviconSize, StationFavicon};
 use crate::utils;
 
 pub struct StationRow {
     pub widget: gtk::FlowBoxChild,
-    station: Station,
+    station: SwStation,
 
     builder: gtk::Builder,
     sender: Sender<Action>,
 }
 
 impl StationRow {
-    pub fn new(sender: Sender<Action>, station: Station) -> Self {
+    pub fn new(sender: Sender<Action>, station: SwStation) -> Self {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/station_row.ui");
         get_widget!(builder, gtk::FlowBoxChild, station_row);
 
         // Set row information
         get_widget!(builder, gtk::Label, station_label);
         get_widget!(builder, gtk::Label, subtitle_label);
-        station_label.set_text(&station.name);
-        let subtitle = utils::station_subtitle(&station.country, &station.state, station.votes);
+        station_label.set_text(&station.metadata().name);
+        let subtitle = utils::station_subtitle(&station.metadata().country, &station.metadata().state, station.metadata().votes);
         subtitle_label.set_text(&subtitle);
 
         // Download & set station favicon
         get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = StationFavicon::new(FaviconSize::Small);
         favicon_box.append(&station_favicon.widget);
-        if let Some(favicon) = station.favicon.as_ref() {
+        if let Some(favicon) = station.metadata().favicon.as_ref() {
             let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Small as i32).map(move |pixbuf| {
                 if let Ok(pixbuf) = pixbuf {
                     station_favicon.set_pixbuf(pixbuf)

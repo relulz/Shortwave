@@ -24,7 +24,7 @@ use std::cell::RefCell;
 use std::convert::TryInto;
 use std::rc::Rc;
 
-use crate::api::Station;
+use crate::api::SwStation;
 use crate::app::Action;
 use crate::ui::{StationDialog, StationRow};
 use crate::utils;
@@ -33,7 +33,7 @@ use crate::utils::{Order, Sorting};
 #[derive(Debug)]
 pub struct StationFlowBox {
     pub widget: gtk::FlowBox,
-    stations: Rc<RefCell<IndexMap<String, Station>>>,
+    stations: Rc<RefCell<IndexMap<String, SwStation>>>,
 
     sorting: RefCell<Sorting>,
     order: RefCell<Order>,
@@ -65,7 +65,7 @@ impl StationFlowBox {
     fn setup_signals(&self) {
         // Show StationDialog when row gets clicked
         self.widget
-            .connect_child_activated(clone!(@weak self.stations as stations, @strong self.sender as sender => move |_, child| {
+            .connect_child_activated(clone!(@strong self.stations as stations, @strong self.sender as sender => move |_, child| {
                 let index = child.get_index();
                 let station = stations.borrow().get_index(index.try_into().unwrap()).unwrap().1.clone();
 
@@ -74,12 +74,12 @@ impl StationFlowBox {
             }));
     }
 
-    pub fn add_stations(&self, stations: Vec<Station>) {
+    pub fn add_stations(&self, stations: Vec<SwStation>) {
         for station in stations {
-            if self.stations.borrow().contains_key(&station.stationuuid) {
-                warn!("Station \"{}\" is already added to flowbox.", station.name);
+            if self.stations.borrow().contains_key(&station.metadata().stationuuid) {
+                warn!("SwStation \"{}\" is already added to flowbox.", station.metadata().name);
             } else {
-                self.stations.borrow_mut().insert(station.stationuuid.clone(), station);
+                self.stations.borrow_mut().insert(station.metadata().stationuuid.clone(), station);
             }
         }
 
@@ -87,15 +87,15 @@ impl StationFlowBox {
         self.update_rows();
     }
 
-    pub fn remove_stations(&self, stations: Vec<Station>) {
+    pub fn remove_stations(&self, stations: Vec<SwStation>) {
         for station in stations {
             // Get the corresponding widget to the index, remove and destroy it
-            let index: usize = self.stations.borrow_mut().entry(station.stationuuid.clone()).index();
+            let index: usize = self.stations.borrow_mut().entry(station.metadata().stationuuid.clone()).index();
             let widget = self.widget.get_child_at_index(index.try_into().unwrap()).unwrap();
             self.widget.remove(&widget);
 
             // Remove the station from the indexmap itself
-            self.stations.borrow_mut().shift_remove(&station.stationuuid);
+            self.stations.borrow_mut().shift_remove(&station.metadata().stationuuid);
         }
     }
 
@@ -119,7 +119,7 @@ impl StationFlowBox {
         let widget = self.widget.downgrade();
         let sender = self.sender.clone();
         let stations = self.stations.borrow().clone();
-        let constructor = move |station: (String, Station)| StationRow::new(sender.clone(), station.1).widget;
+        let constructor = move |station: (String, SwStation)| StationRow::new(sender.clone(), station.1).widget;
 
         // Start lazy loading
         utils::lazy_load(stations, widget, constructor);
