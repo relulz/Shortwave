@@ -23,20 +23,16 @@ use std::rc::Rc;
 
 use crate::api::{Client, Error, SwStation};
 use crate::app::Action;
-use crate::config;
 use crate::database::connection;
 use crate::database::queries;
 use crate::database::StationIdentifier;
 use crate::i18n::*;
+use crate::model::SwStationModel;
 use crate::settings::{settings_manager, Key};
-use crate::ui::{Notification, StationFlowBox};
-use crate::utils::{Order, Sorting};
+use crate::ui::Notification;
 
 pub struct Library {
-    pub widget: gtk::Box,
-
-    flowbox: Rc<StationFlowBox>,
-    library_stack: gtk::Stack,
+    pub model: SwStationModel,
 
     client: Client,
     sender: Sender<Action>,
@@ -44,29 +40,10 @@ pub struct Library {
 
 impl Library {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/library.ui");
-        get_widget!(builder, gtk::Box, library);
-        get_widget!(builder, gtk::Box, content_box);
-        get_widget!(builder, gtk::Stack, library_stack);
-
-        // Setup empty state page
-        get_widget!(builder, adw::StatusPage, status_page);
-        status_page.set_icon_name(Some(&config::APP_ID));
-        // Welcome text which gets displayed when the library is empty. "{}" is the application name.
-        status_page.set_title(Some(&i18n_f("Welcome to {}", &[config::NAME]).as_str()));
-
-        let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        content_box.append(&flowbox.widget);
-
+        let model = SwStationModel::new();
         let client = Client::new(settings_manager::get_string(Key::ApiLookupDomain));
 
-        let library = Self {
-            widget: library,
-            flowbox,
-            library_stack,
-            client,
-            sender,
-        };
+        let library = Self { model, client, sender };
 
         library.load_stations();
         library
@@ -74,22 +51,22 @@ impl Library {
 
     pub fn add_stations(&self, stations: Vec<SwStation>) {
         debug!("Add {} station(s)", stations.len());
-        self.flowbox.add_stations(stations.clone());
         for station in stations {
+            self.model.add_station(&station);
+
             let id = StationIdentifier::from_station(&station);
             queries::insert_station_identifier(id).unwrap();
         }
-        Self::update_stack_page(&self.library_stack);
     }
 
     pub fn remove_stations(&self, stations: Vec<SwStation>) {
         debug!("Remove {} station(s)", stations.len());
-        self.flowbox.remove_stations(stations.clone());
         for station in stations {
+            self.model.remove_station(&station);
+
             let id = StationIdentifier::from_station(&station);
             queries::delete_station_identifier(id).unwrap();
         }
-        Self::update_stack_page(&self.library_stack);
     }
 
     pub fn contains_station(station: &SwStation) -> bool {
@@ -101,19 +78,6 @@ impl Library {
         db.contains(&identifier)
     }
 
-    pub fn set_sorting(&self, sorting: Sorting, order: Order) {
-        self.flowbox.set_sorting(sorting, order);
-    }
-
-    fn update_stack_page(library_stack: &gtk::Stack) {
-        let ids = queries::get_station_identifiers().unwrap();
-        if ids.is_empty() {
-            library_stack.set_visible_child_name("empty");
-        } else {
-            library_stack.set_visible_child_name("content");
-        }
-    }
-
     fn load_stations(&self) {
         // Print database info
         info!("Database Path: {}", connection::DB_PATH.to_str().unwrap());
@@ -121,12 +85,10 @@ impl Library {
 
         // Load database async
         let identifiers = queries::get_station_identifiers().unwrap();
-        let flowbox = self.flowbox.clone();
-        let library_stack = self.library_stack.clone();
+        let model = self.model.clone();
         let client = self.client.clone();
         let sender = self.sender.clone();
         let future = async move {
-            let mut stations = Vec::new();
             let mut futures = Vec::new();
 
             for id in identifiers {
@@ -137,7 +99,7 @@ impl Library {
 
             for result in results {
                 match result {
-                    Ok(station) => stations.insert(0, station),
+                    Ok(station) => model.add_station(&station),
                     Err(err) => match err {
                         Error::InvalidStationError(uuid) => {
                             let id = StationIdentifier::from_uuid(uuid);
@@ -153,9 +115,6 @@ impl Library {
                     },
                 }
             }
-
-            Self::update_stack_page(&library_stack.clone());
-            flowbox.add_stations(stations);
         };
 
         spawn!(future);

@@ -33,6 +33,7 @@ use crate::api::SwStation;
 use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
 use crate::database::Library;
+use crate::model::SwStationModel;
 use crate::settings::{settings_manager, Key};
 use crate::ui::{Notification, SwApplicationWindow, View};
 use crate::utils::{Order, Sorting};
@@ -247,12 +248,19 @@ impl SwApplication {
                     Key::ViewSorting | Key::ViewOrder => {
                         let sorting: Sorting = Sorting::from_str(&settings_manager::get_string(Key::ViewSorting)).unwrap();
                         let order: Order = Order::from_str(&settings_manager::get_string(Key::ViewOrder)).unwrap();
-                        self_.library.set_sorting(sorting, order);
+                        //self_.library.set_sorting(sorting, order);
                     }
                     _ => (),
                 }
             }
         }
         glib::Continue(true)
+    }
+
+    // TODO: Temporary workaround to access the library model
+    // Shouldn't be needed when `Library` itself is a GObject subclass
+    pub fn library_model(&self) -> SwStationModel {
+        let self_ = SwApplicationPrivate::from_instance(self);
+        self_.library.model.clone()
     }
 }

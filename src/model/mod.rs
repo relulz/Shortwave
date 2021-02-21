@@ -14,10 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-mod discover_page;
-mod library_page;
-mod search_page;
+mod station_model;
+mod station_sorter;
 
-pub use discover_page::SwDiscoverPage;
-pub use library_page::SwLibraryPage;
-pub use search_page::SwSearchPage;
+pub use station_model::SwStationModel;

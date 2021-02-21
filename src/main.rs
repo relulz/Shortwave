@@ -41,6 +41,7 @@ mod utils;
 mod api;
 mod audio;
 mod database;
+mod model;
 mod settings;
 mod ui;
 

@@ -28,7 +28,7 @@ use std::rc::Rc;
 use crate::app::{Action, SwApplication, SwApplicationPrivate};
 use crate::config;
 use crate::settings::{settings_manager, Key, SettingsWindow};
-use crate::ui::pages::{SwDiscoverPage, SwSearchPage};
+use crate::ui::pages::*;
 use crate::ui::{about_dialog, Notification};
 
 #[derive(Debug, Clone, PartialEq)]
@@ -47,14 +47,14 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/window.ui")]
     pub struct SwApplicationWindow {
         #[template_child]
+        pub library_page: TemplateChild<SwLibraryPage>,
+        #[template_child]
         pub discover_page: TemplateChild<SwDiscoverPage>,
         #[template_child]
         pub search_page: TemplateChild<SwSearchPage>,
 
         #[template_child]
         pub mini_controller_box: TemplateChild<gtk::Box>,
-        #[template_child]
-        pub library_page: TemplateChild<gtk::Box>,
         #[template_child]
         pub toolbar_controller_box: TemplateChild<gtk::Box>,
         #[template_child]
@@ -84,13 +84,13 @@ mod imp {
         glib::object_subclass!();
 
         fn new() -> Self {
-            let current_notification = RefCell::new(None);
+            let current_notification = RefCell::default();
 
             Self {
+                library_page: TemplateChild::default(),
                 discover_page: TemplateChild::default(),
                 search_page: TemplateChild::default(),
                 mini_controller_box: TemplateChild::default(),
-                library_page: TemplateChild::default(),
                 toolbar_controller_box: TemplateChild::default(),
                 toolbar_controller_revealer: TemplateChild::default(),
                 window_leaflet: TemplateChild::default(),
@@ -139,8 +139,8 @@ impl SwApplicationWindow {
     pub fn new(sender: Sender<Action>, app: SwApplication) -> Self {
         // Create new GObject and downcast it into SwApplicationWindow
         let window = glib::Object::new::<Self>(&[]).unwrap();
-
         app.add_window(&window.clone());
+
         window.setup_widgets(sender.clone());
         window.setup_signals(sender.clone());
         window.setup_gactions(sender);
@@ -153,12 +153,12 @@ impl SwApplicationWindow {
         let app_private = SwApplicationPrivate::from_instance(&app);
 
         // Init pages
+        imp.library_page.init(sender.clone());
         imp.discover_page.init(sender.clone());
         imp.search_page.init(sender.clone());
 
         // Wire everything up
         imp.mini_controller_box.append(&app_private.player.mini_controller_widget);
-        imp.library_page.append(&app_private.library.widget);
         imp.toolbar_controller_box.append(&app_private.player.toolbar_controller_widget);
         imp.window_flap.set_flap(Some(&app_private.player.widget));
 
@@ -384,12 +384,12 @@ impl SwApplicationWindow {
         let current_view = if imp.window_flap.get_folded() && imp.window_flap.get_reveal_flap() {
             View::Player
         } else {
-            if leaflet_child == imp.discover_page.get() {
-                View::Discover
-            } else if leaflet_child == imp.search_page.get() {
-                View::Search
-            } else {
+            if leaflet_child == imp.library_page.get() {
                 View::Library
+            } else if leaflet_child == imp.discover_page.get() {
+                View::Discover
+            } else {
+                View::Search
             }
         };
 
@@ -420,7 +420,7 @@ impl SwApplicationWindow {
         // Show requested view / page
         match view {
             View::Library => {
-                imp.window_leaflet.set_visible_child_name("library");
+                imp.window_leaflet.set_visible_child(&imp.library_page.get());
                 imp.back_button.set_visible(false);
                 imp.add_button.set_visible(true);
             }

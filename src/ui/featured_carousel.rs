@@ -116,7 +116,7 @@ impl FeaturedCarousel {
             }),
         );
 
-        self.paginator.connect_page_changed(clone!(@weak self.visible_page as visible_page => move |_, a|{
+        self.paginator.connect_page_changed(clone!(@strong self.visible_page as visible_page => move |_, a|{
             *visible_page.borrow_mut() = a.try_into().unwrap();
         }));
     }

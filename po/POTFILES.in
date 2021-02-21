@@ -2,7 +2,7 @@
 # Please keep this file sorted alphabetically.
 
 data/gtk/discover_page.ui
-data/gtk/library.ui
+data/gtk/library_page.ui
 data/gtk/menu/player_menu.ui
 data/gtk/mini_controller.ui
 data/gtk/notification.ui
@@ -21,6 +21,7 @@ src/audio/player.rs
 src/database/library.rs
 src/ui/about_dialog.rs
 src/ui/pages/discover_page.rs
+src/ui/pages/library_page.rs
 src/ui/pages/search_page.rs
 src/ui/station_row.rs
 src/ui/window.rs

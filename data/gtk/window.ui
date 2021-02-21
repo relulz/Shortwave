@@ -63,12 +63,7 @@
                         <property name="hexpand">True</property>
                         <property name="can_swipe_back">True</property>
                         <child>
-                          <object class="AdwLeafletPage">
-                            <property name="name">library</property>
-                            <property name="child">
-                              <object class="GtkBox" id="library_page"/>
-                            </property>
-                          </object>
+                          <object class="SwLibraryPage" id="library_page"/>
                         </child>
                         <child>
                           <object class="SwDiscoverPage" id="discover_page"/>

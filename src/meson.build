@@ -61,7 +61,12 @@ sources = files(
   'settings/settings_window.rs',
   'settings/settings_manager.rs',
 
+  'model/mod.rs',
+  'model/station_model.rs',
+  'model/station_sorter.rs',
+
   'ui/pages/discover_page.rs',
+  'ui/pages/library_page.rs',
   'ui/pages/mod.rs',
   'ui/pages/search_page.rs',
   'ui/about_dialog.rs',
