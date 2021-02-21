@@ -1,152 +1,43 @@
 # Brazilian Portuguese translation for shortwave.
 # Copyright (C) 2021 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
-# Rafael Fontenelle <rafaelff@gnome.org>, 2020.
 # Enrico Nicoletto <liverig@gmail.com>, 2021.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2020-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-02-15 21:35+0000\n"
-"PO-Revision-Date: 2021-02-16 18:39-0300\n"
-"Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
+"POT-Creation-Date: 2021-02-20 14:26+0000\n"
+"PO-Revision-Date: 2021-02-21 14:51-0300\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Gtranslator 3.38.0\n"
 
-#: data/gtk/station_dialog.ui:8
-msgid "Station details"
-msgstr "Detalhes da estação"
-
-#: data/gtk/station_dialog.ui:62
-msgid "Language"
-msgstr "Idioma"
-
-#: data/gtk/station_dialog.ui:91
-msgid "Tags"
-msgstr "Etiquetas"
-
-#: data/gtk/station_dialog.ui:117
-msgid "Codec"
-msgstr "Codec"
-
-#: data/gtk/station_dialog.ui:144
-msgid "Homepage"
-msgstr "Site"
-
-#: data/gtk/station_dialog.ui:182
-msgid "_Remove from Library"
-msgstr "_Remover da biblioteca"
-
-#: data/gtk/station_dialog.ui:196
-msgid "_Add to library"
-msgstr "_Adicionar a biblioteca"
-
-#: data/gtk/discover.ui:31
+#: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
 msgstr "Estações mais votadas"
 
-#: data/gtk/discover.ui:46
+#: data/gtk/discover_page.ui:43
 msgid "Trending"
 msgstr "Em alta"
 
-#: data/gtk/discover.ui:61
+#: data/gtk/discover_page.ui:58
 msgid "Other users are listening to…"
 msgstr "Outros usuários estão ouvindo…"
 
-#: data/gtk/song_row.ui:12
-msgid "Save recorded song"
-msgstr "Salvar gravação"
+#: data/gtk/library.ui:37
+msgid "Receiving station data…"
+msgstr "Recebendo dados da estação…"
 
-#: data/gtk/streaming_dialog.ui:46
-msgid "Stream to a device"
-msgstr "Fazer stream para um dispositivo"
-
-#: data/gtk/streaming_dialog.ui:89
-msgid "Devices which implement the Google Cast protocol are supported."
-msgstr "Há suporte a dispositivos que implementam o protocolo Google Cast."
-
-#: data/gtk/streaming_dialog.ui:121
-msgid "No devices found"
-msgstr "Nenhum dispositivo encontrado"
-
-#: data/gtk/streaming_dialog.ui:131
-msgid "_Retry search"
-msgstr "_Repetir pesquisar"
-
-#: data/gtk/streaming_dialog.ui:179 data/gtk/streaming_dialog.ui:210
-msgid "Searching for devices…"
-msgstr "Pesquisando dispositivos…"
-
-#: data/gtk/notification.ui:58
-msgid "Error details"
-msgstr "Detalhes do erro"
-
-#: data/gtk/sidebar_controller.ui:22
-msgid "An error occurred"
-msgstr "Ocorreu um erro"
-
-#: data/gtk/sidebar_controller.ui:63 data/gtk/mini_controller.ui:91
-#: data/gtk/toolbar_controller.ui:38
-msgid "No playback"
-msgstr "Nenhuma reprodução"
-
-#: data/gtk/menu/app_menu.ui:6
-msgid "_Sorting"
-msgstr "_Classificação"
-
-#: data/gtk/menu/app_menu.ui:9
-msgid "_Name"
-msgstr "_Nome"
-
-#: data/gtk/menu/app_menu.ui:14
-msgid "_Language"
-msgstr "_Idioma"
-
-#: data/gtk/menu/app_menu.ui:19
-msgid "_Country"
-msgstr "_País"
-
-#: data/gtk/menu/app_menu.ui:24
-msgid "S_tate"
-msgstr "Es_tado"
-
-#: data/gtk/menu/app_menu.ui:29
-msgid "_Votes"
-msgstr "_Votos"
-
-#: data/gtk/menu/app_menu.ui:36
-msgid "_Ascending"
-msgstr "_Crescente"
-
-#: data/gtk/menu/app_menu.ui:41
-msgid "_Descending"
-msgstr "_Decrescente"
-
-#: data/gtk/menu/app_menu.ui:50
-msgid "_Open radio-browser.info <sup>↗</sup>"
-msgstr "A_brir radio-browser.info <sup>↗</sup>"
-
-#: data/gtk/menu/app_menu.ui:54
-msgid "_Create new station"
-msgstr "_Criar nova estação"
-
-#: data/gtk/menu/app_menu.ui:60
-msgid "_Preferences"
-msgstr "_Preferências"
-
-#: data/gtk/menu/app_menu.ui:64
-msgid "_Keyboard Shortcuts"
-msgstr "A_talhos de teclado"
-
-#: data/gtk/menu/app_menu.ui:68
-msgid "_About Shortwave"
-msgstr "_Sobre o Shortwave"
+#: data/gtk/library.ui:64
+msgid "_Discover new stations"
+msgstr "_Descobrir novas estações"
 
 #: data/gtk/menu/player_menu.ui:6
 msgid "_Show station details"
@@ -159,6 +50,27 @@ msgstr "Fazer stream para um _dispositivo"
 #: data/gtk/menu/player_menu.ui:16
 msgid "_Enable mini player"
 msgstr "_Habilitar reprodutor compacto"
+
+#: data/gtk/mini_controller.ui:69
+msgid "SHORTWAVE INTERNET RADIO"
+msgstr "SHORTWAVE RÁDIO NA INTERNET"
+
+#: data/gtk/mini_controller.ui:91 data/gtk/sidebar_controller.ui:63
+#: data/gtk/toolbar_controller.ui:38
+msgid "No playback"
+msgstr "Nenhuma reprodução"
+
+#: data/gtk/notification.ui:58
+msgid "Error details"
+msgstr "Detalhes do erro"
+
+#: data/gtk/player.ui:44
+msgid "Connected with"
+msgstr "Conectado com"
+
+#: data/gtk/settings_window.ui:10 data/gtk/shortcuts.ui:11
+msgid "General"
+msgstr "Geral"
 
 #: data/gtk/settings_window.ui:13
 msgid "Appearance"
@@ -184,10 +96,6 @@ msgstr "_Notificações"
 msgid "Show desktop notifications when a new song gets played"
 msgstr "Mostra notificações quando uma nova música é reproduzida"
 
-#: data/gtk/shortcuts.ui:11
-msgid "General"
-msgstr "Geral"
-
 #: data/gtk/shortcuts.ui:15
 msgctxt "shortcut window"
 msgid "Quit the application"
@@ -198,25 +106,9 @@ msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "Pesquisa por estações"
 
-#: data/gtk/storefront.ui:18
-msgid "Discover"
-msgstr "Descobrir"
-
-#: data/gtk/storefront.ui:28
-msgid "Search"
-msgstr "Pesquisar"
-
-#: data/gtk/library.ui:37
-msgid "Receiving station data…"
-msgstr "Recebendo dados da estação…"
-
-#: data/gtk/library.ui:64
-msgid "_Discover new stations"
-msgstr "_Descobrir novas estações"
-
-#: data/gtk/mini_controller.ui:69
-msgid "SHORTWAVE INTERNET RADIO"
-msgstr "SHORTWAVE RÁDIO NA INTERNET"
+#: data/gtk/sidebar_controller.ui:22
+msgid "An error occurred"
+msgstr "Ocorreu um erro"
 
 #: data/gtk/song_listbox.ui:23
 msgid ""
@@ -248,20 +140,130 @@ msgstr "As músicas salvas ficarão disponíveis na sua pasta Música."
 msgid "_Open"
 msgstr "_Abrir"
 
-#: data/gtk/player.ui:44
-msgid "Connected with"
-msgstr "Conectado com"
+#: data/gtk/song_row.ui:12
+msgid "Save recorded song"
+msgstr "Salvar gravação"
 
-#: src/audio/player.rs:162
+#: data/gtk/station_dialog.ui:8
+msgid "Station details"
+msgstr "Detalhes da estação"
+
+#: data/gtk/station_dialog.ui:62
+msgid "Language"
+msgstr "Idioma"
+
+#: data/gtk/station_dialog.ui:91
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: data/gtk/station_dialog.ui:117
+msgid "Codec"
+msgstr "Codec"
+
+#: data/gtk/station_dialog.ui:144
+msgid "Homepage"
+msgstr "Site"
+
+#: data/gtk/station_dialog.ui:182
+msgid "_Remove from Library"
+msgstr "_Remover da biblioteca"
+
+#: data/gtk/station_dialog.ui:196
+msgid "_Add to library"
+msgstr "_Adicionar a biblioteca"
+
+#: data/gtk/streaming_dialog.ui:46
+msgid "Stream to a device"
+msgstr "Fazer stream para um dispositivo"
+
+#: data/gtk/streaming_dialog.ui:51
+#| msgid "Cancel"
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: data/gtk/streaming_dialog.ui:57
+#| msgid "Connected with"
+msgid "_Connect"
+msgstr "_Conectar"
+
+#: data/gtk/streaming_dialog.ui:89
+msgid "Devices which implement the Google Cast protocol are supported."
+msgstr "Há suporte a dispositivos que implementam o protocolo Google Cast."
+
+#: data/gtk/streaming_dialog.ui:121
+msgid "No devices found"
+msgstr "Nenhum dispositivo encontrado"
+
+#: data/gtk/streaming_dialog.ui:131
+msgid "_Retry search"
+msgstr "_Repetir pesquisar"
+
+#: data/gtk/streaming_dialog.ui:179 data/gtk/streaming_dialog.ui:210
+msgid "Searching for devices…"
+msgstr "Pesquisando dispositivos…"
+
+#: data/gtk/window.ui:108
+msgid "_Sorting"
+msgstr "_Classificação"
+
+#: data/gtk/window.ui:111
+msgid "_Name"
+msgstr "_Nome"
+
+#: data/gtk/window.ui:116
+msgid "_Language"
+msgstr "_Idioma"
+
+#: data/gtk/window.ui:121
+msgid "_Country"
+msgstr "_País"
+
+#: data/gtk/window.ui:126
+msgid "S_tate"
+msgstr "Es_tado"
+
+#: data/gtk/window.ui:131
+msgid "_Votes"
+msgstr "_Votos"
+
+#: data/gtk/window.ui:138
+msgid "_Ascending"
+msgstr "_Crescente"
+
+#: data/gtk/window.ui:143
+msgid "_Descending"
+msgstr "_Decrescente"
+
+#: data/gtk/window.ui:152
+msgid "_Open radio-browser.info <sup>↗</sup>"
+msgstr "A_brir radio-browser.info <sup>↗</sup>"
+
+#: data/gtk/window.ui:156
+msgid "_Create new station"
+msgstr "_Criar nova estação"
+
+#: data/gtk/window.ui:162
+msgid "_Preferences"
+msgstr "_Preferências"
+
+#: data/gtk/window.ui:166
+msgid "_Keyboard Shortcuts"
+msgstr "A_talhos de teclado"
+
+#: data/gtk/window.ui:170
+msgid "_About Shortwave"
+msgstr "_Sobre o Shortwave"
+
+#: src/audio/player.rs:163
 msgid "This station cannot be played because the stream is offline."
 msgstr ""
 "Esta estação não pode ser reproduzida porque o stream está desconectado."
 
-#: src/audio/player.rs:180
+#: src/audio/player.rs:181
 msgid "Station cannot be streamed."
 msgstr "A estação não pode ser reproduzida."
 
-#: src/audio/player.rs:180
+#: src/audio/player.rs:181
 msgid "URL is not valid."
 msgstr "A URL não é válida."
 
@@ -274,34 +276,10 @@ msgstr "Bem-vindo(a) ao {}"
 msgid "No longer existing station removed from library."
 msgstr "Estação inexistente removida da biblioteca."
 
-#: src/database/library.rs:150 src/discover/pages/discover.rs:127
-#: src/discover/pages/search.rs:95
+#: src/database/library.rs:150 src/ui/pages/discover_page.rs:167
+#: src/ui/pages/search_page.rs:158
 msgid "Station data could not be received."
 msgstr "Os dados da estação não puderam ser recebidos."
-
-#: src/discover/pages/discover.rs:57
-msgid "Show statistics"
-msgstr "Mostrar estatísticas"
-
-#: src/discover/pages/discover.rs:58
-msgid "Browse over 25,500 stations"
-msgstr "Navegue por mais de 25.500 estações"
-
-#: src/discover/pages/discover.rs:60
-msgid "Add new station"
-msgstr "Adicionar nova estação"
-
-#: src/discover/pages/discover.rs:61
-msgid "Your favorite station is missing?"
-msgstr "Sua estação favorita não está aqui?"
-
-#: src/discover/pages/discover.rs:63
-msgid "Open website"
-msgstr "Abrir site"
-
-#: src/discover/pages/discover.rs:64
-msgid "Powered by radio-browser.info"
-msgstr "Fornecido por radio-browser.info"
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -313,6 +291,30 @@ msgid "translator-credits"
 msgstr ""
 "Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Enrico Nicoletto <liverig@gmail.com>"
+
+#: src/ui/pages/discover_page.rs:116
+msgid "Show statistics"
+msgstr "Mostrar estatísticas"
+
+#: src/ui/pages/discover_page.rs:117
+msgid "Browse over 25,500 stations"
+msgstr "Navegue por mais de 25.500 estações"
+
+#: src/ui/pages/discover_page.rs:119
+msgid "Add new station"
+msgstr "Adicionar nova estação"
+
+#: src/ui/pages/discover_page.rs:120
+msgid "Your favorite station is missing?"
+msgstr "Sua estação favorita não está aqui?"
+
+#: src/ui/pages/discover_page.rs:122
+msgid "Open website"
+msgstr "Abrir site"
+
+#: src/ui/pages/discover_page.rs:123
+msgid "Powered by radio-browser.info"
+msgstr "Fornecido por radio-browser.info"
 
 #: src/utils.rs:109
 msgid "{} Vote"
@@ -385,6 +387,12 @@ msgstr "Integração perfeita no ambiente GNOME"
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Rádio;Radio;Stream;Fluxo;Wave;Onda;Sintonia;"
 
+#~ msgid "Discover"
+#~ msgstr "Descobrir"
+
+#~ msgid "Search"
+#~ msgstr "Pesquisar"
+
 #~ msgid "Locations"
 #~ msgstr "Locais"
 
@@ -408,9 +416,6 @@ msgstr "Gradio;Rádio;Radio;Stream;Fluxo;Wave;Onda;Sintonia;"
 
 #~ msgid "Import"
 #~ msgstr "Importar"
-
-#~ msgid "Cancel"
-#~ msgstr "Cancelar"
 
 #~ msgid "Converting data…"
 #~ msgstr "Convertendo dados…"
