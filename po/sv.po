@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-02-15 21:35+0000\n"
-"PO-Revision-Date: 2021-02-16 00:48+0100\n"
+"POT-Creation-Date: 2021-02-20 14:26+0000\n"
+"PO-Revision-Date: 2021-02-22 22:25+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -18,134 +18,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: data/gtk/station_dialog.ui:8
-msgid "Station details"
-msgstr "Stationsdetaljer"
-
-#: data/gtk/station_dialog.ui:62
-msgid "Language"
-msgstr "Språk"
-
-#: data/gtk/station_dialog.ui:91
-msgid "Tags"
-msgstr "Taggar"
-
-#: data/gtk/station_dialog.ui:117
-msgid "Codec"
-msgstr "Kodek"
-
-#: data/gtk/station_dialog.ui:144
-msgid "Homepage"
-msgstr "Webbsida"
-
-#: data/gtk/station_dialog.ui:182
-msgid "_Remove from Library"
-msgstr "_Ta bort från bibliotek"
-
-#: data/gtk/station_dialog.ui:196
-msgid "_Add to library"
-msgstr "_Lägg till i bibliotek"
-
-#: data/gtk/discover.ui:31
+#: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
 msgstr "Stationer med flest röster"
 
-#: data/gtk/discover.ui:46
+#: data/gtk/discover_page.ui:43
 msgid "Trending"
 msgstr "Populärt just nu"
 
-#: data/gtk/discover.ui:61
+#: data/gtk/discover_page.ui:58
 msgid "Other users are listening to…"
 msgstr "Andra användare lyssnar på…"
 
-#: data/gtk/song_row.ui:12
-msgid "Save recorded song"
-msgstr "Spara inspelad låt"
+#: data/gtk/library.ui:37
+msgid "Receiving station data…"
+msgstr "Erhåller stationsdata…"
 
-#: data/gtk/streaming_dialog.ui:46
-msgid "Stream to a device"
-msgstr "Strömma till en enhet"
-
-#: data/gtk/streaming_dialog.ui:89
-msgid "Devices which implement the Google Cast protocol are supported."
-msgstr "Enheter som implementerar Google Cast-protokollet stöds."
-
-#: data/gtk/streaming_dialog.ui:121
-msgid "No devices found"
-msgstr "Inga enheter hittades"
-
-#: data/gtk/streaming_dialog.ui:131
-msgid "_Retry search"
-msgstr "Sök _igen"
-
-#: data/gtk/streaming_dialog.ui:179 data/gtk/streaming_dialog.ui:210
-msgid "Searching for devices…"
-msgstr "Söker efter enheter…"
-
-#: data/gtk/notification.ui:58
-msgid "Error details"
-msgstr "Feldetaljer"
-
-#: data/gtk/sidebar_controller.ui:22
-msgid "An error occurred"
-msgstr "Ett fel uppstod"
-
-#: data/gtk/sidebar_controller.ui:63 data/gtk/mini_controller.ui:91
-#: data/gtk/toolbar_controller.ui:38
-msgid "No playback"
-msgstr "Ingen uppspelning"
-
-#: data/gtk/menu/app_menu.ui:6
-msgid "_Sorting"
-msgstr "_Sortering"
-
-#: data/gtk/menu/app_menu.ui:9
-msgid "_Name"
-msgstr "_Namn"
-
-#: data/gtk/menu/app_menu.ui:14
-msgid "_Language"
-msgstr "S_pråk"
-
-#: data/gtk/menu/app_menu.ui:19
-msgid "_Country"
-msgstr "_Land"
-
-#: data/gtk/menu/app_menu.ui:24
-msgid "S_tate"
-msgstr "Lä_n"
-
-#: data/gtk/menu/app_menu.ui:29
-msgid "_Votes"
-msgstr "_Röster"
-
-#: data/gtk/menu/app_menu.ui:36
-msgid "_Ascending"
-msgstr "S_tigande"
-
-#: data/gtk/menu/app_menu.ui:41
-msgid "_Descending"
-msgstr "_Fallande"
-
-#: data/gtk/menu/app_menu.ui:50
-msgid "_Open radio-browser.info <sup>↗</sup>"
-msgstr "Ö_ppna radio-browser.info <sup>↗</sup>"
-
-#: data/gtk/menu/app_menu.ui:54
-msgid "_Create new station"
-msgstr "S_kapa ny station"
-
-#: data/gtk/menu/app_menu.ui:60
-msgid "_Preferences"
-msgstr "_Inställningar"
-
-#: data/gtk/menu/app_menu.ui:64
-msgid "_Keyboard Shortcuts"
-msgstr "_Tangentbordsgenvägar"
-
-#: data/gtk/menu/app_menu.ui:68
-msgid "_About Shortwave"
-msgstr "_Om Shortwave"
+#: data/gtk/library.ui:64
+msgid "_Discover new stations"
+msgstr "_Upptäck nya stationer"
 
 #: data/gtk/menu/player_menu.ui:6
 msgid "_Show station details"
@@ -158,6 +49,27 @@ msgstr "Strömma till en _enhet"
 #: data/gtk/menu/player_menu.ui:16
 msgid "_Enable mini player"
 msgstr "_Aktivera minispelare"
+
+#: data/gtk/mini_controller.ui:69
+msgid "SHORTWAVE INTERNET RADIO"
+msgstr "SHORTWAVE INTERNETRADIO"
+
+#: data/gtk/mini_controller.ui:91 data/gtk/sidebar_controller.ui:63
+#: data/gtk/toolbar_controller.ui:38
+msgid "No playback"
+msgstr "Ingen uppspelning"
+
+#: data/gtk/notification.ui:58
+msgid "Error details"
+msgstr "Feldetaljer"
+
+#: data/gtk/player.ui:44
+msgid "Connected with"
+msgstr "Ansluten till"
+
+#: data/gtk/settings_window.ui:10 data/gtk/shortcuts.ui:11
+msgid "General"
+msgstr "Allmänt"
 
 #: data/gtk/settings_window.ui:13
 msgid "Appearance"
@@ -183,10 +95,6 @@ msgstr "_Aviseringar"
 msgid "Show desktop notifications when a new song gets played"
 msgstr "Visa skrivbordsaviseringar när en ny låt spelas"
 
-#: data/gtk/shortcuts.ui:11
-msgid "General"
-msgstr "Allmänt"
-
 #: data/gtk/shortcuts.ui:15
 msgctxt "shortcut window"
 msgid "Quit the application"
@@ -197,25 +105,9 @@ msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "Sök stationer"
 
-#: data/gtk/storefront.ui:18
-msgid "Discover"
-msgstr "Upptäck"
-
-#: data/gtk/storefront.ui:28
-msgid "Search"
-msgstr "Sök"
-
-#: data/gtk/library.ui:37
-msgid "Receiving station data…"
-msgstr "Erhåller stationsdata…"
-
-#: data/gtk/library.ui:64
-msgid "_Discover new stations"
-msgstr "_Upptäck nya stationer"
-
-#: data/gtk/mini_controller.ui:69
-msgid "SHORTWAVE INTERNET RADIO"
-msgstr "SHORTWAVE INTERNETRADIO"
+#: data/gtk/sidebar_controller.ui:22
+msgid "An error occurred"
+msgstr "Ett fel uppstod"
 
 #: data/gtk/song_listbox.ui:23
 msgid ""
@@ -247,19 +139,127 @@ msgstr "Sparade låtar finns i din mapp Musik."
 msgid "_Open"
 msgstr "Ö_ppna"
 
-#: data/gtk/player.ui:44
-msgid "Connected with"
-msgstr "Ansluten till"
+#: data/gtk/song_row.ui:12
+msgid "Save recorded song"
+msgstr "Spara inspelad låt"
 
-#: src/audio/player.rs:162
+#: data/gtk/station_dialog.ui:8
+msgid "Station details"
+msgstr "Stationsdetaljer"
+
+#: data/gtk/station_dialog.ui:62
+msgid "Language"
+msgstr "Språk"
+
+#: data/gtk/station_dialog.ui:91
+msgid "Tags"
+msgstr "Taggar"
+
+#: data/gtk/station_dialog.ui:117
+msgid "Codec"
+msgstr "Kodek"
+
+#: data/gtk/station_dialog.ui:144
+msgid "Homepage"
+msgstr "Webbsida"
+
+#: data/gtk/station_dialog.ui:182
+msgid "_Remove from Library"
+msgstr "_Ta bort från bibliotek"
+
+#: data/gtk/station_dialog.ui:196
+msgid "_Add to library"
+msgstr "_Lägg till i bibliotek"
+
+#: data/gtk/streaming_dialog.ui:46
+msgid "Stream to a device"
+msgstr "Strömma till en enhet"
+
+#: data/gtk/streaming_dialog.ui:51
+msgid "_Cancel"
+msgstr "A_vbryt"
+
+#: data/gtk/streaming_dialog.ui:57
+msgid "_Connect"
+msgstr "_Anslut"
+
+#: data/gtk/streaming_dialog.ui:89
+msgid "Devices which implement the Google Cast protocol are supported."
+msgstr "Enheter som implementerar Google Cast-protokollet stöds."
+
+#: data/gtk/streaming_dialog.ui:121
+msgid "No devices found"
+msgstr "Inga enheter hittades"
+
+#: data/gtk/streaming_dialog.ui:131
+msgid "_Retry search"
+msgstr "Sök _igen"
+
+#: data/gtk/streaming_dialog.ui:179 data/gtk/streaming_dialog.ui:210
+msgid "Searching for devices…"
+msgstr "Söker efter enheter…"
+
+#: data/gtk/window.ui:108
+msgid "_Sorting"
+msgstr "_Sortering"
+
+#: data/gtk/window.ui:111
+msgid "_Name"
+msgstr "_Namn"
+
+#: data/gtk/window.ui:116
+msgid "_Language"
+msgstr "S_pråk"
+
+#: data/gtk/window.ui:121
+msgid "_Country"
+msgstr "_Land"
+
+#: data/gtk/window.ui:126
+msgid "S_tate"
+msgstr "Lä_n"
+
+#: data/gtk/window.ui:131
+msgid "_Votes"
+msgstr "_Röster"
+
+#: data/gtk/window.ui:138
+msgid "_Ascending"
+msgstr "S_tigande"
+
+#: data/gtk/window.ui:143
+msgid "_Descending"
+msgstr "_Fallande"
+
+#: data/gtk/window.ui:152
+msgid "_Open radio-browser.info <sup>↗</sup>"
+msgstr "Ö_ppna radio-browser.info <sup>↗</sup>"
+
+#: data/gtk/window.ui:156
+msgid "_Create new station"
+msgstr "S_kapa ny station"
+
+#: data/gtk/window.ui:162
+msgid "_Preferences"
+msgstr "_Inställningar"
+
+#: data/gtk/window.ui:166
+msgid "_Keyboard Shortcuts"
+msgstr "_Tangentbordsgenvägar"
+
+#: data/gtk/window.ui:170
+msgid "_About Shortwave"
+msgstr "_Om Shortwave"
+
+#: src/audio/player.rs:163
 msgid "This station cannot be played because the stream is offline."
 msgstr "Denna station kan inte spelas eftersom strömmen är frånkopplad."
 
-#: src/audio/player.rs:180
+#: src/audio/player.rs:181
 msgid "Station cannot be streamed."
 msgstr "Stationen kan inte strömmas."
 
-#: src/audio/player.rs:180
+#: src/audio/player.rs:181
 msgid "URL is not valid."
 msgstr "URL är inte giltig."
 
@@ -272,34 +272,10 @@ msgstr "Välkommen till {}"
 msgid "No longer existing station removed from library."
 msgstr "Station som inte längre finns borttagen från bibliotek."
 
-#: src/database/library.rs:150 src/discover/pages/discover.rs:127
-#: src/discover/pages/search.rs:95
+#: src/database/library.rs:150 src/ui/pages/discover_page.rs:167
+#: src/ui/pages/search_page.rs:158
 msgid "Station data could not be received."
 msgstr "Kunde inte erhålla stationsdata."
-
-#: src/discover/pages/discover.rs:57
-msgid "Show statistics"
-msgstr "Visa statistik"
-
-#: src/discover/pages/discover.rs:58
-msgid "Browse over 25,500 stations"
-msgstr "Bläddra bland över 25500 stationer"
-
-#: src/discover/pages/discover.rs:60
-msgid "Add new station"
-msgstr "Lägg till ny station"
-
-#: src/discover/pages/discover.rs:61
-msgid "Your favorite station is missing?"
-msgstr "Saknas din favoritstation?"
-
-#: src/discover/pages/discover.rs:63
-msgid "Open website"
-msgstr "Öppna webbplats"
-
-#: src/discover/pages/discover.rs:64
-msgid "Powered by radio-browser.info"
-msgstr "Driftas av radio-browser.info"
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -313,6 +289,30 @@ msgstr ""
 "\n"
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>"
+
+#: src/ui/pages/discover_page.rs:116
+msgid "Show statistics"
+msgstr "Visa statistik"
+
+#: src/ui/pages/discover_page.rs:117
+msgid "Browse over 25,500 stations"
+msgstr "Bläddra bland över 25500 stationer"
+
+#: src/ui/pages/discover_page.rs:119
+msgid "Add new station"
+msgstr "Lägg till ny station"
+
+#: src/ui/pages/discover_page.rs:120
+msgid "Your favorite station is missing?"
+msgstr "Saknas din favoritstation?"
+
+#: src/ui/pages/discover_page.rs:122
+msgid "Open website"
+msgstr "Öppna webbplats"
+
+#: src/ui/pages/discover_page.rs:123
+msgid "Powered by radio-browser.info"
+msgstr "Driftas av radio-browser.info"
 
 #: src/utils.rs:109
 msgid "{} Vote"
@@ -378,43 +378,3 @@ msgstr "Sömlös integration med skrivbordsmiljön GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Ström;Stream;Wave;"
-
-#~ msgid "Locations"
-#~ msgstr "Platser"
-
-#~ msgid "Languages"
-#~ msgstr "Språk"
-
-#~ msgid "Enable dark mode"
-#~ msgstr "Aktivera mörkt läge"
-
-#~ msgid "Library"
-#~ msgstr "Bibliotek"
-
-#~ msgid "Import from Gradio"
-#~ msgstr "Importera från Gradio"
-
-#~ msgid "Import stations from Gradio"
-#~ msgstr "Importera stationer från Gradio"
-
-#~ msgid "Select database to import"
-#~ msgstr "Välj databas att importera"
-
-#~ msgid "Import"
-#~ msgstr "Importera"
-
-#~ msgid "Cancel"
-#~ msgstr "Avbryt"
-
-#~ msgid "Converting data…"
-#~ msgstr "Konverterar data…"
-
-#~ msgid "Importing {} station…"
-#~ msgid_plural "Importing {} stations…"
-#~ msgstr[0] "Importerar {} station…"
-#~ msgstr[1] "Importerar {} stationer…"
-
-#~ msgid "Imported {} station!"
-#~ msgid_plural "Imported {} stations!"
-#~ msgstr[0] "Importerade {} station!"
-#~ msgstr[1] "Importerade {} stationer!"
