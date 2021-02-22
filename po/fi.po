@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-08-02 15:56+0000\n"
-"PO-Revision-Date: 2020-08-16 15:51+0300\n"
+"POT-Creation-Date: 2021-02-20 14:26+0000\n"
+"PO-Revision-Date: 2021-02-22 18:00+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -16,202 +16,100 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
-#: data/gtk/station_dialog.ui:10
-msgid "Station details"
-msgstr "Aseman tiedot"
-
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:169
-msgid "Language"
-msgstr "Kieli"
-
-#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:175
-msgid "Tags"
-msgstr "Tunnisteet"
-
-#: data/gtk/station_dialog.ui:220
-msgid "Codec"
-msgstr "Koodekki"
-
-#: data/gtk/station_dialog.ui:235
-msgid "Homepage"
-msgstr "Verkkosivusto"
-
-#: data/gtk/discover.ui:54
+#: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
 msgstr "Eniten ääniä keränneet asemat"
 
-#: data/gtk/discover.ui:88
+#: data/gtk/discover_page.ui:43
 msgid "Trending"
 msgstr "Nousussa"
 
-#: data/gtk/discover.ui:122
+#: data/gtk/discover_page.ui:58
 msgid "Other users are listening to…"
 msgstr "Muut käyttäjät kuuntelevat…"
 
-#: data/gtk/song_row.ui:18
-msgid "Save recorded song"
-msgstr "Tallenna nauhoitettu kappale"
+#: data/gtk/library.ui:37
+msgid "Receiving station data…"
+msgstr "Vastaanotetaan aseman tietoja…"
 
-#: data/gtk/streaming_dialog.ui:75 data/gtk/menu/player_menu.ui:33
-msgid "Stream to a device"
-msgstr "Suoratoista laitteelle"
+#: data/gtk/library.ui:64
+msgid "_Discover new stations"
+msgstr "L_öydä uusia asemia"
 
-#: data/gtk/streaming_dialog.ui:154
-msgid "Devices which implement the Google Cast protocol are supported."
-msgstr "Google Cast -protokollaa noudattavat laitteet ovat tuettuja."
+#: data/gtk/menu/player_menu.ui:6
+msgid "_Show station details"
+msgstr "Näytä _aseman tiedot"
 
-#: data/gtk/streaming_dialog.ui:209
-msgid "No devices found"
-msgstr "Laitteita ei löytynyt"
+#: data/gtk/menu/player_menu.ui:10
+msgid "Stream to a _device"
+msgstr "_Suoratoista laitteelle"
 
-#: data/gtk/streaming_dialog.ui:224
-msgid "Retry search"
-msgstr "Hae uudelleen"
+#: data/gtk/menu/player_menu.ui:16
+msgid "_Enable mini player"
+msgstr "_Käytä pienoissoitinta"
 
-#: data/gtk/streaming_dialog.ui:302 data/gtk/streaming_dialog.ui:353
-msgid "Searching for devices…"
-msgstr "Etsitään laitteita…"
+#: data/gtk/mini_controller.ui:69
+msgid "SHORTWAVE INTERNET RADIO"
+msgstr "SHORTWAVE INTERNET RADIO"
 
-#: data/gtk/notification.ui:142
-msgid "Error details"
-msgstr "Virheen lisätiedot"
-
-#: data/gtk/sidebar_controller.ui:33
-msgid "An error occurred"
-msgstr "Tapahtui virhe"
-
-#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
-#: data/gtk/toolbar_controller.ui:74
+#: data/gtk/mini_controller.ui:91 data/gtk/sidebar_controller.ui:63
+#: data/gtk/toolbar_controller.ui:38
 msgid "No playback"
 msgstr "Mitään ei toisteta"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:136
-msgid "Sorting"
-msgstr "Järjestys"
+#: data/gtk/notification.ui:58
+msgid "Error details"
+msgstr "Virheen lisätiedot"
 
-#: data/gtk/menu/app_menu.ui:43
-msgid "Open radio-browser.info <sup>↗</sup>"
-msgstr "Avaa radio-browser.info <sup>↗</sup>"
+#: data/gtk/player.ui:44
+msgid "Connected with"
+msgstr "Yhdistettynä"
 
-#: data/gtk/menu/app_menu.ui:58
-msgid "Create new station"
-msgstr "Luo uusi asema"
-
-#: data/gtk/menu/app_menu.ui:83
-msgid "Preferences"
-msgstr "Asetukset"
-
-#: data/gtk/menu/app_menu.ui:97
-msgid "Keyboard Shortcuts"
-msgstr "Pikanäppäimet"
-
-#: data/gtk/menu/app_menu.ui:111
-msgid "About Shortwave"
-msgstr "Tietoja - Shortwave"
-
-#: data/gtk/menu/app_menu.ui:154
-msgid "Name"
-msgstr "Nimi"
-
-#: data/gtk/menu/app_menu.ui:184
-msgid "Country"
-msgstr "Maa"
-
-#: data/gtk/menu/app_menu.ui:199
-msgid "State"
-msgstr "Tila"
-
-#: data/gtk/menu/app_menu.ui:214
-msgid "Votes"
-msgstr "Äänet"
-
-#: data/gtk/menu/app_menu.ui:240
-msgid "Ascending"
-msgstr "Nouseva"
-
-#: data/gtk/menu/app_menu.ui:255
-msgid "Descending"
-msgstr "Laskeva"
-
-#: data/gtk/menu/player_menu.ui:19
-msgid "Show station details"
-msgstr "Näytä aseman tiedot"
-
-#: data/gtk/menu/player_menu.ui:58
-msgid "Enable mini player"
-msgstr "Käytä pienoissoitinta"
-
-#: data/gtk/settings_window.ui:15
-msgid "Appearance"
-msgstr "Ulkoasu"
-
-#: data/gtk/settings_window.ui:19
-msgid "Dark Mode"
-msgstr "Tumma tila"
-
-#: data/gtk/settings_window.ui:20
-msgid "Whether the application should use a dark theme"
-msgstr "Käyttääkö sovellus tummaa teemaa vai ei"
-
-#: data/gtk/settings_window.ui:36
-msgid "Features"
-msgstr "Ominaisuudet"
-
-#: data/gtk/settings_window.ui:40
-msgid "Notifications"
-msgstr "Ilmoitukset"
-
-#: data/gtk/settings_window.ui:41
-msgid "Show desktop notifications when a new song gets played"
-msgstr "Näytä työpöytäilmoitus kun uusi kappale alkaa soida"
-
-#: data/gtk/shortcuts.ui:12
+#: data/gtk/settings_window.ui:10 data/gtk/shortcuts.ui:11
 msgid "General"
 msgstr "Yleiset"
 
-#: data/gtk/shortcuts.ui:18
+#: data/gtk/settings_window.ui:13
+msgid "Appearance"
+msgstr "Ulkoasu"
+
+#: data/gtk/settings_window.ui:16
+msgid "_Dark Mode"
+msgstr "_Tumma tila"
+
+#: data/gtk/settings_window.ui:18
+msgid "Whether the application should use a dark theme"
+msgstr "Käyttääkö sovellus tummaa teemaa vai ei"
+
+#: data/gtk/settings_window.ui:31
+msgid "Features"
+msgstr "Ominaisuudet"
+
+#: data/gtk/settings_window.ui:34
+msgid "_Notifications"
+msgstr "_Ilmoitukset"
+
+#: data/gtk/settings_window.ui:36
+msgid "Show desktop notifications when a new song gets played"
+msgstr "Näytä työpöytäilmoitus kun uusi kappale alkaa soida"
+
+#: data/gtk/shortcuts.ui:15
 msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Lopeta sovellus"
 
-#: data/gtk/shortcuts.ui:25
+#: data/gtk/shortcuts.ui:21
 msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "Etsi asemia"
 
-#: data/gtk/storefront.ui:21 data/gtk/library.ui:21
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "Shortwave"
-msgstr "Shortwave"
+#: data/gtk/sidebar_controller.ui:22
+msgid "An error occurred"
+msgstr "Tapahtui virhe"
 
-#: data/gtk/storefront.ui:85
-msgid "Discover"
-msgstr "Löydä"
-
-#: data/gtk/storefront.ui:100
-msgid "Search"
-msgstr "Etsi"
-
-#: data/gtk/storefront.ui:125
-msgid "Locations"
-msgstr "Sijainnit"
-
-#: data/gtk/storefront.ui:150
-msgid "Languages"
-msgstr "Kielet"
-
-#: data/gtk/library.ui:121
-msgid "Receiving station data…"
-msgstr "Vastaanotetaan aseman tietoja…"
-
-#: data/gtk/library.ui:217
-msgid "Discover new stations"
-msgstr "Löydä uusia asemia"
-
-#: data/gtk/song_listbox.ui:34
+#: data/gtk/song_listbox.ui:23
 msgid ""
 "Songs are automatically recognized using the stream metadata.\n"
 "\n"
@@ -221,79 +119,163 @@ msgstr ""
 "\n"
 "Jos asema ei lähetä metatietoja, kappaleita ei voida tunnistaa."
 
-#: data/gtk/song_listbox.ui:93
+#: data/gtk/song_listbox.ui:64
 msgid "No songs detected"
 msgstr "Kappaleita ei havaittu"
 
-#: data/gtk/song_listbox.ui:110
+#: data/gtk/song_listbox.ui:74
 msgid "Detected songs will appear here."
 msgstr "Havaitut kappaleet näkyvät tässä."
 
-#: data/gtk/song_listbox.ui:131
-msgid "How does this work?"
-msgstr "Miten tämä toimii?"
+#: data/gtk/song_listbox.ui:83
+msgid "_How does this work?"
+msgstr "_Miten tämä toimii?"
 
-#: data/gtk/song_listbox.ui:197
+#: data/gtk/song_listbox.ui:125
 msgid "Saved songs are located in your Music folder."
 msgstr "Tallennetut kappaleet sijaitsevat Musiikki-kansiossa."
 
-#: data/gtk/song_listbox.ui:215
-msgid "Open"
-msgstr "Avaa"
+#: data/gtk/song_listbox.ui:138
+msgid "_Open"
+msgstr "_Avaa"
 
-#: data/gtk/player.ui:135
-msgid "Connected with"
-msgstr "Yhdistettynä"
+#: data/gtk/song_row.ui:12
+msgid "Save recorded song"
+msgstr "Tallenna nauhoitettu kappale"
 
-#: src/audio/player.rs:167
+#: data/gtk/station_dialog.ui:8
+msgid "Station details"
+msgstr "Aseman tiedot"
+
+#: data/gtk/station_dialog.ui:62
+msgid "Language"
+msgstr "Kieli"
+
+#: data/gtk/station_dialog.ui:91
+msgid "Tags"
+msgstr "Tunnisteet"
+
+#: data/gtk/station_dialog.ui:117
+msgid "Codec"
+msgstr "Koodekki"
+
+#: data/gtk/station_dialog.ui:144
+msgid "Homepage"
+msgstr "Verkkosivusto"
+
+#: data/gtk/station_dialog.ui:182
+msgid "_Remove from Library"
+msgstr "_Poista kirjastosta"
+
+#: data/gtk/station_dialog.ui:196
+msgid "_Add to library"
+msgstr "_Lisää kirjastoon"
+
+#: data/gtk/streaming_dialog.ui:46
+msgid "Stream to a device"
+msgstr "Suoratoista laitteelle"
+
+#: data/gtk/streaming_dialog.ui:51
+msgid "_Cancel"
+msgstr "_Peru"
+
+#: data/gtk/streaming_dialog.ui:57
+msgid "_Connect"
+msgstr "_Yhdistä"
+
+#: data/gtk/streaming_dialog.ui:89
+msgid "Devices which implement the Google Cast protocol are supported."
+msgstr "Google Cast -protokollaa noudattavat laitteet ovat tuettuja."
+
+#: data/gtk/streaming_dialog.ui:121
+msgid "No devices found"
+msgstr "Laitteita ei löytynyt"
+
+#: data/gtk/streaming_dialog.ui:131
+msgid "_Retry search"
+msgstr "_Hae uudelleen"
+
+#: data/gtk/streaming_dialog.ui:179 data/gtk/streaming_dialog.ui:210
+msgid "Searching for devices…"
+msgstr "Etsitään laitteita…"
+
+#: data/gtk/window.ui:108
+msgid "_Sorting"
+msgstr "_Järjestys"
+
+#: data/gtk/window.ui:111
+msgid "_Name"
+msgstr "_Nimi"
+
+#: data/gtk/window.ui:116
+msgid "_Language"
+msgstr "_Kieli"
+
+#: data/gtk/window.ui:121
+msgid "_Country"
+msgstr "_Maa"
+
+#: data/gtk/window.ui:126
+msgid "S_tate"
+msgstr "_Tila"
+
+#: data/gtk/window.ui:131
+msgid "_Votes"
+msgstr "_Äänet"
+
+#: data/gtk/window.ui:138
+msgid "_Ascending"
+msgstr "_Nouseva"
+
+#: data/gtk/window.ui:143
+msgid "_Descending"
+msgstr "_Laskeva"
+
+#: data/gtk/window.ui:152
+msgid "_Open radio-browser.info <sup>↗</sup>"
+msgstr "_Avaa radio-browser.info <sup>↗</sup>"
+
+#: data/gtk/window.ui:156
+msgid "_Create new station"
+msgstr "_Luo uusi asema"
+
+#: data/gtk/window.ui:162
+msgid "_Preferences"
+msgstr "_Asetukset"
+
+#: data/gtk/window.ui:166
+msgid "_Keyboard Shortcuts"
+msgstr "_Pikanäppäimet"
+
+#: data/gtk/window.ui:170
+msgid "_About Shortwave"
+msgstr "_Tietoja - Shortwave"
+
+#: src/audio/player.rs:163
 msgid "This station cannot be played because the stream is offline."
 msgstr "Asemaa ei voida toistaa, koska aseman suoratoisto ei ole käynnissä."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:181
 msgid "Station cannot be streamed."
 msgstr "Asemaa ei voi suoratoistaa."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:181
 msgid "URL is not valid."
 msgstr "Osoite ei ole kelvollinen."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:60
+#: src/database/library.rs:56
 msgid "Welcome to {}"
 msgstr "Tervetuloa, käytössäsi on {}"
 
-#: src/database/library.rs:156
+#: src/database/library.rs:146
 msgid "No longer existing station removed from library."
 msgstr "Toimintansa lopettanut asema poistettiin kirjastosta."
 
-#: src/database/library.rs:160 src/discover/pages/discover.rs:127
-#: src/discover/pages/search.rs:95
+#: src/database/library.rs:150 src/ui/pages/discover_page.rs:167
+#: src/ui/pages/search_page.rs:158
 msgid "Station data could not be received."
 msgstr "Aseman tietoja ei voitu vastaanottaa."
-
-#: src/discover/pages/discover.rs:57
-msgid "Show statistics"
-msgstr "Näytä tilastot"
-
-#: src/discover/pages/discover.rs:58
-msgid "Browse over 25,500 stations"
-msgstr "Selaa yli 25 500 asemaa"
-
-#: src/discover/pages/discover.rs:60
-msgid "Add new station"
-msgstr "Lisää uusi asema"
-
-#: src/discover/pages/discover.rs:61
-msgid "Your favorite station is missing?"
-msgstr "Puuttuuko suosikkiasemasi?"
-
-#: src/discover/pages/discover.rs:63
-msgid "Open website"
-msgstr "Avaa verkkosivu"
-
-#: src/discover/pages/discover.rs:64
-msgid "Powered by radio-browser.info"
-msgstr "Taustavoimana radio-browser.info"
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -304,17 +286,46 @@ msgstr "Kuuntele internetradiota"
 msgid "translator-credits"
 msgstr "Jiri Grönroos"
 
-#: src/utils.rs:110
+#: src/ui/pages/discover_page.rs:116
+msgid "Show statistics"
+msgstr "Näytä tilastot"
+
+#: src/ui/pages/discover_page.rs:117
+msgid "Browse over 25,500 stations"
+msgstr "Selaa yli 25 500 asemaa"
+
+#: src/ui/pages/discover_page.rs:119
+msgid "Add new station"
+msgstr "Lisää uusi asema"
+
+#: src/ui/pages/discover_page.rs:120
+msgid "Your favorite station is missing?"
+msgstr "Puuttuuko suosikkiasemasi?"
+
+#: src/ui/pages/discover_page.rs:122
+msgid "Open website"
+msgstr "Avaa verkkosivu"
+
+#: src/ui/pages/discover_page.rs:123
+msgid "Powered by radio-browser.info"
+msgstr "Taustavoimana radio-browser.info"
+
+#: src/utils.rs:109
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} ääni"
 msgstr[1] "{} ääntä"
 
-#: src/utils.rs:112
+#: src/utils.rs:111
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} ääni"
 msgstr[1] "{} · {} ääntä"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Shortwave"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
 msgid "Felix Häcker"
@@ -367,6 +378,18 @@ msgstr "Saumaton integraatio Gnome-työpöytäympäristöön"
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;suoratoisto;nettiradio;"
 
+#~ msgid "Discover"
+#~ msgstr "Löydä"
+
+#~ msgid "Search"
+#~ msgstr "Etsi"
+
+#~ msgid "Locations"
+#~ msgstr "Sijainnit"
+
+#~ msgid "Languages"
+#~ msgstr "Kielet"
+
 #~ msgid "Library"
 #~ msgstr "Kirjasto"
 
@@ -382,14 +405,8 @@ msgstr "Gradio;Radio;Stream;Wave;suoratoisto;nettiradio;"
 #~ msgid "Select database to import"
 #~ msgstr "Valitse tuotava tietokanta"
 
-#~ msgid "Cancel"
-#~ msgstr "Peru"
-
 #~ msgid "Import"
 #~ msgstr "Tuo"
-
-#~ msgid "Could not import library."
-#~ msgstr "Kirjastoa ei voitu tuoda."
 
 #~ msgid "Converting data…"
 #~ msgstr "Muunnetaan tietoja…"
