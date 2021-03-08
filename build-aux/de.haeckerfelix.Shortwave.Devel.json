@@ -70,7 +70,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://gitlab.gnome.org/exalm/libadwaita",
+                    "url" : "https://gitlab.gnome.org/exalm/libadwaita.git",
                     "branch" : "main"
                 }
             ]

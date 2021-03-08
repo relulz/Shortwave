@@ -56,7 +56,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/libhandy",
+                    "url" : "https://gitlab.gnome.org/GNOME/libhandy.git",
                     "tag": "0.81.0"
                 }
             ]
