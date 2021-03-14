@@ -43,7 +43,7 @@ mod imp {
     use super::*;
     use glib::subclass;
 
-    #[derive(Debug, CompositeTemplate)]
+    #[derive(Debug, Default, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/window.ui")]
     pub struct SwApplicationWindow {
         #[template_child]
@@ -78,25 +78,6 @@ mod imp {
         const NAME: &'static str = "SwApplicationWindow";
         type ParentType = adw::ApplicationWindow;
         type Type = super::SwApplicationWindow;
-
-        fn new() -> Self {
-            let current_notification = RefCell::default();
-
-            Self {
-                library_page: TemplateChild::default(),
-                discover_page: TemplateChild::default(),
-                search_page: TemplateChild::default(),
-                mini_controller_box: TemplateChild::default(),
-                toolbar_controller_box: TemplateChild::default(),
-                toolbar_controller_revealer: TemplateChild::default(),
-                window_leaflet: TemplateChild::default(),
-                window_flap: TemplateChild::default(),
-                overlay: TemplateChild::default(),
-                add_button: TemplateChild::default(),
-                back_button: TemplateChild::default(),
-                current_notification,
-            }
-        }
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);

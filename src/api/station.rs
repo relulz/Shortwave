@@ -26,7 +26,7 @@ use crate::api::StationMetadata;
 mod imp {
     use super::*;
 
-    #[derive(Debug)]
+    #[derive(Debug, Default)]
     pub struct SwStation {
         pub metadata: OnceCell<StationMetadata>,
     }
@@ -36,10 +36,6 @@ mod imp {
         const NAME: &'static str = "SwStation";
         type ParentType = glib::Object;
         type Type = super::SwStation;
-
-        fn new() -> Self {
-            Self { metadata: OnceCell::default() }
-        }
     }
 
     impl ObjectImpl for SwStation {

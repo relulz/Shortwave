@@ -24,7 +24,7 @@ mod imp {
     use super::*;
     use std::cell::RefCell;
 
-    #[derive(Debug)]
+    #[derive(Debug, Default)]
     pub struct SwStationModel {
         pub vec: RefCell<Vec<SwStation>>,
     }
@@ -34,10 +34,7 @@ mod imp {
         const NAME: &'static str = "SwStationModel";
         type ParentType = glib::Object;
         type Type = super::SwStationModel;
-
-        fn new() -> Self {
-            Self { vec: RefCell::default() }
-        }
+        type Interfaces = (gio::ListModel,);
     }
 
     impl ObjectImpl for SwStationModel {}

@@ -31,7 +31,7 @@ mod imp {
     use super::*;
     use glib::subclass;
 
-    #[derive(Debug, CompositeTemplate)]
+    #[derive(Debug, Default, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/library_page.ui")]
     pub struct SwLibraryPage {
         #[template_child]
@@ -49,15 +49,6 @@ mod imp {
         const NAME: &'static str = "SwLibraryPage";
         type ParentType = adw::Bin;
         type Type = super::SwLibraryPage;
-
-        fn new() -> Self {
-            Self {
-                status_page: TemplateChild::default(),
-                stack: TemplateChild::default(),
-                flowbox: TemplateChild::default(),
-                sender: OnceCell::default(),
-            }
-        }
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);

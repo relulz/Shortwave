@@ -33,7 +33,7 @@ mod imp {
     use super::*;
     use glib::subclass;
 
-    #[derive(Debug, CompositeTemplate)]
+    #[derive(Debug, Default, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_flowbox.ui")]
     pub struct SwStationFlowBox {
         #[template_child]
@@ -46,13 +46,6 @@ mod imp {
         const NAME: &'static str = "SwStationFlowBox";
         type ParentType = adw::Bin;
         type Type = super::SwStationFlowBox;
-
-        fn new() -> Self {
-            Self {
-                flowbox: TemplateChild::default(),
-                model: OnceCell::default(),
-            }
-        }
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);

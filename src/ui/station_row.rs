@@ -32,7 +32,7 @@ mod imp {
     use super::*;
     use glib::subclass;
 
-    #[derive(Debug, CompositeTemplate)]
+    #[derive(Debug, Default, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_row.ui")]
     pub struct SwStationRow {
         #[template_child]
@@ -53,17 +53,6 @@ mod imp {
         const NAME: &'static str = "SwStationRow";
         type ParentType = gtk::FlowBoxChild;
         type Type = super::SwStationRow;
-
-        fn new() -> Self {
-            Self {
-                station_label: TemplateChild::default(),
-                subtitle_label: TemplateChild::default(),
-                favicon_box: TemplateChild::default(),
-                play_button: TemplateChild::default(),
-                station: OnceCell::default(),
-                sender: OnceCell::default(),
-            }
-        }
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
