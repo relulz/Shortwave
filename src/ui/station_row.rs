@@ -19,36 +19,113 @@ use glib::clone;
 use glib::Sender;
 use gtk::glib;
 use gtk::prelude::*;
+use gtk::subclass::prelude::*;
+use gtk::CompositeTemplate;
+use once_cell::unsync::OnceCell;
 
 use crate::api::{FaviconDownloader, SwStation};
 use crate::app::Action;
 use crate::ui::{FaviconSize, StationFavicon};
 use crate::utils;
 
-pub struct StationRow {
-    pub widget: gtk::FlowBoxChild,
-    station: SwStation,
+mod imp {
+    use super::*;
+    use glib::subclass;
 
-    builder: gtk::Builder,
-    sender: Sender<Action>,
+    #[derive(Debug, CompositeTemplate)]
+    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_row.ui")]
+    pub struct SwStationRow {
+        #[template_child]
+        pub station_label: TemplateChild<gtk::Label>,
+        #[template_child]
+        pub subtitle_label: TemplateChild<gtk::Label>,
+        #[template_child]
+        pub favicon_box: TemplateChild<gtk::Box>,
+        #[template_child]
+        pub play_button: TemplateChild<gtk::Button>,
+
+        pub station: OnceCell<SwStation>,
+        pub sender: OnceCell<Sender<Action>>,
+    }
+
+    impl ObjectSubclass for SwStationRow {
+        const NAME: &'static str = "SwStationRow";
+        type ParentType = gtk::FlowBoxChild;
+        type Instance = subclass::simple::InstanceStruct<Self>;
+        type Interfaces = ();
+        type Class = subclass::simple::ClassStruct<Self>;
+        type Type = super::SwStationRow;
+
+        glib::object_subclass!();
+
+        fn new() -> Self {
+            Self {
+                station_label: TemplateChild::default(),
+                subtitle_label: TemplateChild::default(),
+                favicon_box: TemplateChild::default(),
+                play_button: TemplateChild::default(),
+                station: OnceCell::default(),
+                sender: OnceCell::default(),
+            }
+        }
+
+        fn class_init(klass: &mut Self::Class) {
+            Self::bind_template(klass);
+        }
+
+        fn instance_init(obj: &subclass::InitializingObject<Self::Type>) {
+            obj.init_template();
+        }
+    }
+
+    impl ObjectImpl for SwStationRow {}
+
+    impl WidgetImpl for SwStationRow {}
+
+    impl FlowBoxChildImpl for SwStationRow {}
 }
 
-impl StationRow {
+glib::wrapper! {
+    pub struct SwStationRow(ObjectSubclass<imp::SwStationRow>)
+        @extends gtk::Widget, gtk::FlowBoxChild;
+}
+
+impl SwStationRow {
     pub fn new(sender: Sender<Action>, station: SwStation) -> Self {
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/station_row.ui");
-        get_widget!(builder, gtk::FlowBoxChild, station_row);
+        let row = glib::Object::new::<Self>(&[]).unwrap();
+
+        let imp = imp::SwStationRow::from_instance(&row);
+        imp.sender.set(sender.clone()).unwrap();
+        imp.station.set(station.clone()).unwrap();
+
+        row.setup_widgets();
+        row.setup_signals();
+
+        row
+    }
+
+    fn setup_signals(&self) {
+        let imp = imp::SwStationRow::from_instance(self);
+
+        // play_button
+        imp.play_button.connect_clicked(clone!(@strong imp.sender as sender, @strong imp.station as station => move |_| {
+            send!(sender.get().unwrap(), Action::PlaybackSetStation(Box::new(station.get().unwrap().clone())));
+        }));
+    }
+
+    fn setup_widgets(&self) {
+        let imp = imp::SwStationRow::from_instance(self);
 
         // Set row information
-        get_widget!(builder, gtk::Label, station_label);
-        get_widget!(builder, gtk::Label, subtitle_label);
-        station_label.set_text(&station.metadata().name);
+        let station = imp.station.get().unwrap();
+        imp.station_label.set_text(&station.metadata().name);
+
         let subtitle = utils::station_subtitle(&station.metadata().country, &station.metadata().state, station.metadata().votes);
-        subtitle_label.set_text(&subtitle);
+        imp.subtitle_label.set_text(&subtitle);
 
         // Download & set station favicon
-        get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = StationFavicon::new(FaviconSize::Small);
-        favicon_box.append(&station_favicon.widget);
+        imp.favicon_box.append(&station_favicon.widget);
         if let Some(favicon) = station.metadata().favicon.as_ref() {
             let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Small as i32).map(move |pixbuf| {
                 if let Ok(pixbuf) = pixbuf {
@@ -57,23 +134,5 @@ impl StationRow {
             });
             spawn!(fut);
         }
-
-        let stationrow = Self {
-            widget: station_row,
-            station,
-            builder,
-            sender,
-        };
-
-        stationrow.setup_signals();
-        stationrow
-    }
-
-    fn setup_signals(&self) {
-        // play_button
-        get_widget!(self.builder, gtk::Button, play_button);
-        play_button.connect_clicked(clone!(@strong self.sender as sender, @strong self.station as station => move |_| {
-            send!(sender, Action::PlaybackSetStation(Box::new(station.clone())));
-        }));
     }
 }

@@ -36,7 +36,7 @@ pub use station_dialog::StationDialog;
 pub use station_favicon::FaviconSize;
 pub use station_favicon::StationFavicon;
 pub use station_flowbox::SwStationFlowBox;
-pub use station_row::StationRow;
+pub use station_row::SwStationRow;
 pub use streaming_dialog::StreamingDialog;
 pub use window::SwApplicationWindow;
 pub use window::View;

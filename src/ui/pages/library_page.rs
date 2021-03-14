@@ -25,7 +25,7 @@ use once_cell::unsync::OnceCell;
 use crate::app::{Action, SwApplication};
 use crate::config;
 use crate::i18n::*;
-use crate::ui::{Notification, StationRow, SwStationFlowBox};
+use crate::ui::{Notification, SwStationFlowBox};
 
 mod imp {
     use super::*;

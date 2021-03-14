@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <object class="GtkFlowBoxChild" id="station_row">
+  <template class="SwStationRow" parent="GtkFlowBoxChild">
     <property name="width_request">300</property>
     <property name="overflow">hidden</property>
     <child>
@@ -59,5 +59,5 @@
     <style>
       <class name="tile"/>
     </style>
-  </object>
+  </template>
 </interface>

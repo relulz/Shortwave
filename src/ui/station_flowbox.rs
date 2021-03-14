@@ -26,7 +26,7 @@ use once_cell::unsync::OnceCell;
 use crate::api::SwStation;
 use crate::app::Action;
 use crate::model::SwStationModel;
-use crate::ui::{StationDialog, StationRow};
+use crate::ui::{StationDialog, SwStationRow};
 use crate::utils;
 use crate::utils::{Order, Sorting};
 
@@ -95,8 +95,8 @@ impl SwStationFlowBox {
             Some(&model),
             clone!(@strong sender => move |station|{
                 let station = station.downcast_ref::<SwStation>().unwrap();
-                let row = StationRow::new(sender.clone(), station.clone());
-                row.widget.upcast()
+                let row = SwStationRow::new(sender.clone(), station.clone());
+                row.upcast()
             }),
         );
 
