@@ -47,7 +47,7 @@
                             <property name="margin_start">12</property>
                             <property name="margin_end">12</property>
                             <child>
-                              <object class="GtkBox" id="results_box"/>
+                              <object class="SwStationFlowBox" id="flowbox"/>
                             </child>
                           </object>
                         </child>

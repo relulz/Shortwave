@@ -16,10 +16,8 @@
 
 use glib::Sender;
 use gtk::glib;
-use gtk::prelude::*;
 
 use futures::future::join_all;
-use std::rc::Rc;
 
 use crate::api::{Client, Error, SwStation};
 use crate::app::Action;

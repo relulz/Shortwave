@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use gtk::glib::{self, object::WeakRef};
 use gtk::prelude::*;
 
 use crate::api::SwStation;
@@ -58,42 +57,6 @@ pub fn station_cmp(a: &SwStation, b: &SwStation, sorting: Sorting, order: Order)
     }
 }
 
-// If you want to know more about lazy loading, you should read these:
-// - https://en.wikipedia.org/wiki/Lazy_loading
-// - https://blogs.gnome.org/ebassi/documentation/lazy-loading/comment-page-1/
-//
-// Source: gnome-podcasts (GPLv3)
-// https://gitlab.gnome.org/World/podcasts/blob/7856b6fd27cb071583b87f55f3e47d9d8af9acb6/podcasts-gtk/src/utils.rs
-pub(crate) fn lazy_load<T, F, W>(data: T, container: WeakRef<gtk::FlowBox>, mut contructor: F)
-where
-    T: IntoIterator + 'static,
-    T::Item: 'static,
-    F: FnMut(T::Item) -> W + 'static,
-    W: IsA<gtk::Widget> + WidgetExt,
-{
-    let func = move |x| {
-        let container = match container.upgrade() {
-            Some(c) => c,
-            None => return,
-        };
-
-        let widget = contructor(x);
-        container.insert(&widget, -1);
-        widget.show();
-    };
-    lazy_load_full(data, func);
-}
-
-pub(crate) fn lazy_load_full<T, F>(data: T, mut func: F)
-where
-    T: IntoIterator + 'static,
-    T::Item: 'static,
-    F: FnMut(T::Item) + 'static,
-{
-    let mut data = data.into_iter();
-    glib::idle_add_local(move || data.next().map(|x| func(x)).map(|_| glib::Continue(true)).unwrap_or_else(|| glib::Continue(false)));
-}
-
 pub fn simplify_string(s: String) -> String {
     s.replace(&['/', '\0', '\\', ':', '<', '>', '\"', '|', '?', '*', '.'] as &[_], "")
 }
@@ -112,11 +75,4 @@ pub fn station_subtitle(country: &str, state: &str, votes: i32) -> String {
     }
 
     string
-}
-
-// Removes all child items
-pub fn remove_all_items(container: &gtk::FlowBox) {
-    while let Some(child) = container.get_first_child() {
-        container.remove(&child);
-    }
 }

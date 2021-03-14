@@ -15,8 +15,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use adw::subclass::prelude::*;
-use futures_util::FutureExt;
-use glib::clone;
 use glib::Sender;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
@@ -24,16 +22,10 @@ use gtk::CompositeTemplate;
 use gtk::{gio, glib};
 use once_cell::unsync::OnceCell;
 
-use std::cell::RefCell;
-use std::rc::Rc;
-
-use crate::api::{StationRequest, SwStation};
 use crate::app::{Action, SwApplication};
 use crate::config;
 use crate::i18n::*;
-use crate::model::SwStationModel;
-use crate::settings::{settings_manager, Key};
-use crate::ui::{Notification, StationRow};
+use crate::ui::{Notification, StationRow, SwStationFlowBox};
 
 mod imp {
     use super::*;
@@ -47,7 +39,7 @@ mod imp {
         #[template_child]
         pub stack: TemplateChild<gtk::Stack>,
         #[template_child]
-        pub listbox: TemplateChild<gtk::ListBox>,
+        pub flowbox: TemplateChild<SwStationFlowBox>,
 
         pub sender: OnceCell<Sender<Action>>,
     }
@@ -66,7 +58,7 @@ mod imp {
             Self {
                 status_page: TemplateChild::default(),
                 stack: TemplateChild::default(),
-                listbox: TemplateChild::default(),
+                flowbox: TemplateChild::default(),
                 sender: OnceCell::default(),
             }
         }
@@ -98,25 +90,6 @@ impl SwLibraryPage {
         imp.sender.set(sender).unwrap();
 
         self.setup_widgets();
-        self.setup_signals();
-    }
-
-    fn setup_signals(&self) {
-        let imp = imp::SwLibraryPage::from_instance(self);
-
-        let app = gio::Application::get_default().unwrap().downcast::<SwApplication>().unwrap();
-        let model = app.library_model();
-
-        imp.listbox.bind_model(
-            Some(&model),
-            clone!(@strong imp.sender as sender => move |station|{
-                let sender = sender.get().unwrap().clone();
-                let station = station.downcast_ref::<SwStation>().unwrap();
-
-                let row = StationRow::new(sender, station.clone());
-                row.widget.upcast()
-            }),
-        );
     }
 
     fn setup_widgets(&self) {
@@ -127,5 +100,10 @@ impl SwLibraryPage {
 
         // Welcome text which gets displayed when the library is empty. "{}" is the application name.
         imp.status_page.set_title(Some(&i18n_f("Welcome to {}", &[config::NAME]).as_str()));
+
+        // Station flowbox
+        let app = gio::Application::get_default().unwrap().downcast::<SwApplication>().unwrap();
+        let model = app.library_model();
+        imp.flowbox.init(model, imp.sender.get().unwrap().clone());
     }
 }

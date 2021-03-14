@@ -14,120 +14,101 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use adw::subclass::prelude::*;
 use glib::clone;
 use glib::Sender;
 use gtk::glib;
 use gtk::prelude::*;
-use indexmap::IndexMap;
-
-use std::cell::RefCell;
-use std::convert::TryInto;
-use std::rc::Rc;
+use gtk::subclass::prelude::*;
+use gtk::CompositeTemplate;
+use once_cell::unsync::OnceCell;
 
 use crate::api::SwStation;
 use crate::app::Action;
+use crate::model::SwStationModel;
 use crate::ui::{StationDialog, StationRow};
 use crate::utils;
 use crate::utils::{Order, Sorting};
 
-#[derive(Debug)]
-pub struct StationFlowBox {
-    pub widget: gtk::FlowBox,
-    stations: Rc<RefCell<IndexMap<String, SwStation>>>,
+mod imp {
+    use super::*;
+    use glib::subclass;
 
-    sorting: RefCell<Sorting>,
-    order: RefCell<Order>,
+    #[derive(Debug, CompositeTemplate)]
+    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_flowbox.ui")]
+    pub struct SwStationFlowBox {
+        #[template_child]
+        pub flowbox: TemplateChild<gtk::FlowBox>,
+        pub model: OnceCell<gtk::SortListModel>,
 
-    sender: Sender<Action>,
-}
-
-impl StationFlowBox {
-    pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/station_flowbox.ui");
-        get_widget!(builder, gtk::FlowBox, station_flowbox);
-        let stations = Rc::new(RefCell::new(IndexMap::new()));
-
-        let sorting = RefCell::new(Sorting::Default);
-        let order = RefCell::new(Order::Ascending);
-
-        let flowbox = Self {
-            widget: station_flowbox,
-            stations,
-            sorting,
-            order,
-            sender,
-        };
-
-        flowbox.setup_signals();
-        flowbox
+        pub sender: OnceCell<Sender<Action>>,
     }
 
-    fn setup_signals(&self) {
-        // Show StationDialog when row gets clicked
-        self.widget
-            .connect_child_activated(clone!(@strong self.stations as stations, @strong self.sender as sender => move |_, child| {
-                let index = child.get_index();
-                let station = stations.borrow().get_index(index.try_into().unwrap()).unwrap().1.clone();
+    impl ObjectSubclass for SwStationFlowBox {
+        const NAME: &'static str = "SwStationFlowBox";
+        type ParentType = adw::Bin;
+        type Instance = subclass::simple::InstanceStruct<Self>;
+        type Interfaces = ();
+        type Class = subclass::simple::ClassStruct<Self>;
+        type Type = super::SwStationFlowBox;
 
-                let station_dialog = StationDialog::new(sender.clone(), station);
-                station_dialog.show();
-            }));
-    }
+        glib::object_subclass!();
 
-    pub fn add_stations(&self, stations: Vec<SwStation>) {
-        for station in stations {
-            if self.stations.borrow().contains_key(&station.metadata().stationuuid) {
-                warn!("SwStation \"{}\" is already added to flowbox.", station.metadata().name);
-            } else {
-                self.stations.borrow_mut().insert(station.metadata().stationuuid.clone(), station);
+        fn new() -> Self {
+            Self {
+                flowbox: TemplateChild::default(),
+                model: OnceCell::default(),
+                sender: OnceCell::default(),
             }
         }
 
-        self.sort();
-        self.update_rows();
-    }
+        fn class_init(klass: &mut Self::Class) {
+            Self::bind_template(klass);
+        }
 
-    pub fn remove_stations(&self, stations: Vec<SwStation>) {
-        for station in stations {
-            // Get the corresponding widget to the index, remove and destroy it
-            let index: usize = self.stations.borrow_mut().entry(station.metadata().stationuuid.clone()).index();
-            let widget = self.widget.get_child_at_index(index.try_into().unwrap()).unwrap();
-            self.widget.remove(&widget);
-
-            // Remove the station from the indexmap itself
-            self.stations.borrow_mut().shift_remove(&station.metadata().stationuuid);
+        fn instance_init(obj: &subclass::InitializingObject<Self::Type>) {
+            obj.init_template();
         }
     }
 
-    pub fn set_sorting(&self, sorting: Sorting, order: Order) {
-        *self.sorting.borrow_mut() = sorting;
-        *self.order.borrow_mut() = order;
+    impl ObjectImpl for SwStationFlowBox {}
 
-        self.sort();
-        self.update_rows();
+    impl WidgetImpl for SwStationFlowBox {}
+
+    impl BinImpl for SwStationFlowBox {}
+}
+
+glib::wrapper! {
+    pub struct SwStationFlowBox(ObjectSubclass<imp::SwStationFlowBox>)
+        @extends gtk::Widget, adw::Bin;
+}
+
+impl SwStationFlowBox {
+    pub fn init(&self, model: SwStationModel, sender: Sender<Action>) {
+        let imp = imp::SwStationFlowBox::from_instance(self);
+        imp.sender.set(sender.clone()).unwrap();
+
+        //let sorter = gtk::StringSorter::
+        //let sortlist_model = gtk::SortListModel::new(model, sorter);
+
+        imp.flowbox.get().bind_model(
+            Some(&model),
+            clone!(@strong sender => move |station|{
+                let station = station.downcast_ref::<SwStation>().unwrap();
+                let row = StationRow::new(sender.clone(), station.clone());
+                row.widget.upcast()
+            }),
+        );
+
+        self.setup_widgets();
+        self.setup_signals();
     }
 
-    // Clears everything
-    pub fn clear(&self) {
-        self.stations.borrow_mut().clear();
-        utils::remove_all_items(&self.widget);
+    fn setup_signals(&self) {
+        let _imp = imp::SwStationFlowBox::from_instance(self);
     }
 
-    fn update_rows(&self) {
-        utils::remove_all_items(&self.widget);
-
-        let widget = self.widget.downgrade();
-        let sender = self.sender.clone();
-        let stations = self.stations.borrow().clone();
-        let constructor = move |station: (String, SwStation)| StationRow::new(sender.clone(), station.1).widget;
-
-        // Start lazy loading
-        utils::lazy_load(stations, widget, constructor);
-    }
-
-    fn sort(&self) {
-        self.stations
-            .borrow_mut()
-            .sort_by(move |_, a, _, b| utils::station_cmp(a, b, self.sorting.borrow().clone(), self.order.borrow().clone()));
+    fn setup_widgets(&self) {
+        let _imp = imp::SwStationFlowBox::from_instance(self);
     }
 }

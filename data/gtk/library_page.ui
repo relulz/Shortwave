@@ -23,7 +23,7 @@
                         <property name="margin_start">12</property>
                         <property name="margin_end">12</property>
                         <child>
-                          <object class="GtkListBox" id="listbox"/>
+                          <object class="SwStationFlowBox" id="flowbox"/>
                         </child>
                       </object>
                     </child>

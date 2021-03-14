@@ -23,14 +23,12 @@ use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
 use once_cell::unsync::OnceCell;
 
-use std::rc::Rc;
-
 use crate::api::{Client, StationRequest};
 use crate::app;
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
 use crate::ui::featured_carousel::Action;
-use crate::ui::{FeaturedCarousel, Notification, StationFlowBox};
+use crate::ui::{FeaturedCarousel, Notification, SwStationFlowBox};
 
 mod imp {
     use super::*;
@@ -42,13 +40,12 @@ mod imp {
         #[template_child]
         pub carousel_box: TemplateChild<gtk::Box>,
         #[template_child]
-        pub votes_box: TemplateChild<gtk::Box>,
+        pub votes_flowbox: TemplateChild<SwStationFlowBox>,
         #[template_child]
-        pub trending_box: TemplateChild<gtk::Box>,
+        pub trending_flowbox: TemplateChild<SwStationFlowBox>,
         #[template_child]
-        pub clicked_box: TemplateChild<gtk::Box>,
+        pub clicked_flowbox: TemplateChild<SwStationFlowBox>,
 
-        pub client: Client,
         pub sender: OnceCell<Sender<app::Action>>,
     }
 
@@ -63,15 +60,12 @@ mod imp {
         glib::object_subclass!();
 
         fn new() -> Self {
-            let client = Client::new(settings_manager::get_string(Key::ApiLookupDomain));
-
             Self {
                 carousel_box: TemplateChild::default(),
-                votes_box: TemplateChild::default(),
-                trending_box: TemplateChild::default(),
-                clicked_box: TemplateChild::default(),
+                votes_flowbox: TemplateChild::default(),
+                trending_flowbox: TemplateChild::default(),
+                clicked_flowbox: TemplateChild::default(),
 
-                client,
                 sender: OnceCell::default(),
             }
         }
@@ -123,47 +117,36 @@ impl SwDiscoverPage {
         carousel.add_page(&i18n("Powered by radio-browser.info"), "38,162,105", Some(action));
 
         // Most voted stations (stations with the most votes)
-        let votes_flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        imp.votes_box.append(&votes_flowbox.widget);
-
         let mut votes_request = StationRequest::default();
         votes_request.order = Some("votes".to_string());
         votes_request.limit = Some(12);
         votes_request.reverse = Some(true);
-        self.fill_flowbox(votes_flowbox.clone(), votes_request);
+        self.fill_flowbox(&imp.votes_flowbox, votes_request);
 
         // Trending (stations with the highest clicktrend)
-        let trending_flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        imp.trending_box.append(&trending_flowbox.widget);
-
         let mut trending_request = StationRequest::default();
         trending_request.order = Some("clicktrend".to_string());
         trending_request.limit = Some(12);
-        self.fill_flowbox(trending_flowbox.clone(), trending_request);
+        self.fill_flowbox(&imp.trending_flowbox, trending_request);
 
         // Other users are listening to... (stations which got recently clicked)
-        let clicked_flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        imp.clicked_box.append(&clicked_flowbox.widget);
-
         let mut clicked_request = StationRequest::default();
         clicked_request.order = Some("clicktimestamp".to_string());
         clicked_request.limit = Some(12);
-        self.fill_flowbox(clicked_flowbox.clone(), clicked_request);
+        self.fill_flowbox(&imp.clicked_flowbox, clicked_request);
     }
 
-    fn fill_flowbox(&self, fb: Rc<StationFlowBox>, request: StationRequest) {
+    fn fill_flowbox(&self, flowbox: &SwStationFlowBox, request: StationRequest) {
         let imp = imp::SwDiscoverPage::from_instance(self);
 
-        let client = imp.client.clone();
+        let client = Client::new(settings_manager::get_string(Key::ApiLookupDomain));
         let sender = imp.sender.get().unwrap().clone();
-        let flowbox = fb;
 
-        let fut = client.send_station_request(request).map(move |stations| match stations {
-            Ok(s) => {
-                flowbox.clear();
-                flowbox.add_stations(s);
-            }
-            Err(err) => {
+        let model = &*client.model.clone();
+        flowbox.init(model.clone(), sender.clone());
+
+        let fut = client.send_station_request(request).map(move |result| {
+            if let Err(err) = result {
                 let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
                 send!(sender, app::Action::ViewShowNotification(notification));
             }

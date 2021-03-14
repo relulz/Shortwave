@@ -23,11 +23,13 @@ use rand::thread_rng;
 use url::Url;
 
 use std::net::IpAddr;
+use std::rc::Rc;
 use std::time::Duration;
 
 use crate::api::*;
 use crate::config;
 use crate::database::StationIdentifier;
+use crate::model::SwStationModel;
 
 lazy_static! {
     pub static ref USER_AGENT: String = format!("{}/{}-{}", config::PKGNAME, config::VERSION, config::PROFILE);
@@ -46,6 +48,8 @@ lazy_static! {
 
 #[derive(Clone, Debug)]
 pub struct Client {
+    pub model: Rc<SwStationModel>,
+
     lookup_domain: String,
     server: OnceCell<Url>,
 }
@@ -53,20 +57,25 @@ pub struct Client {
 impl Client {
     pub fn new(lookup_domain: String) -> Self {
         Client {
+            model: Rc::new(SwStationModel::new()),
             lookup_domain,
             server: OnceCell::default(),
         }
     }
 
-    pub async fn send_station_request(self, request: StationRequest) -> Result<Vec<SwStation>, Error> {
+    pub async fn send_station_request(self, request: StationRequest) -> Result<(), Error> {
         let url = self.build_url(STATION_SEARCH, Some(&request.url_encode())).await?;
         debug!("Station request URL: {}", url);
         let stations_md: Vec<StationMetadata> = HTTP_CLIENT.get_async(url.as_ref()).await?.json().await?;
         let stations: Vec<SwStation> = stations_md.into_iter().map(|smd| SwStation::new(smd)).collect();
 
         debug!("Found {} station(s)!", stations.len());
+        self.model.clear();
+        for station in &stations {
+            self.model.add_station(station);
+        }
 
-        Ok(stations)
+        Ok(())
     }
 
     pub async fn get_station_by_identifier(self, identifier: StationIdentifier) -> Result<SwStation, Error> {

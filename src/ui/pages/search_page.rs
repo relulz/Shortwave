@@ -31,7 +31,7 @@ use crate::api::{Client, StationRequest};
 use crate::app::Action;
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
-use crate::ui::{Notification, StationFlowBox};
+use crate::ui::{Notification, SwStationFlowBox};
 
 mod imp {
     use super::*;
@@ -43,12 +43,11 @@ mod imp {
         #[template_child]
         pub stack: TemplateChild<gtk::Stack>,
         #[template_child]
-        pub results_box: TemplateChild<gtk::Box>,
+        pub flowbox: TemplateChild<SwStationFlowBox>,
         #[template_child]
         pub search_entry: TemplateChild<gtk::SearchEntry>,
 
         pub client: Client,
-        pub flowbox: OnceCell<Rc<StationFlowBox>>,
         pub timeout_id: Rc<RefCell<Option<glib::source::SourceId>>>,
         pub sender: OnceCell<Sender<Action>>,
     }
@@ -69,10 +68,9 @@ mod imp {
 
             Self {
                 stack: TemplateChild::default(),
-                results_box: TemplateChild::default(),
+                flowbox: TemplateChild::default(),
                 search_entry: TemplateChild::default(),
                 client,
-                flowbox: OnceCell::default(),
                 timeout_id,
                 sender: OnceCell::default(),
             }
@@ -103,11 +101,9 @@ impl SwSearchPage {
     pub fn init(&self, sender: Sender<Action>) {
         let imp = imp::SwSearchPage::from_instance(self);
 
-        let flowbox = Rc::new(StationFlowBox::new(sender.clone()));
-        imp.results_box.append(&flowbox.widget);
-
+        let model = &*imp.client.model.clone();
+        imp.flowbox.init(model.clone(), sender.clone());
         imp.sender.set(sender).unwrap();
-        imp.flowbox.set(flowbox).unwrap();
 
         self.setup_signals();
     }
@@ -135,7 +131,7 @@ impl SwSearchPage {
         // Start new timeout
         let id = imp.timeout_id.clone();
         let client = imp.client.clone();
-        let flowbox = imp.flowbox.clone();
+        //let flowbox = imp.flowbox.clone();
         let stack = imp.stack.clone();
         let sender = imp.sender.get().unwrap().clone();
         let id = glib::source::timeout_add_seconds_local(1, move || {
@@ -144,17 +140,12 @@ impl SwSearchPage {
             debug!("Search for: {:?}", request);
 
             let client = client.clone();
-            let flowbox = flowbox.clone();
             let stack = stack.clone();
             let request = request.clone();
             let sender = sender.clone();
-            let fut = client.send_station_request(request).map(move |stations| match stations {
-                Ok(s) => {
-                    flowbox.get().unwrap().clear();
-                    flowbox.get().unwrap().add_stations(s);
-                    stack.set_visible_child_name("results");
-                }
-                Err(err) => {
+            let fut = client.send_station_request(request).map(move |result| {
+                stack.set_visible_child_name("results");
+                if let Err(err) = result {
                     let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
                     stack.set_visible_child_name("results");
                     send!(sender, Action::ViewShowNotification(notification));

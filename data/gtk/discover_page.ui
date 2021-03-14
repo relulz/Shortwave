@@ -35,7 +35,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkBox" id="votes_box"/>
+                      <object class="SwStationFlowBox" id="votes_flowbox"/>
                     </child>
                     <child>
                       <object class="GtkLabel">
@@ -50,7 +50,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkBox" id="trending_box"/>
+                      <object class="SwStationFlowBox" id="trending_flowbox"/>
                     </child>
                     <child>
                       <object class="GtkLabel">
@@ -65,7 +65,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkBox" id="clicked_box"/>
+                      <object class="SwStationFlowBox" id="clicked_flowbox"/>
                     </child>
                   </object>
                 </child>

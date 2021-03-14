@@ -110,4 +110,11 @@ impl SwStationModel {
         }
         None
     }
+
+    pub fn clear(&self) {
+        let imp = imp::SwStationModel::from_instance(self);
+        let len = self.get_n_items();
+        imp.vec.borrow_mut().clear();
+        self.items_changed(0, len, 0);
+    }
 }
