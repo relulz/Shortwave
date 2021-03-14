@@ -2268,7 +2268,6 @@ dependencies = [
  "lazy_static",
  "libadwaita",
  "log",
- "matches",
  "mdns",
  "mpris-player",
  "once_cell",
