@@ -25,22 +25,17 @@ use crate::api::StationMetadata;
 
 mod imp {
     use super::*;
-    use glib::subclass;
 
     #[derive(Debug)]
     pub struct SwStation {
         pub metadata: OnceCell<StationMetadata>,
     }
 
+    #[glib::object_subclass]
     impl ObjectSubclass for SwStation {
         const NAME: &'static str = "SwStation";
         type ParentType = glib::Object;
-        type Instance = subclass::simple::InstanceStruct<Self>;
-        type Interfaces = ();
-        type Class = subclass::simple::ClassStruct<Self>;
         type Type = super::SwStation;
-
-        glib::object_subclass!();
 
         fn new() -> Self {
             Self { metadata: OnceCell::default() }

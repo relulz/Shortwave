@@ -27,7 +27,6 @@ use crate::api::SwStation;
 use crate::app::Action;
 use crate::model::SwStationModel;
 use crate::ui::{StationDialog, SwStationRow};
-use crate::utils;
 use crate::utils::{Order, Sorting};
 
 mod imp {
@@ -40,25 +39,18 @@ mod imp {
         #[template_child]
         pub flowbox: TemplateChild<gtk::FlowBox>,
         pub model: OnceCell<gtk::SortListModel>,
-
-        pub sender: OnceCell<Sender<Action>>,
     }
 
+    #[glib::object_subclass]
     impl ObjectSubclass for SwStationFlowBox {
         const NAME: &'static str = "SwStationFlowBox";
         type ParentType = adw::Bin;
-        type Instance = subclass::simple::InstanceStruct<Self>;
-        type Interfaces = ();
-        type Class = subclass::simple::ClassStruct<Self>;
         type Type = super::SwStationFlowBox;
-
-        glib::object_subclass!();
 
         fn new() -> Self {
             Self {
                 flowbox: TemplateChild::default(),
                 model: OnceCell::default(),
-                sender: OnceCell::default(),
             }
         }
 
@@ -66,7 +58,7 @@ mod imp {
             Self::bind_template(klass);
         }
 
-        fn instance_init(obj: &subclass::InitializingObject<Self::Type>) {
+        fn instance_init(obj: &subclass::InitializingObject<Self>) {
             obj.init_template();
         }
     }
@@ -86,7 +78,6 @@ glib::wrapper! {
 impl SwStationFlowBox {
     pub fn init(&self, model: SwStationModel, sender: Sender<Action>) {
         let imp = imp::SwStationFlowBox::from_instance(self);
-        imp.sender.set(sender.clone()).unwrap();
 
         //let sorter = gtk::StringSorter::
         //let sortlist_model = gtk::SortListModel::new(model, sorter);
@@ -100,24 +91,19 @@ impl SwStationFlowBox {
             }),
         );
 
-        self.setup_widgets();
-        self.setup_signals();
+        self.setup_signals(sender);
     }
 
-    fn setup_signals(&self) {
+    fn setup_signals(&self, sender: Sender<Action>) {
         let imp = imp::SwStationFlowBox::from_instance(self);
 
         // Show StationDialog when row gets clicked
-        imp.flowbox.connect_child_activated(clone!(@strong imp.sender as sender => move |_, child| {
+        imp.flowbox.connect_child_activated(clone!(@strong sender => move |_, child| {
             let row = child.clone().downcast::<SwStationRow>().unwrap();
             let station = row.station();
 
-            let station_dialog = StationDialog::new(sender.get().unwrap().clone(), station);
+            let station_dialog = StationDialog::new(sender.clone(), station);
             station_dialog.show();
         }));
-    }
-
-    fn setup_widgets(&self) {
-        let _imp = imp::SwStationFlowBox::from_instance(self);
     }
 }

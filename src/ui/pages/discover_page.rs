@@ -49,15 +49,11 @@ mod imp {
         pub sender: OnceCell<Sender<app::Action>>,
     }
 
+    #[glib::object_subclass]
     impl ObjectSubclass for SwDiscoverPage {
         const NAME: &'static str = "SwDiscoverPage";
         type ParentType = adw::Bin;
-        type Instance = subclass::simple::InstanceStruct<Self>;
-        type Interfaces = ();
-        type Class = subclass::simple::ClassStruct<Self>;
         type Type = super::SwDiscoverPage;
-
-        glib::object_subclass!();
 
         fn new() -> Self {
             Self {
@@ -74,7 +70,7 @@ mod imp {
             Self::bind_template(klass);
         }
 
-        fn instance_init(obj: &subclass::InitializingObject<Self::Type>) {
+        fn instance_init(obj: &subclass::InitializingObject<Self>) {
             obj.init_template();
         }
     }

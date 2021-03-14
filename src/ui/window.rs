@@ -73,15 +73,11 @@ mod imp {
         pub current_notification: RefCell<Option<Rc<Notification>>>,
     }
 
+    #[glib::object_subclass]
     impl ObjectSubclass for SwApplicationWindow {
         const NAME: &'static str = "SwApplicationWindow";
         type ParentType = adw::ApplicationWindow;
-        type Instance = subclass::simple::InstanceStruct<Self>;
-        type Interfaces = ();
-        type Class = subclass::simple::ClassStruct<Self>;
         type Type = super::SwApplicationWindow;
-
-        glib::object_subclass!();
 
         fn new() -> Self {
             let current_notification = RefCell::default();
@@ -106,7 +102,7 @@ mod imp {
             Self::bind_template(klass);
         }
 
-        fn instance_init(obj: &subclass::InitializingObject<Self::Type>) {
+        fn instance_init(obj: &subclass::InitializingObject<Self>) {
             obj.init_template();
         }
     }
