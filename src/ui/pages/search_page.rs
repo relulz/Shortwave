@@ -52,15 +52,11 @@ mod imp {
         pub sender: OnceCell<Sender<Action>>,
     }
 
+    #[glib::object_subclass]
     impl ObjectSubclass for SwSearchPage {
         const NAME: &'static str = "SwSearchPage";
         type ParentType = adw::Bin;
-        type Instance = subclass::simple::InstanceStruct<Self>;
-        type Interfaces = ();
-        type Class = subclass::simple::ClassStruct<Self>;
         type Type = super::SwSearchPage;
-
-        glib::object_subclass!();
 
         fn new() -> Self {
             let client = Client::new(settings_manager::get_string(Key::ApiLookupDomain));
@@ -80,7 +76,7 @@ mod imp {
             Self::bind_template(klass);
         }
 
-        fn instance_init(obj: &subclass::InitializingObject<Self::Type>) {
+        fn instance_init(obj: &subclass::InitializingObject<Self>) {
             obj.init_template();
         }
     }

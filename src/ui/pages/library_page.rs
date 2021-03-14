@@ -31,7 +31,7 @@ mod imp {
     use super::*;
     use glib::subclass;
 
-    #[derive(Debug, CompositeTemplate)]
+    #[derive(Debug, Default, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/library_page.ui")]
     pub struct SwLibraryPage {
         #[template_child]
@@ -44,30 +44,17 @@ mod imp {
         pub sender: OnceCell<Sender<Action>>,
     }
 
+    #[glib::object_subclass]
     impl ObjectSubclass for SwLibraryPage {
         const NAME: &'static str = "SwLibraryPage";
         type ParentType = adw::Bin;
-        type Instance = subclass::simple::InstanceStruct<Self>;
-        type Interfaces = ();
-        type Class = subclass::simple::ClassStruct<Self>;
         type Type = super::SwLibraryPage;
-
-        glib::object_subclass!();
-
-        fn new() -> Self {
-            Self {
-                status_page: TemplateChild::default(),
-                stack: TemplateChild::default(),
-                flowbox: TemplateChild::default(),
-                sender: OnceCell::default(),
-            }
-        }
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
         }
 
-        fn instance_init(obj: &subclass::InitializingObject<Self::Type>) {
+        fn instance_init(obj: &subclass::InitializingObject<Self>) {
             obj.init_template();
         }
     }

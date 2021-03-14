@@ -43,7 +43,7 @@ mod imp {
     use super::*;
     use glib::subclass;
 
-    #[derive(Debug, CompositeTemplate)]
+    #[derive(Debug, Default, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/window.ui")]
     pub struct SwApplicationWindow {
         #[template_child]
@@ -73,40 +73,17 @@ mod imp {
         pub current_notification: RefCell<Option<Rc<Notification>>>,
     }
 
+    #[glib::object_subclass]
     impl ObjectSubclass for SwApplicationWindow {
         const NAME: &'static str = "SwApplicationWindow";
         type ParentType = adw::ApplicationWindow;
-        type Instance = subclass::simple::InstanceStruct<Self>;
-        type Interfaces = ();
-        type Class = subclass::simple::ClassStruct<Self>;
         type Type = super::SwApplicationWindow;
-
-        glib::object_subclass!();
-
-        fn new() -> Self {
-            let current_notification = RefCell::default();
-
-            Self {
-                library_page: TemplateChild::default(),
-                discover_page: TemplateChild::default(),
-                search_page: TemplateChild::default(),
-                mini_controller_box: TemplateChild::default(),
-                toolbar_controller_box: TemplateChild::default(),
-                toolbar_controller_revealer: TemplateChild::default(),
-                window_leaflet: TemplateChild::default(),
-                window_flap: TemplateChild::default(),
-                overlay: TemplateChild::default(),
-                add_button: TemplateChild::default(),
-                back_button: TemplateChild::default(),
-                current_notification,
-            }
-        }
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
         }
 
-        fn instance_init(obj: &subclass::InitializingObject<Self::Type>) {
+        fn instance_init(obj: &subclass::InitializingObject<Self>) {
             obj.init_template();
         }
     }

@@ -32,7 +32,7 @@ mod imp {
     use super::*;
     use glib::subclass;
 
-    #[derive(Debug, CompositeTemplate)]
+    #[derive(Debug, Default, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_row.ui")]
     pub struct SwStationRow {
         #[template_child]
@@ -48,32 +48,17 @@ mod imp {
         pub sender: OnceCell<Sender<Action>>,
     }
 
+    #[glib::object_subclass]
     impl ObjectSubclass for SwStationRow {
         const NAME: &'static str = "SwStationRow";
         type ParentType = gtk::FlowBoxChild;
-        type Instance = subclass::simple::InstanceStruct<Self>;
-        type Interfaces = ();
-        type Class = subclass::simple::ClassStruct<Self>;
         type Type = super::SwStationRow;
-
-        glib::object_subclass!();
-
-        fn new() -> Self {
-            Self {
-                station_label: TemplateChild::default(),
-                subtitle_label: TemplateChild::default(),
-                favicon_box: TemplateChild::default(),
-                play_button: TemplateChild::default(),
-                station: OnceCell::default(),
-                sender: OnceCell::default(),
-            }
-        }
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
         }
 
-        fn instance_init(obj: &subclass::InitializingObject<Self::Type>) {
+        fn instance_init(obj: &subclass::InitializingObject<Self>) {
             obj.init_template();
         }
     }

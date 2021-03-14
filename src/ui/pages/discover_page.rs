@@ -34,7 +34,7 @@ mod imp {
     use super::*;
     use glib::subclass;
 
-    #[derive(Debug, CompositeTemplate)]
+    #[derive(Debug, Default, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/discover_page.ui")]
     pub struct SwDiscoverPage {
         #[template_child]
@@ -49,32 +49,17 @@ mod imp {
         pub sender: OnceCell<Sender<app::Action>>,
     }
 
+    #[glib::object_subclass]
     impl ObjectSubclass for SwDiscoverPage {
         const NAME: &'static str = "SwDiscoverPage";
         type ParentType = adw::Bin;
-        type Instance = subclass::simple::InstanceStruct<Self>;
-        type Interfaces = ();
-        type Class = subclass::simple::ClassStruct<Self>;
         type Type = super::SwDiscoverPage;
-
-        glib::object_subclass!();
-
-        fn new() -> Self {
-            Self {
-                carousel_box: TemplateChild::default(),
-                votes_flowbox: TemplateChild::default(),
-                trending_flowbox: TemplateChild::default(),
-                clicked_flowbox: TemplateChild::default(),
-
-                sender: OnceCell::default(),
-            }
-        }
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
         }
 
-        fn instance_init(obj: &subclass::InitializingObject<Self::Type>) {
+        fn instance_init(obj: &subclass::InitializingObject<Self>) {
             obj.init_template();
         }
     }

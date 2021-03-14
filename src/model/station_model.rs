@@ -22,27 +22,19 @@ use crate::api::SwStation;
 
 mod imp {
     use super::*;
-    use glib::subclass;
     use std::cell::RefCell;
 
-    #[derive(Debug)]
+    #[derive(Debug, Default)]
     pub struct SwStationModel {
         pub vec: RefCell<Vec<SwStation>>,
     }
 
+    #[glib::object_subclass]
     impl ObjectSubclass for SwStationModel {
         const NAME: &'static str = "SwStationModel";
-        type Type = super::SwStationModel;
         type ParentType = glib::Object;
+        type Type = super::SwStationModel;
         type Interfaces = (gio::ListModel,);
-        type Instance = subclass::simple::InstanceStruct<Self>;
-        type Class = subclass::simple::ClassStruct<Self>;
-
-        glib::object_subclass!();
-
-        fn new() -> Self {
-            Self { vec: RefCell::default() }
-        }
     }
 
     impl ObjectImpl for SwStationModel {}

@@ -73,15 +73,11 @@ pub struct SwApplicationPrivate {
     settings: gio::Settings,
 }
 
+#[glib::object_subclass]
 impl ObjectSubclass for SwApplicationPrivate {
     const NAME: &'static str = "SwApplication";
     type ParentType = gtk::Application;
-    type Instance = subclass::simple::InstanceStruct<Self>;
-    type Interfaces = ();
-    type Class = subclass::simple::ClassStruct<Self>;
     type Type = super::SwApplication;
-
-    glib::object_subclass!();
 
     fn new() -> Self {
         let (sender, r) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
@@ -112,9 +108,9 @@ impl GtkApplicationImpl for SwApplicationPrivate {}
 
 // Implement Gio.Application for SwApplication
 impl ApplicationImpl for SwApplicationPrivate {
-    fn activate(&self, _app: &Self::Type) {
+    fn activate(&self, app: &Self::Type) {
         debug!("gio::Application -> activate()");
-        let app = ObjectSubclass::get_instance(self).downcast::<SwApplication>().unwrap();
+        let app = app.downcast_ref::<SwApplication>().unwrap();
 
         // If the window already exists,
         // present it instead creating a new one again.
@@ -132,13 +128,16 @@ impl ApplicationImpl for SwApplicationPrivate {
 
         // Setup action channel
         let receiver = self.receiver.borrow_mut().take().unwrap();
-        receiver.attach(None, move |action| app.process_action(action));
+        receiver.attach(None, clone!(@strong app => move |action| app.process_action(action)));
 
         // Setup settings signal (we get notified when a key gets changed)
-        self.settings.connect_changed(clone!(@strong self.sender as sender => move |_, key_str| {
-            let key: Key = Key::from_str(key_str).unwrap();
-            send!(sender, Action::SettingsKeyChanged(key));
-        }));
+        self.settings.connect_changed(
+            None,
+            clone!(@strong self.sender as sender => move |_, key_str| {
+                let key: Key = Key::from_str(key_str).unwrap();
+                send!(sender, Action::SettingsKeyChanged(key));
+            }),
+        );
 
         // List all setting keys
         settings_manager::list_keys();
