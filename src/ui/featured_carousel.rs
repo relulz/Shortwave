@@ -105,7 +105,7 @@ impl FeaturedCarousel {
 
         get_widget!(self.builder, gtk::Button, next_button);
         next_button.connect_clicked(
-            clone!(@weak self.paginator as paginator, @weak self.pages as pages, @weak self.visible_page as visible_page => move |_|{
+            clone!(@weak self.paginator as paginator, @strong self.pages as pages, @weak self.visible_page as visible_page => move |_|{
                 if (*visible_page.borrow()+1) != pages.borrow().len() {
                     paginator.scroll_to(&pages.borrow()[*visible_page.borrow() +1]);
                     *visible_page.borrow_mut() += 1;
