@@ -105,7 +105,16 @@ impl SwStationFlowBox {
     }
 
     fn setup_signals(&self) {
-        let _imp = imp::SwStationFlowBox::from_instance(self);
+        let imp = imp::SwStationFlowBox::from_instance(self);
+
+        // Show StationDialog when row gets clicked
+        imp.flowbox.connect_child_activated(clone!(@strong imp.sender as sender => move |_, child| {
+            let row = child.clone().downcast::<SwStationRow>().unwrap();
+            let station = row.station();
+
+            let station_dialog = StationDialog::new(sender.get().unwrap().clone(), station);
+            station_dialog.show();
+        }));
     }
 
     fn setup_widgets(&self) {

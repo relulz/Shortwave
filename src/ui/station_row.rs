@@ -135,4 +135,9 @@ impl SwStationRow {
             spawn!(fut);
         }
     }
+
+    pub fn station(&self) -> SwStation {
+        let imp = imp::SwStationRow::from_instance(self);
+        imp.station.get().unwrap().clone()
+    }
 }
