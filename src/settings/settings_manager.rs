@@ -35,7 +35,7 @@ pub fn list_keys() {
 
 pub fn create_action(key: Key) -> gio::Action {
     let settings = get_settings();
-    settings.create_action(&key.to_string()).unwrap()
+    settings.create_action(&key.to_string())
 }
 
 pub fn get_settings() -> gio::Settings {
@@ -51,7 +51,7 @@ pub fn bind_property<P: IsA<glib::Object>>(key: Key, object: &P, property: &str)
 #[allow(dead_code)]
 pub fn get_string(key: Key) -> String {
     let settings = get_settings();
-    settings.get_string(&key.to_string()).unwrap().to_string()
+    settings.get_string(&key.to_string()).to_string()
 }
 
 #[allow(dead_code)]
