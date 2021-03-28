@@ -17,28 +17,30 @@
 use adw::subclass::prelude::*;
 use glib::clone;
 use glib::Sender;
+use glib::{ParamSpec, ToValue};
 use gtk::glib;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
-use once_cell::unsync::OnceCell;
+use once_cell::sync::Lazy;
 
 use crate::api::SwStation;
 use crate::app::Action;
 use crate::model::SwStationModel;
+use crate::model::{SwSorting, SwStationSorter};
 use crate::ui::{StationDialog, SwStationRow};
-use crate::utils::{Order, Sorting};
 
 mod imp {
     use super::*;
     use glib::subclass;
 
-    #[derive(Debug, Default, CompositeTemplate)]
+    #[derive(Debug, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_flowbox.ui")]
     pub struct SwStationFlowBox {
         #[template_child]
         pub flowbox: TemplateChild<gtk::FlowBox>,
-        pub model: OnceCell<gtk::SortListModel>,
+        pub sorter: SwStationSorter,
+        pub model: gtk::SortListModel,
     }
 
     #[glib::object_subclass]
@@ -46,6 +48,17 @@ mod imp {
         const NAME: &'static str = "SwStationFlowBox";
         type ParentType = adw::Bin;
         type Type = super::SwStationFlowBox;
+
+        fn new() -> Self {
+            let sorter = SwStationSorter::new();
+            let model = gtk::SortListModel::new(None::<&SwStationModel>, Some(&sorter));
+
+            Self {
+                flowbox: TemplateChild::default(),
+                sorter,
+                model,
+            }
+        }
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
@@ -56,7 +69,20 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for SwStationFlowBox {}
+    impl ObjectImpl for SwStationFlowBox {
+        fn properties() -> &'static [ParamSpec] {
+            static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| vec![ParamSpec::object("model", "Model", "Model", gtk::SortListModel::static_type(), glib::ParamFlags::READABLE)]);
+
+            PROPERTIES.as_ref()
+        }
+
+        fn get_property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
+            match pspec.get_name() {
+                "model" => self.model.to_value(),
+                _ => unimplemented!(),
+            }
+        }
+    }
 
     impl WidgetImpl for SwStationFlowBox {}
 
@@ -71,24 +97,28 @@ glib::wrapper! {
 impl SwStationFlowBox {
     pub fn init(&self, model: SwStationModel, sender: Sender<Action>) {
         let imp = imp::SwStationFlowBox::from_instance(self);
+        imp.model.set_model(Some(&model));
 
-        //let sorter = gtk::StringSorter::
-        //let sortlist_model = gtk::SortListModel::new(model, sorter);
+        self.setup_signals(sender);
+    }
+
+    pub fn set_sorting(&self, sorting: SwSorting, descending: bool) {
+        let imp = imp::SwStationFlowBox::from_instance(self);
+        imp.sorter.set_sorting(sorting);
+        imp.sorter.set_descending(descending);
+    }
+
+    fn setup_signals(&self, sender: Sender<Action>) {
+        let imp = imp::SwStationFlowBox::from_instance(self);
 
         imp.flowbox.get().bind_model(
-            Some(&model),
+            Some(&imp.model),
             clone!(@strong sender => move |station|{
                 let station = station.downcast_ref::<SwStation>().unwrap();
                 let row = SwStationRow::new(sender.clone(), station.clone());
                 row.upcast()
             }),
         );
-
-        self.setup_signals(sender);
-    }
-
-    fn setup_signals(&self, sender: Sender<Action>) {
-        let imp = imp::SwStationFlowBox::from_instance(self);
 
         // Show StationDialog when row gets clicked
         imp.flowbox.connect_child_activated(clone!(@strong sender => move |_, child| {

@@ -18,3 +18,4 @@ mod station_model;
 mod station_sorter;
 
 pub use station_model::SwStationModel;
+pub use station_sorter::{SwSorting, SwStationSorter};

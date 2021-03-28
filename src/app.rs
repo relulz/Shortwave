@@ -17,7 +17,6 @@
 use gio::subclass::prelude::ApplicationImpl;
 use gio::SettingsExt;
 use glib::clone;
-use glib::subclass;
 use glib::subclass::prelude::*;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
@@ -33,10 +32,10 @@ use crate::api::SwStation;
 use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
 use crate::database::Library;
+use crate::model::SwSorting;
 use crate::model::SwStationModel;
 use crate::settings::{settings_manager, Key};
 use crate::ui::{Notification, SwApplicationWindow, View};
-use crate::utils::{Order, Sorting};
 
 #[derive(Debug, Clone)]
 pub enum Action {
@@ -245,9 +244,12 @@ impl SwApplication {
                 debug!("Settings key changed: {:?}", &key);
                 match key {
                     Key::ViewSorting | Key::ViewOrder => {
-                        let sorting: Sorting = Sorting::from_str(&settings_manager::get_string(Key::ViewSorting)).unwrap();
-                        let order: Order = Order::from_str(&settings_manager::get_string(Key::ViewOrder)).unwrap();
-                        //self_.library.set_sorting(sorting, order);
+                        let sorting: SwSorting = SwSorting::from_str(&settings_manager::get_string(Key::ViewSorting)).unwrap();
+
+                        let order = settings_manager::get_string(Key::ViewOrder);
+                        let descending = if order == "Descending" { true } else { false };
+
+                        self_.window.borrow().as_ref().unwrap().set_sorting(sorting, descending);
                     }
                     _ => (),
                 }

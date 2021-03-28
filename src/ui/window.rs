@@ -27,6 +27,7 @@ use std::rc::Rc;
 
 use crate::app::{Action, SwApplication, SwApplicationPrivate};
 use crate::config;
+use crate::model::SwSorting;
 use crate::settings::{settings_manager, Key, SettingsWindow};
 use crate::ui::pages::*;
 use crate::ui::{about_dialog, Notification};
@@ -330,6 +331,11 @@ impl SwApplicationWindow {
         } else {
             self.set_default_size(700, 500);
         }
+    }
+
+    pub fn set_sorting(&self, sorting: SwSorting, descending: bool) {
+        let imp = imp::SwApplicationWindow::from_instance(self);
+        imp.library_page.get().set_sorting(sorting, descending);
     }
 
     pub fn go_back(&self) {

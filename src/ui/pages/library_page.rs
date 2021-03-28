@@ -25,6 +25,7 @@ use once_cell::unsync::OnceCell;
 use crate::app::{Action, SwApplication};
 use crate::config;
 use crate::i18n::*;
+use crate::model::SwSorting;
 use crate::ui::{Notification, SwStationFlowBox};
 
 mod imp {
@@ -77,6 +78,11 @@ impl SwLibraryPage {
         imp.sender.set(sender).unwrap();
 
         self.setup_widgets();
+    }
+
+    pub fn set_sorting(&self, sorting: SwSorting, descending: bool) {
+        let imp = imp::SwLibraryPage::from_instance(self);
+        imp.flowbox.get().set_sorting(sorting, descending);
     }
 
     fn setup_widgets(&self) {
