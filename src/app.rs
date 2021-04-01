@@ -240,22 +240,24 @@ impl SwApplication {
             Action::PlaybackSaveSong(song) => self_.player.save_song(song),
             Action::LibraryAddStations(stations) => self_.library.add_stations(stations),
             Action::LibraryRemoveStations(stations) => self_.library.remove_stations(stations),
-            Action::SettingsKeyChanged(key) => {
-                debug!("Settings key changed: {:?}", &key);
-                match key {
-                    Key::ViewSorting | Key::ViewOrder => {
-                        let sorting: SwSorting = SwSorting::from_str(&settings_manager::get_string(Key::ViewSorting)).unwrap();
-
-                        let order = settings_manager::get_string(Key::ViewOrder);
-                        let descending = if order == "Descending" { true } else { false };
-
-                        self_.window.borrow().as_ref().unwrap().set_sorting(sorting, descending);
-                    }
-                    _ => (),
-                }
-            }
+            Action::SettingsKeyChanged(key) => self.apply_settings_changes(key),
         }
         glib::Continue(true)
+    }
+
+    fn apply_settings_changes(&self, key: Key) {
+        let self_ = SwApplicationPrivate::from_instance(self);
+
+        debug!("Settings key changed: {:?}", &key);
+        match key {
+            Key::ViewSorting | Key::ViewOrder => {
+                let sorting: SwSorting = SwSorting::from_str(&settings_manager::get_string(Key::ViewSorting)).unwrap();
+                let order = settings_manager::get_string(Key::ViewOrder);
+                let descending = if order == "Descending" { true } else { false };
+                self_.window.borrow().as_ref().unwrap().set_sorting(sorting, descending);
+            }
+            _ => (),
+        }
     }
 
     // TODO: Temporary workaround to access the library model

@@ -31,7 +31,7 @@
                 <child type="end">
                   <object class="GtkMenuButton" id="appmenu_button">
                     <property name="icon_name">open-menu-symbolic</property>
-                    <property name="menu_model">app_menu</property>
+                    <property name="menu_model">library_menu</property>
                   </object>
                 </child>
                 <child type="end">
@@ -96,7 +96,7 @@
       </object>
     </child>
   </template>
-  <menu id="app_menu">
+  <menu id="library_menu">
     <section>
       <submenu>
         <attribute name="label" translatable="yes">_Sorting</attribute>
@@ -139,6 +139,38 @@
             <attribute name="target">Descending</attribute>
           </item>
         </section>
+      </submenu>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Open radio-browser.info &lt;sup&gt;↗&lt;/sup&gt;</attribute>
+        <attribute name="action">win.open-radio-browser-info</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Create new station</attribute>
+        <attribute name="action">win.create-new-station</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Preferences</attribute>
+        <attribute name="action">win.show-preferences</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+        <attribute name="action">win.show-help-overlay</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_About Shortwave</attribute>
+        <attribute name="action">win.about</attribute>
+      </item>
+    </section>
+  </menu>
+  <menu id="default_menu">
+    <section>
+      <submenu>
+        <attribute name="label" translatable="yes">_Sorting</attribute>
+        <attribute name="action"></attribute>
       </submenu>
     </section>
     <section>

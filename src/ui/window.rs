@@ -71,6 +71,13 @@ mod imp {
         #[template_child]
         pub back_button: TemplateChild<gtk::Button>,
 
+        #[template_child]
+        pub appmenu_button: TemplateChild<gtk::MenuButton>,
+        #[template_child]
+        pub default_menu: TemplateChild<gio::MenuModel>,
+        #[template_child]
+        pub library_menu: TemplateChild<gio::MenuModel>,
+
         pub current_notification: RefCell<Option<Rc<Notification>>>,
     }
 
@@ -400,12 +407,15 @@ impl SwApplicationWindow {
             imp.window_flap.set_reveal_flap(false);
         }
 
+        imp.appmenu_button.set_menu_model(Some(&imp.default_menu.get()));
+
         // Show requested view / page
         match view {
             View::Library => {
                 imp.window_leaflet.set_visible_child(&imp.library_page.get());
                 imp.back_button.set_visible(false);
                 imp.add_button.set_visible(true);
+                imp.appmenu_button.set_menu_model(Some(&imp.library_menu.get()));
             }
             View::Discover => {
                 imp.window_leaflet.set_visible_child(&imp.discover_page.get());
