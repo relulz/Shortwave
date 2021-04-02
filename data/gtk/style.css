@@ -25,8 +25,8 @@
 
 .favicon-big {
   border-radius: 8px;
-  border: 1px solid @borders;
-  box-shadow: 0 4px 5px rgba(0,0,0,0.2);
+  border: none;
+  box-shadow: 0 4px 5px 1px alpha(black, .2), 0 0 0 1px alpha(black, .15);
 }
 
 .smallcover {
