@@ -3,7 +3,7 @@
 #
 # Hannie Dumoleyn <hannie@ubuntu-nl.org>, 2020.
 # Erwin van Eijk <erwin@oakhill.nl>, 2020.
-# Nathan Follens <nthn@unseen.is>, 2020.
+# Nathan Follens <nthn@unseen.is>, 2020-2021.
 #
 # Vertaalde termen:
 # - stream -- mediastroom
@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-08-02 15:56+0000\n"
-"PO-Revision-Date: 2020-08-25 23:09+0200\n"
+"POT-Creation-Date: 2021-02-20 14:26+0000\n"
+"PO-Revision-Date: 2021-04-02 16:50+0200\n"
 "Last-Translator: Nathan Follens <nthn@unseen.is>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
@@ -21,212 +21,106 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
-#
-#: data/gtk/station_dialog.ui:10
-msgid "Station details"
-msgstr "Informatie over radiostation"
-
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:169
-msgid "Language"
-msgstr "Taal"
-
-#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:175
-msgid "Tags"
-msgstr "Labels"
-
-#: data/gtk/station_dialog.ui:220
-msgid "Codec"
-msgstr "Codec"
-
-#
-#: data/gtk/station_dialog.ui:235
-msgid "Homepage"
-msgstr "Startpagina"
-
-#: data/gtk/discover.ui:54
+#: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
 msgstr "Radiostations met de meeste stemmen"
 
 # Trending vervangen door populair - Erwin
-#: data/gtk/discover.ui:88
+#: data/gtk/discover_page.ui:43
 msgid "Trending"
 msgstr "Populair"
 
-#: data/gtk/discover.ui:122
+#: data/gtk/discover_page.ui:58
 msgid "Other users are listening to…"
 msgstr "Andere gebruikers luisteren naar…"
 
-#: data/gtk/song_row.ui:18
-msgid "Save recorded song"
-msgstr "Een opgenomen nummer opslaan"
+#: data/gtk/library.ui:37
+msgid "Receiving station data…"
+msgstr "Gegevens van radiostation ontvangen…"
 
-#: data/gtk/streaming_dialog.ui:75 data/gtk/menu/player_menu.ui:33
-msgid "Stream to a device"
-msgstr "Naar een apparaat versturen"
+#: data/gtk/library.ui:64
+msgid "_Discover new stations"
+msgstr "Nieuwe ra_diostations ontdekken"
 
-#: data/gtk/streaming_dialog.ui:154
-msgid "Devices which implement the Google Cast protocol are supported."
-msgstr ""
-"Apparaten die het ‘Google Cast-protocol’ geïmplementeerd hebben, worden "
-"ondersteund."
+#: data/gtk/menu/player_menu.ui:6
+msgid "_Show station details"
+msgstr "Informatie over radio_station tonen"
 
-#: data/gtk/streaming_dialog.ui:209
-msgid "No devices found"
-msgstr "Geen apparaten gevonden"
+#: data/gtk/menu/player_menu.ui:10
+msgid "Stream to a _device"
+msgstr "Naar een a_pparaat versturen"
 
-#: data/gtk/streaming_dialog.ui:224
-msgid "Retry search"
-msgstr "Probeer opnieuw te zoeken"
+#: data/gtk/menu/player_menu.ui:16
+msgid "_Enable mini player"
+msgstr "Minisp_eler inschakelen"
 
-#: data/gtk/streaming_dialog.ui:302 data/gtk/streaming_dialog.ui:353
-msgid "Searching for devices…"
-msgstr "Op zoek naar apparaten…"
-
-#: data/gtk/notification.ui:142
-msgid "Error details"
-msgstr "Foutdetails"
-
-#: data/gtk/sidebar_controller.ui:33
-msgid "An error occurred"
-msgstr "Er is een fout opgetreden"
+#: data/gtk/mini_controller.ui:69
+msgid "SHORTWAVE INTERNET RADIO"
+msgstr "SHORTWAVE INTERNETRADIO"
 
 # Hmmm, playback is weergave? Ik denk meer aan terugspelen, dus:
 # Niet terugspelen of zoiets. - Hannie
 # Vervangen door 'geen geluid', wat toch het eindresultaat hoort te zijn - Erwin
 # 'Geen geluid' interpreteer ik alsof er wel iets wordt afgespeeld, maar het geluid van de computer uit staat, dus lijkt iets als 'inactief' me hier beter - Nathan
 # Source nagekeken - dit label wordt vervangen door station-name, dus is "geen radiostation" de beste invulling, denk ik - Erwin
-#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
-#: data/gtk/toolbar_controller.ui:74
+#: data/gtk/mini_controller.ui:91 data/gtk/sidebar_controller.ui:63
+#: data/gtk/toolbar_controller.ui:38
 msgid "No playback"
 msgstr "Geen radiostation"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:136
-msgid "Sorting"
-msgstr "Sorteren"
+#: data/gtk/notification.ui:58
+msgid "Error details"
+msgstr "Foutdetails"
 
-#: data/gtk/menu/app_menu.ui:43
-msgid "Open radio-browser.info <sup>↗</sup>"
-msgstr "radio-browser.info <sup>↗</sup> openen"
+#: data/gtk/player.ui:44
+msgid "Connected with"
+msgstr "Verbonden met"
 
-#: data/gtk/menu/app_menu.ui:58
-msgid "Create new station"
-msgstr "Een nieuw radiostation aanmaken"
-
-#: data/gtk/menu/app_menu.ui:83
-msgid "Preferences"
-msgstr "Voorkeuren"
-
-#: data/gtk/menu/app_menu.ui:97
-msgid "Keyboard Shortcuts"
-msgstr "Sneltoetsen"
-
-#: data/gtk/menu/app_menu.ui:111
-msgid "About Shortwave"
-msgstr "Over Shortwave"
-
-#: data/gtk/menu/app_menu.ui:154
-msgid "Name"
-msgstr "Naam"
-
-#: data/gtk/menu/app_menu.ui:184
-msgid "Country"
-msgstr "Land"
-
-#: data/gtk/menu/app_menu.ui:199
-msgid "State"
-msgstr "Staat"
-
-#: data/gtk/menu/app_menu.ui:214
-msgid "Votes"
-msgstr "Stemmen"
-
-#: data/gtk/menu/app_menu.ui:240
-msgid "Ascending"
-msgstr "Oplopend"
-
-#: data/gtk/menu/app_menu.ui:255
-msgid "Descending"
-msgstr "Aflopend"
-
-#: data/gtk/menu/player_menu.ui:19
-msgid "Show station details"
-msgstr "Informatie over radiostation tonen"
-
-#: data/gtk/menu/player_menu.ui:58
-msgid "Enable mini player"
-msgstr "Minispeler inschakelen"
-
-#: data/gtk/settings_window.ui:15
-msgid "Appearance"
-msgstr "Uiterlijk"
-
-#: data/gtk/settings_window.ui:19
-msgid "Dark Mode"
-msgstr "Donkere modus"
-
-#: data/gtk/settings_window.ui:20
-msgid "Whether the application should use a dark theme"
-msgstr "Of de toepassing een donker thema gebruikt"
-
-#: data/gtk/settings_window.ui:36
-msgid "Features"
-msgstr "Functies"
-
-#: data/gtk/settings_window.ui:40
-msgid "Notifications"
-msgstr "Notificaties"
-
-#: data/gtk/settings_window.ui:41
-msgid "Show desktop notifications when a new song gets played"
-msgstr "Bureaubladnotificaties tonen bij een nieuw nummer"
-
-#: data/gtk/shortcuts.ui:12
+#: data/gtk/settings_window.ui:10 data/gtk/shortcuts.ui:11
 msgid "General"
 msgstr "Algemeen"
 
-#: data/gtk/shortcuts.ui:18
+#: data/gtk/settings_window.ui:13
+msgid "Appearance"
+msgstr "Uiterlijk"
+
+#: data/gtk/settings_window.ui:16
+msgid "_Dark Mode"
+msgstr "_Donkere modus"
+
+#: data/gtk/settings_window.ui:18
+msgid "Whether the application should use a dark theme"
+msgstr "Of de toepassing een donker thema gebruikt"
+
+#: data/gtk/settings_window.ui:31
+msgid "Features"
+msgstr "Functies"
+
+#: data/gtk/settings_window.ui:34
+msgid "_Notifications"
+msgstr "_Notificaties"
+
+#: data/gtk/settings_window.ui:36
+msgid "Show desktop notifications when a new song gets played"
+msgstr "Bureaubladnotificaties tonen bij een nieuw nummer"
+
+#: data/gtk/shortcuts.ui:15
 msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Toepassing afsluiten"
 
-#: data/gtk/shortcuts.ui:25
+#: data/gtk/shortcuts.ui:21
 msgctxt "shortcut window"
 msgid "Search for stations"
 msgstr "Radiostations zoeken"
 
-#: data/gtk/storefront.ui:21 data/gtk/library.ui:21
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "Shortwave"
-msgstr "Shortwave"
+#: data/gtk/sidebar_controller.ui:22
+msgid "An error occurred"
+msgstr "Er is een fout opgetreden"
 
-#: data/gtk/storefront.ui:85
-msgid "Discover"
-msgstr "Ontdekken"
-
-#: data/gtk/storefront.ui:100
-msgid "Search"
-msgstr "Zoeken"
-
-#: data/gtk/storefront.ui:125
-msgid "Locations"
-msgstr "Locaties"
-
-#: data/gtk/storefront.ui:150
-msgid "Languages"
-msgstr "Talen"
-
-#: data/gtk/library.ui:121
-msgid "Receiving station data…"
-msgstr "Gegevens van radiostation ontvangen…"
-
-#: data/gtk/library.ui:217
-msgid "Discover new stations"
-msgstr "Nieuwe radiostations ontdekken"
-
-#: data/gtk/song_listbox.ui:34
+#: data/gtk/song_listbox.ui:23
 msgid ""
 "Songs are automatically recognized using the stream metadata.\n"
 "\n"
@@ -238,87 +132,173 @@ msgstr ""
 "worden."
 
 # Over naar gedetecteerd, in plaats van herkend. - Erwin
-#: data/gtk/song_listbox.ui:93
+#: data/gtk/song_listbox.ui:64
 msgid "No songs detected"
 msgstr "Geen nummers gedetecteerd"
 
-#: data/gtk/song_listbox.ui:110
+#: data/gtk/song_listbox.ui:74
 msgid "Detected songs will appear here."
 msgstr "Gedetecteerde nummers zullen hier getoond worden."
 
-#: data/gtk/song_listbox.ui:131
-msgid "How does this work?"
-msgstr "Hoe werkt dit?"
+#: data/gtk/song_listbox.ui:83
+msgid "_How does this work?"
+msgstr "_Hoe werkt dit?"
 
-#: data/gtk/song_listbox.ui:197
+#: data/gtk/song_listbox.ui:125
 msgid "Saved songs are located in your Music folder."
 msgstr "Opgeslagen nummers staan in de map Muziek."
 
-#: data/gtk/song_listbox.ui:215
-msgid "Open"
-msgstr "Openen"
+#: data/gtk/song_listbox.ui:138
+msgid "_Open"
+msgstr "_Openen"
 
-#: data/gtk/player.ui:135
-msgid "Connected with"
-msgstr "Verbonden met"
+#: data/gtk/song_row.ui:12
+msgid "Save recorded song"
+msgstr "Een opgenomen nummer opslaan"
+
+#
+#: data/gtk/station_dialog.ui:8
+msgid "Station details"
+msgstr "Informatie over radiostation"
+
+#: data/gtk/station_dialog.ui:62
+msgid "Language"
+msgstr "Taal"
+
+#: data/gtk/station_dialog.ui:91
+msgid "Tags"
+msgstr "Labels"
+
+#: data/gtk/station_dialog.ui:117
+msgid "Codec"
+msgstr "Codec"
+
+#
+#: data/gtk/station_dialog.ui:144
+msgid "Homepage"
+msgstr "Startpagina"
+
+#: data/gtk/station_dialog.ui:182
+msgid "_Remove from Library"
+msgstr "Ve_rwijderen uit bibliotheek"
+
+#: data/gtk/station_dialog.ui:196
+msgid "_Add to library"
+msgstr "_Toevoegen aan bibliotheek"
+
+#: data/gtk/streaming_dialog.ui:46
+msgid "Stream to a device"
+msgstr "Naar een apparaat versturen"
+
+#: data/gtk/streaming_dialog.ui:51
+msgid "_Cancel"
+msgstr "Annu_leren"
+
+#: data/gtk/streaming_dialog.ui:57
+msgid "_Connect"
+msgstr "_Verbinden"
+
+#: data/gtk/streaming_dialog.ui:89
+msgid "Devices which implement the Google Cast protocol are supported."
+msgstr ""
+"Apparaten die het ‘Google Cast-protocol’ geïmplementeerd hebben, worden "
+"ondersteund."
+
+#: data/gtk/streaming_dialog.ui:121
+msgid "No devices found"
+msgstr "Geen apparaten gevonden"
+
+#: data/gtk/streaming_dialog.ui:131
+msgid "_Retry search"
+msgstr "Opnieuw p_roberen zoeken"
+
+#: data/gtk/streaming_dialog.ui:179 data/gtk/streaming_dialog.ui:210
+msgid "Searching for devices…"
+msgstr "Op zoek naar apparaten…"
+
+#: data/gtk/window.ui:108
+msgid "_Sorting"
+msgstr "_Sorteren"
+
+#: data/gtk/window.ui:111
+msgid "_Name"
+msgstr "_Naam"
+
+#: data/gtk/window.ui:116
+msgid "_Language"
+msgstr "Taa_l"
+
+#: data/gtk/window.ui:121
+msgid "_Country"
+msgstr "L_and"
+
+#: data/gtk/window.ui:126
+msgid "S_tate"
+msgstr "S_taat"
+
+#: data/gtk/window.ui:131
+msgid "_Votes"
+msgstr "Ste_mmen"
+
+#: data/gtk/window.ui:138
+msgid "_Ascending"
+msgstr "_Oplopend"
+
+#: data/gtk/window.ui:143
+msgid "_Descending"
+msgstr "_Aflopend"
+
+#: data/gtk/window.ui:152
+msgid "_Open radio-browser.info <sup>↗</sup>"
+msgstr "radio-browser.info <sup>↗</sup> _openen"
+
+#: data/gtk/window.ui:156
+msgid "_Create new station"
+msgstr "Nieuw _radiostation aanmaken"
+
+#: data/gtk/window.ui:162
+msgid "_Preferences"
+msgstr "_Voorkeuren"
+
+#: data/gtk/window.ui:166
+msgid "_Keyboard Shortcuts"
+msgstr "Snel_toetsen"
+
+#: data/gtk/window.ui:170
+msgid "_About Shortwave"
+msgstr "_Over Shortwave"
 
 # Eerder werd audio-stroom gebruikt. - Hannie
 # Alles naar 'mediastroom', omdat dat de lading beter dekt. - Erwin
-#: src/audio/player.rs:167
+#: src/audio/player.rs:163
 msgid "This station cannot be played because the stream is offline."
 msgstr ""
 "Dit radiostation kan niet afgespeeld worden, omdat de mediastroom offline is."
 
 # Ik vind "gestreamd" niet fraai, maar afspelen is iets anders dan streamen, toch? - Hannie
-#: src/audio/player.rs:185
+#: src/audio/player.rs:181
 msgid "Station cannot be streamed."
 msgstr "Het radiostation kan niet afgespeeld worden."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:181
 msgid "URL is not valid."
 msgstr "De URL is niet geldig."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:60
+#: src/database/library.rs:56
 msgid "Welcome to {}"
 msgstr "Welkom bij {}"
 
 # Collectie vind ik eigenlijk ook mooier dan bibliotheek in dit geval, maar is bibliotheek niet duidelijker?. - Hannie
 # Ik ook, dus consequent collectie neergezet. Tevens in de vertaalwoorden in de inleiding opgenomen. - Erwin
-#: src/database/library.rs:156
+#: src/database/library.rs:146
 msgid "No longer existing station removed from library."
 msgstr "Het niet langer bestaande radiostation is verwijderd uit de collectie."
 
-#: src/database/library.rs:160 src/discover/pages/discover.rs:127
-#: src/discover/pages/search.rs:95
+#: src/database/library.rs:150 src/ui/pages/discover_page.rs:167
+#: src/ui/pages/search_page.rs:158
 msgid "Station data could not be received."
 msgstr "De gegevens van het radiostation zijn niet ontvangen."
-
-#: src/discover/pages/discover.rs:57
-msgid "Show statistics"
-msgstr "Statistieken tonen"
-
-# Ik vind de string niet meteen terug in de toepassing zelf, misschien is een gebiedende wijs hier ook gepaster - Nathan
-# De tekst zit in een roterende carousel, met andere features van Shortwave en daar is idd gebiedende wijs beter - Erwin
-#: src/discover/pages/discover.rs:58
-msgid "Browse over 25,500 stations"
-msgstr "Blader door meer dan 25.500 radiostations"
-
-#: src/discover/pages/discover.rs:60
-msgid "Add new station"
-msgstr "Een nieuw radiostation toevoegen"
-
-#: src/discover/pages/discover.rs:61
-msgid "Your favorite station is missing?"
-msgstr "Ontbreekt uw favoriete radiostation?"
-
-#: src/discover/pages/discover.rs:63
-msgid "Open website"
-msgstr "Website openen"
-
-#: src/discover/pages/discover.rs:64
-msgid "Powered by radio-browser.info"
-msgstr "Mogelijk gemaakt door radio-browser.info"
 
 # Gebiedende wijs, omdat het een soort voorstel van de computer aan de gebruiker is - Nathan
 #: src/ui/about_dialog.rs:32
@@ -335,17 +315,48 @@ msgstr ""
 "\n"
 "Meer info over Gnome-NL http://nl.gnome.org"
 
-#: src/utils.rs:110
+#: src/ui/pages/discover_page.rs:116
+msgid "Show statistics"
+msgstr "Statistieken tonen"
+
+# Ik vind de string niet meteen terug in de toepassing zelf, misschien is een gebiedende wijs hier ook gepaster - Nathan
+# De tekst zit in een roterende carousel, met andere features van Shortwave en daar is idd gebiedende wijs beter - Erwin
+#: src/ui/pages/discover_page.rs:117
+msgid "Browse over 25,500 stations"
+msgstr "Blader door meer dan 25.500 radiostations"
+
+#: src/ui/pages/discover_page.rs:119
+msgid "Add new station"
+msgstr "Een nieuw radiostation toevoegen"
+
+#: src/ui/pages/discover_page.rs:120
+msgid "Your favorite station is missing?"
+msgstr "Ontbreekt uw favoriete radiostation?"
+
+#: src/ui/pages/discover_page.rs:122
+msgid "Open website"
+msgstr "Website openen"
+
+#: src/ui/pages/discover_page.rs:123
+msgid "Powered by radio-browser.info"
+msgstr "Mogelijk gemaakt door radio-browser.info"
+
+#: src/utils.rs:109
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} stem"
 msgstr[1] "{} stemmen"
 
-#: src/utils.rs:112
+#: src/utils.rs:111
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} stemmen"
 msgstr[1] "{} · {} stemmen"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Shortwave"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
 msgid "Felix Häcker"
@@ -402,6 +413,18 @@ msgstr "Naadloze integratie in de Gnome-bureaubladomgeving"
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;Stroom;Golf;"
 
+#~ msgid "Discover"
+#~ msgstr "Ontdekken"
+
+#~ msgid "Search"
+#~ msgstr "Zoeken"
+
+#~ msgid "Locations"
+#~ msgstr "Locaties"
+
+#~ msgid "Languages"
+#~ msgstr "Talen"
+
 # Bibliotheek is een betere vertaling van 'library', maar zoals het gebruikt
 # wordt in de applicatie is 'collectie' beter. - Erwin
 #~ msgid "Library"
@@ -423,9 +446,6 @@ msgstr "Gradio;Radio;Stream;Wave;Stroom;Golf;"
 #~ msgid "Import"
 #~ msgstr "Importeren"
 
-#~ msgid "Cancel"
-#~ msgstr "Afbreken"
-
 #~ msgid "Converting data…"
 #~ msgstr "Gegevens converteren…"
 
@@ -438,6 +458,3 @@ msgstr "Gradio;Radio;Stream;Wave;Stroom;Golf;"
 #~ msgid_plural "Imported {} stations!"
 #~ msgstr[0] "{} radiostation geïmporteerd!"
 #~ msgstr[1] "{} radiostations geïmporteerd!"
-
-#~ msgid "Could not import library."
-#~ msgstr "Importeren van de collectie is mislukt."
