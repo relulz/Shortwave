@@ -198,7 +198,7 @@ impl GCastController {
         send!(self.gcast_sender, GCastAction::Connect);
 
         // Stop audio playback
-        send!(self.app_sender, Action::PlaybackStop);
+        send!(self.app_sender, Action::PlaybackSet(false));
     }
 
     pub fn disconnect_from_device(&self) {
@@ -217,7 +217,7 @@ impl Controller for Rc<GCastController> {
             send!(self.gcast_sender, GCastAction::SetStation);
 
             // Stop audio playback
-            send!(self.app_sender, Action::PlaybackStop);
+            send!(self.app_sender, Action::PlaybackSet(false));
         } else {
             debug!("No device ip available, don't set station. ")
         }

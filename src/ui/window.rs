@@ -244,7 +244,7 @@ impl SwApplicationWindow {
             window,
             "show-discover",
             clone!(@strong sender => move |_, _| {
-                send!(sender, Action::ViewShowDiscover);
+                send!(sender, Action::ViewSet(View::Discover));
             })
         );
 
@@ -253,7 +253,7 @@ impl SwApplicationWindow {
             window,
             "show-search",
             clone!(@strong sender => move |_, _| {
-                send!(sender, Action::ViewShowSearch);
+                send!(sender, Action::ViewSet(View::Search));
             })
         );
         app.set_accels_for_action("win.show-search", &["<primary>f"]);
@@ -263,26 +263,26 @@ impl SwApplicationWindow {
             window,
             "show-library",
             clone!(@strong sender => move |_, _| {
-                send!(sender, Action::ViewShowLibrary);
+                send!(sender, Action::ViewSet(View::Library));
             })
         );
 
-        // win.toggle-start-stop
+        // win.toggle-playback
         action!(
             window,
-            "toggle-start-stop",
+            "toggle-playback",
             clone!(@strong sender => move |_, _| {
-                send!(sender, Action::PlaybackToggleStartStop);
+                send!(sender, Action::PlaybackToggle);
             })
         );
-        app.set_accels_for_action("win.toggle-start-stop", &["<primary>space"]);
+        app.set_accels_for_action("win.toggle-playback", &["<primary>space"]);
 
         // win.disable-mini-player
         action!(
             window,
             "disable-mini-player",
             clone!(@strong sender => move |_, _| {
-                send!(sender, Action::ViewDisableMiniPlayer);
+                send!(sender, Action::ViewSetMiniPlayer(false));
             })
         );
 
@@ -291,7 +291,7 @@ impl SwApplicationWindow {
             window,
             "enable-mini-player",
             clone!(@strong sender => move |_, _| {
-                send!(sender, Action::ViewEnableMiniPlayer);
+                send!(sender, Action::ViewSetMiniPlayer(true));
             })
         );
 

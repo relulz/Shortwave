@@ -39,25 +39,26 @@ use crate::ui::{Notification, SwApplicationWindow, View};
 
 #[derive(Debug, Clone)]
 pub enum Action {
+    /* User Interface */
     ViewGoBack,
-    ViewShowDiscover,
-    ViewShowLibrary,
-    ViewShowSearch,
-    ViewShowPlayer,
-    ViewEnableMiniPlayer,
-    ViewDisableMiniPlayer,
+    ViewSet(View),
+    ViewSetMiniPlayer(bool),
     ViewRaise,
     ViewShowNotification(Rc<Notification>),
+
+    /* Audio Playback */
     PlaybackConnectGCastDevice(GCastDevice),
     PlaybackDisconnectGCastDevice,
     PlaybackSetStation(Box<SwStation>),
-    PlaybackStart,
-    PlaybackStop,
-    PlaybackToggleStartStop,
+    PlaybackSet(bool),
+    PlaybackToggle,
     PlaybackSetVolume(f64),
     PlaybackSaveSong(Song),
+
+    /* Library */
     LibraryAddStations(Vec<SwStation>),
     LibraryRemoveStations(Vec<SwStation>),
+
     SettingsKeyChanged(Key),
 }
 
@@ -219,13 +220,9 @@ impl SwApplication {
 
         match action {
             Action::ViewGoBack => self_.window.borrow().as_ref().unwrap().go_back(),
-            Action::ViewShowDiscover => self_.window.borrow().as_ref().unwrap().set_view(View::Discover),
-            Action::ViewShowLibrary => self_.window.borrow().as_ref().unwrap().set_view(View::Library),
-            Action::ViewShowSearch => self_.window.borrow().as_ref().unwrap().set_view(View::Search),
-            Action::ViewShowPlayer => self_.window.borrow().as_ref().unwrap().set_view(View::Player),
+            Action::ViewSet(view) => self_.window.borrow().as_ref().unwrap().set_view(view),
             Action::ViewRaise => self_.window.borrow().as_ref().unwrap().present_with_time((glib::get_monotonic_time() / 1000) as u32),
-            Action::ViewEnableMiniPlayer => self_.window.borrow().as_ref().unwrap().enable_mini_player(true),
-            Action::ViewDisableMiniPlayer => self_.window.borrow().as_ref().unwrap().enable_mini_player(false),
+            Action::ViewSetMiniPlayer(enable) => self_.window.borrow().as_ref().unwrap().enable_mini_player(enable),
             Action::ViewShowNotification(notification) => self_.window.borrow().as_ref().unwrap().show_notification(notification),
             Action::PlaybackConnectGCastDevice(device) => self_.player.connect_to_gcast_device(device),
             Action::PlaybackDisconnectGCastDevice => self_.player.disconnect_from_gcast_device(),
@@ -233,9 +230,9 @@ impl SwApplication {
                 self_.player.set_station(*station);
                 self_.window.borrow().as_ref().unwrap().show_player_widget();
             }
-            Action::PlaybackStart => self_.player.set_playback(PlaybackState::Playing),
-            Action::PlaybackStop => self_.player.set_playback(PlaybackState::Stopped),
-            Action::PlaybackToggleStartStop => self_.player.toggle_playback(),
+            Action::PlaybackSet(true) => self_.player.set_playback(PlaybackState::Playing),
+            Action::PlaybackSet(false) => self_.player.set_playback(PlaybackState::Stopped),
+            Action::PlaybackToggle => self_.player.toggle_playback(),
             Action::PlaybackSetVolume(volume) => self_.player.set_volume(volume),
             Action::PlaybackSaveSong(song) => self_.player.save_song(song),
             Action::LibraryAddStations(stations) => self_.library.add_stations(stations),

@@ -97,25 +97,25 @@ impl MprisController {
         // mpris play / pause
         self.mpris.connect_play_pause(clone!(@weak self.mpris as mpris, @strong self.sender as sender => move || {
             match mpris.get_playback_status().unwrap().as_ref() {
-                "Paused" => send!(sender, Action::PlaybackStart),
-                "Stopped" => send!(sender, Action::PlaybackStart),
-                _ => send!(sender, Action::PlaybackStop),
+                "Paused" => send!(sender, Action::PlaybackSet(true)),
+                "Stopped" => send!(sender, Action::PlaybackSet(true)),
+                _ => send!(sender, Action::PlaybackSet(false)),
             };
         }));
 
         // mpris play
         self.mpris.connect_play(clone!(@strong self.sender as sender => move || {
-            send!(sender, Action::PlaybackStart);
+            send!(sender, Action::PlaybackSet(true));
         }));
 
         // mpris stop
         self.mpris.connect_stop(clone!(@strong self.sender as sender => move || {
-            send!(sender, Action::PlaybackStop);
+            send!(sender, Action::PlaybackSet(false));
         }));
 
         // mpris pause
         self.mpris.connect_pause(clone!(@strong self.sender as sender => move || {
-            send!(sender, Action::PlaybackStop);
+            send!(sender, Action::PlaybackSet(false));
         }));
 
         // mpris volume

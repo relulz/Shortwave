@@ -82,12 +82,12 @@ impl MiniController {
     fn setup_signals(&self) {
         // start_playback_button
         self.start_playback_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
-            send!(sender, Action::PlaybackStart);
+            send!(sender, Action::PlaybackSet(true));
         }));
 
         // stop_playback_button
         self.stop_playback_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
-            send!(sender, Action::PlaybackStop);
+            send!(sender, Action::PlaybackSet(false));
         }));
     }
 }
