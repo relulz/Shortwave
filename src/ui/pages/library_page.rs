@@ -26,7 +26,7 @@ use crate::app::{Action, SwApplication};
 use crate::config;
 use crate::i18n::*;
 use crate::model::SwSorting;
-use crate::ui::{Notification, SwStationFlowBox};
+use crate::ui::SwStationFlowBox;
 
 mod imp {
     use super::*;

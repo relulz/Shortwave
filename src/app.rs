@@ -35,13 +35,13 @@ use crate::database::Library;
 use crate::model::SwSorting;
 use crate::model::SwStationModel;
 use crate::settings::{settings_manager, Key};
-use crate::ui::{Notification, SwApplicationWindow, View};
+use crate::ui::{Notification, SwApplicationWindow, SwView};
 
 #[derive(Debug, Clone)]
 pub enum Action {
     /* User Interface */
     ViewGoBack,
-    ViewSet(View),
+    ViewSet(SwView),
     ViewSetMiniPlayer(bool),
     ViewRaise,
     ViewShowNotification(Rc<Notification>),
@@ -184,7 +184,7 @@ impl SwApplication {
         gtk::StyleContext::add_provider_for_display(&gdk::Display::get_default().unwrap(), &p, 500);
 
         // Set initial view
-        window.set_view(View::Library);
+        window.set_view(SwView::Library);
 
         // Setup help overlay
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");

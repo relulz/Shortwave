@@ -86,7 +86,6 @@ impl SwDiscoverPage {
 
     fn setup_widgets(&self) {
         let imp = imp::SwDiscoverPage::from_instance(self);
-        let sender = imp.sender.get().unwrap();
 
         // Featured Carousel
         let carousel = FeaturedCarousel::new();

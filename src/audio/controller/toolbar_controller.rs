@@ -27,7 +27,7 @@ use crate::api::{FaviconDownloader, SwStation};
 use crate::app::Action;
 use crate::audio::Controller;
 use crate::audio::PlaybackState;
-use crate::ui::{FaviconSize, StationFavicon, View};
+use crate::ui::{FaviconSize, StationFavicon, SwView};
 
 pub struct ToolbarController {
     pub widget: gtk::Box,
@@ -96,7 +96,7 @@ impl ToolbarController {
 
         // show_player_button
         self.toolbox_gesture.connect_pressed(clone!(@strong self.sender as sender => move |_, _, _, _| {
-            send!(sender, Action::ViewSet(View::Player));
+            send!(sender, Action::ViewSet(SwView::Player));
         }));
     }
 }

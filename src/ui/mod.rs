@@ -39,4 +39,4 @@ pub use station_flowbox::SwStationFlowBox;
 pub use station_row::SwStationRow;
 pub use streaming_dialog::StreamingDialog;
 pub use window::SwApplicationWindow;
-pub use window::View;
+pub use window::SwView;

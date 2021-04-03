@@ -35,9 +35,13 @@
                   </object>
                 </child>
                 <child type="end">
-                  <object class="GtkButton" id="search_button">
-                    <property name="action_name">win.show-search</property>
-                    <property name="icon_name">system-search-symbolic</property>
+                  <object class="GtkRevealer" id="search_revealer">
+                    <property name="transition_type">crossfade</property>
+                    <child>
+                      <object class="GtkToggleButton" id="search_button">
+                        <property name="icon_name">system-search-symbolic</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
                 <style>
@@ -60,7 +64,6 @@
                       <object class="AdwLeaflet" id="window_leaflet">
                         <property name="can_unfold">False</property>
                         <property name="hexpand">True</property>
-                        <property name="can_swipe_back">True</property>
                         <child>
                           <object class="SwLibraryPage" id="library_page"/>
                         </child>
@@ -170,7 +173,7 @@
     <section>
       <submenu>
         <attribute name="label" translatable="yes">_Sorting</attribute>
-        <attribute name="action"></attribute>
+        <attribute name="action"/>
       </submenu>
     </section>
     <section>
@@ -199,3 +202,4 @@
     </section>
   </menu>
 </interface>
+

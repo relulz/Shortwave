@@ -17,10 +17,12 @@
 use adw::subclass::prelude::*;
 use glib::clone;
 use glib::Sender;
+use glib::{GEnum, ParamSpec, ToValue};
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
 use gtk::{gio, glib};
+use once_cell::sync::Lazy;
 
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -32,12 +34,20 @@ use crate::settings::{settings_manager, Key, SettingsWindow};
 use crate::ui::pages::*;
 use crate::ui::{about_dialog, Notification};
 
-#[derive(Debug, Clone, PartialEq)]
-pub enum View {
+#[derive(Display, Copy, Debug, Clone, EnumString, PartialEq, GEnum)]
+#[repr(u32)]
+#[genum(type_name = "SwSwView")]
+pub enum SwView {
     Library,
     Discover,
     Search,
     Player,
+}
+
+impl Default for SwView {
+    fn default() -> Self {
+        SwView::Library
+    }
 }
 
 mod imp {
@@ -70,6 +80,10 @@ mod imp {
         pub add_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub back_button: TemplateChild<gtk::Button>,
+        #[template_child]
+        pub search_button: TemplateChild<gtk::ToggleButton>,
+        #[template_child]
+        pub search_revealer: TemplateChild<gtk::Revealer>,
 
         #[template_child]
         pub appmenu_button: TemplateChild<gtk::MenuButton>,
@@ -79,6 +93,7 @@ mod imp {
         pub library_menu: TemplateChild<gio::MenuModel>,
 
         pub current_notification: RefCell<Option<Rc<Notification>>>,
+        pub view: RefCell<SwView>,
     }
 
     #[glib::object_subclass]
@@ -96,8 +111,31 @@ mod imp {
         }
     }
 
-    // Implement GLib.Object for SwApplicationWindow
-    impl ObjectImpl for SwApplicationWindow {}
+    impl ObjectImpl for SwApplicationWindow {
+        fn properties() -> &'static [ParamSpec] {
+            static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| vec![ParamSpec::enum_("view", "View", "View", SwView::static_type(), SwView::default() as i32, glib::ParamFlags::READWRITE)]);
+
+            PROPERTIES.as_ref()
+        }
+
+        fn get_property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
+            match pspec.get_name() {
+                "view" => self.view.borrow().to_value(),
+                _ => unimplemented!(),
+            }
+        }
+
+        fn set_property(&self, obj: &Self::Type, _id: usize, value: &glib::Value, pspec: &ParamSpec) {
+            match pspec.get_name() {
+                "view" => {
+                    let view = value.get().unwrap();
+                    *self.view.borrow_mut() = view.unwrap();
+                    obj.update_view();
+                }
+                _ => unimplemented!(),
+            }
+        }
+    }
 
     // Implement Gtk.Widget for SwApplicationWindow
     impl WidgetImpl for SwApplicationWindow {}
@@ -129,6 +167,10 @@ impl SwApplicationWindow {
         window.setup_widgets(sender.clone());
         window.setup_signals(sender.clone());
         window.setup_gactions(sender);
+
+        // Library is the default page
+        window.set_view(SwView::Library);
+
         window
     }
 
@@ -169,7 +211,19 @@ impl SwApplicationWindow {
 
         // flap
         imp.window_flap.connect_property_folded_notify(clone!(@strong self as this => move |_| {
-           this.sync_ui_state();
+            this.update_visible_view();
+        }));
+        imp.window_flap.connect_property_reveal_flap_notify(clone!(@strong self as this => move |_| {
+            this.update_visible_view();
+        }));
+
+        // search_button
+        imp.search_button.connect_toggled(clone!(@strong self as this => move |search_button| {
+            if search_button.get_active(){
+                this.set_view(SwView::Search);
+            }else{
+                this.set_view(SwView::Discover);
+            }
         }));
 
         // window gets closed
@@ -244,7 +298,7 @@ impl SwApplicationWindow {
             window,
             "show-discover",
             clone!(@strong sender => move |_, _| {
-                send!(sender, Action::ViewSet(View::Discover));
+                send!(sender, Action::ViewSet(SwView::Discover));
             })
         );
 
@@ -253,7 +307,7 @@ impl SwApplicationWindow {
             window,
             "show-search",
             clone!(@strong sender => move |_, _| {
-                send!(sender, Action::ViewSet(View::Search));
+                send!(sender, Action::ViewSet(SwView::Search));
             })
         );
         app.set_accels_for_action("win.show-search", &["<primary>f"]);
@@ -263,7 +317,7 @@ impl SwApplicationWindow {
             window,
             "show-library",
             clone!(@strong sender => move |_, _| {
-                send!(sender, Action::ViewSet(View::Library));
+                send!(sender, Action::ViewSet(SwView::Library));
             })
         );
 
@@ -307,11 +361,9 @@ impl SwApplicationWindow {
         let imp = imp::SwApplicationWindow::from_instance(self);
 
         imp.toolbar_controller_revealer.set_visible(true);
-
-        // Unlock player sidebar flap
         imp.window_flap.set_locked(false);
 
-        self.sync_ui_state();
+        self.update_visible_view();
     }
 
     pub fn show_notification(&self, notification: Rc<Notification>) {
@@ -326,9 +378,13 @@ impl SwApplicationWindow {
         *imp.current_notification.borrow_mut() = Some(notification);
     }
 
-    pub fn set_view(&self, view: View) {
-        self.update_view(view);
-        self.sync_ui_state();
+    pub fn set_sorting(&self, sorting: SwSorting, descending: bool) {
+        let imp = imp::SwApplicationWindow::from_instance(self);
+        imp.library_page.get().set_sorting(sorting, descending);
+    }
+
+    pub fn set_view(&self, view: SwView) {
+        self.set_property("view", &view).unwrap()
     }
 
     pub fn enable_mini_player(&self, enable: bool) {
@@ -340,97 +396,90 @@ impl SwApplicationWindow {
         }
     }
 
-    pub fn set_sorting(&self, sorting: SwSorting, descending: bool) {
-        let imp = imp::SwApplicationWindow::from_instance(self);
-        imp.library_page.get().set_sorting(sorting, descending);
-    }
-
     pub fn go_back(&self) {
         debug!("Go back to previous view");
         let imp = imp::SwApplicationWindow::from_instance(self);
 
-        // Check if current view = player sidebar
-        if imp.window_flap.get_folded() && imp.window_flap.get_reveal_flap() {
+        if *imp.view.borrow() == SwView::Player {
             imp.window_flap.set_reveal_flap(false);
         } else {
             imp.window_leaflet.navigate(adw::NavigationDirection::Back);
         }
 
-        imp.window_leaflet.navigate(adw::NavigationDirection::Back);
-
-        // Make sure that the rest of the UI is correctly synced
-        self.sync_ui_state();
+        self.update_visible_view();
     }
 
-    fn sync_ui_state(&self) {
+    fn update_visible_view(&self) {
         let imp = imp::SwApplicationWindow::from_instance(self);
-        let app: SwApplication = self.get_application().unwrap().downcast().unwrap();
-        let app_priv = SwApplicationPrivate::from_instance(&app);
 
-        let leaflet_child = imp.window_leaflet.get_visible_child().unwrap();
-
-        // Check in which state the sidebar flap is,
-        // and set the corresponding view (Library|Storefront|Player)
-        let current_view = if imp.window_flap.get_folded() && imp.window_flap.get_reveal_flap() {
-            View::Player
+        let view = if imp.window_flap.get_folded() && imp.window_flap.get_reveal_flap() {
+            SwView::Player
         } else {
+            let leaflet_child = imp.window_leaflet.get_visible_child().unwrap();
             if leaflet_child == imp.library_page.get() {
-                View::Library
+                SwView::Library
             } else if leaflet_child == imp.discover_page.get() {
-                View::Discover
+                SwView::Discover
+            } else if leaflet_child == imp.search_page.get() {
+                SwView::Search
             } else {
-                View::Search
+                panic!("Unknown leaflet child")
             }
         };
 
-        // Show bottom player controller toolbar when
-        // sidebar flap is folded, player widget is not revealed,
-        // and there is a selected station.
-        let show_toolbar_controller = imp.window_flap.get_folded() && !imp.window_flap.get_reveal_flap() && app_priv.player.has_station();
-        imp.toolbar_controller_revealer.set_reveal_child(show_toolbar_controller);
-
-        // Ensure that player sidebar gets revealed
-        if !show_toolbar_controller && !imp.window_flap.get_locked() {
-            imp.window_flap.set_reveal_flap(true);
-        }
-
-        debug!("Setting current view as {:?}", &current_view);
-        self.update_view(current_view);
+        self.set_view(view);
     }
 
-    fn update_view(&self, view: View) {
+    fn update_view(&self) {
         let imp = imp::SwApplicationWindow::from_instance(self);
-        debug!("Set view to {:?}", &view);
+        let view = imp.view.borrow().clone();
+        debug!("Set view to {:?}", view);
 
-        // Don't reveal sidebar flap by default
-        if !imp.window_flap.get_locked() && imp.window_flap.get_folded() {
-            imp.window_flap.set_reveal_flap(false);
+        // Not enough place to display player sidebar and content side by side (eg. mobile phones)
+        let slim_mode = imp.window_flap.get_folded();
+        // Wether the player widgets (sidebar / bottom toolbar) should get display or not.
+        let player_activated = !imp.window_flap.get_locked();
+
+        if player_activated {
+            if slim_mode && view == SwView::Player {
+                imp.window_flap.set_reveal_flap(true);
+                imp.toolbar_controller_revealer.set_reveal_child(false);
+            } else if slim_mode {
+                imp.window_flap.set_reveal_flap(false);
+                imp.toolbar_controller_revealer.set_reveal_child(true);
+            } else {
+                imp.window_flap.set_reveal_flap(true);
+                imp.toolbar_controller_revealer.set_reveal_child(false);
+            }
         }
 
+        // Set defaults
+        imp.add_button.set_visible(false);
+        imp.back_button.set_visible(true);
         imp.appmenu_button.set_menu_model(Some(&imp.default_menu.get()));
+        imp.search_revealer.set_reveal_child(false);
 
         // Show requested view / page
         match view {
-            View::Library => {
+            SwView::Library => {
                 imp.window_leaflet.set_visible_child(&imp.library_page.get());
                 imp.back_button.set_visible(false);
                 imp.add_button.set_visible(true);
                 imp.appmenu_button.set_menu_model(Some(&imp.library_menu.get()));
             }
-            View::Discover => {
+            SwView::Discover => {
                 imp.window_leaflet.set_visible_child(&imp.discover_page.get());
-                imp.back_button.set_visible(true);
-                imp.add_button.set_visible(false);
+                imp.search_button.set_active(false);
+                imp.search_revealer.set_reveal_child(true);
             }
-            View::Search => {
+            SwView::Search => {
                 imp.window_leaflet.set_visible_child(&imp.search_page.get());
-                imp.back_button.set_visible(true);
-                imp.add_button.set_visible(false);
+                imp.search_button.set_active(true);
+                imp.search_revealer.set_reveal_child(true);
             }
-            View::Player => {
+            SwView::Player => {
                 imp.window_flap.set_reveal_flap(true);
-                imp.back_button.set_visible(true);
-                imp.add_button.set_visible(false);
+                imp.search_button.set_active(false);
             }
         }
     }
