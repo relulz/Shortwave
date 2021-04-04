@@ -155,7 +155,8 @@ mod imp {
 glib::wrapper! {
     pub struct SwApplicationWindow(
         ObjectSubclass<imp::SwApplicationWindow>)
-        @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::ApplicationWindow;
+        @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::ApplicationWindow,
+        @implements gio::ActionMap, gio::ActionGroup;
 }
 
 // SwApplicationWindow implementation itself
@@ -233,24 +234,22 @@ impl SwApplicationWindow {
     }
 
     fn setup_gactions(&self, sender: Sender<Action>) {
-        // We need to upcast from SwApplicationWindow to adw::ApplicationWindow, because SwApplicationWindow
-        // currently doesn't implement GLib.ActionMap, since it's not supported in gtk-rs for subclassing (13-01-2020)
-        let window = self.clone().upcast::<gtk::ApplicationWindow>();
-        let app = window.get_application().unwrap();
+        let imp = imp::SwApplicationWindow::from_instance(self);
+        let app = self.get_application().unwrap();
 
         // win.open-radio-browser-info
-        action!(window, "open-radio-browser-info", |_, _| {
+        action!(self, "open-radio-browser-info", |_, _| {
             open::that("https://www.radio-browser.info/").expect("Could not open webpage.");
         });
 
         // win.create-new-station
-        action!(window, "create-new-station", |_, _| {
+        action!(self, "create-new-station", |_, _| {
             open::that("https://www.radio-browser.info/#!/add").expect("Could not open webpage.");
         });
 
         // win.quit
         action!(
-            window,
+            self,
             "quit",
             clone!(@weak app => move |_, _| {
                 app.quit();
@@ -260,26 +259,27 @@ impl SwApplicationWindow {
 
         // win.about
         action!(
-            window,
+            self,
             "about",
-            clone!(@weak window => move |_, _| {
-                about_dialog::show_about_dialog(window);
+            clone!(@weak self as this => move |_, _| {
+                about_dialog::show_about_dialog(this.upcast());
             })
         );
 
         // win.show-preferences
         action!(
-            window,
+            self,
             "show-preferences",
-            clone!(@weak window => move |_, _| {
-                let settings_window = SettingsWindow::new(&window);
+            clone!(@weak self as this => move |_, _| {
+                let settings_window = SettingsWindow::new(&this.upcast());
                 settings_window.show();
             })
         );
+        app.set_accels_for_action("win.show-preferences", &["<primary>comma"]);
 
         // win.go-back
         action!(
-            window,
+            self,
             "go-back",
             clone!(@strong sender => move |_, _| {
                 send!(sender, Action::ViewGoBack);
@@ -289,16 +289,17 @@ impl SwApplicationWindow {
 
         // win.show-discover
         action!(
-            window,
+            self,
             "show-discover",
             clone!(@strong sender => move |_, _| {
                 send!(sender, Action::ViewSet(SwView::Discover));
             })
         );
+        app.set_accels_for_action("win.show-discover", &["<primary>d"]);
 
         // win.show-search
         action!(
-            window,
+            self,
             "show-search",
             clone!(@strong sender => move |_, _| {
                 send!(sender, Action::ViewSet(SwView::Search));
@@ -308,16 +309,27 @@ impl SwApplicationWindow {
 
         // win.show-library
         action!(
-            window,
+            self,
             "show-library",
             clone!(@strong sender => move |_, _| {
                 send!(sender, Action::ViewSet(SwView::Library));
             })
         );
+        app.set_accels_for_action("win.show-library", &["<primary>l"]);
+
+        // win.show-appmenu
+        action!(
+            self,
+            "show-appmenu",
+            clone!(@strong imp.appmenu_button as appmenu_button => move |_, _| {
+                appmenu_button.popup();
+            })
+        );
+        app.set_accels_for_action("win.show-appmenu", &["F10"]);
 
         // win.toggle-playback
         action!(
-            window,
+            self,
             "toggle-playback",
             clone!(@strong sender => move |_, _| {
                 send!(sender, Action::PlaybackToggle);
@@ -327,7 +339,7 @@ impl SwApplicationWindow {
 
         // win.disable-mini-player
         action!(
-            window,
+            self,
             "disable-mini-player",
             clone!(@strong sender => move |_, _| {
                 send!(sender, Action::ViewSetMiniPlayer(false));
@@ -336,7 +348,7 @@ impl SwApplicationWindow {
 
         // win.enable-mini-player
         action!(
-            window,
+            self,
             "enable-mini-player",
             clone!(@strong sender => move |_, _| {
                 send!(sender, Action::ViewSetMiniPlayer(true));
@@ -345,10 +357,10 @@ impl SwApplicationWindow {
 
         // Sort / Order menu
         let sorting_action = settings_manager::create_action(Key::ViewSorting);
-        window.add_action(&sorting_action);
+        self.add_action(&sorting_action);
 
         let order_action = settings_manager::create_action(Key::ViewOrder);
-        window.add_action(&order_action);
+        self.add_action(&order_action);
     }
 
     pub fn show_player_widget(&self, player: Rc<Player>) {

@@ -194,6 +194,7 @@ impl SwApplication {
         get_widget!(builder, gtk::ShortcutsWindow, shortcuts);
         let w = window.clone().upcast::<gtk::ApplicationWindow>();
         w.set_help_overlay(Some(&shortcuts));
+        self.set_accels_for_action("win.show-help-overlay", &["<primary>question"]);
 
         window
     }
