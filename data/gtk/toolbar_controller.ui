@@ -29,8 +29,8 @@
             <child>
               <object class="GtkBox">
                 <property name="valign">center</property>
-                <property name="margin_start">12</property>
-                <property name="margin_end">12</property>
+                <property name="margin_start">8</property>
+                <property name="margin_end">8</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="title_label">
