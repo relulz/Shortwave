@@ -37,9 +37,12 @@
   border-top: 1px solid @borders;
 }
 
+.featured-carousel{
+  border-radius: 8px;
+}
+
 .carousel-banner {
   padding: 0px;
-  border-radius: 8px;
   border: 1px solid @borders;
   color: white;
 }
@@ -61,18 +64,25 @@
   background-color: lightgrey;
 }
 
-.carousel-left-button {
-  padding: 2px;
-  border-radius: 0px;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
+.carousel-button {
+  padding: 8px;
+  min-width: 30px;
+  min-height: 30px;
+  margin: 6px;
 }
 
-.carousel-right-button {
-  padding: 2px;
-  border-radius: 0px;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
+.carousel-button {
+  -gtk-icon-shadow: none;
+  background: none;
+  border: none;
+}
+
+.carousel-button:hover {
+	background: rgba(46, 52, 54, 0.2);
+}
+
+.carousel-button:active {
+	background: rgba(46, 52, 54, 0.35);
 }
 
 .mini-controller {

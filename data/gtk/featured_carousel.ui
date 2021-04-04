@@ -7,13 +7,12 @@
     <child>
       <object class="GtkOverlay" id="overlay">
         <child>
-          <object class="AdwCarousel" id="paginator">
+          <object class="AdwCarousel" id="carousel">
             <property name="height_request">150</property>
-            <property name="spacing">12</property>
             <property name="animation_duration">400</property>
             <property name="allow_mouse_drag">True</property>
             <style>
-              <class name="discover-paginator"/>
+              <class name="featured-carousel"/>
             </style>
           </object>
         </child>
@@ -24,7 +23,8 @@
             <property name="icon_name">go-previous-symbolic</property>
             <style>
               <class name="osd"/>
-              <class name="carousel-left-button"/>
+              <class name="carousel-button"/>
+              <class name="circular"/>
             </style>
           </object>
         </child>
@@ -35,7 +35,8 @@
             <property name="icon_name">go-next-symbolic</property>
             <style>
               <class name="osd"/>
-              <class name="carousel-right-button"/>
+              <class name="carousel-button"/>
+              <class name="circular"/>
             </style>
           </object>
         </child>
@@ -43,7 +44,7 @@
     </child>
     <child>
       <object class="AdwCarouselIndicatorLines">
-        <property name="carousel">paginator</property>
+        <property name="carousel">carousel</property>
       </object>
     </child>
   </object>

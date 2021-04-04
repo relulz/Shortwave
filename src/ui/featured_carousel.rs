@@ -25,7 +25,7 @@ use std::rc::Rc;
 
 pub struct FeaturedCarousel {
     pub widget: gtk::Box,
-    paginator: Carousel,
+    carousel: Carousel,
 
     pages: Rc<RefCell<Vec<gtk::Box>>>,
     visible_page: Rc<RefCell<usize>>,
@@ -37,14 +37,14 @@ impl FeaturedCarousel {
     pub fn new() -> Self {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/featured_carousel.ui");
         get_widget!(builder, gtk::Box, featured_carousel);
-        get_widget!(builder, Carousel, paginator);
+        get_widget!(builder, Carousel, carousel);
 
         let pages = Rc::new(RefCell::new(Vec::new()));
         let visible_page = Rc::new(RefCell::new(0));
 
         let carousel = Self {
             widget: featured_carousel,
-            paginator,
+            carousel,
             pages,
             visible_page,
             builder,
@@ -85,38 +85,36 @@ impl FeaturedCarousel {
         style_ctx.add_class("banner");
         style_ctx.add_provider(&css_provider, 600);
 
-        self.paginator.insert(&page_box, self.paginator.get_n_pages().try_into().unwrap());
+        self.carousel.insert(&page_box, self.carousel.get_n_pages().try_into().unwrap());
         self.pages.borrow_mut().append(&mut vec![page_box]);
     }
 
     fn setup_signals(&self) {
         get_widget!(self.builder, gtk::Button, previous_button);
-        previous_button.connect_clicked(
-            clone!(@weak self.paginator as paginator, @weak self.pages as pages, @weak self.visible_page as visible_page => move |_|{
-                if *visible_page.borrow() != 0 {
-                    paginator.scroll_to(&pages.borrow()[*visible_page.borrow() -1]);
-                    *visible_page.borrow_mut() -= 1;
-                }else{
-                    paginator.scroll_to(&pages.borrow()[(pages.borrow().len()-1)]);
-                    *visible_page.borrow_mut() = pages.borrow().len()-1;
-                }
-            }),
-        );
+        previous_button.connect_clicked(clone!(@weak self.carousel as carousel, @weak self.pages as pages, @weak self.visible_page as visible_page => move |_|{
+            if *visible_page.borrow() != 0 {
+                carousel.scroll_to(&pages.borrow()[*visible_page.borrow() -1]);
+                *visible_page.borrow_mut() -= 1;
+            }else{
+                carousel.scroll_to(&pages.borrow()[(pages.borrow().len()-1)]);
+                *visible_page.borrow_mut() = pages.borrow().len()-1;
+            }
+        }));
 
         get_widget!(self.builder, gtk::Button, next_button);
         next_button.connect_clicked(
-            clone!(@weak self.paginator as paginator, @strong self.pages as pages, @weak self.visible_page as visible_page => move |_|{
+            clone!(@weak self.carousel as carousel, @strong self.pages as pages, @weak self.visible_page as visible_page => move |_|{
                 if (*visible_page.borrow()+1) != pages.borrow().len() {
-                    paginator.scroll_to(&pages.borrow()[*visible_page.borrow() +1]);
+                    carousel.scroll_to(&pages.borrow()[*visible_page.borrow() +1]);
                     *visible_page.borrow_mut() += 1;
                 }else{
-                    paginator.scroll_to(&pages.borrow()[0]);
+                    carousel.scroll_to(&pages.borrow()[0]);
                     *visible_page.borrow_mut() = 0;
                 }
             }),
         );
 
-        self.paginator.connect_page_changed(clone!(@strong self.visible_page as visible_page => move |_, a|{
+        self.carousel.connect_page_changed(clone!(@strong self.visible_page as visible_page => move |_, a|{
             *visible_page.borrow_mut() = a.try_into().unwrap();
         }));
     }
