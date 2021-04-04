@@ -27,7 +27,8 @@ use once_cell::sync::Lazy;
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::app::{Action, SwApplication, SwApplicationPrivate};
+use crate::app::{Action, SwApplication};
+use crate::audio::Player;
 use crate::config;
 use crate::model::SwSorting;
 use crate::settings::{settings_manager, Key, SettingsWindow};
@@ -176,18 +177,11 @@ impl SwApplicationWindow {
 
     pub fn setup_widgets(&self, sender: Sender<Action>) {
         let imp = imp::SwApplicationWindow::from_instance(self);
-        let app: SwApplication = self.get_application().unwrap().downcast::<SwApplication>().unwrap();
-        let app_private = SwApplicationPrivate::from_instance(&app);
 
         // Init pages
         imp.library_page.init(sender.clone());
         imp.discover_page.init(sender.clone());
         imp.search_page.init(sender.clone());
-
-        // Wire everything up
-        imp.mini_controller_box.append(&app_private.player.mini_controller_widget);
-        imp.toolbar_controller_box.append(&app_private.player.toolbar_controller_widget);
-        imp.window_flap.set_flap(Some(&app_private.player.widget));
 
         // Add devel style class for development or beta builds
         if config::PROFILE == "development" || config::PROFILE == "beta" {
@@ -357,8 +351,13 @@ impl SwApplicationWindow {
         window.add_action(&order_action);
     }
 
-    pub fn show_player_widget(&self) {
+    pub fn show_player_widget(&self, player: Rc<Player>) {
         let imp = imp::SwApplicationWindow::from_instance(self);
+
+        // Wire everything up
+        imp.mini_controller_box.append(&player.mini_controller_widget);
+        imp.toolbar_controller_box.append(&player.toolbar_controller_widget);
+        imp.window_flap.set_flap(Some(&player.widget));
 
         imp.toolbar_controller_revealer.set_visible(true);
         imp.window_flap.set_locked(false);
