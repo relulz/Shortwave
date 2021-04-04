@@ -15,7 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use adw::subclass::prelude::*;
-use glib::Sender;
+use glib::{clone, Sender};
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
@@ -24,6 +24,7 @@ use once_cell::unsync::OnceCell;
 
 use crate::app::{Action, SwApplication};
 use crate::config;
+use crate::database::{SwLibrary, SwLibraryStatus};
 use crate::i18n::*;
 use crate::model::SwSorting;
 use crate::ui::SwStationFlowBox;
@@ -32,7 +33,7 @@ mod imp {
     use super::*;
     use glib::subclass;
 
-    #[derive(Debug, Default, CompositeTemplate)]
+    #[derive(Debug, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/library_page.ui")]
     pub struct SwLibraryPage {
         #[template_child]
@@ -42,6 +43,7 @@ mod imp {
         #[template_child]
         pub flowbox: TemplateChild<SwStationFlowBox>,
 
+        pub library: SwLibrary,
         pub sender: OnceCell<Sender<Action>>,
     }
 
@@ -50,6 +52,25 @@ mod imp {
         const NAME: &'static str = "SwLibraryPage";
         type ParentType = adw::Bin;
         type Type = super::SwLibraryPage;
+
+        fn new() -> Self {
+            let status_page = TemplateChild::default();
+            let stack = TemplateChild::default();
+            let flowbox = TemplateChild::default();
+
+            let app = gio::Application::get_default().unwrap().downcast::<SwApplication>().unwrap();
+            let library = app.get_library();
+
+            let sender = OnceCell::default();
+
+            Self {
+                status_page,
+                stack,
+                flowbox,
+                library,
+                sender,
+            }
+        }
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
@@ -78,6 +99,7 @@ impl SwLibraryPage {
         imp.sender.set(sender).unwrap();
 
         self.setup_widgets();
+        self.setup_signals();
     }
 
     pub fn set_sorting(&self, sorting: SwSorting, descending: bool) {
@@ -95,8 +117,24 @@ impl SwLibraryPage {
         imp.status_page.set_title(Some(&i18n_f("Welcome to {}", &[config::NAME]).as_str()));
 
         // Station flowbox
-        let app = gio::Application::get_default().unwrap().downcast::<SwApplication>().unwrap();
-        let model = app.library_model();
-        imp.flowbox.init(model, imp.sender.get().unwrap().clone());
+        imp.flowbox.init(imp.library.get_model(), imp.sender.get().unwrap().clone());
+    }
+
+    fn setup_signals(&self) {
+        let imp = imp::SwLibraryPage::from_instance(self);
+
+        imp.library.connect_notify_local(
+            Some("status"),
+            clone!(@weak self as this => move |library, _|{
+                let imp = imp::SwLibraryPage::from_instance(&this);
+
+                match library.get_status(){
+                    SwLibraryStatus::Loading => imp.stack.set_visible_child_name("loading"),
+                    SwLibraryStatus::Empty => imp.stack.set_visible_child_name("empty"),
+                    SwLibraryStatus::Content => imp.stack.set_visible_child_name("content"),
+                    _ => (),
+                }
+            }),
+        );
     }
 }

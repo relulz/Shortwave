@@ -15,8 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use futures::future::join_all;
-use glib::Sender;
-use glib::{GEnum, ObjectExt, ParamSpec, ToValue};
+use glib::{clone, GEnum, ObjectExt, ParamSpec, Sender, ToValue};
 use gtk::glib;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
@@ -40,9 +39,9 @@ use crate::ui::Notification;
 #[genum(type_name = "SwLibraryStatus")]
 pub enum SwLibraryStatus {
     Loading,
-    Ready,
+    Content,
     Empty,
-    NoConnection,
+    Offline,
 }
 
 impl Default for SwLibraryStatus {
@@ -141,6 +140,8 @@ impl SwLibrary {
             let id = StationIdentifier::from_station(&station);
             queries::insert_station_identifier(id).unwrap();
         }
+
+        self.update_library_status();
     }
 
     pub fn remove_stations(&self, stations: Vec<SwStation>) {
@@ -153,6 +154,8 @@ impl SwLibrary {
             let id = StationIdentifier::from_station(&station);
             queries::delete_station_identifier(id).unwrap();
         }
+
+        self.update_library_status();
     }
 
     pub fn contains_station(station: &SwStation) -> bool {
@@ -164,47 +167,60 @@ impl SwLibrary {
         db.contains(&identifier)
     }
 
-    fn load_stations(&self) {
+    fn update_library_status(&self) {
         let imp = imp::SwLibrary::from_instance(self);
 
+        if imp.model.get_n_items() == 0 {
+            *imp.status.borrow_mut() = SwLibraryStatus::Empty;
+        } else {
+            *imp.status.borrow_mut() = SwLibraryStatus::Content;
+        }
+
+        self.notify("status");
+    }
+
+    fn load_stations(&self) {
         // Print database info
         info!("Database Path: {}", connection::DB_PATH.to_str().unwrap());
         info!("Stations: {}", queries::get_station_identifiers().unwrap().len());
 
         // Load database async
-        let identifiers = queries::get_station_identifiers().unwrap();
-        let model = imp.model.clone();
-        let client = imp.client.clone();
-        let sender = imp.sender.clone();
-        let future = async move {
+        let future = clone!(@strong self as this => async move {
+            let imp = imp::SwLibrary::from_instance(&this);
             let mut futures = Vec::new();
 
+            // Set library status to loading
+            *imp.status.borrow_mut() = SwLibraryStatus::Loading;
+            this.notify("status");
+
+            let identifiers = queries::get_station_identifiers().unwrap();
             for id in identifiers {
-                let future = client.clone().get_station_by_identifier(id);
+                let future = imp.client.clone().get_station_by_identifier(id);
                 futures.insert(0, future);
             }
             let results = join_all(futures).await;
 
             for result in results {
                 match result {
-                    Ok(station) => model.add_station(&station),
+                    Ok(station) => imp.model.add_station(&station),
                     Err(err) => match err {
                         Error::InvalidStationError(uuid) => {
                             let id = StationIdentifier::from_uuid(uuid);
                             queries::delete_station_identifier(id).unwrap();
 
                             let notification = Notification::new_info(&i18n("No longer existing station removed from library."));
-                            send!(sender.get().unwrap(), Action::ViewShowNotification(notification));
+                            send!(imp.sender.get().unwrap(), Action::ViewShowNotification(notification));
                         }
                         _ => {
                             let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
-                            send!(sender.get().unwrap(), Action::ViewShowNotification(notification));
+                            send!(imp.sender.get().unwrap(), Action::ViewShowNotification(notification));
                         }
                     },
                 }
             }
-        };
 
+            this.update_library_status();
+        });
         spawn!(future);
     }
 }
