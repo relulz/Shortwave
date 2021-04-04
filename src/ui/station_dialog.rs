@@ -22,7 +22,7 @@ use gtk::{gio, glib};
 
 use crate::api::{FaviconDownloader, SwStation};
 use crate::app::{Action, SwApplication};
-use crate::database::Library;
+use crate::database::SwLibrary;
 use crate::ui::{FaviconSize, StationFavicon};
 use crate::utils;
 
@@ -76,7 +76,7 @@ impl StationDialog {
 
         // Show correct library action
         get_widget!(builder, gtk::Stack, library_action_stack);
-        if Library::contains_station(&station) {
+        if SwLibrary::contains_station(&station) {
             library_action_stack.set_visible_child_name("library-remove");
         } else {
             library_action_stack.set_visible_child_name("library-add");

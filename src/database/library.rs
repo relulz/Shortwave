@@ -14,10 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use glib::Sender;
-use gtk::glib;
-
 use futures::future::join_all;
+use glib::Sender;
+use glib::{GEnum, ObjectExt, ParamSpec, ToValue};
+use gtk::glib;
+use gtk::prelude::*;
+use gtk::subclass::prelude::*;
+use once_cell::sync::Lazy;
+use once_cell::unsync::OnceCell;
+
+use std::cell::RefCell;
 
 use crate::api::{Client, Error, SwStation};
 use crate::app::Action;
@@ -29,28 +35,108 @@ use crate::model::SwStationModel;
 use crate::settings::{settings_manager, Key};
 use crate::ui::Notification;
 
-pub struct Library {
-    pub model: SwStationModel,
-
-    client: Client,
-    sender: Sender<Action>,
+#[derive(Display, Copy, Debug, Clone, EnumString, PartialEq, GEnum)]
+#[repr(u32)]
+#[genum(type_name = "SwLibraryStatus")]
+pub enum SwLibraryStatus {
+    Loading,
+    Ready,
+    Empty,
+    NoConnection,
 }
 
-impl Library {
-    pub fn new(sender: Sender<Action>) -> Self {
-        let model = SwStationModel::new();
-        let client = Client::new(settings_manager::get_string(Key::ApiLookupDomain));
+impl Default for SwLibraryStatus {
+    fn default() -> Self {
+        SwLibraryStatus::Loading
+    }
+}
 
-        let library = Self { model, client, sender };
+mod imp {
+    use super::*;
+
+    #[derive(Debug)]
+    pub struct SwLibrary {
+        pub model: SwStationModel,
+        pub status: RefCell<SwLibraryStatus>,
+
+        pub client: Client,
+        pub sender: OnceCell<Sender<Action>>,
+    }
+
+    #[glib::object_subclass]
+    impl ObjectSubclass for SwLibrary {
+        const NAME: &'static str = "SwLibrary";
+        type ParentType = glib::Object;
+        type Type = super::SwLibrary;
+
+        fn new() -> Self {
+            let model = SwStationModel::new();
+            let status = RefCell::default();
+            let client = Client::new(settings_manager::get_string(Key::ApiLookupDomain));
+            let sender = OnceCell::default();
+
+            Self { model, status, client, sender }
+        }
+    }
+
+    impl ObjectImpl for SwLibrary {
+        fn properties() -> &'static [ParamSpec] {
+            static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| {
+                vec![
+                    ParamSpec::object("model", "Model", "Model", SwStationModel::static_type(), glib::ParamFlags::READABLE),
+                    ParamSpec::enum_(
+                        "status",
+                        "Status",
+                        "Status",
+                        SwLibraryStatus::static_type(),
+                        SwLibraryStatus::default() as i32,
+                        glib::ParamFlags::READABLE,
+                    ),
+                ]
+            });
+
+            PROPERTIES.as_ref()
+        }
+
+        fn get_property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
+            match pspec.get_name() {
+                "model" => self.model.to_value(),
+                "status" => self.status.borrow().to_value(),
+                _ => unimplemented!(),
+            }
+        }
+    }
+}
+
+glib::wrapper! {
+    pub struct SwLibrary(ObjectSubclass<imp::SwLibrary>);
+}
+
+impl SwLibrary {
+    pub fn new(sender: Sender<Action>) -> Self {
+        let library = glib::Object::new::<Self>(&[]).unwrap();
+
+        let imp = imp::SwLibrary::from_instance(&library);
+        imp.sender.set(sender).unwrap();
 
         library.load_stations();
         library
     }
 
+    pub fn get_model(&self) -> SwStationModel {
+        self.get_property("model").unwrap().get().unwrap().unwrap()
+    }
+
+    pub fn get_status(&self) -> SwLibraryStatus {
+        self.get_property("status").unwrap().get().unwrap().unwrap()
+    }
+
     pub fn add_stations(&self, stations: Vec<SwStation>) {
+        let imp = imp::SwLibrary::from_instance(self);
+
         debug!("Add {} station(s)", stations.len());
         for station in stations {
-            self.model.add_station(&station);
+            imp.model.add_station(&station);
 
             let id = StationIdentifier::from_station(&station);
             queries::insert_station_identifier(id).unwrap();
@@ -58,9 +144,11 @@ impl Library {
     }
 
     pub fn remove_stations(&self, stations: Vec<SwStation>) {
+        let imp = imp::SwLibrary::from_instance(self);
+
         debug!("Remove {} station(s)", stations.len());
         for station in stations {
-            self.model.remove_station(&station);
+            imp.model.remove_station(&station);
 
             let id = StationIdentifier::from_station(&station);
             queries::delete_station_identifier(id).unwrap();
@@ -77,15 +165,17 @@ impl Library {
     }
 
     fn load_stations(&self) {
+        let imp = imp::SwLibrary::from_instance(self);
+
         // Print database info
         info!("Database Path: {}", connection::DB_PATH.to_str().unwrap());
         info!("Stations: {}", queries::get_station_identifiers().unwrap().len());
 
         // Load database async
         let identifiers = queries::get_station_identifiers().unwrap();
-        let model = self.model.clone();
-        let client = self.client.clone();
-        let sender = self.sender.clone();
+        let model = imp.model.clone();
+        let client = imp.client.clone();
+        let sender = imp.sender.clone();
         let future = async move {
             let mut futures = Vec::new();
 
@@ -104,11 +194,11 @@ impl Library {
                             queries::delete_station_identifier(id).unwrap();
 
                             let notification = Notification::new_info(&i18n("No longer existing station removed from library."));
-                            send!(sender, Action::ViewShowNotification(notification));
+                            send!(sender.get().unwrap(), Action::ViewShowNotification(notification));
                         }
                         _ => {
                             let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
-                            send!(sender, Action::ViewShowNotification(notification));
+                            send!(sender.get().unwrap(), Action::ViewShowNotification(notification));
                         }
                     },
                 }

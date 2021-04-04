@@ -31,7 +31,7 @@ use std::str::FromStr;
 use crate::api::SwStation;
 use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
-use crate::database::Library;
+use crate::database::SwLibrary;
 use crate::model::SwSorting;
 use crate::model::SwStationModel;
 use crate::settings::{settings_manager, Key};
@@ -68,7 +68,7 @@ pub struct SwApplicationPrivate {
 
     window: RefCell<Option<SwApplicationWindow>>,
     pub player: Rc<Player>,
-    pub library: Library,
+    pub library: SwLibrary,
 
     settings: gio::Settings,
 }
@@ -85,7 +85,7 @@ impl ObjectSubclass for SwApplicationPrivate {
 
         let window = RefCell::new(None);
         let player = Player::new(sender.clone());
-        let library = Library::new(sender.clone());
+        let library = SwLibrary::new(sender.clone());
 
         let settings = settings_manager::get_settings();
 
@@ -261,6 +261,6 @@ impl SwApplication {
     // Shouldn't be needed when `Library` itself is a GObject subclass
     pub fn library_model(&self) -> SwStationModel {
         let self_ = SwApplicationPrivate::from_instance(self);
-        self_.library.model.clone()
+        self_.library.get_model()
     }
 }

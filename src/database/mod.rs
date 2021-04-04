@@ -20,5 +20,5 @@ mod models;
 mod queries;
 mod schema;
 
-pub use library::Library;
+pub use library::SwLibrary;
 pub use models::StationIdentifier;
