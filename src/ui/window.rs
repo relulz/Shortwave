@@ -240,12 +240,12 @@ impl SwApplicationWindow {
 
         // win.open-radio-browser-info
         action!(window, "open-radio-browser-info", |_, _| {
-            open::that("http://www.radio-browser.info/").expect("Could not open webpage.");
+            open::that("https://www.radio-browser.info/").expect("Could not open webpage.");
         });
 
         // win.create-new-station
         action!(window, "create-new-station", |_, _| {
-            open::that("http://www.radio-browser.info/gui/#!/add").expect("Could not open webpage.");
+            open::that("https://www.radio-browser.info/#!/add").expect("Could not open webpage.");
         });
 
         // win.quit
