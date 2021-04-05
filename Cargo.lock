@@ -1627,9 +1627,9 @@ dependencies = [
 
 [[package]]
 name = "mpris-player"
-version = "0.6.0"
+version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0f7c3dd9dc80dfa3764f96ff6f107a9d7ce4d0f971e9adecd1ca911772b4f668"
+checksum = "4f6badd6ebe31be46eb2e2975cf3b34b183bace5f8a8db1d609fefc4d46fbb07"
 dependencies = [
  "dbus",
  "glib 0.10.3",

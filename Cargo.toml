@@ -42,4 +42,4 @@ gtk = { git = "https://github.com/gtk-rs/gtk4-rs", package = "gtk4" }
 gtk-macros = "0.2.0"
 
 [target.'cfg(unix)'.dependencies]
-mpris-player = "0.6.0"
+mpris-player = "0.6.1"
