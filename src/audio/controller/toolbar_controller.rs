@@ -42,6 +42,7 @@ pub struct ToolbarController {
     playback_button_stack: gtk::Stack,
     start_playback_button: gtk::Button,
     stop_playback_button: gtk::Button,
+    loading_button: gtk::Button,
     toolbox_gesture: gtk::GestureClick,
 }
 
@@ -56,6 +57,7 @@ impl ToolbarController {
         get_widget!(builder, gtk::Stack, playback_button_stack);
         get_widget!(builder, gtk::Button, start_playback_button);
         get_widget!(builder, gtk::Button, stop_playback_button);
+        get_widget!(builder, gtk::Button, loading_button);
         get_widget!(builder, gtk::GestureClick, toolbox_gesture);
 
         let station = Rc::new(RefCell::new(None));
@@ -76,6 +78,7 @@ impl ToolbarController {
             playback_button_stack,
             start_playback_button,
             stop_playback_button,
+            loading_button,
             toolbox_gesture,
         };
 
@@ -91,6 +94,11 @@ impl ToolbarController {
 
         // stop_playback_button
         self.stop_playback_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
+            send!(sender, Action::PlaybackSet(false));
+        }));
+
+        // loading_button
+        self.loading_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
             send!(sender, Action::PlaybackSet(false));
         }));
 
@@ -128,6 +136,7 @@ impl Controller for ToolbarController {
         match playback_state {
             PlaybackState::Playing => self.playback_button_stack.set_visible_child_name("stop_playback"),
             PlaybackState::Stopped => self.playback_button_stack.set_visible_child_name("start_playback"),
+            PlaybackState::Loading => self.playback_button_stack.set_visible_child_name("loading"),
             PlaybackState::Failure(_) => self.playback_button_stack.set_visible_child_name("start_playback"),
         };
     }

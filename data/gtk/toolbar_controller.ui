@@ -90,6 +90,20 @@
                     </property>
                   </object>
                 </child>
+                <child>
+                  <object class="GtkStackPage">
+                    <property name="name">loading</property>
+                    <property name="child">
+                      <object class="GtkButton" id="loading_button">
+                        <child>
+                          <object class="GtkSpinner">
+                            <property name="spinning">True</property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>

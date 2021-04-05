@@ -70,6 +70,7 @@ use crate::utils;
 pub enum PlaybackState {
     Playing,
     Stopped,
+    Loading,
     Failure(String),
 }
 

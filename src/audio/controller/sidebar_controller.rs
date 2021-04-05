@@ -42,6 +42,7 @@ pub struct SidebarController {
     playback_button_stack: gtk::Stack,
     start_playback_button: gtk::Button,
     stop_playback_button: gtk::Button,
+    loading_button: gtk::Button,
     error_label: gtk::Label,
     volume_button: gtk::VolumeButton,
     volume_signal_id: glib::signal::SignalHandlerId,
@@ -61,6 +62,7 @@ impl SidebarController {
         get_widget!(builder, gtk::Stack, playback_button_stack);
         get_widget!(builder, gtk::Button, start_playback_button);
         get_widget!(builder, gtk::Button, stop_playback_button);
+        get_widget!(builder, gtk::Button, loading_button);
         get_widget!(builder, gtk::Label, error_label);
         get_widget!(builder, gtk::VolumeButton, volume_button);
 
@@ -100,6 +102,7 @@ impl SidebarController {
             playback_button_stack,
             start_playback_button,
             stop_playback_button,
+            loading_button,
             error_label,
             volume_button,
             volume_signal_id,
@@ -119,6 +122,11 @@ impl SidebarController {
 
         // stop_playback_button
         self.stop_playback_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
+            send!(sender, Action::PlaybackSet(false));
+        }));
+
+        // stop_playback_button
+        self.loading_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
             send!(sender, Action::PlaybackSet(false));
         }));
 
@@ -172,6 +180,7 @@ impl Controller for SidebarController {
         match playback_state {
             PlaybackState::Playing => self.playback_button_stack.set_visible_child_name("stop_playback"),
             PlaybackState::Stopped => self.playback_button_stack.set_visible_child_name("start_playback"),
+            PlaybackState::Loading => self.playback_button_stack.set_visible_child_name("loading"),
             PlaybackState::Failure(msg) => {
                 self.playback_button_stack.set_visible_child_name("error");
                 let mut text = self.error_label.get_text().to_string();
