@@ -161,12 +161,12 @@ glib::wrapper! {
 
 // SwApplicationWindow implementation itself
 impl SwApplicationWindow {
-    pub fn new(sender: Sender<Action>, app: SwApplication) -> Self {
+    pub fn new(sender: Sender<Action>, app: SwApplication, player: Rc<Player>) -> Self {
         // Create new GObject and downcast it into SwApplicationWindow
         let window = glib::Object::new::<Self>(&[]).unwrap();
         app.add_window(&window.clone());
 
-        window.setup_widgets(sender.clone());
+        window.setup_widgets(sender.clone(), player);
         window.setup_signals(sender.clone());
         window.setup_gactions(sender);
 
@@ -176,13 +176,18 @@ impl SwApplicationWindow {
         window
     }
 
-    pub fn setup_widgets(&self, sender: Sender<Action>) {
+    pub fn setup_widgets(&self, sender: Sender<Action>, player: Rc<Player>) {
         let imp = imp::SwApplicationWindow::from_instance(self);
 
         // Init pages
         imp.library_page.init(sender.clone());
         imp.discover_page.init(sender.clone());
         imp.search_page.init(sender.clone());
+
+        // Wire everything up
+        imp.mini_controller_box.append(&player.mini_controller_widget);
+        imp.toolbar_controller_box.append(&player.toolbar_controller_widget);
+        imp.window_flap.set_flap(Some(&player.widget));
 
         // Add devel style class for development or beta builds
         if config::PROFILE == "development" || config::PROFILE == "beta" {
@@ -363,13 +368,8 @@ impl SwApplicationWindow {
         self.add_action(&order_action);
     }
 
-    pub fn show_player_widget(&self, player: Rc<Player>) {
+    pub fn show_player_widget(&self) {
         let imp = imp::SwApplicationWindow::from_instance(self);
-
-        // Wire everything up
-        imp.mini_controller_box.append(&player.mini_controller_widget);
-        imp.toolbar_controller_box.append(&player.toolbar_controller_widget);
-        imp.window_flap.set_flap(Some(&player.widget));
 
         imp.toolbar_controller_revealer.set_visible(true);
         imp.window_flap.set_locked(false);
@@ -403,7 +403,7 @@ impl SwApplicationWindow {
             self.unmaximize();
             self.set_default_size(450, 105);
         } else {
-            self.set_default_size(700, 500);
+            self.set_default_size(800, 650);
         }
     }
 

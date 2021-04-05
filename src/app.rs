@@ -179,7 +179,7 @@ impl SwApplication {
 
     fn create_window(&self) -> SwApplicationWindow {
         let imp = imp::SwApplication::from_instance(self);
-        let window = SwApplicationWindow::new(imp.sender.clone(), self.clone());
+        let window = SwApplicationWindow::new(imp.sender.clone(), self.clone(), imp.player.clone());
 
         // Load custom styling
         let p = gtk::CssProvider::new();
@@ -237,7 +237,7 @@ impl SwApplication {
             Action::PlaybackDisconnectGCastDevice => imp.player.disconnect_from_gcast_device(),
             Action::PlaybackSetStation(station) => {
                 imp.player.set_station(*station);
-                imp.window.borrow().as_ref().unwrap().show_player_widget(imp.player.clone());
+                imp.window.borrow().as_ref().unwrap().show_player_widget();
             }
             Action::PlaybackSet(true) => imp.player.set_playback(PlaybackState::Playing),
             Action::PlaybackSet(false) => imp.player.set_playback(PlaybackState::Stopped),
