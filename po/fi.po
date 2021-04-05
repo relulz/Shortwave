@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-02-20 14:26+0000\n"
-"PO-Revision-Date: 2021-02-22 18:00+0200\n"
+"POT-Creation-Date: 2021-04-04 19:22+0000\n"
+"PO-Revision-Date: 2021-04-05 18:03+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -30,11 +30,11 @@ msgstr "Nousussa"
 msgid "Other users are listening to…"
 msgstr "Muut käyttäjät kuuntelevat…"
 
-#: data/gtk/library.ui:37
+#: data/gtk/library_page.ui:63
 msgid "Receiving station data…"
 msgstr "Vastaanotetaan aseman tietoja…"
 
-#: data/gtk/library.ui:64
+#: data/gtk/library_page.ui:90
 msgid "_Discover new stations"
 msgstr "L_öydä uusia asemia"
 
@@ -97,13 +97,56 @@ msgstr "Näytä työpöytäilmoitus kun uusi kappale alkaa soida"
 
 #: data/gtk/shortcuts.ui:15
 msgctxt "shortcut window"
-msgid "Quit the application"
-msgstr "Lopeta sovellus"
+msgid "Open shortcut window"
+msgstr "Avaa pikanäppäinten ikkuna"
 
 #: data/gtk/shortcuts.ui:21
 msgctxt "shortcut window"
-msgid "Search for stations"
-msgstr "Etsi asemia"
+msgid "Open application menu"
+msgstr "Avaa sovellusvalikko"
+
+#: data/gtk/shortcuts.ui:27
+msgctxt "shortcut window"
+msgid "Open preferences"
+msgstr "Avaa asetukset"
+
+#: data/gtk/shortcuts.ui:33
+msgctxt "shortcut window"
+msgid "Quit the application"
+msgstr "Lopeta sovellus"
+
+#: data/gtk/shortcuts.ui:40
+msgid "Window"
+msgstr "Ikkuna"
+
+#: data/gtk/shortcuts.ui:44
+msgctxt "shortcut window"
+msgid "Open library view"
+msgstr "Avaa kirjastonäkymä"
+
+#: data/gtk/shortcuts.ui:50
+msgctxt "shortcut window"
+msgid "Open discover view"
+msgstr "Avaa löytämisnäkymä"
+
+#: data/gtk/shortcuts.ui:56
+msgctxt "shortcut window"
+msgid "Open search view"
+msgstr "Avaa hakunäkymä"
+
+#: data/gtk/shortcuts.ui:62
+msgctxt "shortcut window"
+msgid "Go back"
+msgstr "Siirry takaisin"
+
+#: data/gtk/shortcuts.ui:69
+msgid "Playback"
+msgstr "Toisto"
+
+#: data/gtk/shortcuts.ui:73
+msgctxt "shortcut window"
+msgid "Toggle playback"
+msgstr "Toisto päällä/pois"
 
 #: data/gtk/sidebar_controller.ui:22
 msgid "An error occurred"
@@ -199,55 +242,56 @@ msgstr "_Hae uudelleen"
 msgid "Searching for devices…"
 msgstr "Etsitään laitteita…"
 
-#: data/gtk/window.ui:108
+#: data/gtk/window.ui:105 data/gtk/window.ui:175
 msgid "_Sorting"
 msgstr "_Järjestys"
 
-#: data/gtk/window.ui:111
+#: data/gtk/window.ui:108
 msgid "_Name"
 msgstr "_Nimi"
 
-#: data/gtk/window.ui:116
+#: data/gtk/window.ui:113
 msgid "_Language"
 msgstr "_Kieli"
 
-#: data/gtk/window.ui:121
+#: data/gtk/window.ui:118
 msgid "_Country"
 msgstr "_Maa"
 
-#: data/gtk/window.ui:126
+#: data/gtk/window.ui:123
 msgid "S_tate"
 msgstr "_Tila"
 
-#: data/gtk/window.ui:131
+#: data/gtk/window.ui:128
 msgid "_Votes"
 msgstr "_Äänet"
 
-#: data/gtk/window.ui:138
+#: data/gtk/window.ui:135
 msgid "_Ascending"
 msgstr "_Nouseva"
 
-#: data/gtk/window.ui:143
+#: data/gtk/window.ui:140
 msgid "_Descending"
 msgstr "_Laskeva"
 
-#: data/gtk/window.ui:152
+#: data/gtk/window.ui:149 data/gtk/window.ui:181
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_Avaa radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/window.ui:156
-msgid "_Create new station"
-msgstr "_Luo uusi asema"
+#: data/gtk/window.ui:153 data/gtk/window.ui:185
+#| msgid "_Create new station"
+msgid "_Create new station <sup>↗</sup>"
+msgstr "_Luo uusi asema <sup>↗</sup>"
 
-#: data/gtk/window.ui:162
+#: data/gtk/window.ui:159 data/gtk/window.ui:191
 msgid "_Preferences"
 msgstr "_Asetukset"
 
-#: data/gtk/window.ui:166
+#: data/gtk/window.ui:163 data/gtk/window.ui:195
 msgid "_Keyboard Shortcuts"
 msgstr "_Pikanäppäimet"
 
-#: data/gtk/window.ui:170
+#: data/gtk/window.ui:167 data/gtk/window.ui:199
 msgid "_About Shortwave"
 msgstr "_Tietoja - Shortwave"
 
@@ -263,17 +307,12 @@ msgstr "Asemaa ei voi suoratoistaa."
 msgid "URL is not valid."
 msgstr "Osoite ei ole kelvollinen."
 
-#. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:56
-msgid "Welcome to {}"
-msgstr "Tervetuloa, käytössäsi on {}"
-
-#: src/database/library.rs:146
+#: src/database/library.rs:211
 msgid "No longer existing station removed from library."
 msgstr "Toimintansa lopettanut asema poistettiin kirjastosta."
 
-#: src/database/library.rs:150 src/ui/pages/discover_page.rs:167
-#: src/ui/pages/search_page.rs:158
+#: src/database/library.rs:215 src/ui/pages/discover_page.rs:134
+#: src/ui/pages/search_page.rs:145
 msgid "Station data could not be received."
 msgstr "Aseman tietoja ei voitu vastaanottaa."
 
@@ -286,37 +325,42 @@ msgstr "Kuuntele internetradiota"
 msgid "translator-credits"
 msgstr "Jiri Grönroos"
 
-#: src/ui/pages/discover_page.rs:116
+#: src/ui/pages/discover_page.rs:94
 msgid "Show statistics"
 msgstr "Näytä tilastot"
 
-#: src/ui/pages/discover_page.rs:117
+#: src/ui/pages/discover_page.rs:95
 msgid "Browse over 25,500 stations"
 msgstr "Selaa yli 25 500 asemaa"
 
-#: src/ui/pages/discover_page.rs:119
+#: src/ui/pages/discover_page.rs:97
 msgid "Add new station"
 msgstr "Lisää uusi asema"
 
-#: src/ui/pages/discover_page.rs:120
+#: src/ui/pages/discover_page.rs:98
 msgid "Your favorite station is missing?"
 msgstr "Puuttuuko suosikkiasemasi?"
 
-#: src/ui/pages/discover_page.rs:122
+#: src/ui/pages/discover_page.rs:100
 msgid "Open website"
 msgstr "Avaa verkkosivu"
 
-#: src/ui/pages/discover_page.rs:123
+#: src/ui/pages/discover_page.rs:101
 msgid "Powered by radio-browser.info"
 msgstr "Taustavoimana radio-browser.info"
 
-#: src/utils.rs:109
+#. Welcome text which gets displayed when the library is empty. "{}" is the application name.
+#: src/ui/pages/library_page.rs:117
+msgid "Welcome to {}"
+msgstr "Tervetuloa, käytössäsi on {}"
+
+#: src/utils.rs:31
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} ääni"
 msgstr[1] "{} ääntä"
 
-#: src/utils.rs:111
+#: src/utils.rs:33
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} ääni"
@@ -377,6 +421,10 @@ msgstr "Saumaton integraatio Gnome-työpöytäympäristöön"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;suoratoisto;nettiradio;"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Search for stations"
+#~ msgstr "Etsi asemia"
 
 #~ msgid "Discover"
 #~ msgstr "Löydä"
