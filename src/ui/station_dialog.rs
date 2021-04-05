@@ -34,6 +34,7 @@ pub struct StationDialog {
     subtitle_label: gtk::Label,
     codec_label: gtk::Label,
     homepage_label: gtk::Label,
+    stream_label: gtk::Label,
     tags_label: gtk::Label,
     language_label: gtk::Label,
 
@@ -54,6 +55,7 @@ impl StationDialog {
         get_widget!(builder, gtk::Label, subtitle_label);
         get_widget!(builder, gtk::Label, codec_label);
         get_widget!(builder, gtk::Label, homepage_label);
+        get_widget!(builder, gtk::Label, stream_label);
         get_widget!(builder, gtk::Label, tags_label);
         get_widget!(builder, gtk::Label, language_label);
         get_widget!(builder, gtk::Label, codec_label_label);
@@ -89,6 +91,7 @@ impl StationDialog {
             subtitle_label,
             codec_label,
             homepage_label,
+            stream_label,
             tags_label,
             language_label,
             codec_label_label,
@@ -115,23 +118,32 @@ impl StationDialog {
             self.codec_label.hide();
             self.codec_label_label.hide();
         }
+
         if self.station.metadata().tags != "" {
             self.tags_label.set_text(&self.station.metadata().tags);
         } else {
             self.tags_label.hide();
             self.tags_label_label.hide();
         }
+
         if self.station.metadata().language != "" {
             self.language_label.set_text(&self.station.metadata().language);
         } else {
             self.language_label.hide();
             self.language_label_label.hide();
         }
+
         if let Some(ref homepage) = self.station.metadata().homepage {
+            let homepage = homepage.to_string().replace("&", "&amp;");
             self.homepage_label.set_markup(&format!("<a href=\"{}\">{}</a>", homepage, homepage));
         } else {
             self.homepage_label.hide();
             self.homepage_label_label.hide();
+        }
+
+        if let Some(ref url_resolved) = self.station.metadata().url_resolved {
+            let stream = url_resolved.to_string().replace("&", "&amp;");
+            self.stream_label.set_markup(&format!("<a href=\"{}\">{}</a>", stream, stream));
         }
     }
 

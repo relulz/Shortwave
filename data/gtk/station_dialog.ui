@@ -167,6 +167,35 @@
                 </layout>
               </object>
             </child>
+            <child>
+              <object class="GtkLabel" id="stream_label_label">
+                <property name="halign">end</property>
+                <property name="label" translatable="yes">Stream</property>
+                <style>
+                  <class name="dim-label"/>
+                </style>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">4</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="stream_label">
+                <property name="halign">start</property>
+                <property name="label">—</property>
+                <property name="use_markup">True</property>
+                <property name="wrap">True</property>
+                <property name="wrap_mode">char</property>
+                <property name="selectable">True</property>
+                <property name="ellipsize">end</property>
+                <property name="max_width_chars">20</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">4</property>
+                </layout>
+              </object>
+            </child>
           </object>
         </child>
         <child>
