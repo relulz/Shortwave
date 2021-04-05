@@ -34,7 +34,6 @@ If the station does not send any metadata, no songs can be recognized.</property
     </child>
   </object>
   <object class="GtkBox" id="song_listbox">
-    <property name="margin_top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
@@ -97,7 +96,6 @@ If the station does not send any metadata, no songs can be recognized.</property
             <property name="child">
               <object class="GtkBox">
                 <property name="orientation">vertical</property>
-                <property name="margin_top">22</property>
                 <property name="spacing">12</property>
                 <child>
                   <object class="GtkListBox" id="listbox">
@@ -112,6 +110,7 @@ If the station does not send any metadata, no songs can be recognized.</property
                   <object class="GtkImage">
                     <property name="icon_name">dialog-information-symbolic</property>
                     <property name="pixel_size">64</property>
+                    <property name="margin_start">6</property>
                     <style>
                       <class name="dim-label"/>
                     </style>

@@ -77,7 +77,7 @@
                     <property name="width_request">100</property>
                     <property name="halign">center</property>
                     <property name="margin_top">12</property>
-                    <property name="margin_bottom">12</property>
+                    <property name="margin_bottom">18</property>
                   </object>
                 </child>
               </object>
