@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <object class="AdwPreferencesWindow" id="settings_window">
-    <property name="default_height">400</property>
-    <property name="default_width">640</property>
     <property name="width_request">300</property>
     <child>
       <object class="AdwPreferencesPage">
