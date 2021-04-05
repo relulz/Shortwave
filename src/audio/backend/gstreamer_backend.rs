@@ -470,6 +470,8 @@ impl GstreamerBackend {
                 if percent < 100 {
                     if !buffering_state.buffering {
                         buffering_state.buffering = true;
+                        send!(sender, GstreamerMessage::PlaybackStateChanged(PlaybackState::Loading));
+
                         if buffering_state.is_live == Some(false) {
                             debug!("Pausing pipeline because buffering started");
                             let tee = pipeline.get_by_name("tee").unwrap();
@@ -491,6 +493,8 @@ impl GstreamerBackend {
                 } else {
                     if buffering_state.buffering {
                         buffering_state.buffering = false;
+                        send!(sender, GstreamerMessage::PlaybackStateChanged(PlaybackState::Playing));
+
                         if buffering_state.is_live == Some(false) {
                             debug!("Resuming pipeline because buffering finished");
                             let _ = pipeline.set_state(State::Playing);
