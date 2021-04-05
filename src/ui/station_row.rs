@@ -80,8 +80,8 @@ impl SwStationRow {
         let row = glib::Object::new::<Self>(&[]).unwrap();
 
         let imp = imp::SwStationRow::from_instance(&row);
-        imp.sender.set(sender.clone()).unwrap();
-        imp.station.set(station.clone()).unwrap();
+        imp.sender.set(sender).unwrap();
+        imp.station.set(station).unwrap();
 
         row.setup_widgets();
         row.setup_signals();

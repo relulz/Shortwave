@@ -17,7 +17,6 @@
 use glib::Sender;
 use gtk::glib;
 use gtk::prelude::*;
-use open;
 
 use crate::app::Action;
 use crate::audio::Song;
@@ -74,7 +73,7 @@ impl SongListBox {
     }
 
     fn update_stack(&self) {
-        if !self.listbox.get_last_child().is_none() {
+        if self.listbox.get_last_child().is_some() {
             self.stack.set_visible_child_name("content");
         } else {
             self.stack.set_visible_child_name("empty");

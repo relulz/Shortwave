@@ -101,22 +101,28 @@ impl SwDiscoverPage {
         carousel.add_page(&i18n("Powered by radio-browser.info"), "38,162,105", Some(action));
 
         // Most voted stations (stations with the most votes)
-        let mut votes_request = StationRequest::default();
-        votes_request.order = Some("votes".to_string());
-        votes_request.limit = Some(12);
-        votes_request.reverse = Some(true);
+        let votes_request = StationRequest {
+            order: Some("votes".to_string()),
+            limit: Some(12),
+            reverse: Some(true),
+            ..Default::default()
+        };
         self.fill_flowbox(&imp.votes_flowbox, votes_request);
 
         // Trending (stations with the highest clicktrend)
-        let mut trending_request = StationRequest::default();
-        trending_request.order = Some("clicktrend".to_string());
-        trending_request.limit = Some(12);
+        let mut trending_request = StationRequest {
+            order: Some("clicktrend".to_string()),
+            limit: Some(12),
+            ..Default::default()
+        };
         self.fill_flowbox(&imp.trending_flowbox, trending_request);
 
         // Other users are listening to... (stations which got recently clicked)
-        let mut clicked_request = StationRequest::default();
-        clicked_request.order = Some("clicktimestamp".to_string());
-        clicked_request.limit = Some(12);
+        let clicked_request = StationRequest {
+            order: Some("clicktimestamp".to_string()),
+            limit: Some(12),
+            ..Default::default()
+        };
         self.fill_flowbox(&imp.clicked_flowbox, clicked_request);
     }
 
@@ -126,7 +132,7 @@ impl SwDiscoverPage {
         let client = Client::new(settings_manager::get_string(Key::ApiLookupDomain));
         let sender = imp.sender.get().unwrap().clone();
 
-        let model = &*client.model.clone();
+        let model = &*client.model;
         flowbox.init(model.clone(), sender.clone());
 
         let fut = client.send_station_request(request).map(move |result| {

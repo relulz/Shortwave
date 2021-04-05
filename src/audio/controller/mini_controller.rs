@@ -104,7 +104,7 @@ impl Controller for MiniController {
     fn set_station(&self, station: SwStation) {
         self.title_label.set_text(&station.metadata().name);
         self.title_label.set_tooltip_text(Some(station.metadata().name.as_str()));
-        *self.station.borrow_mut() = Some(station.clone());
+        *self.station.borrow_mut() = Some(station);
 
         self.subtitle_revealer.set_reveal_child(false);
     }
@@ -126,7 +126,7 @@ impl Controller for MiniController {
     }
 
     fn set_song_title(&self, title: &str) {
-        if title != "" {
+        if !title.is_empty() {
             self.subtitle_label.set_text(title);
             self.subtitle_label.set_tooltip_text(Some(title));
             self.subtitle_revealer.set_reveal_child(true);

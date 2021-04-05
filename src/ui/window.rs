@@ -164,7 +164,7 @@ impl SwApplicationWindow {
     pub fn new(sender: Sender<Action>, app: SwApplication, player: Rc<Player>) -> Self {
         // Create new GObject and downcast it into SwApplicationWindow
         let window = glib::Object::new::<Self>(&[]).unwrap();
-        app.add_window(&window.clone());
+        app.add_window(&window);
 
         window.setup_widgets(sender.clone(), player);
         window.setup_signals(sender.clone());
@@ -182,7 +182,7 @@ impl SwApplicationWindow {
         // Init pages
         imp.library_page.init(sender.clone());
         imp.discover_page.init(sender.clone());
-        imp.search_page.init(sender.clone());
+        imp.search_page.init(sender);
 
         // Wire everything up
         imp.mini_controller_box.append(&player.mini_controller_widget);
@@ -443,7 +443,7 @@ impl SwApplicationWindow {
 
     fn update_view(&self) {
         let imp = imp::SwApplicationWindow::from_instance(self);
-        let view = imp.view.borrow().clone();
+        let view = *imp.view.borrow();
         debug!("Set view to {:?}", view);
 
         // Not enough place to display player sidebar and content side by side (eg. mobile phones)

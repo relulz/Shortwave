@@ -217,7 +217,7 @@ impl Player {
 
     pub fn set_volume(&self, volume: f64) {
         debug!("Set volume: {}", &volume);
-        self.backend.lock().unwrap().gstreamer.set_volume(volume.clone());
+        self.backend.lock().unwrap().gstreamer.set_volume(volume);
 
         for con in &*self.controller {
             con.set_volume(volume);
@@ -388,7 +388,7 @@ impl SongTitle {
             // Make sure that the path exists
             fs::create_dir_all(path.clone()).expect("Could not create path for recording");
 
-            if title != "" {
+            if !title.is_empty() {
                 path.push(filename);
             }
             return Some(path);

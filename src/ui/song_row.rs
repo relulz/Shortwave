@@ -19,7 +19,6 @@ use glib::clone;
 use glib::Sender;
 use gtk::glib;
 use gtk::prelude::*;
-use open;
 
 use crate::app::Action;
 use crate::audio::Song;

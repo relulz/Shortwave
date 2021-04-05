@@ -84,7 +84,7 @@ impl SongBackend {
         dest_path.push(song.path.file_name().unwrap());
 
         let custom_path = settings_manager::get_string(Key::RecorderSongSavePath);
-        if custom_path != "" {
+        if !custom_path.is_empty() {
             dest_path.push(custom_path);
             dest_path.push(song.path.file_name().unwrap());
         }

@@ -42,13 +42,11 @@ impl StationFavicon {
         image.set_size_request(size as i32, size as i32);
         placeholder.set_pixel_size((size as i32).div_euclid(2));
 
-        let favicon = Self {
+        Self {
             widget: station_favicon,
             image,
             stack,
-        };
-
-        favicon
+        }
     }
 
     pub fn set_pixbuf(&self, pixbuf: Pixbuf) {

@@ -259,7 +259,7 @@ impl SwApplication {
             Key::ViewSorting | Key::ViewOrder => {
                 let sorting: SwSorting = SwSorting::from_str(&settings_manager::get_string(Key::ViewSorting)).unwrap();
                 let order = settings_manager::get_string(Key::ViewOrder);
-                let descending = if order == "Descending" { true } else { false };
+                let descending = order == "Descending";
                 imp.window.borrow().as_ref().unwrap().set_sorting(sorting, descending);
             }
             _ => (),

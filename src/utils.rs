@@ -17,13 +17,13 @@
 use crate::i18n::*;
 
 pub fn station_subtitle(country: &str, state: &str, votes: i32) -> String {
-    let mut string = if country != "" { country.to_string() } else { "".to_string() };
+    let mut string = if !country.is_empty() { country.to_string() } else { "".to_string() };
 
-    if state != "" {
+    if !state.is_empty() {
         string = format!("{} {}", string, state);
     }
 
-    if string == "" {
+    if string.is_empty() {
         string = ni18n_f("{} Vote", "{} Votes", votes as u32, &[&votes.to_string()]);
     } else {
         string = ni18n_f("{} · {} Vote", "{} · {} Votes", votes as u32, &[&string, &votes.to_string()]);

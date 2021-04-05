@@ -67,7 +67,7 @@ impl Client {
         let url = self.build_url(STATION_SEARCH, Some(&request.url_encode())).await?;
         debug!("Station request URL: {}", url);
         let stations_md: Vec<StationMetadata> = HTTP_CLIENT.get_async(url.as_ref()).await?.json().await?;
-        let stations: Vec<SwStation> = stations_md.into_iter().map(|smd| SwStation::new(smd)).collect();
+        let stations: Vec<SwStation> = stations_md.into_iter().map(SwStation::new).collect();
 
         debug!("Found {} station(s)!", stations.len());
         self.model.clear();
@@ -83,7 +83,7 @@ impl Client {
         debug!("Request station by UUID URL: {}", url);
 
         let stations_md: Vec<StationMetadata> = HTTP_CLIENT.get_async(url.as_ref()).await?.json().await?;
-        let mut data: Vec<SwStation> = stations_md.into_iter().map(|smd| SwStation::new(smd)).collect();
+        let mut data: Vec<SwStation> = stations_md.into_iter().map(SwStation::new).collect();
 
         match data.pop() {
             Some(station) => Ok(station),

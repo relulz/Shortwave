@@ -198,7 +198,7 @@ impl Controller for SidebarController {
     }
 
     fn set_song_title(&self, title: &str) {
-        if title != "" {
+        if !title.is_empty() {
             self.subtitle_label.set_text(title);
             self.subtitle_label.set_tooltip_text(Some(title));
             self.subtitle_revealer.set_reveal_child(true);

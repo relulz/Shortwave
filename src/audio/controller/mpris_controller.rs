@@ -146,7 +146,7 @@ impl Controller for MprisController {
 
     fn set_volume(&self, volume: f64) {
         *self.volume.borrow_mut() = volume;
-        self.mpris.set_volume(volume.clone()).unwrap();
+        self.mpris.set_volume(volume).unwrap();
     }
 
     fn set_song_title(&self, title: &str) {

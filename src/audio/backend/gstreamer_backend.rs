@@ -189,7 +189,6 @@ impl GstreamerBackend {
             if new_pad_type.starts_with("audio/x-raw") {
                 // check if new_pad is audio
                 let _ = src_pad.link(&sink_pad);
-                return;
             }
         }));
 
@@ -490,17 +489,15 @@ impl GstreamerBackend {
                             let _ = pipeline.set_state(State::Paused);
                         }
                     }
-                } else {
-                    if buffering_state.buffering {
-                        buffering_state.buffering = false;
-                        send!(sender, GstreamerMessage::PlaybackStateChanged(PlaybackState::Playing));
+                } else if buffering_state.buffering {
+                    buffering_state.buffering = false;
+                    send!(sender, GstreamerMessage::PlaybackStateChanged(PlaybackState::Playing));
 
-                        if buffering_state.is_live == Some(false) {
-                            debug!("Resuming pipeline because buffering finished");
-                            let _ = pipeline.set_state(State::Playing);
-                            if let Some((pad, probe_id)) = buffering_state.buffering_probe.take() {
-                                pad.remove_probe(probe_id);
-                            }
+                    if buffering_state.is_live == Some(false) {
+                        debug!("Resuming pipeline because buffering finished");
+                        let _ = pipeline.set_state(State::Playing);
+                        if let Some((pad, probe_id)) = buffering_state.buffering_probe.take() {
+                            pad.remove_probe(probe_id);
                         }
                     }
                 }

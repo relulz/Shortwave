@@ -29,7 +29,7 @@ pub enum Error {
     GLibError(#[from] glib::error::Error),
 
     #[error("Input/Output error: {0}")]
-    IOError(#[from] std::io::Error),
+    IoError(#[from] std::io::Error),
 
     #[error("Network error: {0}")]
     NetworkError(#[from] isahc::Error),

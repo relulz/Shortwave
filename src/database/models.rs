@@ -28,7 +28,7 @@ impl StationIdentifier {
     pub fn from_station(station: &SwStation) -> Self {
         StationIdentifier {
             id: None,
-            stationuuid: station.metadata().stationuuid.clone(),
+            stationuuid: station.metadata().stationuuid,
         }
     }
     pub fn from_uuid(uuid: String) -> Self {

@@ -112,21 +112,21 @@ impl StationDialog {
         let subtitle = utils::station_subtitle(&self.station.metadata().country, &self.station.metadata().state, self.station.metadata().votes);
         self.subtitle_label.set_text(&subtitle);
 
-        if self.station.metadata().codec != "" {
+        if !self.station.metadata().codec.is_empty() {
             self.codec_label.set_text(&self.station.metadata().codec);
         } else {
             self.codec_label.hide();
             self.codec_label_label.hide();
         }
 
-        if self.station.metadata().tags != "" {
+        if !self.station.metadata().tags.is_empty() {
             self.tags_label.set_text(&self.station.metadata().tags);
         } else {
             self.tags_label.hide();
             self.tags_label_label.hide();
         }
 
-        if self.station.metadata().language != "" {
+        if !self.station.metadata().language.is_empty() {
             self.language_label.set_text(&self.station.metadata().language);
         } else {
             self.language_label.hide();
