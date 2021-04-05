@@ -31,6 +31,7 @@ pub fn show_about_dialog(window: gtk::ApplicationWindow) {
     dialog.set_logo_icon_name(Some(config::APP_ID));
     dialog.set_comments(Some(&i18n("Listen to internet radio")));
     dialog.set_copyright(Some("© 2021 Felix Häcker"));
+    dialog.set_website(Some("https://gitlab.gnome.org/World/Shortwave"));
     dialog.set_translator_credits(Some(&i18n("translator-credits")));
     dialog.set_license_type(gtk::License::Gpl30);
     dialog.set_version(Some(version.as_str()));
