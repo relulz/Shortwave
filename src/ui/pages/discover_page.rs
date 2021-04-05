@@ -110,7 +110,7 @@ impl SwDiscoverPage {
         self.fill_flowbox(&imp.votes_flowbox, votes_request);
 
         // Trending (stations with the highest clicktrend)
-        let mut trending_request = StationRequest {
+        let trending_request = StationRequest {
             order: Some("clicktrend".to_string()),
             limit: Some(12),
             ..Default::default()
