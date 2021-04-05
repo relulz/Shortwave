@@ -16,10 +16,6 @@
 
 use crate::i18n::*;
 
-pub fn simplify_string(s: String) -> String {
-    s.replace(&['/', '\0', '\\', ':', '<', '>', '\"', '|', '?', '*', '.'] as &[_], "")
-}
-
 pub fn station_subtitle(country: &str, state: &str, votes: i32) -> String {
     let mut string = if country != "" { country.to_string() } else { "".to_string() };
 
