@@ -33,8 +33,8 @@ use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
 use crate::database::SwLibrary;
 use crate::model::SwSorting;
-use crate::settings::{settings_manager, Key};
-use crate::ui::{Notification, SwApplicationWindow, SwView};
+use crate::settings::{settings_manager, Key, SettingsWindow};
+use crate::ui::{about_dialog, Notification, SwApplicationWindow, SwView};
 
 #[derive(Debug, Clone)]
 pub enum Action {
@@ -124,9 +124,11 @@ mod imp {
 
             // No window available -> we have to create one
             let window = app.create_window();
-            window.present();
             self.window.replace(Some(window));
             info!("Created application window.");
+
+            // Setup app level GActions
+            app.setup_gactions();
 
             // Setup action channel
             let receiver = self.receiver.borrow_mut().take().unwrap();
@@ -159,7 +161,8 @@ mod imp {
 // Wrap SwApplication into a usable gtk-rs object
 glib::wrapper! {
     pub struct SwApplication(ObjectSubclass<imp::SwApplication>)
-        @extends gio::Application, gtk::Application;
+        @extends gio::Application, gtk::Application,
+        @implements gio::ActionMap, gio::ActionGroup;
 }
 
 // SwApplication implementation itself
@@ -189,14 +192,42 @@ impl SwApplication {
         // Set initial view
         window.set_view(SwView::Library);
 
-        // Setup help overlay
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/shortcuts.ui");
-        get_widget!(builder, gtk::ShortcutsWindow, shortcuts);
-        let w = window.clone().upcast::<gtk::ApplicationWindow>();
-        w.set_help_overlay(Some(&shortcuts));
-        self.set_accels_for_action("win.show-help-overlay", &["<primary>question"]);
-
+        window.present();
         window
+    }
+
+    fn setup_gactions(&self) {
+        let window = self.get_active_window().unwrap();
+
+        // app.show-preferences
+        action!(
+            self,
+            "show-preferences",
+            clone!(@weak window => move |_, _| {
+                let settings_window = SettingsWindow::new(&window.upcast());
+                settings_window.show();
+            })
+        );
+        self.set_accels_for_action("app.show-preferences", &["<primary>comma"]);
+
+        // app.quit
+        action!(
+            self,
+            "quit",
+            clone!(@weak self as this => move |_, _| {
+                this.quit();
+            })
+        );
+        self.set_accels_for_action("app.quit", &["<primary>q"]);
+
+        // app.about
+        action!(
+            self,
+            "about",
+            clone!(@weak window => move |_, _| {
+                about_dialog::show_about_dialog(&window);
+            })
+        );
     }
 
     fn check_theme() {

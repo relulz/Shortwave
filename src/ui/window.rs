@@ -31,9 +31,9 @@ use crate::app::{Action, SwApplication};
 use crate::audio::Player;
 use crate::config;
 use crate::model::SwSorting;
-use crate::settings::{settings_manager, Key, SettingsWindow};
+use crate::settings::{settings_manager, Key};
 use crate::ui::pages::*;
-use crate::ui::{about_dialog, Notification};
+use crate::ui::Notification;
 
 #[derive(Display, Copy, Debug, Clone, EnumString, PartialEq, GEnum)]
 #[repr(u32)]
@@ -113,6 +113,13 @@ mod imp {
     }
 
     impl ObjectImpl for SwApplicationWindow {
+        fn constructed(&self, obj: &Self::Type) {
+            self.parent_constructed(obj);
+            let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/help_overlay.ui");
+            get_widget!(builder, gtk::ShortcutsWindow, help_overlay);
+            obj.set_help_overlay(Some(&help_overlay));
+        }
+
         fn properties() -> &'static [ParamSpec] {
             static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| vec![ParamSpec::enum_("view", "View", "View", SwView::static_type(), SwView::default() as i32, glib::ParamFlags::READWRITE)]);
 
@@ -251,36 +258,6 @@ impl SwApplicationWindow {
         action!(self, "create-new-station", |_, _| {
             open::that("https://www.radio-browser.info/#!/add").expect("Could not open webpage.");
         });
-
-        // win.quit
-        action!(
-            self,
-            "quit",
-            clone!(@weak app => move |_, _| {
-                app.quit();
-            })
-        );
-        app.set_accels_for_action("win.quit", &["<primary>q"]);
-
-        // win.about
-        action!(
-            self,
-            "about",
-            clone!(@weak self as this => move |_, _| {
-                about_dialog::show_about_dialog(this.upcast());
-            })
-        );
-
-        // win.show-preferences
-        action!(
-            self,
-            "show-preferences",
-            clone!(@weak self as this => move |_, _| {
-                let settings_window = SettingsWindow::new(&this.upcast());
-                settings_window.show();
-            })
-        );
-        app.set_accels_for_action("win.show-preferences", &["<primary>comma"]);
 
         // win.go-back
         action!(

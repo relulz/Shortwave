@@ -144,7 +144,7 @@
             <child>
               <object class="GtkButton" id="close_button">
                 <property name="valign">center</property>
-                <property name="action_name">win.quit</property>
+                <property name="action_name">app.quit</property>
                 <property name="icon_name">window-close-symbolic</property>
                 <style>
                   <class name="circular"/>

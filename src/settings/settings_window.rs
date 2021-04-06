@@ -26,7 +26,7 @@ pub struct SettingsWindow {
 }
 
 impl SettingsWindow {
-    pub fn new(window: &gtk::ApplicationWindow) -> Self {
+    pub fn new(window: &gtk::Window) -> Self {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/settings_window.ui");
         get_widget!(builder, PreferencesWindow, settings_window);
 
