@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use adw::prelude::*;
+use adw::subclass::prelude::*;
 use futures_util::future::FutureExt;
 use glib::clone;
 use glib::Sender;
@@ -77,7 +78,7 @@ mod imp {
     #[glib::object_subclass]
     impl ObjectSubclass for SwStationDialog {
         const NAME: &'static str = "SwStationDialog";
-        type ParentType = gtk::Dialog;
+        type ParentType = adw::Window;
         type Type = super::SwStationDialog;
 
         fn class_init(klass: &mut Self::Class) {
@@ -95,12 +96,12 @@ mod imp {
 
     impl WindowImpl for SwStationDialog {}
 
-    impl DialogImpl for SwStationDialog {}
+    impl AdwWindowImpl for SwStationDialog {}
 }
 
 glib::wrapper! {
     pub struct SwStationDialog(ObjectSubclass<imp::SwStationDialog>)
-        @extends gtk::Widget, gtk::Window, gtk::Dialog;
+        @extends gtk::Widget, gtk::Window, adw::Window;
 }
 
 impl SwStationDialog {

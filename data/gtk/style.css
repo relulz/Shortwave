@@ -6,6 +6,13 @@
   background-color: @theme_bg_color;
 }
 
+headerbar.flat {
+  background-image: none;
+  border: none;
+  background-color: transparent;
+}
+
+
 .tile {
   padding: 0px;
   border-radius: 8px;

@@ -1,159 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="SwStationDialog" parent="GtkDialog">
+  <template class="SwStationDialog" parent="AdwWindow">
     <property name="width_request">325</property>
     <property name="height_request">575</property>
-    <property name="default_width">500</property>
-    <property name="default_height">450</property>
+    <property name="default_width">700</property>
+    <property name="default_height">500</property>
     <property name="title" translatable="yes">Station details</property>
     <property name="modal">True</property>
     <child>
-      <object class="GtkScrolledWindow">
+      <object class="GtkOverlay">
+        <child type="overlay">
+          <object class="GtkHeaderBar">
+            <property name="valign">start</property>
+            <property name="title-widget">
+              <object class="GtkBox"/>
+            </property>
+            <style>
+              <class name="flat"/>
+            </style>
+          </object>
+        </child>
         <child>
-          <object class="AdwClamp">
+          <object class="GtkScrolledWindow">
+            <property name="vexpand">True</property>
             <child>
-              <object class="GtkBox">
-                <property name="orientation">vertical</property>
-                <property name="spacing">18</property>
-                <property name="margin_start">12</property>
-                <property name="margin_end">12</property>
-                <property name="margin_bottom">18</property>
-                <property name="margin_top">18</property>
-                <child>
-                  <object class="GtkBox" id="favicon_box">
-                    <property name="halign">center</property>
-                    <property name="overflow">hidden</property>
-                    <style>
-                      <class name="favicon-big"/>
-                    </style>
-                  </object>
-                </child>
+              <object class="AdwClamp">
                 <child>
                   <object class="GtkBox">
                     <property name="orientation">vertical</property>
-                    <property name="halign">center</property>
+                    <property name="spacing">18</property>
+                    <property name="margin_start">12</property>
+                    <property name="margin_end">12</property>
+                    <property name="margin_bottom">18</property>
+                    <property name="margin_top">30</property>
                     <child>
-                      <object class="GtkLabel" id="title_label">
-                        <property name="label">label</property>
-                        <property name="justify">center</property>
-                        <property name="wrap">True</property>
-                        <property name="selectable">True</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                          <attribute name="scale" value="1.2"/>
-                        </attributes>
+                      <object class="GtkBox" id="favicon_box">
+                        <property name="halign">center</property>
+                        <property name="overflow">hidden</property>
+                        <style>
+                          <class name="favicon-big"/>
+                        </style>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="subtitle_label">
-                        <property name="label">subtitle</property>
-                        <property name="justify">center</property>
-                        <property name="wrap">True</property>
-                        <property name="selectable">True</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwPreferencesGroup">
-                    <property name="title" translatable="yes">Actions</property>
-                    <child>
-                      <object class="AdwActionRow" id="start_playback_row">
-                        <property name="title" translatable="yes">_Play this station</property>
-                        <property name="icon-name">media-playback-start-symbolic</property>
-                        <property name="use_underline">True</property>
-                        <property name="activatable">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="AdwActionRow" id="library_add_row">
-                        <property name="title" translatable="yes">_Add to library</property>
-                        <property name="icon-name">list-add-symbolic</property>
-                        <property name="use_underline">True</property>
-                        <property name="visible">False</property>
-                        <property name="activatable">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="AdwActionRow" id="library_remove_row">
-                        <property name="title" translatable="yes">_Remove from Library</property>
-                        <property name="icon-name">list-remove-symbolic</property>
-                        <property name="use_underline">True</property>
-                        <property name="visible">False</property>
-                        <property name="activatable">True</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwPreferencesGroup">
-                    <property name="title" translatable="yes">Information</property>
-                    <child>
-                      <object class="AdwActionRow" id="language_row">
-                        <property name="title" translatable="yes">Language</property>
-                        <property name="visible">False</property>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="halign">center</property>
                         <child>
-                          <object class="GtkLabel" id="language_label">
-                            <property name="ellipsize">end</property>
-                            <style>
-                              <class name="dim-label"/>
-                            </style>
+                          <object class="GtkLabel" id="title_label">
+                            <property name="label">label</property>
+                            <property name="justify">center</property>
+                            <property name="wrap">True</property>
+                            <attributes>
+                              <attribute name="weight" value="bold"/>
+                              <attribute name="scale" value="1.2"/>
+                            </attributes>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="subtitle_label">
+                            <property name="label">subtitle</property>
+                            <property name="justify">center</property>
+                            <property name="wrap">True</property>
                           </object>
                         </child>
                       </object>
                     </child>
                     <child>
-                      <object class="AdwActionRow" id="tags_row">
-                        <property name="title" translatable="yes">Tags</property>
-                        <property name="visible">False</property>
+                      <object class="AdwPreferencesGroup">
+                        <property name="title" translatable="yes">Actions</property>
                         <child>
-                          <object class="GtkLabel" id="tags_label">
-                            <property name="ellipsize">end</property>
-                            <style>
-                              <class name="dim-label"/>
-                            </style>
+                          <object class="AdwActionRow" id="start_playback_row">
+                            <property name="title" translatable="yes">_Play this station</property>
+                            <property name="icon-name">media-playback-start-symbolic</property>
+                            <property name="use_underline">True</property>
+                            <property name="activatable">True</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwActionRow" id="library_add_row">
+                            <property name="title" translatable="yes">_Add to library</property>
+                            <property name="icon-name">list-add-symbolic</property>
+                            <property name="use_underline">True</property>
+                            <property name="visible">False</property>
+                            <property name="activatable">True</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwActionRow" id="library_remove_row">
+                            <property name="title" translatable="yes">_Remove from Library</property>
+                            <property name="icon-name">list-remove-symbolic</property>
+                            <property name="use_underline">True</property>
+                            <property name="visible">False</property>
+                            <property name="activatable">True</property>
                           </object>
                         </child>
                       </object>
                     </child>
                     <child>
-                      <object class="AdwActionRow" id="codec_row">
-                        <property name="title" translatable="yes">Codec</property>
-                        <property name="visible">False</property>
+                      <object class="AdwPreferencesGroup">
+                        <property name="title" translatable="yes">Information</property>
                         <child>
-                          <object class="GtkLabel" id="codec_label">
-                            <property name="ellipsize">end</property>
-                            <style>
-                              <class name="dim-label"/>
-                            </style>
+                          <object class="AdwActionRow" id="language_row">
+                            <property name="title" translatable="yes">Language</property>
+                            <property name="visible">False</property>
+                            <child>
+                              <object class="GtkLabel" id="language_label">
+                                <property name="ellipsize">end</property>
+                                <style>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
                           </object>
                         </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="AdwActionRow" id="homepage_row">
-                        <property name="title" translatable="yes">Homepage</property>
-                        <property name="visible">False</property>
                         <child>
-                          <object class="GtkLabel" id="homepage_label">
-                            <property name="ellipsize">end</property>
-                            <style>
-                              <class name="dim-label"/>
-                            </style>
+                          <object class="AdwActionRow" id="tags_row">
+                            <property name="title" translatable="yes">Tags</property>
+                            <property name="visible">False</property>
+                            <child>
+                              <object class="GtkLabel" id="tags_label">
+                                <property name="ellipsize">end</property>
+                                <style>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
                           </object>
                         </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="AdwActionRow" id="stream_row">
-                        <property name="title" translatable="yes">Stream</property>
-                        <property name="visible">False</property>
                         <child>
-                          <object class="GtkLabel" id="stream_label">
-                            <property name="ellipsize">end</property>
-                            <style>
-                              <class name="dim-label"/>
-                            </style>
+                          <object class="AdwActionRow" id="codec_row">
+                            <property name="title" translatable="yes">Codec</property>
+                            <property name="visible">False</property>
+                            <child>
+                              <object class="GtkLabel" id="codec_label">
+                                <property name="ellipsize">end</property>
+                                <style>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwActionRow" id="homepage_row">
+                            <property name="title" translatable="yes">Homepage</property>
+                            <property name="visible">False</property>
+                            <child>
+                              <object class="GtkLabel" id="homepage_label">
+                                <property name="ellipsize">end</property>
+                                <style>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwActionRow" id="stream_row">
+                            <property name="title" translatable="yes">Stream</property>
+                            <property name="visible">False</property>
+                            <child>
+                              <object class="GtkLabel" id="stream_label">
+                                <property name="ellipsize">end</property>
+                                <style>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
                           </object>
                         </child>
                       </object>
