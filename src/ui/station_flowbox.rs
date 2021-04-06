@@ -28,7 +28,7 @@ use crate::api::SwStation;
 use crate::app::Action;
 use crate::model::SwStationModel;
 use crate::model::{SwSorting, SwStationSorter};
-use crate::ui::{StationDialog, SwStationRow};
+use crate::ui::{SwStationDialog, SwStationRow};
 
 mod imp {
     use super::*;
@@ -125,7 +125,7 @@ impl SwStationFlowBox {
             let row = child.clone().downcast::<SwStationRow>().unwrap();
             let station = row.station();
 
-            let station_dialog = StationDialog::new(sender.clone(), station);
+            let station_dialog = SwStationDialog::new(sender.clone(), station);
             station_dialog.show();
         }));
     }

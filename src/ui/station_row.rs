@@ -105,7 +105,7 @@ impl SwStationRow {
         let station = imp.station.get().unwrap();
         imp.station_label.set_text(&station.metadata().name);
 
-        let subtitle = utils::station_subtitle(&station.metadata().country, &station.metadata().state, station.metadata().votes);
+        let subtitle = utils::station_subtitle(station.metadata());
         imp.subtitle_label.set_text(&subtitle);
 
         // Download & set station favicon

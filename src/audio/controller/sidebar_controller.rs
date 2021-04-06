@@ -27,7 +27,7 @@ use crate::api::{FaviconDownloader, SwStation};
 use crate::app::Action;
 use crate::audio::Controller;
 use crate::audio::PlaybackState;
-use crate::ui::{FaviconSize, StationDialog, StationFavicon, StreamingDialog};
+use crate::ui::{FaviconSize, StationFavicon, StreamingDialog, SwStationDialog};
 
 pub struct SidebarController {
     pub widget: gtk::Box,
@@ -136,7 +136,7 @@ impl SidebarController {
             "show-details",
             clone!(@strong self.sender as sender, @strong self.station as station => move |_, _| {
                 let s = station.borrow().clone().unwrap();
-                let station_dialog = StationDialog::new(sender.clone(), s);
+                let station_dialog = SwStationDialog::new(sender.clone(), s);
                 station_dialog.show();
             })
         );

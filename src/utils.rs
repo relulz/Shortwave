@@ -14,19 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use crate::api::StationMetadata;
 use crate::i18n::*;
 
-pub fn station_subtitle(country: &str, state: &str, votes: i32) -> String {
-    let mut string = if !country.is_empty() { country.to_string() } else { "".to_string() };
+pub fn station_subtitle(metadata: StationMetadata) -> String {
+    let mut string = if !metadata.country.is_empty() { metadata.country.to_string() } else { "".to_string() };
 
-    if !state.is_empty() {
-        string = format!("{} {}", string, state);
+    if !metadata.state.is_empty() {
+        string = format!("{} {}", string, metadata.state);
     }
 
     if string.is_empty() {
-        string = ni18n_f("{} Vote", "{} Votes", votes as u32, &[&votes.to_string()]);
+        string = ni18n_f("{} Vote", "{} Votes", metadata.votes as u32, &[&metadata.votes.to_string()]);
     } else {
-        string = ni18n_f("{} · {} Vote", "{} · {} Votes", votes as u32, &[&string, &votes.to_string()]);
+        string = ni18n_f("{} · {} Vote", "{} · {} Votes", metadata.votes as u32, &[&string, &metadata.votes.to_string()]);
     }
 
     string

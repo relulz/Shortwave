@@ -32,7 +32,7 @@ pub use featured_carousel::FeaturedCarousel;
 pub use notification::Notification;
 pub use song_listbox::SongListBox;
 pub use song_row::SongRow;
-pub use station_dialog::StationDialog;
+pub use station_dialog::SwStationDialog;
 pub use station_favicon::FaviconSize;
 pub use station_favicon::StationFavicon;
 pub use station_flowbox::SwStationFlowBox;

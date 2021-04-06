@@ -14,11 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use adw::prelude::*;
 use futures_util::future::FutureExt;
 use glib::clone;
 use glib::Sender;
 use gtk::prelude::*;
+use gtk::subclass::prelude::*;
+use gtk::CompositeTemplate;
 use gtk::{gio, glib};
+use once_cell::unsync::OnceCell;
 
 use crate::api::{FaviconDownloader, SwStation};
 use crate::app::{Action, SwApplication};
@@ -26,48 +30,103 @@ use crate::database::SwLibrary;
 use crate::ui::{FaviconSize, StationFavicon};
 use crate::utils;
 
-pub struct StationDialog {
-    pub widget: gtk::Dialog,
-    station: SwStation,
+mod imp {
+    use super::*;
+    use glib::subclass;
 
-    title_label: gtk::Label,
-    subtitle_label: gtk::Label,
-    codec_label: gtk::Label,
-    homepage_label: gtk::Label,
-    stream_label: gtk::Label,
-    tags_label: gtk::Label,
-    language_label: gtk::Label,
+    #[derive(Debug, Default, CompositeTemplate)]
+    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_dialog.ui")]
+    pub struct SwStationDialog {
+        #[template_child]
+        pub favicon_box: TemplateChild<gtk::Box>,
+        #[template_child]
+        pub title_label: TemplateChild<gtk::Label>,
+        #[template_child]
+        pub subtitle_label: TemplateChild<gtk::Label>,
+        #[template_child]
+        pub library_add_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub library_remove_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub start_playback_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub language_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub language_label: TemplateChild<gtk::Label>,
+        #[template_child]
+        pub tags_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub tags_label: TemplateChild<gtk::Label>,
+        #[template_child]
+        pub codec_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub codec_label: TemplateChild<gtk::Label>,
+        #[template_child]
+        pub homepage_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub homepage_label: TemplateChild<gtk::Label>,
+        #[template_child]
+        pub stream_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub stream_label: TemplateChild<gtk::Label>,
 
-    codec_label_label: gtk::Label,
-    homepage_label_label: gtk::Label,
-    tags_label_label: gtk::Label,
-    language_label_label: gtk::Label,
+        pub station: OnceCell<SwStation>,
+        pub sender: OnceCell<Sender<Action>>,
+    }
 
-    builder: gtk::Builder,
-    sender: Sender<Action>,
+    #[glib::object_subclass]
+    impl ObjectSubclass for SwStationDialog {
+        const NAME: &'static str = "SwStationDialog";
+        type ParentType = gtk::Dialog;
+        type Type = super::SwStationDialog;
+
+        fn class_init(klass: &mut Self::Class) {
+            Self::bind_template(klass);
+        }
+
+        fn instance_init(obj: &subclass::InitializingObject<Self>) {
+            obj.init_template();
+        }
+    }
+
+    impl ObjectImpl for SwStationDialog {}
+
+    impl WidgetImpl for SwStationDialog {}
+
+    impl WindowImpl for SwStationDialog {}
+
+    impl DialogImpl for SwStationDialog {}
 }
 
-impl StationDialog {
+glib::wrapper! {
+    pub struct SwStationDialog(ObjectSubclass<imp::SwStationDialog>)
+        @extends gtk::Widget, gtk::Window, gtk::Dialog;
+}
+
+impl SwStationDialog {
     pub fn new(sender: Sender<Action>, station: SwStation) -> Self {
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/station_dialog.ui");
-        get_widget!(builder, gtk::Dialog, station_dialog);
-        get_widget!(builder, gtk::Label, title_label);
-        get_widget!(builder, gtk::Label, subtitle_label);
-        get_widget!(builder, gtk::Label, codec_label);
-        get_widget!(builder, gtk::Label, homepage_label);
-        get_widget!(builder, gtk::Label, stream_label);
-        get_widget!(builder, gtk::Label, tags_label);
-        get_widget!(builder, gtk::Label, language_label);
-        get_widget!(builder, gtk::Label, codec_label_label);
-        get_widget!(builder, gtk::Label, homepage_label_label);
-        get_widget!(builder, gtk::Label, tags_label_label);
-        get_widget!(builder, gtk::Label, language_label_label);
+        let dialog = glib::Object::new(&[]).unwrap();
+
+        let imp = imp::SwStationDialog::from_instance(&dialog);
+        imp.station.set(station).unwrap();
+        imp.sender.set(sender).unwrap();
+
+        let window = gio::Application::get_default().unwrap().downcast_ref::<SwApplication>().unwrap().get_active_window().unwrap();
+        dialog.set_transient_for(Some(&window));
+
+        dialog.setup_widgets();
+        dialog.setup_signals();
+        dialog
+    }
+
+    fn setup_widgets(&self) {
+        let imp = imp::SwStationDialog::from_instance(self);
+        let metadata = imp.station.get().unwrap().metadata().clone();
 
         // Download & set station favicon
-        get_widget!(builder, gtk::Box, favicon_box);
         let station_favicon = StationFavicon::new(FaviconSize::Big);
-        favicon_box.append(&station_favicon.widget);
-        if let Some(favicon) = station.metadata().favicon.as_ref() {
+        imp.favicon_box.append(&station_favicon.widget);
+        if let Some(favicon) = metadata.favicon.as_ref() {
             let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Big as i32).map(move |pixbuf| {
                 if let Ok(pixbuf) = pixbuf {
                     station_favicon.set_pixbuf(pixbuf)
@@ -76,98 +135,72 @@ impl StationDialog {
             spawn!(fut);
         }
 
-        // Show correct library action
-        get_widget!(builder, gtk::Stack, library_action_stack);
-        if SwLibrary::contains_station(&station) {
-            library_action_stack.set_visible_child_name("library-remove");
+        // Title / Subtitle
+        let subtitle = utils::station_subtitle(metadata.clone());
+        imp.title_label.set_text(&metadata.name);
+        imp.subtitle_label.set_text(&subtitle);
+
+        // Action rows
+        if SwLibrary::contains_station(&imp.station.get().unwrap()) {
+            imp.library_remove_row.set_visible(true);
         } else {
-            library_action_stack.set_visible_child_name("library-add");
+            imp.library_add_row.set_visible(true);
         }
 
-        let dialog = Self {
-            widget: station_dialog,
-            station,
-            title_label,
-            subtitle_label,
-            codec_label,
-            homepage_label,
-            stream_label,
-            tags_label,
-            language_label,
-            codec_label_label,
-            homepage_label_label,
-            tags_label_label,
-            language_label_label,
-            builder,
-            sender,
-        };
-
-        dialog.setup();
-        dialog.setup_signals();
-        dialog
-    }
-
-    fn setup(&self) {
-        self.title_label.set_text(&self.station.metadata().name);
-        let subtitle = utils::station_subtitle(&self.station.metadata().country, &self.station.metadata().state, self.station.metadata().votes);
-        self.subtitle_label.set_text(&subtitle);
-
-        if !self.station.metadata().codec.is_empty() {
-            self.codec_label.set_text(&self.station.metadata().codec);
-        } else {
-            self.codec_label.hide();
-            self.codec_label_label.hide();
+        if !metadata.language.is_empty() {
+            imp.tags_row.set_visible(true);
+            imp.tags_label.set_text(&metadata.tags);
         }
 
-        if !self.station.metadata().tags.is_empty() {
-            self.tags_label.set_text(&self.station.metadata().tags);
-        } else {
-            self.tags_label.hide();
-            self.tags_label_label.hide();
+        if !metadata.tags.is_empty() {
+            imp.language_row.set_visible(true);
+            imp.language_label.set_text(&metadata.language);
         }
 
-        if !self.station.metadata().language.is_empty() {
-            self.language_label.set_text(&self.station.metadata().language);
-        } else {
-            self.language_label.hide();
-            self.language_label_label.hide();
+        if !metadata.codec.is_empty() {
+            imp.codec_row.set_visible(true);
+            imp.codec_label.set_text(&metadata.codec);
         }
 
-        if let Some(ref homepage) = self.station.metadata().homepage {
-            let homepage = homepage.to_string().replace("&", "&amp;");
-            self.homepage_label.set_markup(&format!("<a href=\"{}\">{}</a>", homepage, homepage));
-        } else {
-            self.homepage_label.hide();
-            self.homepage_label_label.hide();
+        if let Some(homepage) = metadata.homepage {
+            imp.homepage_row.set_visible(true);
+            imp.homepage_label.set_text(&homepage.to_string());
         }
 
-        if let Some(ref url_resolved) = self.station.metadata().url_resolved {
-            let stream = url_resolved.to_string().replace("&", "&amp;");
-            self.stream_label.set_markup(&format!("<a href=\"{}\">{}</a>", stream, stream));
+        if let Some(url_resolved) = metadata.url_resolved {
+            imp.stream_row.set_visible(true);
+            imp.stream_label.set_text(&url_resolved.to_string());
         }
-    }
-
-    pub fn show(&self) {
-        let window = gio::Application::get_default().unwrap().downcast_ref::<SwApplication>().unwrap().get_active_window().unwrap();
-        self.widget.set_transient_for(Some(&window));
-        self.widget.set_visible(true);
     }
 
     fn setup_signals(&self) {
-        // remove_button
-        get_widget!(self.builder, gtk::Button, remove_button);
-        remove_button.connect_clicked(clone!(@weak self.widget as widget, @strong self.station as station, @strong self.sender as sender => move |_| {
-            send!(sender, Action::LibraryRemoveStations(vec![station.clone()]));
-            widget.hide();
-            widget.close();
-        }));
+        let imp = imp::SwStationDialog::from_instance(self);
 
-        // add_button
-        get_widget!(self.builder, gtk::Button, add_button);
-        add_button.connect_clicked(clone!(@weak self.widget as widget, @strong self.station as station, @strong self.sender as sender => move |_| {
-            send!(sender, Action::LibraryAddStations(vec![station.clone()]));
-            widget.hide();
-            widget.close();
-        }));
+        imp.library_add_row.connect_activated(clone!(@weak self as this => move|_|
+            let imp = imp::SwStationDialog::from_instance(&this);
+            let station = imp.station.get().unwrap().clone();
+
+            send!(imp.sender.get().unwrap(), Action::LibraryAddStations(vec![station]));
+            this.hide();
+            this.close();
+        ));
+
+        imp.library_remove_row.connect_activated(clone!(@weak self as this => move|_|
+            let imp = imp::SwStationDialog::from_instance(&this);
+            let station = imp.station.get().unwrap().clone();
+
+            send!(imp.sender.get().unwrap(), Action::LibraryRemoveStations(vec![station]));
+            this.hide();
+            this.close();
+        ));
+
+        imp.start_playback_row.connect_activated(clone!(@weak self as this => move|_|
+            let imp = imp::SwStationDialog::from_instance(&this);
+            let station = imp.station.get().unwrap().clone();
+
+            send!(imp.sender.get().unwrap(), Action::PlaybackSetStation(Box::new(station)));
+            this.hide();
+            this.close();
+        ));
     }
 }
