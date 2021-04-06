@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-04-05 17:37+0000\n"
-"PO-Revision-Date: 2021-04-05 21:49+0200\n"
+"POT-Creation-Date: 2021-04-06 15:59+0000\n"
+"PO-Revision-Date: 2021-04-07 01:45+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -162,23 +162,23 @@ msgstr ""
 "\n"
 "Om stationen inte sänder några metadata så kan inga låtar kännas igen."
 
-#: data/gtk/song_listbox.ui:64
+#: data/gtk/song_listbox.ui:63
 msgid "No songs detected"
 msgstr "Inga låtar upptäcktes"
 
-#: data/gtk/song_listbox.ui:74
+#: data/gtk/song_listbox.ui:73
 msgid "Detected songs will appear here."
 msgstr "Upptäckta låtar kommer dyka upp här."
 
-#: data/gtk/song_listbox.ui:83
+#: data/gtk/song_listbox.ui:82
 msgid "_How does this work?"
 msgstr "_Hur fungerar detta?"
 
-#: data/gtk/song_listbox.ui:125
+#: data/gtk/song_listbox.ui:124
 msgid "Saved songs are located in your Music folder."
 msgstr "Sparade låtar finns i din mapp Musik."
 
-#: data/gtk/song_listbox.ui:138
+#: data/gtk/song_listbox.ui:137
 msgid "_Open"
 msgstr "Ö_ppna"
 
@@ -190,33 +190,45 @@ msgstr "Spara inspelad låt"
 msgid "Station details"
 msgstr "Stationsdetaljer"
 
-#: data/gtk/station_dialog.ui:62
-msgid "Language"
-msgstr "Språk"
+#: data/gtk/station_dialog.ui:71
+msgid "Actions"
+msgstr "Åtgärder"
+
+#: data/gtk/station_dialog.ui:74
+msgid "_Play this station"
+msgstr "_Spela upp denna station"
+
+#: data/gtk/station_dialog.ui:82
+msgid "_Add to library"
+msgstr "_Lägg till i bibliotek"
 
 #: data/gtk/station_dialog.ui:91
-msgid "Tags"
-msgstr "Taggar"
-
-#: data/gtk/station_dialog.ui:117
-msgid "Codec"
-msgstr "Kodek"
-
-#: data/gtk/station_dialog.ui:144
-msgid "Homepage"
-msgstr "Webbsida"
-
-#: data/gtk/station_dialog.ui:173
-msgid "Stream"
-msgstr "Ström"
-
-#: data/gtk/station_dialog.ui:211
 msgid "_Remove from Library"
 msgstr "_Ta bort från bibliotek"
 
-#: data/gtk/station_dialog.ui:225
-msgid "_Add to library"
-msgstr "_Lägg till i bibliotek"
+#: data/gtk/station_dialog.ui:102
+msgid "Information"
+msgstr "Information"
+
+#: data/gtk/station_dialog.ui:105
+msgid "Language"
+msgstr "Språk"
+
+#: data/gtk/station_dialog.ui:119
+msgid "Tags"
+msgstr "Taggar"
+
+#: data/gtk/station_dialog.ui:133
+msgid "Codec"
+msgstr "Kodek"
+
+#: data/gtk/station_dialog.ui:147
+msgid "Homepage"
+msgstr "Webbsida"
+
+#: data/gtk/station_dialog.ui:161
+msgid "Stream"
+msgstr "Ström"
 
 #: data/gtk/streaming_dialog.ui:46
 msgid "Stream to a device"
@@ -298,15 +310,15 @@ msgstr "_Tangentbordsgenvägar"
 msgid "_About Shortwave"
 msgstr "_Om Shortwave"
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:163
 msgid "This station cannot be played because the stream is offline."
 msgstr "Denna station kan inte spelas eftersom strömmen är frånkopplad."
 
-#: src/audio/player.rs:182
+#: src/audio/player.rs:181
 msgid "Station cannot be streamed."
 msgstr "Stationen kan inte strömmas."
 
-#: src/audio/player.rs:182
+#: src/audio/player.rs:181
 msgid "URL is not valid."
 msgstr "URL är inte giltig."
 
@@ -314,7 +326,7 @@ msgstr "URL är inte giltig."
 msgid "No longer existing station removed from library."
 msgstr "Station som inte längre finns borttagen från bibliotek."
 
-#: src/database/library.rs:215 src/ui/pages/discover_page.rs:134
+#: src/database/library.rs:215 src/ui/pages/discover_page.rs:140
 #: src/ui/pages/search_page.rs:145
 msgid "Station data could not be received."
 msgstr "Kunde inte erhålla stationsdata."
@@ -361,13 +373,13 @@ msgstr "Driftas av radio-browser.info"
 msgid "Welcome to {}"
 msgstr "Välkommen till {}"
 
-#: src/utils.rs:31
+#: src/utils.rs:28
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} röst"
 msgstr[1] "{} röster"
 
-#: src/utils.rs:33
+#: src/utils.rs:30
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} röst"
