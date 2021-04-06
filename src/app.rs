@@ -17,10 +17,9 @@
 use gio::subclass::prelude::ApplicationImpl;
 use gio::SettingsExt;
 use glib::clone;
-use glib::subclass::prelude::*;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
-use gtk::subclass::application::GtkApplicationImpl;
+use gtk::subclass::prelude::*;
 use gtk::{gdk, gio, glib};
 
 use std::cell::RefCell;
@@ -110,6 +109,11 @@ mod imp {
 
     // Implement Gio.Application for SwApplication
     impl ApplicationImpl for SwApplication {
+        fn startup(&self, app: &Self::Type) {
+            self.parent_startup(app);
+            app.set_resource_base_path(Some("/de/haeckerfelix/Shortwave/"));
+        }
+
         fn activate(&self, app: &Self::Type) {
             debug!("gio::Application -> activate()");
             let app = app.downcast_ref::<super::SwApplication>().unwrap();

@@ -33,7 +33,7 @@ pub struct SongRow {
 
 impl SongRow {
     pub fn new(sender: Sender<Action>, song: Song) -> Self {
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/song_row.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/song-row.ui");
         get_widget!(builder, gtk::Box, song_row);
 
         get_widget!(builder, gtk::Label, title_label);

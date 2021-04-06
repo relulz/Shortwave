@@ -115,7 +115,7 @@ mod imp {
     impl ObjectImpl for SwApplicationWindow {
         fn constructed(&self, obj: &Self::Type) {
             self.parent_constructed(obj);
-            let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/help_overlay.ui");
+            let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/help-overlay.ui");
             get_widget!(builder, gtk::ShortcutsWindow, help_overlay);
             obj.set_help_overlay(Some(&help_overlay));
         }

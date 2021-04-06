@@ -48,7 +48,7 @@ pub struct ToolbarController {
 
 impl ToolbarController {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/toolbar_controller.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/toolbar-controller.ui");
         get_widget!(builder, gtk::Box, toolbar_controller);
         get_widget!(builder, gtk::Label, title_label);
         get_widget!(builder, gtk::Label, subtitle_label);

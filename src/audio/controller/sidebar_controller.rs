@@ -53,7 +53,7 @@ pub struct SidebarController {
 
 impl SidebarController {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/sidebar_controller.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/sidebar-controller.ui");
         get_widget!(builder, gtk::Box, sidebar_controller);
         get_widget!(builder, gtk::Label, title_label);
         get_widget!(builder, gtk::Label, subtitle_label);
@@ -78,7 +78,7 @@ impl SidebarController {
         }));
 
         // menu button
-        let menu_builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/menu/player_menu.ui");
+        let menu_builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/menu/player-menu.ui");
         get_widget!(menu_builder, gio::MenuModel, player_menu);
         get_widget!(builder, gtk::MenuButton, playermenu_button);
         playermenu_button.set_menu_model(Some(&player_menu));

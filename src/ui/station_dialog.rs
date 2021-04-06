@@ -36,7 +36,7 @@ mod imp {
     use glib::subclass;
 
     #[derive(Debug, Default, CompositeTemplate)]
-    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_dialog.ui")]
+    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station-dialog.ui")]
     pub struct SwStationDialog {
         #[template_child]
         pub favicon_box: TemplateChild<gtk::Box>,

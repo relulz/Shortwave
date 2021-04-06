@@ -35,7 +35,7 @@ mod imp {
     use glib::subclass;
 
     #[derive(Debug, CompositeTemplate)]
-    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_flowbox.ui")]
+    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station-flowbox.ui")]
     pub struct SwStationFlowBox {
         #[template_child]
         pub flowbox: TemplateChild<gtk::FlowBox>,
