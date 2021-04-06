@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
 "POT-Creation-Date: 2021-04-05 17:37+0000\n"
-"PO-Revision-Date: 2021-04-06 09:32+0300\n"
+"PO-Revision-Date: 2021-04-06 09:34+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -210,7 +210,7 @@ msgstr "Домашня сторінка"
 #: data/gtk/station_dialog.ui:173
 msgid "Stream"
 msgstr ""
-"Потік"
+"Трансляція"
 
 #: data/gtk/station_dialog.ui:211
 msgid "_Remove from Library"
