@@ -158,7 +158,7 @@
                         </child>
                         <child>
                           <object class="AdwActionRow" id="stream_row">
-                            <property name="title" translatable="yes">Stream</property>
+                            <property name="title" translatable="yes" comments="This is a noun/label for the station stream url">Stream</property>
                             <property name="visible">False</property>
                             <child>
                               <object class="GtkLabel" id="stream_label">
