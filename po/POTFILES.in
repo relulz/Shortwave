@@ -3,7 +3,6 @@
 
 data/gtk/discover-page.ui
 data/gtk/library-page.ui
-data/gtk/menu/player-menu.ui
 data/gtk/mini-controller.ui
 data/gtk/notification.ui
 data/gtk/player.ui

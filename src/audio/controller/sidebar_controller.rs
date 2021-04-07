@@ -77,12 +77,6 @@ impl SidebarController {
             send!(sender, Action::PlaybackSetVolume(value));
         }));
 
-        // menu button
-        let menu_builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/menu/player-menu.ui");
-        get_widget!(menu_builder, gio::MenuModel, player_menu);
-        get_widget!(builder, gtk::MenuButton, playermenu_button);
-        playermenu_button.set_menu_model(Some(&player_menu));
-
         // action group
         let action_group = gio::SimpleActionGroup::new();
         sidebar_controller.insert_action_group("player", Some(&action_group));
