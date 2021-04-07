@@ -219,9 +219,10 @@ impl SwApplicationWindow {
 
         // search_button
         imp.search_button.connect_toggled(clone!(@strong self as this => move |search_button| {
+            let imp = imp::SwApplicationWindow::from_instance(&this);
             if search_button.get_active(){
                 this.set_view(SwView::Search);
-            }else{
+            }else if *imp.view.borrow() != SwView::Player {
                 this.set_view(SwView::Discover);
             }
         }));
@@ -414,6 +415,7 @@ impl SwApplicationWindow {
             }
         };
 
+        debug!("Update visible view to {:?}", view);
         self.set_view(view);
     }
 
@@ -440,33 +442,36 @@ impl SwApplicationWindow {
             }
         }
 
-        // Set defaults
-        imp.add_button.set_visible(false);
-        imp.back_button.set_visible(true);
-        imp.appmenu_button.set_menu_model(Some(&imp.default_menu.get()));
-        imp.search_revealer.set_reveal_child(false);
-
         // Show requested view / page
         match view {
             SwView::Library => {
                 imp.window_leaflet.set_visible_child(&imp.library_page.get());
-                imp.back_button.set_visible(false);
-                imp.add_button.set_visible(true);
                 imp.appmenu_button.set_menu_model(Some(&imp.library_menu.get()));
+                imp.search_revealer.set_reveal_child(false);
+                imp.add_button.set_visible(true);
+                imp.back_button.set_visible(false);
             }
             SwView::Discover => {
                 imp.window_leaflet.set_visible_child(&imp.discover_page.get());
+                imp.appmenu_button.set_menu_model(Some(&imp.default_menu.get()));
                 imp.search_button.set_active(false);
                 imp.search_revealer.set_reveal_child(true);
+                imp.add_button.set_visible(false);
+                imp.back_button.set_visible(true);
             }
             SwView::Search => {
                 imp.window_leaflet.set_visible_child(&imp.search_page.get());
+                imp.appmenu_button.set_menu_model(Some(&imp.default_menu.get()));
                 imp.search_button.set_active(true);
                 imp.search_revealer.set_reveal_child(true);
+                imp.add_button.set_visible(false);
+                imp.back_button.set_visible(true);
             }
             SwView::Player => {
                 imp.window_flap.set_reveal_flap(true);
                 imp.search_button.set_active(false);
+                imp.add_button.set_visible(false);
+                imp.back_button.set_visible(true);
             }
         }
     }
