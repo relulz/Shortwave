@@ -118,23 +118,24 @@ impl SwLibraryPage {
 
         // Station flowbox
         imp.flowbox.init(imp.library.get_model(), imp.sender.get().unwrap().clone());
+
+        // Set intial stack page
+        self.update_stack_page();
     }
 
     fn setup_signals(&self) {
         let imp = imp::SwLibraryPage::from_instance(self);
+        imp.library.connect_notify_local(Some("status"), clone!(@weak self as this => move |_, _|this.update_stack_page()));
+    }
 
-        imp.library.connect_notify_local(
-            Some("status"),
-            clone!(@weak self as this => move |library, _|{
-                let imp = imp::SwLibraryPage::from_instance(&this);
+    fn update_stack_page(&self) {
+        let imp = imp::SwLibraryPage::from_instance(self);
 
-                match library.get_status(){
-                    SwLibraryStatus::Loading => imp.stack.set_visible_child_name("loading"),
-                    SwLibraryStatus::Empty => imp.stack.set_visible_child_name("empty"),
-                    SwLibraryStatus::Content => imp.stack.set_visible_child_name("content"),
-                    _ => (),
-                }
-            }),
-        );
+        match imp.library.get_status() {
+            SwLibraryStatus::Loading => imp.stack.set_visible_child_name("loading"),
+            SwLibraryStatus::Empty => imp.stack.set_visible_child_name("empty"),
+            SwLibraryStatus::Content => imp.stack.set_visible_child_name("content"),
+            _ => (),
+        }
     }
 }
