@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-04-05 17:37+0000\n"
-"PO-Revision-Date: 2021-04-06 09:34+0300\n"
+"POT-Creation-Date: 2021-04-06 15:59+0000\n"
+"PO-Revision-Date: 2021-04-07 09:02+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -163,23 +163,23 @@ msgstr ""
 "\n"
 "Якщо станція не надсилає метаданих, пісні розпізнано не буде."
 
-#: data/gtk/song_listbox.ui:64
+#: data/gtk/song_listbox.ui:63
 msgid "No songs detected"
 msgstr "Не виявлено жодної пісні"
 
-#: data/gtk/song_listbox.ui:74
+#: data/gtk/song_listbox.ui:73
 msgid "Detected songs will appear here."
 msgstr "Виявлені пісні буде показано тут."
 
-#: data/gtk/song_listbox.ui:83
+#: data/gtk/song_listbox.ui:82
 msgid "_How does this work?"
 msgstr "_Як це працює?"
 
-#: data/gtk/song_listbox.ui:125
+#: data/gtk/song_listbox.ui:124
 msgid "Saved songs are located in your Music folder."
 msgstr "Збережені пісні можна буде знайти у теці «Музика»."
 
-#: data/gtk/song_listbox.ui:138
+#: data/gtk/song_listbox.ui:137
 msgid "_Open"
 msgstr "_Відкрити"
 
@@ -191,34 +191,48 @@ msgstr "Зберегти записану пісню"
 msgid "Station details"
 msgstr "Параметри станції"
 
-#: data/gtk/station_dialog.ui:62
-msgid "Language"
-msgstr "Мова"
+#: data/gtk/station_dialog.ui:71
+#| msgid "Locations"
+msgid "Actions"
+msgstr "Дії"
+
+#: data/gtk/station_dialog.ui:74
+msgid "_Play this station"
+msgstr ""
+"_Відтворити цю станцію"
+
+#: data/gtk/station_dialog.ui:82
+msgid "_Add to library"
+msgstr "Д_одати до бібліотеки"
 
 #: data/gtk/station_dialog.ui:91
-msgid "Tags"
-msgstr "Мітки"
-
-#: data/gtk/station_dialog.ui:117
-msgid "Codec"
-msgstr "Кодек"
-
-#: data/gtk/station_dialog.ui:144
-msgid "Homepage"
-msgstr "Домашня сторінка"
-
-#: data/gtk/station_dialog.ui:173
-msgid "Stream"
-msgstr ""
-"Трансляція"
-
-#: data/gtk/station_dialog.ui:211
 msgid "_Remove from Library"
 msgstr "Ви_лучити з бібліотеки"
 
-#: data/gtk/station_dialog.ui:225
-msgid "_Add to library"
-msgstr "Д_одати до бібліотеки"
+#: data/gtk/station_dialog.ui:102
+#| msgid "Locations"
+msgid "Information"
+msgstr "Відомості"
+
+#: data/gtk/station_dialog.ui:105
+msgid "Language"
+msgstr "Мова"
+
+#: data/gtk/station_dialog.ui:119
+msgid "Tags"
+msgstr "Мітки"
+
+#: data/gtk/station_dialog.ui:133
+msgid "Codec"
+msgstr "Кодек"
+
+#: data/gtk/station_dialog.ui:147
+msgid "Homepage"
+msgstr "Домашня сторінка"
+
+#: data/gtk/station_dialog.ui:161
+msgid "Stream"
+msgstr "Трансляція"
 
 #: data/gtk/streaming_dialog.ui:46
 msgid "Stream to a device"
@@ -301,17 +315,17 @@ msgstr "_Клавіатурні скорочення"
 msgid "_About Shortwave"
 msgstr "П_ро «Shortwave»"
 
-#: src/audio/player.rs:164
+#: src/audio/player.rs:163
 msgid "This station cannot be played because the stream is offline."
 msgstr ""
 "Відтворення цієї станції неможливе, оскільки потік даних від неї не "
 "надходить."
 
-#: src/audio/player.rs:182
+#: src/audio/player.rs:181
 msgid "Station cannot be streamed."
 msgstr "Станцію не можна транслювати."
 
-#: src/audio/player.rs:182
+#: src/audio/player.rs:181
 msgid "URL is not valid."
 msgstr "Некоректна адреса."
 
@@ -319,7 +333,7 @@ msgstr "Некоректна адреса."
 msgid "No longer existing station removed from library."
 msgstr "Запис станції, якої вже не існує, вилучено з бібліотеки."
 
-#: src/database/library.rs:215 src/ui/pages/discover_page.rs:134
+#: src/database/library.rs:215 src/ui/pages/discover_page.rs:140
 #: src/ui/pages/search_page.rs:145
 msgid "Station data could not be received."
 msgstr "Не вдалося отримати дані станції."
@@ -362,7 +376,7 @@ msgstr "На основі radio-browser.info"
 msgid "Welcome to {}"
 msgstr "Вітаємо у {}"
 
-#: src/utils.rs:31
+#: src/utils.rs:28
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} голос"
@@ -370,7 +384,7 @@ msgstr[1] "{} голоси"
 msgstr[2] "{} голосів"
 msgstr[3] "{} голос"
 
-#: src/utils.rs:33
+#: src/utils.rs:30
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} голос"
@@ -443,9 +457,6 @@ msgstr "Gradio;Radio;Stream;Wave;градіо;жрадіо;радіо;потік
 
 #~ msgid "Search"
 #~ msgstr "Пошук"
-
-#~ msgid "Locations"
-#~ msgstr "Місця"
 
 #~ msgid "Languages"
 #~ msgstr "Мови"
