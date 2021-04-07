@@ -113,13 +113,6 @@ mod imp {
     }
 
     impl ObjectImpl for SwApplicationWindow {
-        fn constructed(&self, obj: &Self::Type) {
-            self.parent_constructed(obj);
-            let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/help-overlay.ui");
-            get_widget!(builder, gtk::ShortcutsWindow, help_overlay);
-            obj.set_help_overlay(Some(&help_overlay));
-        }
-
         fn properties() -> &'static [ParamSpec] {
             static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| vec![ParamSpec::enum_("view", "View", "View", SwView::static_type(), SwView::default() as i32, glib::ParamFlags::READWRITE)]);
 
@@ -248,6 +241,12 @@ impl SwApplicationWindow {
     fn setup_gactions(&self, sender: Sender<Action>) {
         let imp = imp::SwApplicationWindow::from_instance(self);
         let app = self.get_application().unwrap();
+
+        // win.show-help-overlay
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/help-overlay.ui");
+        get_widget!(builder, gtk::ShortcutsWindow, help_overlay);
+        self.set_help_overlay(Some(&help_overlay));
+        app.set_accels_for_action("win.show-help-overlay", &["<primary>question"]);
 
         // win.open-radio-browser-info
         action!(self, "open-radio-browser-info", |_, _| {
