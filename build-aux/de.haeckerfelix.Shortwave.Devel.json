@@ -11,47 +11,23 @@
         "nightly"
     ],
     "finish-args" : [
+    	"--share=network",
+    	"--share=ipc",
+    	"--socket=fallback-x11",
+    	"--socket=wayland",
+    	"--device=dri",
+    	"--socket=pulseaudio",
         "--filesystem=xdg-music",
-        "--share=network",
-        "--share=ipc",
-        "--socket=x11",
-        "--socket=fallback-x11",
-        "--socket=wayland",
-        "--socket=pulseaudio",
-        "--device=dri",
-        "--filesystem=xdg-run/dconf",
-        "--filesystem=~/.config/dconf:ro",
-        "--talk-name=ca.desrt.dconf",
-        "--talk-name=org.a11y.Bus",
-        "--env=DCONF_USER_CONFIG_DIR=.config/dconf",
-        "--env=RUST_LOG=shortwave=debug",
+	"--env=RUST_LOG=shortwave=debug",
         "--env=RUST_BACKTRACE=1"
     ],
     "build-options" : {
         "append-path" : "/usr/lib/sdk/rust-stable/bin",
         "build-args" : [
             "--share=network"
-        ],
-        "env" : {
-            "G_MESSAGES_DEBUG" : "none",
-            "RUST_BACKTRACE" : "1",
-            "RUST_LOG" : "shortwave=debug"
-        }
+        ]
     },
     "modules" : [
-        {
-            "name" : "gst-libav",
-            "cleanup" : [
-                "*.la"
-            ],
-            "sources" : [
-                {
-                    "type" : "archive",
-                    "url" : "https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.16.2.tar.xz",
-                    "sha256" : "c724f612700c15a933c7356fbeabb0bb9571fb5538f8b1b54d4d2d94188deef2"
-                }
-            ]
-        },
         {
             "name" : "libadwaita",
             "buildsystem" : "meson",
@@ -59,8 +35,7 @@
                 "-Dintrospection=enabled",
                 "-Dtests=false",
                 "-Dexamples=false",
-                "-Dvapi=false",
-                "-Dglade_catalog=disabled"
+                "-Dvapi=false"
             ],
             "cleanup" : [
                 "/include",
@@ -75,6 +50,17 @@
             ]
         },
         {
+            "name" : "gst-libav",
+            "cleanup" : ["*.la"],
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.16.2.tar.xz",
+                    "sha256" : "c724f612700c15a933c7356fbeabb0bb9571fb5538f8b1b54d4d2d94188deef2"
+                }
+            ]
+        },
+        {
             "name" : "shortwave",
             "buildsystem" : "meson",
             "config-opts" : [
@@ -83,7 +69,8 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://gitlab.gnome.org/World/Shortwave.git"
+                    "url" : "https://gitlab.gnome.org/World/Shortwave.git",
+                    "branch" : "master"
                 }
             ]
         }
