@@ -22,7 +22,7 @@ use glib::Sender;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
-use gtk::{gio, glib};
+use gtk::{gdk, gio, glib};
 use once_cell::unsync::OnceCell;
 
 use crate::api::{FaviconDownloader, SwStation};
@@ -67,9 +67,13 @@ mod imp {
         #[template_child]
         pub homepage_label: TemplateChild<gtk::Label>,
         #[template_child]
+        pub copy_homepage_button: TemplateChild<gtk::Button>,
+        #[template_child]
         pub stream_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub stream_label: TemplateChild<gtk::Label>,
+        #[template_child]
+        pub copy_stream_button: TemplateChild<gtk::Button>,
 
         pub station: OnceCell<SwStation>,
         pub sender: OnceCell<Sender<Action>>,
@@ -165,12 +169,14 @@ impl SwStationDialog {
 
         if let Some(homepage) = metadata.homepage {
             imp.homepage_row.set_visible(true);
-            imp.homepage_label.set_text(&homepage.to_string());
+            let homepage = homepage.to_string().replace("&", "&amp;");
+            imp.homepage_label.set_markup(&format!("<a href=\"{}\">{}</a>", &homepage, &homepage));
         }
 
         if let Some(url_resolved) = metadata.url_resolved {
             imp.stream_row.set_visible(true);
-            imp.stream_label.set_text(&url_resolved.to_string());
+            let url_resolved = url_resolved.to_string().replace("&", "&amp;");
+            imp.stream_label.set_markup(&format!("<a href=\"{}\">{}</a>", &url_resolved, &url_resolved));
         }
     }
 
@@ -202,6 +208,28 @@ impl SwStationDialog {
             send!(imp.sender.get().unwrap(), Action::PlaybackSetStation(Box::new(station)));
             this.hide();
             this.close();
+        ));
+
+        imp.copy_homepage_button.connect_clicked(clone!(@weak self as this => move|_|
+            let imp = imp::SwStationDialog::from_instance(&this);
+            let metadata = imp.station.get().unwrap().clone().metadata();
+
+            if let Some(homepage) = metadata.homepage {
+                let display = gdk::Display::get_default().unwrap();
+                let clipboard = display.get_clipboard();
+                clipboard.set_text(&homepage.to_string());
+            }
+        ));
+
+        imp.copy_stream_button.connect_clicked(clone!(@weak self as this => move|_|
+            let imp = imp::SwStationDialog::from_instance(&this);
+            let metadata = imp.station.get().unwrap().clone().metadata();
+
+            if let Some(url_resolved) = metadata.url_resolved {
+                let display = gdk::Display::get_default().unwrap();
+                let clipboard = display.get_clipboard();
+                clipboard.set_text(&url_resolved.to_string());
+            }
         ));
     }
 }

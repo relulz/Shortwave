@@ -147,11 +147,22 @@
                             <property name="title" translatable="yes">Homepage</property>
                             <property name="visible">False</property>
                             <child>
-                              <object class="GtkLabel" id="homepage_label">
-                                <property name="ellipsize">end</property>
-                                <style>
-                                  <class name="dim-label"/>
-                                </style>
+                              <object class="GtkBox">
+                                <property name="spacing">6</property>
+                                <child>
+                                  <object class="GtkLabel" id="homepage_label">
+                                    <property name="ellipsize">end</property>
+                                    <style>
+                                      <class name="dim-label"/>
+                                    </style>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="copy_homepage_button">
+                                    <property name="icon_name">edit-copy-symbolic</property>
+                                    <property name="valign">center</property>
+                                  </object>">
+                                </child>
                               </object>
                             </child>
                           </object>
@@ -161,11 +172,22 @@
                             <property name="title" translatable="yes" comments="This is a noun/label for the station stream url">Stream</property>
                             <property name="visible">False</property>
                             <child>
-                              <object class="GtkLabel" id="stream_label">
-                                <property name="ellipsize">end</property>
-                                <style>
-                                  <class name="dim-label"/>
-                                </style>
+                              <object class="GtkBox">
+                                <property name="spacing">6</property>
+                                <child>
+                                  <object class="GtkLabel" id="stream_label">
+                                    <property name="ellipsize">end</property>
+                                    <style>
+                                      <class name="dim-label"/>
+                                    </style>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="copy_stream_button">
+                                    <property name="icon_name">edit-copy-symbolic</property>
+                                    <property name="valign">center</property>
+                                  </object>">
+                                </child>
                               </object>
                             </child>
                           </object>
@@ -182,3 +204,4 @@
     </child>
   </template>
 </interface>
+
