@@ -2,8 +2,6 @@
 <interface>
   <template class="SwApplicationWindow" parent="AdwApplicationWindow">
     <property name="width_request">350</property>
-    <property name="default_width">900</property>
-    <property name="default_height">700</property>
     <child>
       <object class="AdwSqueezer" id="window_squeezer">
         <property name="orientation">vertical</property>

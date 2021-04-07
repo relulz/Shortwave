@@ -379,7 +379,7 @@ impl SwApplicationWindow {
             self.unmaximize();
             self.set_default_size(450, 105);
         } else {
-            self.set_default_size(800, 650);
+            self.set_default_size(950, 650);
         }
     }
 
