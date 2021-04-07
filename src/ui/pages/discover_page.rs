@@ -35,7 +35,7 @@ mod imp {
     use glib::subclass;
 
     #[derive(Debug, Default, CompositeTemplate)]
-    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/discover-page.ui")]
+    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/discover_page.ui")]
     pub struct SwDiscoverPage {
         #[template_child]
         pub carousel_box: TemplateChild<gtk::Box>,

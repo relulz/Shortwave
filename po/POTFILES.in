@@ -1,19 +1,19 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 
-data/gtk/discover-page.ui
-data/gtk/library-page.ui
-data/gtk/mini-controller.ui
+data/gtk/discover_page.ui
+data/gtk/library_page.ui
+data/gtk/mini_controller.ui
 data/gtk/notification.ui
 data/gtk/player.ui
-data/gtk/settings-window.ui
-data/gtk/help-overlay.ui
-data/gtk/sidebar-controller.ui
-data/gtk/song-listbox.ui
-data/gtk/song-row.ui
-data/gtk/station-dialog.ui
-data/gtk/streaming-dialog.ui
-data/gtk/toolbar-controller.ui
+data/gtk/settings_window.ui
+data/gtk/help_overlay.ui
+data/gtk/sidebar_controller.ui
+data/gtk/song_listbox.ui
+data/gtk/song_row.ui
+data/gtk/station_dialog.ui
+data/gtk/streaming_dialog.ui
+data/gtk/toolbar_controller.ui
 data/gtk/window.ui
 
 src/audio/player.rs

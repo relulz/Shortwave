@@ -33,7 +33,7 @@ pub struct StationFavicon {
 
 impl StationFavicon {
     pub fn new(size: FaviconSize) -> Self {
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/station-favicon.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/station_favicon.ui");
         get_widget!(builder, gtk::Box, station_favicon);
         get_widget!(builder, gtk::Image, image);
         get_widget!(builder, gtk::Stack, stack);

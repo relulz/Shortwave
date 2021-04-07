@@ -53,7 +53,7 @@ pub struct SidebarController {
 
 impl SidebarController {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/sidebar-controller.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/sidebar_controller.ui");
         get_widget!(builder, gtk::Box, sidebar_controller);
         get_widget!(builder, gtk::Label, title_label);
         get_widget!(builder, gtk::Label, subtitle_label);

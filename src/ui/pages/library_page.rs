@@ -34,7 +34,7 @@ mod imp {
     use glib::subclass;
 
     #[derive(Debug, CompositeTemplate)]
-    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/library-page.ui")]
+    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/library_page.ui")]
     pub struct SwLibraryPage {
         #[template_child]
         pub status_page: TemplateChild<adw::StatusPage>,

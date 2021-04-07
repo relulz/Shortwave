@@ -38,7 +38,7 @@ mod imp {
     use glib::subclass;
 
     #[derive(Debug, CompositeTemplate)]
-    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/search-page.ui")]
+    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/search_page.ui")]
     pub struct SwSearchPage {
         #[template_child]
         pub stack: TemplateChild<gtk::Stack>,

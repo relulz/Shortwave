@@ -244,7 +244,7 @@ impl SwApplicationWindow {
         let app = self.get_application().unwrap();
 
         // win.show-help-overlay
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/help-overlay.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/help_overlay.ui");
         get_widget!(builder, gtk::ShortcutsWindow, help_overlay);
         self.set_help_overlay(Some(&help_overlay));
         app.set_accels_for_action("win.show-help-overlay", &["<primary>question"]);

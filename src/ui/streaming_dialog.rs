@@ -37,7 +37,7 @@ pub struct StreamingDialog {
 
 impl StreamingDialog {
     pub fn new(sender: Sender<Action>) -> Self {
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/streaming-dialog.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/streaming_dialog.ui");
         get_widget!(builder, gtk::Dialog, streaming_dialog);
 
         // Setup Google Cast discoverer
@@ -80,7 +80,7 @@ impl StreamingDialog {
                         stream_stack.set_visible_child_name("results");
                         connect_button.set_sensitive(true);
 
-                        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/streaming-dialog.ui");
+                        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/streaming_dialog.ui");
                         get_widget!(builder, gtk::ListBoxRow, device_row);
                         get_widget!(builder, gtk::Label, name_label);
                         get_widget!(builder, gtk::Label, ip_label);

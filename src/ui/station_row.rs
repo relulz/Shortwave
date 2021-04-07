@@ -33,7 +33,7 @@ mod imp {
     use glib::subclass;
 
     #[derive(Debug, Default, CompositeTemplate)]
-    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station-row.ui")]
+    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_row.ui")]
     pub struct SwStationRow {
         #[template_child]
         pub station_label: TemplateChild<gtk::Label>,
