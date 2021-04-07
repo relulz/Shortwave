@@ -23,7 +23,7 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
 - **Is Shortwave compatible with the Librem 5?**
 
-    Yes! We use the awesome [libhandy](https://gitlab.gnome.org/GNOME/libhandy/) library to make the interface adaptive.
+    Yes! We use the awesome [libadwaita](https://gitlab.gnome.org/GNOME/libadwaita) library to make the interface adaptive.
 
 - **Which database does Shortwave use?**
 
@@ -75,11 +75,11 @@ You can get Builder from [here](https://wiki.gnome.org/Apps/Builder/Downloads), 
 
 You need following dependencies to build Shortwave:
 - Rust 1.39 or later
-- GTK 3.24 or later
+- GTK 4
 - Gstreamer 1.16 or later
 - Sqlite3
 - OpenSSL
-- [libhandy](https://source.puri.sm/Librem5/libhandy)
+- [libadwaita](https://gitlab.gnome.org/GNOME/libadwaita)
 - [Meson Buildsystem](https://mesonbuild.com/)
 
 If you need help to build Shortwave, please don't hesitate to ask [here](https://matrix.to/#/#shortwave:matrix.org)!
