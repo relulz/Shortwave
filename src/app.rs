@@ -23,7 +23,6 @@ use gtk::subclass::prelude::*;
 use gtk::{gdk, gio, glib};
 
 use std::cell::RefCell;
-use std::env;
 use std::rc::Rc;
 use std::str::FromStr;
 
@@ -180,8 +179,7 @@ impl SwApplication {
         let app = glib::Object::new::<SwApplication>(&[("application-id", &Some(config::APP_ID)), ("flags", &gio::ApplicationFlags::empty())]).unwrap();
 
         // Start running gtk::Application
-        let args: Vec<String> = env::args().collect();
-        ApplicationExtManual::run(&app, &args);
+        app.run();
     }
 
     fn create_window(&self) -> SwApplicationWindow {

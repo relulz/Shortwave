@@ -86,6 +86,11 @@ mod imp {
         type Type = super::SwStationDialog;
 
         fn class_init(klass: &mut Self::Class) {
+            klass.install_action("dialog.close", None, |this, _, _| {
+                this.hide();
+                this.close();
+            });
+
             Self::bind_template(klass);
         }
 
