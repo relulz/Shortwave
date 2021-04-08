@@ -32,7 +32,7 @@ use crate::app::Action;
 use crate::audio::backend::*;
 #[cfg(unix)]
 use crate::audio::controller::MprisController;
-use crate::audio::controller::{Controller, GCastController, MiniController, SidebarController, ToolbarController};
+use crate::audio::controller::{Controller, GCastController, InhibitController, MiniController, SidebarController, ToolbarController};
 use crate::audio::{GCastDevice, Song};
 use crate::i18n::*;
 use crate::path;
@@ -119,6 +119,10 @@ impl Player {
         // Google Cast Controller
         let gcast_controller = GCastController::new(sender.clone());
         controller.push(Box::new(gcast_controller.clone()));
+
+        // Inhibit Controller
+        let inhibit_controller = InhibitController::new();
+        controller.push(Box::new(inhibit_controller));
 
         let controller: Vec<Box<dyn Controller>> = controller;
 

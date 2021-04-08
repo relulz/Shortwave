@@ -40,6 +40,7 @@ sources = files(
   'audio/backend/mod.rs',
   'audio/backend/song_backend.rs',
   'audio/controller/gcast_controller.rs',
+  'audio/controller/inhibit_controller.rs',
   'audio/controller/sidebar_controller.rs',
   'audio/controller/toolbar_controller.rs',
   'audio/controller/mod.rs',
