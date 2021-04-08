@@ -53,6 +53,31 @@
   </kudos>
 
   <releases>
+    <release version="2.0.0" date="2021-03-10">
+      <description>
+        <p>
+          Version 2.0.0 is a stable release, with the following major
+          improvements since 1.1.0:
+        </p>
+        <ul>
+          <li>Get notified about new songs via desktop notifications.</li>
+          <li>New mini player window mode. Control important features with a super compact window widget.</li>
+          <li>Redesigned station information dialog window. Added ability to copy the stream url.</li>
+          <li>Improved keyboard navigation of the user interface.</li>
+          <li>Don't switch to sleep/hibernate mode during audio playback.</li>
+        </ul>
+        <p>
+          Besides these improvements, this version contains many under the hood
+          changes. The complete user interface has been updated from GTK3 to
+          GTK4. Many app components have been modernised or completely
+          rewritten. As a result, many crashes or other bugs have been fixed.
+        </p>
+        <p>
+          This version also contains updated translations for 27 different
+          languages.
+        </p>
+      </description>
+    </release>
     <release version="1.1.1" date="2020-06-07">
       <description>
         <p>This version fixes a bug that caused some users not to be able to record songs.</p>
