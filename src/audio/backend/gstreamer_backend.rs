@@ -402,6 +402,14 @@ impl GstreamerBackend {
             let pipeline_time = self.pipeline.get_clock().expect("Could not get pipeline clock").get_time().nseconds().unwrap() as i64 / 1_000_000_000;
             let result = pipeline_time + offset + 1;
 
+            // Workaround to avoid crash as described in issue #540
+            // https://gitlab.gnome.org/World/Shortwave/-/issues/540
+            // TODO: Find out actual root cause for this nonsense
+            if result > 86_400 || result < 0 {
+                error!("Unable to determine correct recording value: {} seconds", result);
+                return 0;
+            }
+
             return result;
         }
 
