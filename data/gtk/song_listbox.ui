@@ -100,7 +100,7 @@ If the station does not send any metadata, no songs can be recognized.</property
                 <child>
                   <object class="GtkListBox" id="listbox">
                     <property name="selection_mode">none</property>
-                    <property name="activate_on_single_click">False</property>
+                    <property name="activate_on_single_click">True</property>
                     <style>
                       <class name="content"/>
                     </style>

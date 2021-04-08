@@ -20,7 +20,7 @@ use gtk::prelude::*;
 
 use crate::app::Action;
 use crate::audio::Song;
-use crate::ui::song_row::SongRow;
+use crate::ui::song_row::SwSongRow;
 
 pub struct SongListBox {
     pub widget: gtk::Box,
@@ -58,8 +58,8 @@ impl SongListBox {
     }
 
     pub fn add_song(&mut self, song: Song) {
-        let row = SongRow::new(self.sender.clone(), song);
-        self.listbox.insert(&row.widget, 0);
+        let row = SwSongRow::new(self.sender.clone(), song);
+        self.listbox.insert(&row, 0);
 
         self.update_stack();
     }

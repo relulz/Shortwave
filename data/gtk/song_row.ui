@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <object class="GtkBox" id="song_row">
+  <template class="SwSongRow" parent="AdwActionRow">
+    <property name="activatable_widget">save_button</property>
     <child>
       <object class="GtkStack" id="button_stack">
         <property name="valign">center</property>
@@ -31,38 +32,5 @@
         </child>
       </object>
     </child>
-    <child>
-      <object class="GtkBox">
-        <property name="valign">center</property>
-        <property name="orientation">vertical</property>
-        <property name="margin_start">12</property>
-        <property name="margin_end">12</property>
-        <child>
-          <object class="GtkLabel" id="title_label">
-            <property name="label">title</property>
-            <property name="selectable">True</property>
-            <property name="ellipsize">end</property>
-            <property name="single_line_mode">True</property>
-            <property name="xalign">0</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel" id="duration_label">
-            <property name="label">duration</property>
-            <property name="justify">center</property>
-            <property name="selectable">True</property>
-            <property name="ellipsize">end</property>
-            <property name="single_line_mode">True</property>
-            <property name="xalign">0</property>
-            <style>
-              <class name="dim-label"/>
-            </style>
-          </object>
-        </child>
-      </object>
-    </child>
-    <style>
-      <class name="header"/>
-    </style>
-  </object>
+  </template>
 </interface>
