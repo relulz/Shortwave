@@ -20,6 +20,7 @@ use indexmap::IndexMap;
 
 use std::fs;
 
+use crate::api::Error;
 use crate::app::Action;
 use crate::audio::Song;
 use crate::path;
@@ -77,7 +78,7 @@ impl SongBackend {
         self.listbox.remove_last_row();
     }
 
-    pub fn save_song(&self, song: Song) {
+    pub fn save_song(&self, song: Song) -> Result<(), Error> {
         debug!("Save song \"{}\"", &song.title);
 
         let mut dest_path = glib::get_user_special_dir(glib::UserDirectory::Music);
@@ -89,7 +90,8 @@ impl SongBackend {
             dest_path.push(song.path.file_name().unwrap());
         }
 
-        fs::copy(song.path, dest_path).expect("Could not copy song to music folder.");
+        fs::copy(song.path, dest_path)?;
+        Ok(())
     }
 
     pub fn delete_songs(&self) {

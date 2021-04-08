@@ -231,7 +231,10 @@ impl Player {
     }
 
     pub fn save_song(&self, song: Song) {
-        self.backend.lock().unwrap().song.save_song(song);
+        if let Err(err) = self.backend.lock().unwrap().song.save_song(song) {
+            let notification = Notification::new_error("Cannot save song", &err.to_string());
+            send!(self.sender, Action::ViewShowNotification(notification))
+        }
     }
 
     pub fn connect_to_gcast_device(&self, device: GCastDevice) {
