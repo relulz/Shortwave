@@ -28,17 +28,14 @@
   </description>
 
   <screenshots>
-    <screenshot type="default" height="1200" width="675">
+    <screenshot type="default" height="1002" width="702">
       <image>https://gitlab.gnome.org/World/Shortwave/raw/master/data/screenshots/1.png</image>
     </screenshot>
-    <screenshot height="1200" width="675">
+    <screenshot height="1002" width="702">
       <image>https://gitlab.gnome.org/World/Shortwave/raw/master/data/screenshots/2.png</image>
     </screenshot>
-    <screenshot height="1200" width="675">
+    <screenshot height="1002" width="702">
       <image>https://gitlab.gnome.org/World/Shortwave/raw/master/data/screenshots/3.png</image>
-    </screenshot>
-    <screenshot height="1200" width="675">
-      <image>https://gitlab.gnome.org/World/Shortwave/raw/master/data/screenshots/4.png</image>
     </screenshot>
   </screenshots>
 
