@@ -61,7 +61,7 @@
           <li>New mini player window mode. Control important features with a super compact window widget.</li>
           <li>Redesigned station information dialog window. Added ability to copy the stream url.</li>
           <li>Improved keyboard navigation of the user interface.</li>
-          <li>Don't switch to sleep/hibernate mode during audio playback.</li>
+          <li>Inhibit sleep/hibernate mode during audio playback.</li>
         </ul>
         <p>
           Besides these improvements, this version contains many under the hood
