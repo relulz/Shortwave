@@ -1,11 +1,15 @@
 # Shortwave
 Find and listen to internet radio stations
 
-![Logo](https://gitlab.gnome.org/World/Shortwave/raw/master/data/icons/hicolor/scalable/apps/de.haeckerfelix.Shortwave.svg)
+<p align="center">
+  <img src="data/screenshots/1.png"/>
+  <img src="data/screenshots/4.png"/>
+</p>
+
 
 ## Getting in Touch
 If you have any questions regarding the use or development of Shortwave,
-want to discuss design or simply hang out, please join us on our [#shortwave:matrix.org](https://matrix.to/#/#shortwave:matrix.org) channel.
+want to discuss design or simply hang out, please join us on our [#shortwave:gnome.org](https://matrix.to/#/#shortwave:matrix.org) channel.
 
 ## FAQ
 - **Why its called 'Shortwave'?**
@@ -21,9 +25,12 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
     The edit feature is disabled because of vandalism. I cannot change this. [More information here](http://www.radio-browser.info/gui/#/) and [here](https://github.com/segler-alex/radiobrowser-api/issues/39)
 
-- **Is Shortwave compatible with the Librem 5?**
+- **Is Shortwave compatible with the Librem 5 / PinePhone?**
 
-    Yes! We use the awesome [libadwaita](https://gitlab.gnome.org/GNOME/libadwaita) library to make the interface adaptive.
+    Yes! We use the awesome [libadwaita](https://gitlab.gnome.org/GNOME/libadwaita) library to make the interface adaptive. The easiest way to get it on your phone is using the Flatpak package. [Flathub](https://flathub.org/apps/details/de.haeckerfelix.Shortwave) provides aarch64 packages.
+
+![Adaptive Screenshot 1](data/screenshots/5.png)
+![Adaptive Screenshot 2](data/screenshots/6.png)
 
 - **Which database does Shortwave use?**
 
@@ -39,6 +46,7 @@ information on how to join a language team, or even to create one, please see
 [GNOME Translation Project wiki page](https://wiki.gnome.org/TranslationProject).
 
 ## Flatpak builds
+The recommended way of installing Shortwave is using the Flatpak package. If you don't have Flatpak installed yet, you can get it from [here](https://flatpak.org/setup/).
 
 #### Stable builds
 You can install stable builds of Shortwave from Flathub by using this command:
@@ -47,8 +55,6 @@ You can install stable builds of Shortwave from Flathub by using this command:
 
 <a href="https://flathub.org/apps/details/de.haeckerfelix.Shortwave"><img src="https://flathub.org/assets/badges/flathub-badge-en.png" width="200"/></a>
 
-If you haven't installed Flatpak yet, you can download it from [here](https://flatpak.org/setup/).
-
 
 #### Nightly builds
 You can install nightly builds of Shortwave by using this command:
@@ -56,8 +62,6 @@ You can install nightly builds of Shortwave by using this command:
 `flatpak install https://haeckerfelix.de/~repo/shortwave.flatpakref`
 
 More information are [here available](https://haeckerfelix.de/~repo/shortwave)! The repository is automatically updated every day. You can update to the latest nightly by running `flatpak update`!
-
-If you haven't installed Flatpak yet, you can download it from [here](https://flatpak.org/setup/).
 
 ## Building
 ### Building with Flatpak + GNOME Builder

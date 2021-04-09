@@ -1,15 +1,12 @@
 {
-    "app-id" : "de.haeckerfelix.Shortwave.Devel",
+    "app-id" : "de.haeckerfelix.Shortwave",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "master",
+    "runtime-version" : "40",
     "sdk" : "org.gnome.Sdk",
     "sdk-extensions" : [
         "org.freedesktop.Sdk.Extension.rust-stable"
     ],
     "command" : "shortwave",
-    "tags" : [
-        "nightly"
-    ],
     "finish-args" : [
     	"--share=network",
     	"--share=ipc",
@@ -17,9 +14,7 @@
     	"--socket=wayland",
     	"--device=dri",
     	"--socket=pulseaudio",
-        "--filesystem=xdg-music",
-	"--env=RUST_LOG=shortwave=debug",
-        "--env=RUST_BACKTRACE=1"
+        "--filesystem=xdg-music"
     ],
     "build-options" : {
         "append-path" : "/usr/lib/sdk/rust-stable/bin",
@@ -63,9 +58,6 @@
         {
             "name" : "shortwave",
             "buildsystem" : "meson",
-            "config-opts" : [
-                "-Dprofile=development"
-            ],
             "sources" : [
                 {
                     "type" : "git",
