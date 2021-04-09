@@ -376,11 +376,30 @@ impl SwApplicationWindow {
     }
 
     pub fn enable_mini_player(&self, enable: bool) {
+        debug!("Enable mini player: {:?}", enable);
+
+        // GTK sometimes refuses to set the proper size, so we have to apply a workaround here...
+        // For some reasons it works reliable this way.
+        let duration = std::time::Duration::from_millis(100);
+        self.set_default_size(0, 0);
+
         if enable {
-            self.unmaximize();
-            self.set_default_size(450, 105);
+            glib::timeout_add_local(
+                duration,
+                clone!(@weak self as this => @default-return glib::Continue(false), move||{
+                    this.unmaximize();
+                    this.set_default_size(450, 105);
+                    glib::Continue(false)
+                }),
+            );
         } else {
-            self.set_default_size(950, 650);
+            glib::timeout_add_local(
+                duration,
+                clone!(@weak self as this => @default-return glib::Continue(false), move||{
+                    this.set_default_size(950, 650);
+                    glib::Continue(false)
+                }),
+            );
         }
     }
 
