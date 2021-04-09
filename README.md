@@ -78,7 +78,7 @@ You can get Builder from [here](https://wiki.gnome.org/Apps/Builder/Downloads), 
 5. `sudo ninja -C build install`
 
 You need following dependencies to build Shortwave:
-- Rust 1.39 or later
+- Rust 1.48 or later
 - GTK 4
 - Gstreamer 1.16 or later
 - Sqlite3
