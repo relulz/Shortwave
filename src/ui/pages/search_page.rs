@@ -111,6 +111,11 @@ impl SwSearchPage {
             let request = StationRequest::search_for_name(&entry.get_text().to_string(), 250);
             this.show_station_request(request);
         }));
+
+        self.connect_map(|this| {
+            let imp = imp::SwSearchPage::from_instance(&this);
+            imp.search_entry.grab_focus();
+        });
     }
 
     pub fn show_station_request(&self, request: StationRequest) {
