@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
 "POT-Creation-Date: 2020-06-14 11:38+0000\n"
-"PO-Revision-Date: 2021-04-08 21:45+0200\n"
+"PO-Revision-Date: 2021-04-15 12:08+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: data/gtk/station_dialog.ui:10
 msgid "Station details"
@@ -198,6 +198,9 @@ msgid ""
 "\n"
 "If the station does not send any metadata, no songs can be recognized."
 msgstr ""
+"Za skladbe poteka samodejno prepoznavanje prek metapodatkov pretoka\n"
+"\n"
+"Če postaja ne pošilja metapodatkov, skladb ni mogoče prepoznati."
 
 #: data/gtk/song_listbox.ui:93
 msgid "No songs detected"
@@ -205,7 +208,7 @@ msgstr "Ni zaznanih skladb"
 
 #: data/gtk/song_listbox.ui:110
 msgid "Detected songs will appear here."
-msgstr ""
+msgstr "Zaznane pesmi se bodo pojavile na tem mestu."
 
 #: data/gtk/song_listbox.ui:131
 msgid "How does this work?"
@@ -225,11 +228,11 @@ msgstr "Povezano z"
 
 #: data/gtk/window.ui:213
 msgid "Library"
-msgstr "Knjižnica"
+msgstr "Zbirka"
 
 #: src/audio/player.rs:157
 msgid "This station cannot be played because the stream is offline."
-msgstr ""
+msgstr "Postaje ni mogoče predvajati, ker je pretok ni na voljo."
 
 #: src/audio/player.rs:175
 msgid "Station cannot be streamed."
@@ -246,7 +249,7 @@ msgstr "Dobrodošli v {}"
 
 #: src/database/library.rs:145
 msgid "No longer existing station removed from library."
-msgstr ""
+msgstr "Neobstoječa postaja je odstranjena iz zbirke."
 
 #: src/database/library.rs:149 src/discover/pages/discover.rs:127
 #: src/discover/pages/search.rs:95
@@ -316,6 +319,8 @@ msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 25,000 stations."
 msgstr ""
+"Program Shortwave je internetni radijski predvajalnik, ki omogoča dostop do "
+"podatkovne zbirke več kot 25 000 postaj."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid "Features:"
@@ -323,21 +328,22 @@ msgstr "Zmožnosti:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
 msgid "Create your own library where you can add your favorite stations"
-msgstr ""
+msgstr "Ustvarite svojo zbirko, kamor lahko dodate vse priljubljene postaje"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Easily search and discover new radio stations"
-msgstr ""
+msgstr "Enostavno iskanje in odkrivanje novih radijskih postaj"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
 msgid ""
 "Automatic recognition of songs, with the possibility to save them "
 "individually"
-msgstr ""
+msgstr "Samodejno prepoznavanje skladb z možnostjo posamičnega shranjevanja"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr ""
+"Odzivno prilagajanje programa je skladno z velikimi in majhnimi zasloni"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
 msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
@@ -345,7 +351,7 @@ msgstr "Predvajanje glasbe na podprtih napravah (na primer Google Chromecast)"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
 msgid "Seamless integration into the GNOME desktop environment"
-msgstr ""
+msgstr "Popolna povezava programa z namiznim okoljem GNOME"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
