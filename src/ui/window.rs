@@ -114,20 +114,29 @@ mod imp {
 
     impl ObjectImpl for SwApplicationWindow {
         fn properties() -> &'static [ParamSpec] {
-            static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| vec![ParamSpec::enum_("view", "View", "View", SwView::static_type(), SwView::default() as i32, glib::ParamFlags::READWRITE)]);
+            static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| {
+                vec![ParamSpec::new_enum(
+                    "view",
+                    "View",
+                    "View",
+                    SwView::static_type(),
+                    SwView::default() as i32,
+                    glib::ParamFlags::READWRITE,
+                )]
+            });
 
             PROPERTIES.as_ref()
         }
 
         fn get_property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
-            match pspec.get_name() {
+            match pspec.name() {
                 "view" => self.view.borrow().to_value(),
                 _ => unimplemented!(),
             }
         }
 
         fn set_property(&self, obj: &Self::Type, _id: usize, value: &glib::Value, pspec: &ParamSpec) {
-            match pspec.get_name() {
+            match pspec.name() {
                 "view" => {
                     let view = value.get().unwrap();
                     *self.view.borrow_mut() = view.unwrap();
@@ -191,7 +200,7 @@ impl SwApplicationWindow {
 
         // Add devel style class for development or beta builds
         if config::PROFILE == "development" || config::PROFILE == "beta" {
-            let ctx = self.get_style_context();
+            let ctx = self.style_context();
             ctx.add_class("devel");
         }
 
@@ -220,7 +229,7 @@ impl SwApplicationWindow {
         // search_button
         imp.search_button.connect_toggled(clone!(@strong self as this => move |search_button| {
             let imp = imp::SwApplicationWindow::from_instance(&this);
-            if search_button.get_active(){
+            if search_button.is_active(){
                 this.set_view(SwView::Search);
             }else if *imp.view.borrow() != SwView::Player {
                 this.set_view(SwView::Discover);
@@ -230,8 +239,8 @@ impl SwApplicationWindow {
         // window gets closed
         self.connect_close_request(move |window| {
             debug!("Saving window geometry.");
-            let width = window.get_default_size().0;
-            let height = window.get_default_size().1;
+            let width = window.default_size().0;
+            let height = window.default_size().1;
 
             settings_manager::set_integer(Key::WindowWidth, width);
             settings_manager::set_integer(Key::WindowHeight, height);
@@ -241,7 +250,7 @@ impl SwApplicationWindow {
 
     fn setup_gactions(&self, sender: Sender<Action>) {
         let imp = imp::SwApplicationWindow::from_instance(self);
-        let app = self.get_application().unwrap();
+        let app = self.application().unwrap();
 
         // win.show-help-overlay
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/help_overlay.ui");
@@ -419,10 +428,10 @@ impl SwApplicationWindow {
     fn update_visible_view(&self) {
         let imp = imp::SwApplicationWindow::from_instance(self);
 
-        let view = if imp.window_flap.get_folded() && imp.window_flap.get_reveal_flap() {
+        let view = if imp.window_flap.is_folded() && imp.window_flap.reveals_flap() {
             SwView::Player
         } else {
-            let leaflet_child = imp.window_leaflet.get_visible_child().unwrap();
+            let leaflet_child = imp.window_leaflet.visible_child().unwrap();
             if leaflet_child == imp.library_page.get() {
                 SwView::Library
             } else if leaflet_child == imp.discover_page.get() {
@@ -444,9 +453,9 @@ impl SwApplicationWindow {
         debug!("Set view to {:?}", view);
 
         // Not enough place to display player sidebar and content side by side (eg. mobile phones)
-        let slim_mode = imp.window_flap.get_folded();
+        let slim_mode = imp.window_flap.is_folded();
         // Wether the player widgets (sidebar / bottom toolbar) should get display or not.
-        let player_activated = !imp.window_flap.get_locked();
+        let player_activated = !imp.window_flap.is_locked();
 
         if player_activated {
             if slim_mode && view == SwView::Player {

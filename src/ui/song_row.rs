@@ -111,7 +111,7 @@ impl SwSongRow {
             this.set_activatable_widget(Some(&imp.open_button.get()));
 
             // Dim row
-            let ctx = this.get_style_context();
+            let ctx = this.style_context();
             ctx.add_class("dim-label");
         }));
 

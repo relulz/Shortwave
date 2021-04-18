@@ -90,7 +90,7 @@ impl GstreamerBackend {
         );
         let pipeline = gstreamer::parse_launch(&pipeline_launch).expect("Could not create gstreamer pipeline");
         let pipeline = pipeline.downcast::<gstreamer::Pipeline>().expect("Couldn't downcast pipeline");
-        pipeline.set_property_message_forward(true);
+        pipeline.set_message_forward(true);
 
         // The recorderbin gets added / removed dynamically to the pipeline
         let recorderbin = Arc::new(Mutex::new(None));
@@ -182,9 +182,9 @@ impl GstreamerBackend {
                 return; // We are already linked. Ignoring.
             }
 
-            let new_pad_caps = src_pad.get_current_caps().expect("Failed to get caps of new pad.");
+            let new_pad_caps = src_pad.current_caps().expect("Failed to get caps of new pad.");
             let new_pad_struct = new_pad_caps.get_structure(0).expect("Failed to get first structure of caps.");
-            let new_pad_type = new_pad_struct.get_name();
+            let new_pad_type = new_pad_struct.name();
 
             if new_pad_type.starts_with("audio/x-raw") {
                 // check if new_pad is audio
@@ -193,7 +193,7 @@ impl GstreamerBackend {
         }));
 
         // listen for new pipeline / bus messages
-        let bus = self.pipeline.get_bus().expect("Unable to get pipeline bus");
+        let bus = self.pipeline.bus().expect("Unable to get pipeline bus");
         bus.add_watch_local(
             clone!(@weak self.pipeline as pipeline, @strong self.sender as gst_sender, @strong self.buffering_state as buffering_state, @weak self.current_title as current_title => @default-panic, move |_, message|{
                 Self::parse_bus_message(pipeline, &message, gst_sender.clone(), &buffering_state, current_title);
@@ -344,7 +344,7 @@ impl GstreamerBackend {
 
         // Get the source pad of the tee that is connected to the recorderbin
         let recorderbin_sinkpad = recorderbin.get_static_pad("sink").expect("Failed to get sink pad from recorderbin");
-        let tee_srcpad = match recorderbin_sinkpad.get_peer() {
+        let tee_srcpad = match recorderbin_sinkpad.peer() {
             Some(peer) => peer,
             None => return,
         };
@@ -361,7 +361,7 @@ impl GstreamerBackend {
             clone!(@weak self.pipeline as pipeline => @default-panic, move |tee_srcpad, _| {
                 // Get the parent of the tee source pad, i.e. the tee itself
                 let tee = tee_srcpad
-                    .get_parent()
+                    .parent()
                     .and_then(|parent| parent.downcast::<Element>().ok())
                     .expect("Failed to get tee source pad parent");
 
@@ -397,9 +397,9 @@ impl GstreamerBackend {
         let recorderbin: &Option<Bin> = &*self.recorderbin.lock().unwrap();
         if let Some(recorderbin) = recorderbin {
             let queue_srcpad = recorderbin.get_by_name("queue").unwrap().get_static_pad("src").unwrap();
-            let offset = queue_srcpad.get_offset() / 1_000_000_000;
+            let offset = queue_srcpad.offset() / 1_000_000_000;
 
-            let pipeline_time = self.pipeline.get_clock().expect("Could not get pipeline clock").get_time().nseconds().unwrap() as i64 / 1_000_000_000;
+            let pipeline_time = self.pipeline.clock().expect("Could not get pipeline clock").time().nseconds().unwrap() as i64 / 1_000_000_000;
             let result = pipeline_time + offset + 1;
 
             // Workaround to avoid crash as described in issue #540
@@ -418,8 +418,8 @@ impl GstreamerBackend {
     }
 
     fn calculate_pipeline_offset(pipeline: &Pipeline) -> i64 {
-        let clock_time = pipeline.get_clock().expect("Could not get pipeline clock").get_time().nseconds().unwrap() as i64;
-        let base_time = pipeline.get_base_time().nseconds().expect("Could not get pipeline base time") as i64;
+        let clock_time = pipeline.clock().expect("Could not get pipeline clock").time().nseconds().unwrap() as i64;
+        let base_time = pipeline.base_time().nseconds().expect("Could not get pipeline base time") as i64;
         -(clock_time - base_time)
     }
 
@@ -442,7 +442,7 @@ impl GstreamerBackend {
     fn parse_bus_message(pipeline: Pipeline, message: &gstreamer::Message, sender: Sender<GstreamerMessage>, buffering_state: &Arc<Mutex<BufferingState>>, current_title: Arc<Mutex<String>>) {
         match message.view() {
             MessageView::Tag(tag) => {
-                if let Some(t) = tag.get_tags().get::<gstreamer::tags::Title>() {
+                if let Some(t) = tag.tags().get::<gstreamer::tags::Title>() {
                     let new_title = t.get().unwrap().to_string();
 
                     // only send message if song title really have changed.
@@ -457,8 +457,8 @@ impl GstreamerBackend {
                 // Only report the state change once the pipeline itself changed a state,
                 // not whenever any of the internal elements does that.
                 // https://gitlab.gnome.org/World/Shortwave/-/issues/528
-                if message.get_src().as_ref() == Some(pipeline.upcast_ref::<gstreamer::Object>()) {
-                    let playback_state = match sc.get_current() {
+                if message.src().as_ref() == Some(pipeline.upcast_ref::<gstreamer::Object>()) {
+                    let playback_state = match sc.current() {
                         gstreamer::State::Playing => PlaybackState::Playing,
                         gstreamer::State::Paused => PlaybackState::Playing,
                         gstreamer::State::Ready => PlaybackState::Loading,
@@ -469,7 +469,7 @@ impl GstreamerBackend {
                 }
             }
             MessageView::Buffering(buffering) => {
-                let percent = buffering.get_percent();
+                let percent = buffering.percent();
                 debug!("Buffering ({}%)", percent);
 
                 // Wait until buffering is complete before start/resume playing
@@ -512,12 +512,12 @@ impl GstreamerBackend {
             }
             MessageView::Element(element) => {
                 // Catch the end-of-stream messages from the filesink
-                let structure = element.get_structure().unwrap();
-                if structure.get_name() == "GstBinForwarded" {
+                let structure = element.structure().unwrap();
+                if structure.name() == "GstBinForwarded" {
                     let message: gstreamer::message::Message = structure.get("message").unwrap().unwrap();
                     if let MessageView::Eos(_) = &message.view() {
                         // Get recorderbin from message
-                        let recorderbin = match message.get_src().and_then(|src| src.downcast::<Bin>().ok()) {
+                        let recorderbin = match message.src().and_then(|src| src.downcast::<Bin>().ok()) {
                             Some(src) => src,
                             None => return,
                         };
@@ -531,8 +531,8 @@ impl GstreamerBackend {
                 }
             }
             MessageView::Error(err) => {
-                let msg = err.get_error().to_string();
-                if let Some(debug) = err.get_debug() {
+                let msg = err.error().to_string();
+                if let Some(debug) = err.debug() {
                     warn!("Gstreamer Error: {} (debug {})", msg, debug);
                 } else {
                     warn!("Gstreamer Error: {}", msg);

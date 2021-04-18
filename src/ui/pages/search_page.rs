@@ -108,7 +108,7 @@ impl SwSearchPage {
         let imp = imp::SwSearchPage::from_instance(self);
 
         imp.search_entry.connect_search_changed(clone!(@weak self as this => move |entry| {
-            let request = StationRequest::search_for_name(&entry.get_text().to_string(), 250);
+            let request = StationRequest::search_for_name(&entry.text().to_string(), 250);
             this.show_station_request(request);
         }));
 

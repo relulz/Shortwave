@@ -65,7 +65,7 @@ impl SongListBox {
     }
 
     pub fn remove_last_row(&self) {
-        if let Some(child) = self.listbox.get_last_child() {
+        if let Some(child) = self.listbox.last_child() {
             self.listbox.remove(&child);
         }
 
@@ -73,7 +73,7 @@ impl SongListBox {
     }
 
     fn update_stack(&self) {
-        if self.listbox.get_last_child().is_some() {
+        if self.listbox.last_child().is_some() {
             self.stack.set_visible_child_name("content");
         } else {
             self.stack.set_visible_child_name("empty");

@@ -45,8 +45,8 @@ mod imp {
         fn properties() -> &'static [ParamSpec] {
             static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| {
                 vec![
-                    ParamSpec::boolean("descending", "Descending", "Descending", false, glib::ParamFlags::READWRITE),
-                    ParamSpec::enum_("sorting", "Sorting", "Sorting", SwSorting::static_type(), SwSorting::default() as i32, glib::ParamFlags::READWRITE),
+                    ParamSpec::new_boolean("descending", "Descending", "Descending", false, glib::ParamFlags::READWRITE),
+                    ParamSpec::new_enum("sorting", "Sorting", "Sorting", SwSorting::static_type(), SwSorting::default() as i32, glib::ParamFlags::READWRITE),
                 ]
             });
 
@@ -54,7 +54,7 @@ mod imp {
         }
 
         fn get_property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
-            match pspec.get_name() {
+            match pspec.name() {
                 "descending" => self.descending.borrow().to_value(),
                 "sorting" => self.sorting.borrow().to_value(),
                 _ => unimplemented!(),
@@ -62,7 +62,7 @@ mod imp {
         }
 
         fn set_property(&self, obj: &Self::Type, _id: usize, value: &glib::Value, pspec: &ParamSpec) {
-            match pspec.get_name() {
+            match pspec.name() {
                 "descending" => {
                     let descending = value.get().unwrap();
                     *self.descending.borrow_mut() = descending.unwrap();

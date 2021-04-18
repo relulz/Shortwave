@@ -40,12 +40,12 @@ mod imp {
 
     impl ObjectImpl for SwStation {
         fn properties() -> &'static [ParamSpec] {
-            static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| vec![ParamSpec::boxed("metadata", "Metadata", "Metadata", StationMetadata::static_type(), glib::ParamFlags::READABLE)]);
+            static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| vec![ParamSpec::new_boxed("metadata", "Metadata", "Metadata", StationMetadata::static_type(), glib::ParamFlags::READABLE)]);
             PROPERTIES.as_ref()
         }
 
         fn get_property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
-            match pspec.get_name() {
+            match pspec.name() {
                 "metadata" => self.metadata.get().unwrap().to_value(),
                 _ => unimplemented!(),
             }

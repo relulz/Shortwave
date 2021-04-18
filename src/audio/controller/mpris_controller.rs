@@ -72,7 +72,7 @@ impl MprisController {
         if let Some(station) = station.clone() {
             station.metadata().favicon.map(|favicon| {
                 FaviconDownloader::get_file(&favicon).map(|file| {
-                    let path = format!("file://{}", file.get_path().unwrap().to_str().unwrap().to_owned());
+                    let path = format!("file://{}", file.path().unwrap().to_str().unwrap().to_owned());
                     metadata.art_url = Some(path);
                 })
             });

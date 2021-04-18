@@ -82,8 +82,8 @@ mod imp {
         fn properties() -> &'static [ParamSpec] {
             static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| {
                 vec![
-                    ParamSpec::object("model", "Model", "Model", SwStationModel::static_type(), glib::ParamFlags::READABLE),
-                    ParamSpec::enum_(
+                    ParamSpec::new_object("model", "Model", "Model", SwStationModel::static_type(), glib::ParamFlags::READABLE),
+                    ParamSpec::new_enum(
                         "status",
                         "Status",
                         "Status",
@@ -98,7 +98,7 @@ mod imp {
         }
 
         fn get_property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
-            match pspec.get_name() {
+            match pspec.name() {
                 "model" => self.model.to_value(),
                 "status" => self.status.borrow().to_value(),
                 _ => unimplemented!(),
@@ -170,7 +170,7 @@ impl SwLibrary {
     fn update_library_status(&self) {
         let imp = imp::SwLibrary::from_instance(self);
 
-        if imp.model.get_n_items() == 0 {
+        if imp.model.n_items() == 0 {
             *imp.status.borrow_mut() = SwLibraryStatus::Empty;
         } else {
             *imp.status.borrow_mut() = SwLibraryStatus::Content;

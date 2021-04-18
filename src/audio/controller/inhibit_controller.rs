@@ -40,7 +40,7 @@ impl Controller for InhibitController {
 
     fn set_playback_state(&self, playback_state: &PlaybackState) {
         let app = gio::Application::get_default().unwrap().downcast_ref::<SwApplication>().unwrap().clone();
-        let window = app.get_active_window().unwrap();
+        let window = app.active_window().unwrap();
 
         if playback_state == &PlaybackState::Playing || playback_state == &PlaybackState::Loading {
             if self.cookie.get() == 0 {

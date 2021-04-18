@@ -193,7 +193,7 @@ impl SwApplication {
     }
 
     fn setup_gactions(&self) {
-        let window = self.get_active_window().unwrap();
+        let window = self.active_window().unwrap();
 
         // app.show-preferences
         action!(

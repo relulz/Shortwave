@@ -81,11 +81,11 @@ impl FeaturedCarousel {
             .as_bytes(),
         );
 
-        let style_ctx = page_box.get_style_context();
+        let style_ctx = page_box.style_context();
         style_ctx.add_class("banner");
         style_ctx.add_provider(&css_provider, 600);
 
-        self.carousel.insert(&page_box, self.carousel.get_n_pages().try_into().unwrap());
+        self.carousel.insert(&page_box, self.carousel.n_pages().try_into().unwrap());
         self.pages.borrow_mut().append(&mut vec![page_box]);
     }
 

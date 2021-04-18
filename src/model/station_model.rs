@@ -93,7 +93,7 @@ impl SwStationModel {
     }
 
     pub fn find(&self, station: &SwStation) -> Option<u32> {
-        for pos in 0..self.get_n_items() {
+        for pos in 0..self.n_items() {
             let obj = self.get_object(pos)?;
             let s = obj.downcast::<SwStation>().unwrap();
             if station.metadata().stationuuid == s.metadata().stationuuid {
@@ -105,7 +105,7 @@ impl SwStationModel {
 
     pub fn clear(&self) {
         let imp = imp::SwStationModel::from_instance(self);
-        let len = self.get_n_items();
+        let len = self.n_items();
         imp.vec.borrow_mut().clear();
         self.items_changed(0, len, 0);
     }

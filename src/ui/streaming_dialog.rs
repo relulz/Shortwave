@@ -62,14 +62,14 @@ impl StreamingDialog {
 
                 match message {
                     GCastDiscovererMessage::DiscoverStarted => {
-                        while let Some(child) = devices_listbox.get_first_child() {
+                        while let Some(child) = devices_listbox.first_child() {
                             devices_listbox.remove(&child);
                         }
                         stream_stack.set_visible_child_name("loading");
                         loading_revealer.set_reveal_child(true);
                     }
                     GCastDiscovererMessage::DiscoverEnded => {
-                        if devices_listbox.get_last_child().is_none() {
+                        if devices_listbox.last_child().is_none() {
                             stream_stack.set_visible_child_name("no-devices");
                         } else {
                             stream_stack.set_visible_child_name("results");
@@ -101,7 +101,7 @@ impl StreamingDialog {
     }
 
     pub fn show(&self) {
-        let window = gio::Application::get_default().unwrap().downcast_ref::<SwApplication>().unwrap().get_active_window().unwrap();
+        let window = gio::Application::get_default().unwrap().downcast_ref::<SwApplication>().unwrap().active_window().unwrap();
         self.widget.set_transient_for(Some(&window));
 
         self.widget.set_visible(true);
@@ -130,12 +130,12 @@ impl StreamingDialog {
             get_widget!(builder, gtk::ListBox, devices_listbox);
             get_widget!(builder, gtk::Dialog, streaming_dialog);
 
-            if let Some(active_row) = devices_listbox.get_selected_row() {
+            if let Some(active_row) = devices_listbox.selected_row() {
                 // Very hackish way to get the selected ip address
-                let box1: gtk::Box = active_row.get_first_child().unwrap().downcast().unwrap();
-                let box2: gtk::Box = box1.get_first_child().unwrap().downcast().unwrap();
-                let ip_label: gtk::Label = box2.get_last_child().unwrap().downcast().unwrap();
-                let ip_addr: IpAddr = IpAddr::from_str(ip_label.get_text().to_string().as_str()).unwrap();
+                let box1: gtk::Box = active_row.first_child().unwrap().downcast().unwrap();
+                let box2: gtk::Box = box1.first_child().unwrap().downcast().unwrap();
+                let ip_label: gtk::Label = box2.last_child().unwrap().downcast().unwrap();
+                let ip_addr: IpAddr = IpAddr::from_str(ip_label.text().to_string().as_str()).unwrap();
 
                 // Get GCastDevice
                 let device = gcd.get_device_by_ip_addr(ip_addr).unwrap();
