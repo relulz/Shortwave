@@ -12,6 +12,9 @@ headerbar.flat {
   background-color: transparent;
 }
 
+.sidebar{
+  border: none;
+}
 
 .tile {
   padding: 0px;
