@@ -167,6 +167,7 @@ impl SwApplication {
     pub fn run() {
         info!("{} ({}) ({})", config::NAME, config::APP_ID, config::VCS_TAG);
         info!("Version: {} ({})", config::VERSION, config::PROFILE);
+        info!("Gstreamer version: {:?}", gstreamer::version());
         info!("Isahc version: {}", isahc::version());
 
         // Create new GObject and downcast it into SwApplication
