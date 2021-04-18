@@ -149,12 +149,6 @@ mod imp {
             // List all setting keys
             settings_manager::list_keys();
 
-            // Make sure only supported themes are getting applied
-            let settings = gtk::Settings::get_default().unwrap();
-            settings.connect_property_gtk_theme_name_notify(|_| super::SwApplication::check_theme());
-            settings.connect_property_gtk_icon_theme_name_notify(|_| super::SwApplication::check_theme());
-            super::SwApplication::check_theme();
-
             // Small workaround to update every view to the correct sorting/order.
             send!(self.sender, Action::SettingsKeyChanged(Key::ViewSorting));
         }
@@ -230,26 +224,6 @@ impl SwApplication {
                 about_dialog::show_about_dialog(&window);
             })
         );
-    }
-
-    fn check_theme() {
-        let settings = gtk::Settings::get_default().unwrap();
-
-        let allowed_themes = vec!["Adwaita", "Adwaita:dark", "Adwaita-dark", "HighContrast", "HighContrastInverse"];
-        let allowed_icon_themes = vec!["Adwaita", "HighContrast"];
-
-        let theme_name = settings.get_property_gtk_theme_name().unwrap();
-        let icon_theme_name = settings.get_property_gtk_icon_theme_name().unwrap();
-
-        if !allowed_themes.contains(&theme_name.as_str()) {
-            warn!("Detected unsupported GTK theme, fallback to Adwaita");
-            settings.set_property_gtk_theme_name(Some("Adwaita"));
-        }
-
-        if !allowed_icon_themes.contains(&icon_theme_name.as_str()) {
-            warn!("Detected unsupported GTK icon theme, fallback to Adwaita");
-            settings.set_property_gtk_icon_theme_name(Some("Adwaita"));
-        }
     }
 
     pub fn get_library(&self) -> SwLibrary {
