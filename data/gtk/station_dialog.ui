@@ -2,9 +2,9 @@
 <interface>
   <template class="SwStationDialog" parent="AdwWindow">
     <property name="width_request">325</property>
-    <property name="height_request">575</property>
+    <property name="height_request">500</property>
     <property name="default_width">500</property>
-    <property name="default_height">500</property>
+    <property name="default_height">575</property>
     <property name="title" translatable="yes">Station details</property>
     <property name="modal">True</property>
     <child>
