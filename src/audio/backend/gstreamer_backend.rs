@@ -232,7 +232,7 @@ impl GstreamerBackend {
         }
     }
 
-    pub fn get_state(&self) -> PlaybackState {
+    pub fn state(&self) -> PlaybackState {
         let state = self.pipeline.get_state(gstreamer::ClockTime::from_mseconds(250)).1;
         match state {
             gstreamer::State::Playing => PlaybackState::Playing,
@@ -393,7 +393,7 @@ impl GstreamerBackend {
         self.recorderbin.lock().unwrap().is_some()
     }
 
-    pub fn get_current_recording_duration(&self) -> i64 {
+    pub fn current_recording_duration(&self) -> i64 {
         let recorderbin: &Option<Bin> = &*self.recorderbin.lock().unwrap();
         if let Some(recorderbin) = recorderbin {
             let queue_srcpad = recorderbin.get_by_name("queue").unwrap().get_static_pad("src").unwrap();

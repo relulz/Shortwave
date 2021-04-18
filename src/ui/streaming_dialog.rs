@@ -138,7 +138,7 @@ impl StreamingDialog {
                 let ip_addr: IpAddr = IpAddr::from_str(ip_label.text().to_string().as_str()).unwrap();
 
                 // Get GCastDevice
-                let device = gcd.get_device_by_ip_addr(ip_addr).unwrap();
+                let device = gcd.device_by_ip_addr(ip_addr).unwrap();
                 send!(sender, Action::PlaybackConnectGCastDevice(device));
                 streaming_dialog.set_visible(false);
                 streaming_dialog.hide();

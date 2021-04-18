@@ -59,7 +59,7 @@ mod imp {
             let flowbox = TemplateChild::default();
 
             let app = gio::Application::get_default().unwrap().downcast::<SwApplication>().unwrap();
-            let library = app.get_library();
+            let library = app.library();
 
             let sender = OnceCell::default();
 
@@ -117,7 +117,7 @@ impl SwLibraryPage {
         imp.status_page.set_title(Some(&i18n_f("Welcome to {}", &[config::NAME]).as_str()));
 
         // Station flowbox
-        imp.flowbox.init(imp.library.get_model(), imp.sender.get().unwrap().clone());
+        imp.flowbox.init(imp.library.model(), imp.sender.get().unwrap().clone());
 
         // Set intial stack page
         self.update_stack_page();
@@ -131,7 +131,7 @@ impl SwLibraryPage {
     fn update_stack_page(&self) {
         let imp = imp::SwLibraryPage::from_instance(self);
 
-        match imp.library.get_status() {
+        match imp.library.status() {
             SwLibraryStatus::Loading => imp.stack.set_visible_child_name("loading"),
             SwLibraryStatus::Empty => imp.stack.set_visible_child_name("empty"),
             SwLibraryStatus::Content => imp.stack.set_visible_child_name("content"),

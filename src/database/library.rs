@@ -71,7 +71,7 @@ mod imp {
         fn new() -> Self {
             let model = SwStationModel::new();
             let status = RefCell::default();
-            let client = Client::new(settings_manager::get_string(Key::ApiLookupDomain));
+            let client = Client::new(settings_manager::string(Key::ApiLookupDomain));
             let sender = OnceCell::default();
 
             Self { model, status, client, sender }
@@ -122,11 +122,11 @@ impl SwLibrary {
         library
     }
 
-    pub fn get_model(&self) -> SwStationModel {
+    pub fn model(&self) -> SwStationModel {
         self.get_property("model").unwrap().get().unwrap().unwrap()
     }
 
-    pub fn get_status(&self) -> SwLibraryStatus {
+    pub fn status(&self) -> SwLibraryStatus {
         self.get_property("status").unwrap().get().unwrap().unwrap()
     }
 
@@ -163,7 +163,7 @@ impl SwLibrary {
         let identifier = StationIdentifier::from_station(station);
 
         // Check if database contains this identifier
-        let db = queries::get_station_identifiers().unwrap();
+        let db = queries::station_identifiers().unwrap();
         db.contains(&identifier)
     }
 
@@ -182,7 +182,7 @@ impl SwLibrary {
     fn load_stations(&self) {
         // Print database info
         info!("Database Path: {}", connection::DB_PATH.to_str().unwrap());
-        info!("Stations: {}", queries::get_station_identifiers().unwrap().len());
+        info!("Stations: {}", queries::station_identifiers().unwrap().len());
 
         // Load database async
         let future = clone!(@strong self as this => async move {
@@ -193,9 +193,9 @@ impl SwLibrary {
             *imp.status.borrow_mut() = SwLibraryStatus::Loading;
             this.notify("status");
 
-            let identifiers = queries::get_station_identifiers().unwrap();
+            let identifiers = queries::station_identifiers().unwrap();
             for id in identifiers {
-                let future = imp.client.clone().get_station_by_identifier(id);
+                let future = imp.client.clone().station_by_identifier(id);
                 futures.insert(0, future);
             }
             let results = join_all(futures).await;

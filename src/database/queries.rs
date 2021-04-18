@@ -20,11 +20,11 @@ use crate::diesel::prelude::*;
 
 macro_rules! connect_db {
     () => {
-        database::connection::get_connection().get().unwrap();
+        database::connection::connection().get().unwrap();
     };
 }
 
-pub fn get_station_identifiers() -> Result<Vec<StationIdentifier>, diesel::result::Error> {
+pub fn station_identifiers() -> Result<Vec<StationIdentifier>, diesel::result::Error> {
     use crate::database::schema::library::dsl::*;
     let con = connect_db!();
 

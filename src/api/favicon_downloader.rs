@@ -33,7 +33,7 @@ pub struct FaviconDownloader {}
 
 impl FaviconDownloader {
     pub async fn download(url: Url, size: i32) -> Result<Pixbuf, Error> {
-        match Self::get_cached_pixbuf(&url, size).await {
+        match Self::cached_pixbuf(&url, size).await {
             Ok(pixbuf) => return Ok(pixbuf),
             Err(_) => debug!("No cached favicon available for {:?}", url),
         }
@@ -52,7 +52,7 @@ impl FaviconDownloader {
         let pixbuf = Pixbuf::from_stream_at_scale_async_future(&input_stream, size, size, true).await?;
 
         // Write downloaded bytes into file
-        let file = Self::get_file(&url)?;
+        let file = Self::file(&url)?;
         file.replace_contents_async_future(bytes, None, false, gio::FileCreateFlags::NONE)
             .await
             .expect("Could not write favicon data");
@@ -60,8 +60,8 @@ impl FaviconDownloader {
         Ok(pixbuf)
     }
 
-    async fn get_cached_pixbuf(url: &Url, size: i32) -> Result<Pixbuf, Error> {
-        let file = Self::get_file(&url)?;
+    async fn cached_pixbuf(url: &Url, size: i32) -> Result<Pixbuf, Error> {
+        let file = Self::file(&url)?;
         if Self::exists(&file) {
             let ios = file.open_readwrite_async_future(glib::PRIORITY_DEFAULT).await.expect("Could not open file");
             let data_input_stream = DataInputStream::new(&ios.input_stream());
@@ -72,7 +72,7 @@ impl FaviconDownloader {
         }
     }
 
-    pub fn get_file(url: &Url) -> Result<gio::File, Error> {
+    pub fn file(url: &Url) -> Result<gio::File, Error> {
         let mut hasher = DefaultHasher::new();
         url.hash(&mut hasher);
         let hash = hasher.finish();

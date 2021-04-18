@@ -87,7 +87,7 @@ mod imp {
             let player = Player::new(sender.clone());
             let library = SwLibrary::new(sender.clone());
 
-            let settings = settings_manager::get_settings();
+            let settings = settings_manager::settings();
 
             Self {
                 sender,
@@ -226,7 +226,7 @@ impl SwApplication {
         );
     }
 
-    pub fn get_library(&self) -> SwLibrary {
+    pub fn library(&self) -> SwLibrary {
         let imp = imp::SwApplication::from_instance(self);
         imp.library.clone()
     }
@@ -264,8 +264,8 @@ impl SwApplication {
         debug!("Settings key changed: {:?}", &key);
         match key {
             Key::ViewSorting | Key::ViewOrder => {
-                let sorting: SwSorting = SwSorting::from_str(&settings_manager::get_string(Key::ViewSorting)).unwrap();
-                let order = settings_manager::get_string(Key::ViewOrder);
+                let sorting: SwSorting = SwSorting::from_str(&settings_manager::string(Key::ViewSorting)).unwrap();
+                let order = settings_manager::string(Key::ViewOrder);
                 let descending = order == "Descending";
                 imp.window.borrow().as_ref().unwrap().set_sorting(sorting, descending);
             }

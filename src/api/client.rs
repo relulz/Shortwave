@@ -78,7 +78,7 @@ impl Client {
         Ok(())
     }
 
-    pub async fn get_station_by_identifier(self, identifier: StationIdentifier) -> Result<SwStation, Error> {
+    pub async fn station_by_identifier(self, identifier: StationIdentifier) -> Result<SwStation, Error> {
         let url = self.build_url(&format!("{}{}", STATION_BY_UUID, identifier.stationuuid), None).await?;
         debug!("Request station by UUID URL: {}", url);
 
@@ -96,7 +96,7 @@ impl Client {
 
     async fn build_url(&self, param: &str, options: Option<&str>) -> Result<Url, Error> {
         if self.server.get().is_none() {
-            let server_ip = Self::get_api_server(self.lookup_domain.clone()).await.ok_or(Error::NoServerReachable)?;
+            let server_ip = Self::api_server(self.lookup_domain.clone()).await.ok_or(Error::NoServerReachable)?;
             self.server.set(server_ip).unwrap();
         }
 
@@ -107,7 +107,7 @@ impl Client {
         Ok(url)
     }
 
-    async fn get_api_server(lookup_domain: String) -> Option<Url> {
+    async fn api_server(lookup_domain: String) -> Option<Url> {
         let resolver = resolver(async_std_resolver::config::ResolverConfig::default(), async_std_resolver::config::ResolverOpts::default())
             .await
             .expect("failed to connect resolver");

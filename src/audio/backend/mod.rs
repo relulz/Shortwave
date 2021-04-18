@@ -38,7 +38,7 @@ pub struct Backend {
 impl Backend {
     pub fn new(sender: Sender<Action>) -> Self {
         // Song backend
-        let save_count: usize = settings_manager::get_integer(Key::RecorderSaveCount).try_into().unwrap();
+        let save_count: usize = settings_manager::integer(Key::RecorderSaveCount).try_into().unwrap();
         let song = SongBackend::new(sender.clone(), save_count);
         song.delete_songs(); // Delete old songs
 

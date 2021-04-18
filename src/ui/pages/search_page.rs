@@ -59,7 +59,7 @@ mod imp {
         type Type = super::SwSearchPage;
 
         fn new() -> Self {
-            let client = Client::new(settings_manager::get_string(Key::ApiLookupDomain));
+            let client = Client::new(settings_manager::string(Key::ApiLookupDomain));
             let timeout_id = Rc::new(RefCell::new(None));
 
             Self {

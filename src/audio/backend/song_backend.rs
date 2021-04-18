@@ -84,7 +84,7 @@ impl SongBackend {
         let mut dest_path = glib::get_user_special_dir(glib::UserDirectory::Music);
         dest_path.push(song.path.file_name().unwrap());
 
-        let custom_path = settings_manager::get_string(Key::RecorderSongSavePath);
+        let custom_path = settings_manager::string(Key::RecorderSongSavePath);
         if !custom_path.is_empty() {
             dest_path.push(custom_path);
             dest_path.push(song.path.file_name().unwrap());

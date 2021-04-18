@@ -46,7 +46,7 @@ lazy_static! {
 }
 
 // Returns a R2D2 SqliteConnection
-pub fn get_connection() -> Pool {
+pub fn connection() -> Pool {
     POOL.clone()
 }
 

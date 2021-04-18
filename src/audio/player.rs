@@ -151,7 +151,7 @@ impl Player {
         });
 
         // Set volume
-        let volume = settings_manager::get_double(Key::PlaybackVolume);
+        let volume = settings_manager::double(Key::PlaybackVolume);
         player.set_volume(volume);
 
         player.clone().setup_signals();
@@ -212,9 +212,9 @@ impl Player {
     }
 
     pub fn toggle_playback(&self) {
-        if self.backend.lock().unwrap().gstreamer.get_state() == PlaybackState::Playing {
+        if self.backend.lock().unwrap().gstreamer.state() == PlaybackState::Playing {
             self.set_playback(PlaybackState::Stopped);
-        } else if self.backend.lock().unwrap().gstreamer.get_state() == PlaybackState::Stopped {
+        } else if self.backend.lock().unwrap().gstreamer.state() == PlaybackState::Stopped {
             self.set_playback(PlaybackState::Playing);
         }
     }
@@ -276,8 +276,8 @@ impl Player {
 
                 // If we're already recording something, we need to stop it first.
                 if backend.gstreamer.is_recording() {
-                    let threshold: i64 = settings_manager::get_integer(Key::RecorderSongDurationThreshold).try_into().unwrap();
-                    let duration: i64 = backend.gstreamer.get_current_recording_duration();
+                    let threshold: i64 = settings_manager::integer(Key::RecorderSongDurationThreshold).try_into().unwrap();
+                    let duration: i64 = backend.gstreamer.current_recording_duration();
                     if duration > threshold {
                         backend.gstreamer.stop_recording(false);
 
@@ -300,13 +300,13 @@ impl Player {
                 // Start recording new song
                 // We don't start recording the "first" detected song, since it is going to be incomplete
                 if !self.song_title.borrow().is_first_song() {
-                    backend.gstreamer.start_recording(self.song_title.borrow().get_path().expect("Unable to get song path"));
+                    backend.gstreamer.start_recording(self.song_title.borrow().current_path().expect("Unable to get song path"));
                 } else {
                     debug!("Song will not be recorded because it may be incomplete (first song for this station).")
                 }
 
                 // Show desktop notification
-                if settings_manager::get_boolean(Key::Notifications) {
+                if settings_manager::boolean(Key::Notifications) {
                     self.show_song_notification();
                 }
             }
@@ -327,7 +327,7 @@ impl Player {
 
     fn show_song_notification(&self) {
         let current_station = self.current_station.borrow().clone().unwrap();
-        let notification = gio::Notification::new(&self.song_title.borrow().get_current_title().unwrap());
+        let notification = gio::Notification::new(&self.song_title.borrow().current_title().unwrap());
         notification.set_body(Some(&current_station.metadata().name));
         //notification.add_button("Record and save this song", "app.record-and-save-song");
 
@@ -370,21 +370,21 @@ impl SongTitle {
         }
     }
 
-    pub fn get_current_title(&self) -> Option<String> {
+    pub fn current_title(&self) -> Option<String> {
         self.current_title.clone()
     }
 
     /// Returns song for current title
     pub fn create_song(&self, duration: Duration) -> Option<Song> {
         if let Some(title) = &self.current_title {
-            let path = self.get_path().expect("Unable to get path for current song");
+            let path = self.current_path().expect("Unable to get path for current song");
             return Some(Song::new(&title, path, duration));
         }
         None
     }
 
     /// Returns path for current title
-    fn get_path(&self) -> Option<PathBuf> {
+    fn current_path(&self) -> Option<PathBuf> {
         if let Some(title) = &self.current_title {
             let title = title.to_string();
             let filename = sanitize_filename::sanitize(title.clone() + ".ogg");

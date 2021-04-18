@@ -129,7 +129,7 @@ impl SwDiscoverPage {
     fn fill_flowbox(&self, flowbox: &SwStationFlowBox, request: StationRequest) {
         let imp = imp::SwDiscoverPage::from_instance(self);
 
-        let client = Client::new(settings_manager::get_string(Key::ApiLookupDomain));
+        let client = Client::new(settings_manager::string(Key::ApiLookupDomain));
         let sender = imp.sender.get().unwrap().clone();
 
         let model = &*client.model;

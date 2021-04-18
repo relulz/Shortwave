@@ -205,8 +205,8 @@ impl SwApplicationWindow {
         }
 
         // Restore window geometry
-        let width = settings_manager::get_integer(Key::WindowWidth);
-        let height = settings_manager::get_integer(Key::WindowHeight);
+        let width = settings_manager::integer(Key::WindowWidth);
+        let height = settings_manager::integer(Key::WindowHeight);
         self.set_default_size(width, height);
     }
 
@@ -214,7 +214,7 @@ impl SwApplicationWindow {
         let imp = imp::SwApplicationWindow::from_instance(self);
 
         // dark mode
-        let s = settings_manager::get_settings();
+        let s = settings_manager::settings();
         let gtk_s = gtk::Settings::get_default().unwrap();
         s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme").flags(gio::SettingsBindFlags::GET).build();
 

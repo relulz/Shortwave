@@ -73,7 +73,7 @@ impl GCastDiscoverer {
 
                 let known_devices = known_devices.clone();
                 let sender = sender.clone();
-                if let Some(device) = Self::get_device(response) {
+                if let Some(device) = Self::device(response) {
                     if !known_devices.lock().unwrap().contains(&device) {
                         debug!("Found new google cast device!");
                         debug!("{:?}", device);
@@ -88,7 +88,7 @@ impl GCastDiscoverer {
         });
     }
 
-    pub fn get_device_by_ip_addr(&self, ip: IpAddr) -> Option<GCastDevice> {
+    pub fn device_by_ip_addr(&self, ip: IpAddr) -> Option<GCastDevice> {
         for device in self.known_devices.lock().unwrap().iter() {
             if device.ip == ip {
                 return Some(device.clone());
@@ -97,7 +97,7 @@ impl GCastDiscoverer {
         None
     }
 
-    fn get_device(response: mdns::Response) -> Option<GCastDevice> {
+    fn device(response: mdns::Response) -> Option<GCastDevice> {
         let mut values: HashMap<String, String> = HashMap::new();
 
         let addr = response.records().filter_map(Self::record_to_ip_addr).next();
