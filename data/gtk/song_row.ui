@@ -2,6 +2,7 @@
 <interface>
   <template class="SwSongRow" parent="AdwActionRow">
     <property name="activatable_widget">save_button</property>
+    <property name="title_lines">3</property>
     <child>
       <object class="GtkStack" id="button_stack">
         <property name="valign">center</property>
