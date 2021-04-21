@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use async_std_resolver::resolver;
+use async_std_resolver::resolver_from_system_conf;
 use isahc::config::RedirectPolicy;
 use isahc::prelude::*;
 use once_cell::unsync::OnceCell;
@@ -108,9 +108,7 @@ impl Client {
     }
 
     async fn api_server(lookup_domain: String) -> Option<Url> {
-        let resolver = resolver(async_std_resolver::config::ResolverConfig::default(), async_std_resolver::config::ResolverOpts::default())
-            .await
-            .expect("failed to connect resolver");
+        let resolver = resolver_from_system_conf().await.unwrap();
 
         // Do forward lookup to receive a list with the api servers
         let response = resolver.lookup_ip(lookup_domain).await.ok()?;
