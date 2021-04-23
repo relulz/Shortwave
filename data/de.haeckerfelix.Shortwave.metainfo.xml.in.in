@@ -50,6 +50,18 @@
   </kudos>
 
   <releases>
+    <release version="2.0.1" date="2021-04-23">
+      <description>
+        <p>
+          This version contains minor improvements and bug fixes.
+        </p>
+        <ul>
+          <li>Improve buffering to avoid audio issues for streams with a high bitrate.</li>
+          <li>Fix issue that no connection could be established when a VPN connection was active.</li>
+          <li>Automatically select search entry when the search view gets activated.</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.0" date="2021-03-10">
       <description>
         <p>
