@@ -40,13 +40,13 @@ mod imp {
     impl ObjectImpl for SwStationModel {}
 
     impl ListModelImpl for SwStationModel {
-        fn get_item_type(&self, _list_model: &Self::Type) -> glib::Type {
+        fn item_type(&self, _list_model: &Self::Type) -> glib::Type {
             SwStation::static_type()
         }
-        fn get_n_items(&self, _list_model: &Self::Type) -> u32 {
+        fn n_items(&self, _list_model: &Self::Type) -> u32 {
             self.vec.borrow().len() as u32
         }
-        fn get_item(&self, _list_model: &Self::Type, position: u32) -> Option<glib::Object> {
+        fn item(&self, _list_model: &Self::Type, position: u32) -> Option<glib::Object> {
             self.vec.borrow().get(position as usize).map(|o| o.clone().upcast::<glib::Object>())
         }
     }
@@ -94,7 +94,7 @@ impl SwStationModel {
 
     pub fn find(&self, station: &SwStation) -> Option<u32> {
         for pos in 0..self.n_items() {
-            let obj = self.get_object(pos)?;
+            let obj = self.object(pos)?;
             let s = obj.downcast::<SwStation>().unwrap();
             if station.metadata().stationuuid == s.metadata().stationuuid {
                 return Some(pos);

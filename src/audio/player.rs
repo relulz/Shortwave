@@ -343,7 +343,7 @@ impl Player {
         });
         */
 
-        let app = gio::Application::get_default().unwrap();
+        let app = gio::Application::default().unwrap();
         app.send_notification(None, &notification);
     }
 }

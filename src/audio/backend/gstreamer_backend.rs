@@ -122,7 +122,7 @@ impl GstreamerBackend {
 
     fn setup_signals(&mut self, app_sender: Sender<Action>) {
         // There's no volume support for non pulseaudio systems
-        if let Some(pulsesink) = self.pipeline.get_by_name("pulsesink") {
+        if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
             // We have to update the volume if we get changes from pulseaudio (pulsesink).
             // The user is able to control the volume from g-c-c.
             let (volume_sender, volume_receiver) = glib::MainContext::channel(glib::PRIORITY_LOW);
@@ -141,7 +141,7 @@ impl GstreamerBackend {
             self.volume_signal_id = Some(pulsesink.connect_notify(
                 Some("volume"),
                 clone!(@weak self.volume as old_volume, @strong volume_sender => move |element, _| {
-                    let pa_volume: f64 = element.get_property("volume").unwrap().get().unwrap().unwrap();
+                    let pa_volume: f64 = element.property("volume").unwrap().get().unwrap().unwrap();
                     let new_volume = StreamVolume::convert_volume(StreamVolumeFormat::Linear, StreamVolumeFormat::Cubic, pa_volume);
 
                     // We have to check if the values are the same. For some reason gstreamer sends us
@@ -163,7 +163,7 @@ impl GstreamerBackend {
             pulsesink.connect_notify(
                 Some("mute"),
                 clone!(@weak self.volume as old_volume, @strong volume_sender => move |element, _| {
-                    let mute: bool = element.get_property("mute").unwrap().get().unwrap().unwrap();
+                    let mute: bool = element.property("mute").unwrap().get().unwrap().unwrap();
                     let mut old_volume_locked = old_volume.lock().unwrap();
                     if mute && *old_volume_locked != 0.0 {
                         send!(volume_sender, 0.0);
@@ -174,16 +174,16 @@ impl GstreamerBackend {
         }
 
         // dynamically link uridecodebin element with audioconvert element
-        let uridecodebin = self.pipeline.get_by_name("uridecodebin").unwrap();
-        let audioconvert = self.pipeline.get_by_name("audioconvert").unwrap();
+        let uridecodebin = self.pipeline.by_name("uridecodebin").unwrap();
+        let audioconvert = self.pipeline.by_name("audioconvert").unwrap();
         uridecodebin.connect_pad_added(clone!(@weak audioconvert => move |_, src_pad| {
-            let sink_pad = audioconvert.get_static_pad("sink").expect("Failed to get static sink pad from audioconvert");
+            let sink_pad = audioconvert.static_pad("sink").expect("Failed to get static sink pad from audioconvert");
             if sink_pad.is_linked() {
                 return; // We are already linked. Ignoring.
             }
 
             let new_pad_caps = src_pad.current_caps().expect("Failed to get caps of new pad.");
-            let new_pad_struct = new_pad_caps.get_structure(0).expect("Failed to get first structure of caps.");
+            let new_pad_struct = new_pad_caps.structure(0).expect("Failed to get first structure of caps.");
             let new_pad_type = new_pad_struct.name();
 
             if new_pad_type.starts_with("audio/x-raw") {
@@ -233,7 +233,7 @@ impl GstreamerBackend {
     }
 
     pub fn state(&self) -> PlaybackState {
-        let state = self.pipeline.get_state(gstreamer::ClockTime::from_mseconds(250)).1;
+        let state = self.pipeline.state(gstreamer::ClockTime::from_mseconds(250)).1;
         match state {
             gstreamer::State::Playing => PlaybackState::Playing,
             _ => PlaybackState::Stopped,
@@ -241,7 +241,7 @@ impl GstreamerBackend {
     }
 
     pub fn set_volume(&self, volume: f64) {
-        if let Some(pulsesink) = self.pipeline.get_by_name("pulsesink") {
+        if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
             // We need to block the signal, otherwise we risk creating a endless loop
             glib::signal::signal_handler_block(&pulsesink, &self.volume_signal_id.as_ref().unwrap());
 
@@ -266,7 +266,7 @@ impl GstreamerBackend {
         let _ = self.pipeline.set_state(State::Null);
 
         debug!("Set new source URI...");
-        let uridecodebin = self.pipeline.get_by_name("uridecodebin").unwrap();
+        let uridecodebin = self.pipeline.by_name("uridecodebin").unwrap();
         uridecodebin.set_property("uri", &source).unwrap();
 
         debug!("Start pipeline...");
@@ -304,11 +304,11 @@ impl GstreamerBackend {
         // We need to set an offset, otherwise the length of the recorded song would be wrong.
         // Get current clock time and calculate offset
         let offset = Self::calculate_pipeline_offset(&self.pipeline);
-        let queue_srcpad = recorderbin.get_by_name("queue").unwrap().get_static_pad("src").unwrap();
+        let queue_srcpad = recorderbin.by_name("queue").unwrap().static_pad("src").unwrap();
         queue_srcpad.set_offset(offset);
 
         // Set recording path
-        let filesink = recorderbin.get_by_name("filesink").unwrap();
+        let filesink = recorderbin.by_name("filesink").unwrap();
         filesink.set_property("location", &(path.to_str().unwrap())).unwrap();
 
         // First try setting the recording bin to playing: if this fails we know this before it
@@ -320,9 +320,9 @@ impl GstreamerBackend {
 
         // Get our tee element by name, request a new source pad from it and then link that to our
         // recording bin to actually start receiving data
-        let tee = self.pipeline.get_by_name("tee").unwrap();
-        let tee_srcpad = tee.get_request_pad("src_%u").expect("Failed to request new pad from tee");
-        let sinkpad = recorderbin.get_static_pad("sink").expect("Failed to get sink pad from recorderbin");
+        let tee = self.pipeline.by_name("tee").unwrap();
+        let tee_srcpad = tee.request_pad_simple("src_%u").expect("Failed to request new pad from tee");
+        let sinkpad = recorderbin.static_pad("sink").expect("Failed to get sink pad from recorderbin");
 
         // Link tee srcpad with the sinkpad of the recorderbin
         tee_srcpad.link(&sinkpad).expect("Unable to link tee srcpad with recorderbin sinkpad");
@@ -343,7 +343,7 @@ impl GstreamerBackend {
         debug!("Stop recording... (Discard recorded data: {:?})", &discard_data);
 
         // Get the source pad of the tee that is connected to the recorderbin
-        let recorderbin_sinkpad = recorderbin.get_static_pad("sink").expect("Failed to get sink pad from recorderbin");
+        let recorderbin_sinkpad = recorderbin.static_pad("sink").expect("Failed to get sink pad from recorderbin");
         let tee_srcpad = match recorderbin_sinkpad.peer() {
             Some(peer) => peer,
             None => return,
@@ -396,7 +396,7 @@ impl GstreamerBackend {
     pub fn current_recording_duration(&self) -> i64 {
         let recorderbin: &Option<Bin> = &*self.recorderbin.lock().unwrap();
         if let Some(recorderbin) = recorderbin {
-            let queue_srcpad = recorderbin.get_by_name("queue").unwrap().get_static_pad("src").unwrap();
+            let queue_srcpad = recorderbin.by_name("queue").unwrap().static_pad("src").unwrap();
             let offset = queue_srcpad.offset() / 1_000_000_000;
 
             let pipeline_time = self.pipeline.clock().expect("Could not get pipeline clock").time().nseconds().unwrap() as i64 / 1_000_000_000;
@@ -481,8 +481,8 @@ impl GstreamerBackend {
 
                         if buffering_state.is_live == Some(false) {
                             debug!("Pausing pipeline because buffering started");
-                            let tee = pipeline.get_by_name("tee").unwrap();
-                            let sinkpad = tee.get_static_pad("sink").unwrap();
+                            let tee = pipeline.by_name("tee").unwrap();
+                            let sinkpad = tee.static_pad("sink").unwrap();
                             let probe_id = sinkpad
                                 .add_probe(
                                     gstreamer::PadProbeType::BLOCK | gstreamer::PadProbeType::BUFFER | gstreamer::PadProbeType::BUFFER_LIST,

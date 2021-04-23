@@ -39,7 +39,7 @@ impl Controller for InhibitController {
     fn set_station(&self, _station: SwStation) {}
 
     fn set_playback_state(&self, playback_state: &PlaybackState) {
-        let app = gio::Application::get_default().unwrap().downcast_ref::<SwApplication>().unwrap().clone();
+        let app = gio::Application::default().unwrap().downcast_ref::<SwApplication>().unwrap().clone();
         let window = app.active_window().unwrap();
 
         if playback_state == &PlaybackState::Playing || playback_state == &PlaybackState::Loading {

@@ -22,17 +22,17 @@ use std::path::PathBuf;
 
 lazy_static! {
     pub static ref DATA: PathBuf = {
-        let mut path = glib::get_user_data_dir();
+        let mut path = glib::user_data_dir();
         path.push(config::NAME);
         path
     };
     pub static ref CONFIG: PathBuf = {
-        let mut path = glib::get_user_config_dir();
+        let mut path = glib::user_config_dir();
         path.push(config::NAME);
         path
     };
     pub static ref CACHE: PathBuf = {
-        let mut path = glib::get_user_cache_dir();
+        let mut path = glib::user_cache_dir();
         path.push(config::NAME);
         path
     };

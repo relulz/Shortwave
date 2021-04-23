@@ -53,7 +53,7 @@ mod imp {
             PROPERTIES.as_ref()
         }
 
-        fn get_property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
+        fn property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
             match pspec.name() {
                 "descending" => self.descending.borrow().to_value(),
                 "sorting" => self.sorting.borrow().to_value(),
@@ -79,7 +79,7 @@ mod imp {
     }
 
     impl SorterImpl for SwStationSorter {
-        fn get_order(&self, _sorter: &Self::Type) -> gtk::SorterOrder {
+        fn order(&self, _sorter: &Self::Type) -> gtk::SorterOrder {
             gtk::SorterOrder::Total
         }
 

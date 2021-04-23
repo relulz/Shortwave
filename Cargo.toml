@@ -40,7 +40,7 @@ gstreamer = { git = "https://gitlab.freedesktop.org/gstreamer/gstreamer-rs" }
 gettext-rs = { version = "0.5.0", features = ["gettext-system"] }
 adw = { git = "https://gitlab.gnome.org/bilelmoussaoui/libadwaita-rs", package = "libadwaita" }
 gtk = { git = "https://github.com/gtk-rs/gtk4-rs", package = "gtk4" }
-gtk-macros = "0.2.0"
+gtk-macros = "0.3.0"
 
 [target.'cfg(unix)'.dependencies]
 mpris-player = "0.6.1"

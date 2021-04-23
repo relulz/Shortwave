@@ -81,7 +81,7 @@ impl SongBackend {
     pub fn save_song(&self, song: Song) -> Result<(), Error> {
         debug!("Save song \"{}\"", &song.title);
 
-        let mut dest_path = glib::get_user_special_dir(glib::UserDirectory::Music);
+        let mut dest_path = glib::user_special_dir(glib::UserDirectory::Music);
         dest_path.push(song.path.file_name().unwrap());
 
         let custom_path = settings_manager::string(Key::RecorderSongSavePath);

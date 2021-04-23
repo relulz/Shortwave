@@ -121,7 +121,7 @@ impl SwStationDialog {
         imp.station.set(station).unwrap();
         imp.sender.set(sender).unwrap();
 
-        let window = gio::Application::get_default().unwrap().downcast_ref::<SwApplication>().unwrap().active_window().unwrap();
+        let window = gio::Application::default().unwrap().downcast_ref::<SwApplication>().unwrap().active_window().unwrap();
         dialog.set_transient_for(Some(&window));
 
         dialog.setup_widgets();
@@ -220,7 +220,7 @@ impl SwStationDialog {
             let metadata = imp.station.get().unwrap().clone().metadata();
 
             if let Some(homepage) = metadata.homepage {
-                let display = gdk::Display::get_default().unwrap();
+                let display = gdk::Display::default().unwrap();
                 let clipboard = display.clipboard();
                 clipboard.set_text(&homepage.to_string());
             }
@@ -231,7 +231,7 @@ impl SwStationDialog {
             let metadata = imp.station.get().unwrap().clone().metadata();
 
             if let Some(url_resolved) = metadata.url_resolved {
-                let display = gdk::Display::get_default().unwrap();
+                let display = gdk::Display::default().unwrap();
                 let clipboard = display.clipboard();
                 clipboard.set_text(&url_resolved.to_string());
             }

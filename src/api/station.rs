@@ -44,7 +44,7 @@ mod imp {
             PROPERTIES.as_ref()
         }
 
-        fn get_property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
+        fn property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
             match pspec.name() {
                 "metadata" => self.metadata.get().unwrap().to_value(),
                 _ => unimplemented!(),
@@ -68,6 +68,6 @@ impl SwStation {
     }
 
     pub fn metadata(&self) -> StationMetadata {
-        self.get_property("metadata").unwrap().get::<&StationMetadata>().unwrap().unwrap().clone()
+        self.property("metadata").unwrap().get::<&StationMetadata>().unwrap().unwrap().clone()
     }
 }

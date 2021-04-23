@@ -53,7 +53,7 @@ impl SongListBox {
     fn setup_signals(&self) {
         get_widget!(self.builder, gtk::Button, open_music_folder_button);
         open_music_folder_button.connect_clicked(|_| {
-            open::that(glib::get_user_special_dir(glib::UserDirectory::Music)).expect("Unable to open music folder");
+            open::that(glib::user_special_dir(glib::UserDirectory::Music)).expect("Unable to open music folder");
         });
     }
 

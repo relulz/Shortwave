@@ -97,7 +97,7 @@ mod imp {
             PROPERTIES.as_ref()
         }
 
-        fn get_property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
+        fn property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
             match pspec.name() {
                 "model" => self.model.to_value(),
                 "status" => self.status.borrow().to_value(),
@@ -123,11 +123,11 @@ impl SwLibrary {
     }
 
     pub fn model(&self) -> SwStationModel {
-        self.get_property("model").unwrap().get().unwrap().unwrap()
+        self.property("model").unwrap().get().unwrap().unwrap()
     }
 
     pub fn status(&self) -> SwLibraryStatus {
-        self.get_property("status").unwrap().get().unwrap().unwrap()
+        self.property("status").unwrap().get().unwrap().unwrap()
     }
 
     pub fn add_stations(&self, stations: Vec<SwStation>) {

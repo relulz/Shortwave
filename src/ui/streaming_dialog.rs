@@ -101,7 +101,7 @@ impl StreamingDialog {
     }
 
     pub fn show(&self) {
-        let window = gio::Application::get_default().unwrap().downcast_ref::<SwApplication>().unwrap().active_window().unwrap();
+        let window = gio::Application::default().unwrap().downcast_ref::<SwApplication>().unwrap().active_window().unwrap();
         self.widget.set_transient_for(Some(&window));
 
         self.widget.set_visible(true);

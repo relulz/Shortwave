@@ -128,7 +128,7 @@ mod imp {
             PROPERTIES.as_ref()
         }
 
-        fn get_property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
+        fn property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
             match pspec.name() {
                 "view" => self.view.borrow().to_value(),
                 _ => unimplemented!(),
@@ -215,7 +215,7 @@ impl SwApplicationWindow {
 
         // dark mode
         let s = settings_manager::settings();
-        let gtk_s = gtk::Settings::get_default().unwrap();
+        let gtk_s = gtk::Settings::default().unwrap();
         s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme").flags(gio::SettingsBindFlags::GET).build();
 
         // flap

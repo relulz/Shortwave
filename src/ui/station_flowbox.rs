@@ -76,7 +76,7 @@ mod imp {
             PROPERTIES.as_ref()
         }
 
-        fn get_property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
+        fn property(&self, _obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> glib::Value {
             match pspec.name() {
                 "model" => self.model.to_value(),
                 _ => unimplemented!(),

@@ -183,7 +183,7 @@ impl SwApplication {
         // Load custom styling
         let p = gtk::CssProvider::new();
         gtk::CssProvider::load_from_resource(&p, "/de/haeckerfelix/Shortwave/gtk/style.css");
-        gtk::StyleContext::add_provider_for_display(&gdk::Display::get_default().unwrap(), &p, 500);
+        gtk::StyleContext::add_provider_for_display(&gdk::Display::default().unwrap(), &p, 500);
 
         // Set initial view
         window.set_view(SwView::Library);
@@ -237,7 +237,7 @@ impl SwApplication {
         match action {
             Action::ViewGoBack => imp.window.borrow().as_ref().unwrap().go_back(),
             Action::ViewSet(view) => imp.window.borrow().as_ref().unwrap().set_view(view),
-            Action::ViewRaise => imp.window.borrow().as_ref().unwrap().present_with_time((glib::get_monotonic_time() / 1000) as u32),
+            Action::ViewRaise => imp.window.borrow().as_ref().unwrap().present_with_time((glib::monotonic_time() / 1000) as u32),
             Action::ViewSetMiniPlayer(enable) => imp.window.borrow().as_ref().unwrap().enable_mini_player(enable),
             Action::ViewShowNotification(notification) => imp.window.borrow().as_ref().unwrap().show_notification(notification),
             Action::PlaybackConnectGCastDevice(device) => imp.player.connect_to_gcast_device(device),

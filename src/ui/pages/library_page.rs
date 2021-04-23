@@ -58,7 +58,7 @@ mod imp {
             let stack = TemplateChild::default();
             let flowbox = TemplateChild::default();
 
-            let app = gio::Application::get_default().unwrap().downcast::<SwApplication>().unwrap();
+            let app = gio::Application::default().unwrap().downcast::<SwApplication>().unwrap();
             let library = app.library();
 
             let sender = OnceCell::default();
