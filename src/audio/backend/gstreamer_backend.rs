@@ -85,7 +85,7 @@ impl GstreamerBackend {
 
         // create gstreamer pipeline
         let pipeline_launch = format!(
-            "uridecodebin name=uridecodebin ! audioconvert name=audioconvert ! tee name=tee ! queue ! {} name={}",
+            "uridecodebin name=uridecodebin use-buffering=true buffer-duration=6000000000 ! audioconvert name=audioconvert ! tee name=tee ! queue ! {} name={}",
             audiosink, audiosink
         );
         let pipeline = gstreamer::parse_launch(&pipeline_launch).expect("Could not create gstreamer pipeline");
