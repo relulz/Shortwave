@@ -115,6 +115,7 @@ impl SwSearchPage {
         self.connect_map(|this| {
             let imp = imp::SwSearchPage::from_instance(&this);
             imp.search_entry.grab_focus();
+            imp.search_entry.select_region(0, -1);
         });
     }
 
