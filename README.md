@@ -57,11 +57,13 @@ You can install stable builds of Shortwave from Flathub by using this command:
 
 
 #### Nightly builds
-You can install nightly builds of Shortwave by using this command:
+Nightly builds are currently not available.
 
-`flatpak install https://haeckerfelix.de/~repo/shortwave.flatpakref`
+~~You can install nightly builds of Shortwave by using this command:~~
 
-More information are [here available](https://haeckerfelix.de/~repo/shortwave)! The repository is automatically updated every day. You can update to the latest nightly by running `flatpak update`!
+~~`flatpak install https://haeckerfelix.de/~repo/shortwave.flatpakref`~~
+
+~~More information are [here available](https://haeckerfelix.de/~repo/shortwave)! The repository is automatically updated every day. You can update to the latest nightly by running `flatpak update`!~~
 
 ## Building
 ### Building with Flatpak + GNOME Builder
