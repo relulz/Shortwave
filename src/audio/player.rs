@@ -34,6 +34,7 @@ use crate::audio::backend::*;
 use crate::audio::controller::MprisController;
 use crate::audio::controller::{Controller, GCastController, InhibitController, MiniController, SidebarController, ToolbarController};
 use crate::audio::{GCastDevice, Song};
+use crate::config;
 use crate::i18n::*;
 use crate::path;
 use crate::settings::{settings_manager, Key};
@@ -344,7 +345,8 @@ impl Player {
         */
 
         let app = gio::Application::default().unwrap();
-        app.send_notification(None, &notification);
+        let id = format!("{}.SongNotification", config::APP_ID);
+        app.send_notification(Some(&id), &notification);
     }
 }
 
