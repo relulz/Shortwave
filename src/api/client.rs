@@ -28,7 +28,6 @@ use std::time::Duration;
 
 use crate::api::*;
 use crate::config;
-use crate::database::StationIdentifier;
 use crate::model::SwStationModel;
 
 lazy_static! {
@@ -78,8 +77,8 @@ impl Client {
         Ok(())
     }
 
-    pub async fn station_by_identifier(self, identifier: StationIdentifier) -> Result<SwStation, Error> {
-        let url = self.build_url(&format!("{}{}", STATION_BY_UUID, identifier.stationuuid), None).await?;
+    pub async fn station_by_uuid(self, uuid: &str) -> Result<SwStation, Error> {
+        let url = self.build_url(&format!("{}{}", STATION_BY_UUID, uuid), None).await?;
         debug!("Request station by UUID URL: {}", url);
 
         let stations_md: Vec<StationMetadata> = HTTP_CLIENT.get_async(url.as_ref()).await?.json().await?;
@@ -88,8 +87,8 @@ impl Client {
         match data.pop() {
             Some(station) => Ok(station),
             None => {
-                warn!("API: No station for identifier \"{}\" found", &identifier.stationuuid);
-                Err(Error::InvalidStationError(identifier.stationuuid))
+                warn!("API: No station for identifier \"{}\" found", uuid);
+                Err(Error::InvalidStationError(uuid.to_owned()))
             }
         }
     }

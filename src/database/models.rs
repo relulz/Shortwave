@@ -17,27 +17,30 @@
 use super::schema::*;
 use crate::api::SwStation;
 
+/// Representation of a station within the database.
 #[derive(Queryable, Insertable, Debug, Clone)]
 #[table_name = "library"]
-pub struct StationIdentifier {
-    pub id: Option<i32>,     // Database ID
-    pub stationuuid: String, // Station UUID
+pub struct StationEntry {
+    /// Unique ID that correponds to the RadioBrowser stationuuid for non-local
+    /// stations.
+    pub uuid: String,
+
+    /// Whether this station is local.
+    pub is_local: bool,
+
+    /// Serialized station metadata. For local stations, this is mandatory.
+    pub data: Option<String>,
 }
 
-impl StationIdentifier {
-    pub fn from_station(station: &SwStation) -> Self {
-        StationIdentifier {
-            id: None,
-            stationuuid: station.metadata().stationuuid,
+impl StationEntry {
+    /// Create a station entry for the station.
+    pub fn for_station(station: &SwStation) -> Self {
+        let metadata = station.metadata();
+
+        Self {
+            uuid: metadata.stationuuid.clone(),
+            is_local: false,
+            data: Some(serde_json::to_string(&metadata).unwrap()),
         }
-    }
-    pub fn from_uuid(uuid: String) -> Self {
-        StationIdentifier { id: None, stationuuid: uuid }
-    }
-}
-
-impl PartialEq for StationIdentifier {
-    fn eq(&self, other: &Self) -> bool {
-        self.stationuuid == other.stationuuid
     }
 }

@@ -15,9 +15,10 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 table! {
-    library (id) {
-        id -> Nullable<Integer>,
-        stationuuid -> Text,
+    library (uuid) {
+        uuid -> Text,
+        is_local -> Bool,
+        data -> Nullable<Text>,
     }
 }
 
