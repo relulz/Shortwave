@@ -43,6 +43,12 @@ pub fn insert_station(entry: StationEntry) -> Result<(), diesel::result::Error> 
     Ok(())
 }
 
+pub fn update_station(entry: StationEntry) -> Result<(), diesel::result::Error> {
+    let con = connect_db!();
+    diesel::replace_into(library::table).values(entry).execute(&*con)?;
+    Ok(())
+}
+
 pub fn delete_station(uuid: &str) -> Result<(), diesel::result::Error> {
     let con = connect_db!();
     diesel::delete(library::table.filter(library::uuid.eq(uuid))).execute(&*con)?;

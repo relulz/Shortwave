@@ -192,22 +192,78 @@ impl SwLibrary {
         spawn!(future);
     }
 
+    /// Try to add a station to the database.
     async fn load_station(&self, entry: StationEntry) {
         let imp = imp::SwLibrary::from_instance(&self);
-        match imp.client.clone().station_by_uuid(&entry.uuid).await {
-            Ok(station) => imp.model.add_station(&station),
-            Err(err) => match err {
-                Error::InvalidStationError(uuid) => {
-                    queries::delete_station(&uuid).unwrap();
 
-                    let notification = Notification::new_info(&i18n("No longer existing station removed from library."));
-                    send!(imp.sender.get().unwrap(), Action::ViewShowNotification(notification));
+        if entry.is_local {
+            if let Some(data) = &entry.data {
+                match self.load_cached_station(&entry.uuid, data) {
+                    Ok(station) => imp.model.add_station(&station),
+                    Err(_) => self.delete_unknown_station(&entry.uuid),
                 }
-                _ => {
-                    let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
-                    send!(imp.sender.get().unwrap(), Action::ViewShowNotification(notification));
+            } else {
+                self.delete_unknown_station(&entry.uuid);
+            }
+        } else {
+            match imp.client.clone().station_by_uuid(&entry.uuid).await {
+                Ok(station) => {
+                    // Cache data for future use
+                    let entry = StationEntry::for_station(&station);
+                    queries::update_station(entry).unwrap();
+
+                    // Add station to the library
+                    imp.model.add_station(&station)
                 }
-            },
+                Err(err) => {
+                    warn!("Failed to fetch station: {}", entry.uuid);
+                    warn!("Error while receiving: {}", err);
+                    warn!("Trying to use cached data");
+
+                    let removed_online = matches!(err, Error::InvalidStationError(_));
+
+                    if let Some(data) = &entry.data {
+                        match self.load_cached_station(&entry.uuid, data) {
+                            Ok(station) => imp.model.add_station(&station),
+                            Err(_) => {
+                                if removed_online {
+                                    self.delete_unknown_station(&entry.uuid);
+                                } else {
+                                    warn!("Ignoring station to try again next time");
+                                }
+                            }
+                        }
+                    } else if removed_online {
+                        self.delete_unknown_station(&entry.uuid);
+                    } else {
+                        warn!("Ignoring station to try again next time");
+                    }
+                }
+            }
         }
+    }
+
+    /// Deserialize the provided data as a station.
+    fn load_cached_station(&self, uuid: &str, data: &str) -> Result<SwStation, serde_json::Error> {
+        match serde_json::from_str(data) {
+            Ok(metadata) => Ok(SwStation::new(metadata)),
+            Err(err) => {
+                warn!("Failed to deserialize station: {}", uuid);
+                warn!("Data from database: '{}'", data);
+                warn!("Error while deserializing: {}", err);
+                Err(err)
+            }
+        }
+    }
+
+    /// Delete an unknown or malformed station entry notifying the user.
+    fn delete_unknown_station(&self, uuid: &str) {
+        let imp = imp::SwLibrary::from_instance(&self);
+
+        warn!("Removing unknown station: {}", uuid);
+        queries::delete_station(&uuid).unwrap();
+
+        let notification = Notification::new_info(&i18n("No longer existing station removed from library."));
+        send!(imp.sender.get().unwrap(), Action::ViewShowNotification(notification));
     }
 }
