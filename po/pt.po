@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-04-10 09:03+0000\n"
-"PO-Revision-Date: 2021-05-10 10:05-0300\n"
+"POT-Creation-Date: 2021-05-10 13:10+0000\n"
+"PO-Revision-Date: 2021-05-10 19:56-0300\n"
 "Last-Translator: Juliano de Souza Camargo <julianosc@protonmail.com>\n"
 "Language-Team: Portuguese < >\n"
 "Language: pt\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-DL-Module: shortwave\n"
 "X-DL-Branch: master\n"
 "X-DL-Domain: po\n"
-"X-DL-State: None\n"
+"X-DL-State: Translating\n"
 
 #: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
@@ -40,7 +40,6 @@ msgid "Receiving station data…"
 msgstr "A receber dados da estação..."
 
 #: data/gtk/library_page.ui:90
-#| msgid "Discover new stations"
 msgid "_Discover new stations"
 msgstr "_Descobrir novas estações"
 
@@ -70,20 +69,18 @@ msgid "Appearance"
 msgstr "Aparência"
 
 #: data/gtk/settings_window.ui:14
-#| msgid "Dark Mode"
 msgid "_Dark Mode"
 msgstr "_Modo noturno"
 
 #: data/gtk/settings_window.ui:16
 msgid "Whether the application should use a dark theme"
-msgstr "Se a aplicação deverá utilizar o tema escuro."
+msgstr "Se a aplicação deverá utilizar o tema noturno"
 
 #: data/gtk/settings_window.ui:29
 msgid "Features"
 msgstr "Funcionalidades"
 
 #: data/gtk/settings_window.ui:32
-#| msgid "Notifications"
 msgid "_Notifications"
 msgstr "_Notificações"
 
@@ -98,14 +95,11 @@ msgid "Open shortcut window"
 msgstr "Abrir janela de atalhos"
 
 #: data/gtk/help_overlay.ui:21
-#| msgctxt "shortcut window"
-#| msgid "Quit the application"
 msgctxt "shortcut window"
 msgid "Open application menu"
 msgstr "Abrir menu da aplicação"
 
 #: data/gtk/help_overlay.ui:27
-#| msgid "Preferences"
 msgctxt "shortcut window"
 msgid "Open preferences"
 msgstr "Abrir preferências"
@@ -135,18 +129,15 @@ msgid "Open search view"
 msgstr "Abrir a vista da busca"
 
 #: data/gtk/help_overlay.ui:62
-#| msgid "No playback"
 msgctxt "shortcut window"
 msgid "Go back"
 msgstr "Recuar"
 
 #: data/gtk/help_overlay.ui:69
-#| msgid "No playback"
 msgid "Playback"
 msgstr "Reproduzir"
 
 #: data/gtk/help_overlay.ui:73
-#| msgid "No playback"
 msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Reproduzir/Pausa"
@@ -156,19 +147,16 @@ msgid "An error occurred"
 msgstr "Ocorreu um erro"
 
 #: data/gtk/sidebar_controller.ui:178
-#| msgid "Show station details"
 msgid "_Show station details"
-msgstr "_Mostrar detalhes da estação"
+msgstr "Mostrar detalhe_s da estação"
 
 #: data/gtk/sidebar_controller.ui:182
-#| msgid "Stream to a device"
 msgid "Stream to a _device"
 msgstr "Emitir a um _dispositivo"
 
 #: data/gtk/sidebar_controller.ui:188
-#| msgid "Enable mini player"
 msgid "_Enable mini player"
-msgstr "Ativar _mini reprodutor"
+msgstr "Ativar mini r_eprodutor"
 
 #: data/gtk/song_listbox.ui:23
 msgid ""
@@ -189,7 +177,6 @@ msgid "Detected songs will appear here."
 msgstr "Faixas detetadas aparecerão aqui."
 
 #: data/gtk/song_listbox.ui:82
-#| msgid "How does this work?"
 msgid "_How does this work?"
 msgstr "_Como isto funciona?"
 
@@ -198,11 +185,10 @@ msgid "Saved songs are located in your Music folder."
 msgstr "Faixas guardadas são gravadas em sua pasta Música."
 
 #: data/gtk/song_listbox.ui:137
-#| msgid "Open"
 msgid "_Open"
 msgstr "_Abrir"
 
-#: data/gtk/song_row.ui:13
+#: data/gtk/song_row.ui:14
 msgid "Save recorded song"
 msgstr "Guardar música gravada"
 
@@ -211,13 +197,12 @@ msgid "Station details"
 msgstr "Detalhes da estação"
 
 #: data/gtk/station_dialog.ui:71
-#| msgid "Locations"
 msgid "Actions"
 msgstr "Ações"
 
 #: data/gtk/station_dialog.ui:74
 msgid "_Play this station"
-msgstr "Reproduzir _esta estação"
+msgstr "Re_produzir esta estação"
 
 #: data/gtk/station_dialog.ui:82
 msgid "_Add to library"
@@ -228,7 +213,6 @@ msgid "_Remove from Library"
 msgstr "_Remover da biblioteca"
 
 #: data/gtk/station_dialog.ui:102
-#| msgid "Locations"
 msgid "Information"
 msgstr "Informação"
 
@@ -262,7 +246,6 @@ msgid "_Cancel"
 msgstr "_Cancelar"
 
 #: data/gtk/streaming_dialog.ui:58
-#| msgid "Connected with"
 msgid "_Connect"
 msgstr "_Ligar"
 
@@ -275,7 +258,6 @@ msgid "No devices found"
 msgstr "Nenhum dispositivo encontrado"
 
 #: data/gtk/streaming_dialog.ui:132
-#| msgid "Retry search"
 msgid "_Retry search"
 msgstr "_Voltar a procurar"
 
@@ -284,88 +266,75 @@ msgid "Searching for devices…"
 msgstr "A procurar por dispositivos..."
 
 #: data/gtk/window.ui:103 data/gtk/window.ui:173
-#| msgid "Sorting"
 msgid "_Sorting"
 msgstr "_Ordenação"
 
 #: data/gtk/window.ui:106
-#| msgid "Name"
 msgid "_Name"
 msgstr "_Nome"
 
 #: data/gtk/window.ui:111
-#| msgid "Language"
 msgid "_Language"
 msgstr "_Idioma"
 
 #: data/gtk/window.ui:116
-#| msgid "Country"
 msgid "_Country"
 msgstr "_País"
 
 #: data/gtk/window.ui:121
-#| msgid "State"
 msgid "S_tate"
 msgstr "_Distrito"
 
 #: data/gtk/window.ui:126
-#| msgid "Votes"
 msgid "_Votes"
 msgstr "_Votos"
 
 #: data/gtk/window.ui:133
-#| msgid "Ascending"
 msgid "_Ascending"
 msgstr "_Ascendente"
 
 #: data/gtk/window.ui:138
-#| msgid "Descending"
 msgid "_Descending"
-msgstr "_Descendente"
+msgstr "Des_cendente"
 
 #: data/gtk/window.ui:147 data/gtk/window.ui:179
-#| msgid "Open radio-browser.info <sup>↗</sup>"
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "A_brir radio-browser.info <sup>↗</sup>"
 
 #: data/gtk/window.ui:151 data/gtk/window.ui:183
-#| msgid "Create new station"
 msgid "_Create new station <sup>↗</sup>"
 msgstr "C_riar nova estação"
 
 #: data/gtk/window.ui:157 data/gtk/window.ui:189
-#| msgid "Preferences"
 msgid "_Preferences"
 msgstr "_Preferências"
 
 #: data/gtk/window.ui:161 data/gtk/window.ui:193
-#| msgid "Keyboard Shortcuts"
 msgid "_Keyboard Shortcuts"
 msgstr "Atalhos de t_eclado"
 
 #: data/gtk/window.ui:165 data/gtk/window.ui:197
-#| msgid "About Shortwave"
 msgid "_About Shortwave"
 msgstr "Acerca do _Shortwave"
 
-#: src/audio/player.rs:167
+#: src/audio/player.rs:168
 msgid "This station cannot be played because the stream is offline."
 msgstr "Esta estação não se pode reproduzir pois a emissão está offline."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "Station cannot be streamed."
 msgstr "A estação não pode ser transmitida."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "URL is not valid."
 msgstr "URL inválido."
 
 #: src/database/library.rs:211
 msgid "No longer existing station removed from library."
-msgstr "Não há mais estações removida da coleção."
+msgstr "Estação não mais existente removida da coleção."
 
 #: src/database/library.rs:215 src/ui/pages/discover_page.rs:140
-#: src/ui/pages/search_page.rs:145
+#: src/ui/pages/search_page.rs:151
 msgid "Station data could not be received."
 msgstr "Dados da estação não se puderam receber."
 
