@@ -38,8 +38,8 @@ impl StationEntry {
         let metadata = station.metadata();
 
         Self {
-            uuid: metadata.stationuuid.clone(),
-            is_local: false,
+            uuid: station.uuid(),
+            is_local: station.is_local(),
             data: Some(serde_json::to_string(&metadata).unwrap()),
         }
     }

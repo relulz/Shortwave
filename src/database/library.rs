@@ -15,7 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use super::models::StationEntry;
-use crate::api::{Client, Error, SwStation};
+use crate::api::{Client, Error, StationMetadata, SwStation};
 use crate::app::Action;
 use crate::database::connection;
 use crate::database::queries;
@@ -148,14 +148,14 @@ impl SwLibrary {
         debug!("Remove {} station(s)", stations.len());
         for station in stations {
             imp.model.remove_station(&station);
-            queries::delete_station(&station.metadata().stationuuid).unwrap();
+            queries::delete_station(&station.uuid()).unwrap();
         }
 
         self.update_library_status();
     }
 
     pub fn contains_station(station: &SwStation) -> bool {
-        queries::contains_station(&station.metadata().stationuuid).unwrap()
+        queries::contains_station(&station.uuid()).unwrap()
     }
 
     fn update_library_status(&self) {
@@ -199,7 +199,7 @@ impl SwLibrary {
         if entry.is_local {
             if let Some(data) = &entry.data {
                 match self.load_cached_station(&entry.uuid, data) {
-                    Ok(station) => imp.model.add_station(&station),
+                    Ok(metadata) => imp.model.add_station(&SwStation::new_local(&entry.uuid, metadata)),
                     Err(_) => self.delete_unknown_station(&entry.uuid),
                 }
             } else {
@@ -224,7 +224,7 @@ impl SwLibrary {
 
                     if let Some(data) = &entry.data {
                         match self.load_cached_station(&entry.uuid, data) {
-                            Ok(station) => imp.model.add_station(&station),
+                            Ok(metadata) => imp.model.add_station(&SwStation::new(metadata)),
                             Err(_) => {
                                 if removed_online {
                                     self.delete_unknown_station(&entry.uuid);
@@ -244,9 +244,9 @@ impl SwLibrary {
     }
 
     /// Deserialize the provided data as a station.
-    fn load_cached_station(&self, uuid: &str, data: &str) -> Result<SwStation, serde_json::Error> {
+    fn load_cached_station(&self, uuid: &str, data: &str) -> Result<StationMetadata, serde_json::Error> {
         match serde_json::from_str(data) {
-            Ok(metadata) => Ok(SwStation::new(metadata)),
+            Ok(metadata) => Ok(metadata),
             Err(err) => {
                 warn!("Failed to deserialize station: {}", uuid);
                 warn!("Data from database: '{}'", data);

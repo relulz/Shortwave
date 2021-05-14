@@ -96,7 +96,7 @@ impl SwStationModel {
         for pos in 0..self.n_items() {
             let obj = self.object(pos)?;
             let s = obj.downcast::<SwStation>().unwrap();
-            if station.metadata().stationuuid == s.metadata().stationuuid {
+            if station.uuid() == s.uuid() {
                 return Some(pos);
             }
         }
