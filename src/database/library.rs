@@ -198,7 +198,7 @@ impl SwLibrary {
 
         if entry.is_local {
             if let Some(data) = &entry.data {
-                match self.load_cached_station(&entry.uuid, data) {
+                match self.load_station_metadata(&entry.uuid, data) {
                     Ok(metadata) => imp.model.add_station(&SwStation::new_local(&entry.uuid, metadata)),
                     Err(_) => self.delete_unknown_station(&entry.uuid),
                 }
@@ -223,7 +223,7 @@ impl SwLibrary {
                     let removed_online = matches!(err, Error::InvalidStationError(_));
 
                     if let Some(data) = &entry.data {
-                        match self.load_cached_station(&entry.uuid, data) {
+                        match self.load_station_metadata(&entry.uuid, data) {
                             Ok(metadata) => imp.model.add_station(&SwStation::new(metadata)),
                             Err(_) => {
                                 if removed_online {
@@ -244,7 +244,7 @@ impl SwLibrary {
     }
 
     /// Deserialize the provided data as a station.
-    fn load_cached_station(&self, uuid: &str, data: &str) -> Result<StationMetadata, serde_json::Error> {
+    fn load_station_metadata(&self, uuid: &str, data: &str) -> Result<StationMetadata, serde_json::Error> {
         match serde_json::from_str(data) {
             Ok(metadata) => Ok(metadata),
             Err(err) => {
@@ -263,7 +263,7 @@ impl SwLibrary {
         warn!("Removing unknown station: {}", uuid);
         queries::delete_station(&uuid).unwrap();
 
-        let notification = Notification::new_info(&i18n("No longer existing station removed from library."));
+        let notification = Notification::new_info(&i18n("An invalid station was removed from the library."));
         send!(imp.sender.get().unwrap(), Action::ViewShowNotification(notification));
     }
 }
