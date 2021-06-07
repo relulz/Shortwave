@@ -199,15 +199,17 @@ impl SwLibrary {
         if entry.is_local {
             if let Some(data) = &entry.data {
                 match self.load_station_metadata(&entry.uuid, data) {
-                    Ok(metadata) => imp.model.add_station(&SwStation::new_local(&entry.uuid, metadata)),
+                    Ok(metadata) => imp.model.add_station(&SwStation::new(entry.uuid.clone(), true, metadata)),
                     Err(_) => self.delete_unknown_station(&entry.uuid),
                 }
             } else {
                 self.delete_unknown_station(&entry.uuid);
             }
         } else {
-            match imp.client.clone().station_by_uuid(&entry.uuid).await {
-                Ok(station) => {
+            match imp.client.clone().station_metadata_by_uuid(&entry.uuid).await {
+                Ok(metadata) => {
+                    let station = SwStation::new(entry.uuid.clone(), false, metadata);
+
                     // Cache data for future use
                     let entry = StationEntry::for_station(&station);
                     queries::update_station(entry).unwrap();
@@ -224,7 +226,10 @@ impl SwLibrary {
 
                     if let Some(data) = &entry.data {
                         match self.load_station_metadata(&entry.uuid, data) {
-                            Ok(metadata) => imp.model.add_station(&SwStation::new(metadata)),
+                            Ok(metadata) => {
+                                let station = SwStation::new(entry.uuid.clone(), false, metadata);
+                                imp.model.add_station(&station);
+                            }
                             Err(_) => {
                                 if removed_online {
                                     self.delete_unknown_station(&entry.uuid);

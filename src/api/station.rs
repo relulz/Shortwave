@@ -68,23 +68,12 @@ glib::wrapper! {
 }
 
 impl SwStation {
-    pub fn new(metadata: StationMetadata) -> Self {
+    pub fn new(uuid: String, is_local: bool, metadata: StationMetadata) -> Self {
         let station = glib::Object::new::<Self>(&[]).unwrap();
 
         let imp = imp::SwStation::from_instance(&station);
-        imp.uuid.set(metadata.stationuuid.clone()).unwrap();
-        imp.is_local.set(false).unwrap();
-        imp.metadata.set(metadata).unwrap();
-
-        station
-    }
-
-    pub fn new_local(uuid: &str, metadata: StationMetadata) -> Self {
-        let station = glib::Object::new::<Self>(&[]).unwrap();
-
-        let imp = imp::SwStation::from_instance(&station);
-        imp.uuid.set(uuid.to_owned()).unwrap();
-        imp.is_local.set(true).unwrap();
+        imp.uuid.set(uuid).unwrap();
+        imp.is_local.set(is_local).unwrap();
         imp.metadata.set(metadata).unwrap();
 
         station

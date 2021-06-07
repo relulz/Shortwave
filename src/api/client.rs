@@ -66,7 +66,7 @@ impl Client {
         let url = self.build_url(STATION_SEARCH, Some(&request.url_encode())).await?;
         debug!("Station request URL: {}", url);
         let stations_md: Vec<StationMetadata> = HTTP_CLIENT.get_async(url.as_ref()).await?.json().await?;
-        let stations: Vec<SwStation> = stations_md.into_iter().map(SwStation::new).collect();
+        let stations: Vec<SwStation> = stations_md.into_iter().map(|metadata| SwStation::new(metadata.stationuuid.clone(), false, metadata)).collect();
 
         debug!("Found {} station(s)!", stations.len());
         self.model.clear();
@@ -77,15 +77,13 @@ impl Client {
         Ok(())
     }
 
-    pub async fn station_by_uuid(self, uuid: &str) -> Result<SwStation, Error> {
+    pub async fn station_metadata_by_uuid(self, uuid: &str) -> Result<StationMetadata, Error> {
         let url = self.build_url(&format!("{}{}", STATION_BY_UUID, uuid), None).await?;
         debug!("Request station by UUID URL: {}", url);
 
-        let stations_md: Vec<StationMetadata> = HTTP_CLIENT.get_async(url.as_ref()).await?.json().await?;
-        let mut data: Vec<SwStation> = stations_md.into_iter().map(SwStation::new).collect();
-
-        match data.pop() {
-            Some(station) => Ok(station),
+        let mut metadata: Vec<StationMetadata> = HTTP_CLIENT.get_async(url.as_ref()).await?.json().await?;
+        match metadata.pop() {
+            Some(data) => Ok(data),
             None => {
                 warn!("API: No station for identifier \"{}\" found", uuid);
                 Err(Error::InvalidStationError(uuid.to_owned()))
