@@ -14,6 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use super::models::StationEntry;
+use crate::api::{Client, Error, StationMetadata, SwStation};
+use crate::app::Action;
+use crate::database::connection;
+use crate::database::queries;
+use crate::i18n::*;
+use crate::model::SwStationModel;
+use crate::settings::{settings_manager, Key};
+use crate::ui::Notification;
 use futures::future::join_all;
 use glib::{clone, GEnum, ObjectExt, ParamSpec, Sender, ToValue};
 use gtk::glib;
@@ -21,18 +30,7 @@ use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use once_cell::sync::Lazy;
 use once_cell::unsync::OnceCell;
-
 use std::cell::RefCell;
-
-use crate::api::{Client, Error, SwStation};
-use crate::app::Action;
-use crate::database::connection;
-use crate::database::queries;
-use crate::database::StationIdentifier;
-use crate::i18n::*;
-use crate::model::SwStationModel;
-use crate::settings::{settings_manager, Key};
-use crate::ui::Notification;
 
 #[derive(Display, Copy, Debug, Clone, EnumString, PartialEq, GEnum)]
 #[repr(u32)]
@@ -137,8 +135,8 @@ impl SwLibrary {
         for station in stations {
             imp.model.add_station(&station);
 
-            let id = StationIdentifier::from_station(&station);
-            queries::insert_station_identifier(id).unwrap();
+            let entry = StationEntry::for_station(&station);
+            queries::insert_station(entry).unwrap();
         }
 
         self.update_library_status();
@@ -150,21 +148,14 @@ impl SwLibrary {
         debug!("Remove {} station(s)", stations.len());
         for station in stations {
             imp.model.remove_station(&station);
-
-            let id = StationIdentifier::from_station(&station);
-            queries::delete_station_identifier(id).unwrap();
+            queries::delete_station(&station.uuid()).unwrap();
         }
 
         self.update_library_status();
     }
 
     pub fn contains_station(station: &SwStation) -> bool {
-        // Get station identifier
-        let identifier = StationIdentifier::from_station(station);
-
-        // Check if database contains this identifier
-        let db = queries::station_identifiers().unwrap();
-        db.contains(&identifier)
+        queries::contains_station(&station.uuid()).unwrap()
     }
 
     fn update_library_status(&self) {
@@ -180,47 +171,104 @@ impl SwLibrary {
     }
 
     fn load_stations(&self) {
-        // Print database info
-        info!("Database Path: {}", connection::DB_PATH.to_str().unwrap());
-        info!("Stations: {}", queries::station_identifiers().unwrap().len());
-
         // Load database async
         let future = clone!(@strong self as this => async move {
-            let imp = imp::SwLibrary::from_instance(&this);
-            let mut futures = Vec::new();
+            let entries = queries::stations().unwrap();
+
+            // Print database info
+            info!("Database Path: {}", connection::DB_PATH.to_str().unwrap());
+            info!("Stations: {}", entries.len());
 
             // Set library status to loading
+            let imp = imp::SwLibrary::from_instance(&this);
             *imp.status.borrow_mut() = SwLibraryStatus::Loading;
             this.notify("status");
 
-            let identifiers = queries::station_identifiers().unwrap();
-            for id in identifiers {
-                let future = imp.client.clone().station_by_identifier(id);
-                futures.insert(0, future);
-            }
-            let results = join_all(futures).await;
-
-            for result in results {
-                match result {
-                    Ok(station) => imp.model.add_station(&station),
-                    Err(err) => match err {
-                        Error::InvalidStationError(uuid) => {
-                            let id = StationIdentifier::from_uuid(uuid);
-                            queries::delete_station_identifier(id).unwrap();
-
-                            let notification = Notification::new_info(&i18n("No longer existing station removed from library."));
-                            send!(imp.sender.get().unwrap(), Action::ViewShowNotification(notification));
-                        }
-                        _ => {
-                            let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
-                            send!(imp.sender.get().unwrap(), Action::ViewShowNotification(notification));
-                        }
-                    },
-                }
-            }
+            let futures = entries.into_iter().map(|entry| this.load_station(entry));
+            join_all(futures).await;
 
             this.update_library_status();
         });
         spawn!(future);
+    }
+
+    /// Try to add a station to the database.
+    async fn load_station(&self, entry: StationEntry) {
+        let imp = imp::SwLibrary::from_instance(&self);
+
+        if entry.is_local {
+            if let Some(data) = &entry.data {
+                match self.load_station_metadata(&entry.uuid, data) {
+                    Ok(metadata) => imp.model.add_station(&SwStation::new(entry.uuid.clone(), true, metadata)),
+                    Err(_) => self.delete_unknown_station(&entry.uuid),
+                }
+            } else {
+                self.delete_unknown_station(&entry.uuid);
+            }
+        } else {
+            match imp.client.clone().station_metadata_by_uuid(&entry.uuid).await {
+                Ok(metadata) => {
+                    let station = SwStation::new(entry.uuid.clone(), false, metadata);
+
+                    // Cache data for future use
+                    let entry = StationEntry::for_station(&station);
+                    queries::update_station(entry).unwrap();
+
+                    // Add station to the library
+                    imp.model.add_station(&station)
+                }
+                Err(err) => {
+                    warn!("Failed to fetch station: {}", entry.uuid);
+                    warn!("Error while receiving: {}", err);
+                    warn!("Trying to use cached data");
+
+                    let removed_online = matches!(err, Error::InvalidStationError(_));
+
+                    if let Some(data) = &entry.data {
+                        match self.load_station_metadata(&entry.uuid, data) {
+                            Ok(metadata) => {
+                                let station = SwStation::new(entry.uuid.clone(), false, metadata);
+                                imp.model.add_station(&station);
+                            }
+                            Err(_) => {
+                                if removed_online {
+                                    self.delete_unknown_station(&entry.uuid);
+                                } else {
+                                    warn!("Ignoring station to try again next time");
+                                }
+                            }
+                        }
+                    } else if removed_online {
+                        self.delete_unknown_station(&entry.uuid);
+                    } else {
+                        warn!("Ignoring station to try again next time");
+                    }
+                }
+            }
+        }
+    }
+
+    /// Deserialize the provided data as a station.
+    fn load_station_metadata(&self, uuid: &str, data: &str) -> Result<StationMetadata, serde_json::Error> {
+        match serde_json::from_str(data) {
+            Ok(metadata) => Ok(metadata),
+            Err(err) => {
+                warn!("Failed to deserialize station: {}", uuid);
+                warn!("Data from database: '{}'", data);
+                warn!("Error while deserializing: {}", err);
+                Err(err)
+            }
+        }
+    }
+
+    /// Delete an unknown or malformed station entry notifying the user.
+    fn delete_unknown_station(&self, uuid: &str) {
+        let imp = imp::SwLibrary::from_instance(&self);
+
+        warn!("Removing unknown station: {}", uuid);
+        queries::delete_station(&uuid).unwrap();
+
+        let notification = Notification::new_info(&i18n("An invalid station was removed from the library."));
+        send!(imp.sender.get().unwrap(), Action::ViewShowNotification(notification));
     }
 }

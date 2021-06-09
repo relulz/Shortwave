@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use super::models::StationEntry;
+use super::schema::library;
 use crate::database;
-use crate::database::*;
 use crate::diesel::prelude::*;
 
 macro_rules! connect_db {
@@ -24,23 +25,32 @@ macro_rules! connect_db {
     };
 }
 
-pub fn station_identifiers() -> Result<Vec<StationIdentifier>, diesel::result::Error> {
-    use crate::database::schema::library::dsl::*;
+pub fn stations() -> Result<Vec<StationEntry>, diesel::result::Error> {
     let con = connect_db!();
-
-    library.load::<StationIdentifier>(&con).map_err(From::from)
+    let entries = library::table.load::<StationEntry>(&con)?;
+    Ok(entries)
 }
 
-pub fn insert_station_identifier(identifier: StationIdentifier) -> Result<(), diesel::result::Error> {
-    use crate::database::schema::library::dsl::*;
+pub fn contains_station(uuid: &str) -> Result<bool, diesel::result::Error> {
     let con = connect_db!();
-
-    diesel::insert_into(library).values(identifier).execute(&*con).map_err(From::from).map(|_| ())
+    let entries = library::table.filter(library::uuid.eq(uuid)).load::<StationEntry>(&con)?;
+    Ok(!entries.is_empty())
 }
 
-pub fn delete_station_identifier(identifier: StationIdentifier) -> Result<(), diesel::result::Error> {
-    use crate::database::schema::library::dsl::*;
+pub fn insert_station(entry: StationEntry) -> Result<(), diesel::result::Error> {
     let con = connect_db!();
+    diesel::insert_into(library::table).values(entry).execute(&*con)?;
+    Ok(())
+}
 
-    diesel::delete(library.filter(stationuuid.eq(identifier.stationuuid))).execute(&*con).map_err(From::from).map(|_| ())
+pub fn update_station(entry: StationEntry) -> Result<(), diesel::result::Error> {
+    let con = connect_db!();
+    diesel::replace_into(library::table).values(entry).execute(&*con)?;
+    Ok(())
+}
+
+pub fn delete_station(uuid: &str) -> Result<(), diesel::result::Error> {
+    let con = connect_db!();
+    diesel::delete(library::table.filter(library::uuid.eq(uuid))).execute(&*con)?;
+    Ok(())
 }

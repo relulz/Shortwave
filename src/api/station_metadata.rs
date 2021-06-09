@@ -15,23 +15,26 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use gtk::glib;
-use serde::Deserialize;
-use serde::Deserializer;
+use serde::{Deserialize, Deserializer, Serializer};
 use std::str::FromStr;
 use url::Url;
 
-#[derive(glib::GBoxed, Default, Debug, Clone, serde_derive::Deserialize)]
+#[derive(glib::GBoxed, Default, Debug, Clone, Serialize, Deserialize)]
 #[gboxed(type_name = "SwStationMetadata")]
 pub struct StationMetadata {
     pub changeuuid: String,
     pub stationuuid: String,
     pub name: String,
+    #[serde(serialize_with = "url_to_str")]
     #[serde(deserialize_with = "str_to_url")]
     pub url: Option<Url>,
+    #[serde(serialize_with = "url_to_str")]
     #[serde(deserialize_with = "str_to_url")]
     pub url_resolved: Option<Url>,
+    #[serde(serialize_with = "url_to_str")]
     #[serde(deserialize_with = "str_to_url")]
     pub homepage: Option<Url>,
+    #[serde(serialize_with = "url_to_str")]
     #[serde(deserialize_with = "str_to_url")]
     pub favicon: Option<Url>,
     pub tags: String,
@@ -51,6 +54,14 @@ pub struct StationMetadata {
     pub clicktimestamp: String,
     pub clickcount: i32,
     pub clicktrend: i32,
+}
+
+fn url_to_str<S>(url: &Option<Url>, serializer: S) -> Result<S::Ok, S::Error>
+where
+    S: Serializer,
+{
+    let value = if let Some(url) = url { url.as_str() } else { "" };
+    serializer.serialize_str(value)
 }
 
 fn str_to_url<'de, D>(deserializer: D) -> Result<Option<Url>, D::Error>
