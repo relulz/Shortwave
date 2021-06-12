@@ -94,7 +94,7 @@ impl SwStationModel {
 
     pub fn find(&self, station: &SwStation) -> Option<u32> {
         for pos in 0..self.n_items() {
-            let obj = self.object(pos)?;
+            let obj = self.item(pos)?;
             let s = obj.downcast::<SwStation>().unwrap();
             if station.uuid() == s.uuid() {
                 return Some(pos);

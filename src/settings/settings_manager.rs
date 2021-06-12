@@ -24,12 +24,12 @@ use crate::settings::Key;
 pub fn list_keys() {
     debug!("Settings values:");
     let settings = settings();
-    let keys = settings.list_keys();
+    let keys = settings.list_children();
 
     for key in keys {
         let name = key.to_string();
         let value = settings.value(&name);
-        debug!("  \"{}\" -> {}", name, value);
+        debug!("  \"{}\" -> {}", &name, &value);
     }
 }
 

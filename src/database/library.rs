@@ -121,11 +121,11 @@ impl SwLibrary {
     }
 
     pub fn model(&self) -> SwStationModel {
-        self.property("model").unwrap().get().unwrap().unwrap()
+        self.property("model").unwrap().get().unwrap()
     }
 
     pub fn status(&self) -> SwLibraryStatus {
-        self.property("status").unwrap().get().unwrap().unwrap()
+        self.property("status").unwrap().get().unwrap()
     }
 
     pub fn add_stations(&self, stations: Vec<SwStation>) {

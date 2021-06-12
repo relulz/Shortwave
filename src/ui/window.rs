@@ -138,8 +138,7 @@ mod imp {
         fn set_property(&self, obj: &Self::Type, _id: usize, value: &glib::Value, pspec: &ParamSpec) {
             match pspec.name() {
                 "view" => {
-                    let view = value.get().unwrap();
-                    *self.view.borrow_mut() = view.unwrap();
+                    *self.view.borrow_mut() = value.get().unwrap();
                     obj.update_view();
                 }
                 _ => unimplemented!(),
@@ -219,10 +218,10 @@ impl SwApplicationWindow {
         s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme").flags(gio::SettingsBindFlags::GET).build();
 
         // flap
-        imp.window_flap.connect_property_folded_notify(clone!(@strong self as this => move |_| {
+        imp.window_flap.get().connect_folded_notify(clone!(@strong self as this => move |_| {
             this.update_visible_view();
         }));
-        imp.window_flap.connect_property_reveal_flap_notify(clone!(@strong self as this => move |_| {
+        imp.window_flap.get().connect_reveal_flap_notify(clone!(@strong self as this => move |_| {
             this.update_visible_view();
         }));
 

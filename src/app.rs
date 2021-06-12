@@ -15,7 +15,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use gio::subclass::prelude::ApplicationImpl;
-use gio::SettingsExt;
 use glib::clone;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;

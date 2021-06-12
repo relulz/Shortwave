@@ -83,7 +83,7 @@ impl FaviconDownloader {
 
         path.push(hash.to_string());
 
-        Ok(gio::File::new_for_path(&path))
+        Ok(gio::File::for_path(&path))
     }
 
     fn exists(file: &gio::File) -> bool {

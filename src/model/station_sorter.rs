@@ -64,13 +64,11 @@ mod imp {
         fn set_property(&self, obj: &Self::Type, _id: usize, value: &glib::Value, pspec: &ParamSpec) {
             match pspec.name() {
                 "descending" => {
-                    let descending = value.get().unwrap();
-                    *self.descending.borrow_mut() = descending.unwrap();
+                    *self.descending.borrow_mut() = value.get().unwrap();
                     obj.changed(gtk::SorterChange::Different);
                 }
                 "sorting" => {
-                    let sorting = value.get().unwrap();
-                    *self.sorting.borrow_mut() = sorting.unwrap();
+                    *self.sorting.borrow_mut() = value.get().unwrap();
                     obj.changed(gtk::SorterChange::Different);
                 }
                 _ => unimplemented!(),

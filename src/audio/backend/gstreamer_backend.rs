@@ -141,7 +141,7 @@ impl GstreamerBackend {
             self.volume_signal_id = Some(pulsesink.connect_notify(
                 Some("volume"),
                 clone!(@weak self.volume as old_volume, @strong volume_sender => move |element, _| {
-                    let pa_volume: f64 = element.property("volume").unwrap().get().unwrap().unwrap();
+                    let pa_volume: f64 = element.property("volume").unwrap().get().unwrap();
                     let new_volume = StreamVolume::convert_volume(StreamVolumeFormat::Linear, StreamVolumeFormat::Cubic, pa_volume);
 
                     // We have to check if the values are the same. For some reason gstreamer sends us
@@ -163,7 +163,7 @@ impl GstreamerBackend {
             pulsesink.connect_notify(
                 Some("mute"),
                 clone!(@weak self.volume as old_volume, @strong volume_sender => move |element, _| {
-                    let mute: bool = element.property("mute").unwrap().get().unwrap().unwrap();
+                    let mute: bool = element.property("mute").unwrap().get().unwrap();
                     let mut old_volume_locked = old_volume.lock().unwrap();
                     if mute && *old_volume_locked != 0.0 {
                         send!(volume_sender, 0.0);
@@ -399,7 +399,7 @@ impl GstreamerBackend {
             let queue_srcpad = recorderbin.by_name("queue").unwrap().static_pad("src").unwrap();
             let offset = queue_srcpad.offset() / 1_000_000_000;
 
-            let pipeline_time = self.pipeline.clock().expect("Could not get pipeline clock").time().nseconds().unwrap() as i64 / 1_000_000_000;
+            let pipeline_time = self.pipeline.clock().expect("Could not get pipeline clock").time().unwrap().nseconds() as i64 / 1_000_000_000;
             let result = pipeline_time + offset + 1;
 
             // Workaround to avoid crash as described in issue #540
@@ -418,8 +418,8 @@ impl GstreamerBackend {
     }
 
     fn calculate_pipeline_offset(pipeline: &Pipeline) -> i64 {
-        let clock_time = pipeline.clock().expect("Could not get pipeline clock").time().nseconds().unwrap() as i64;
-        let base_time = pipeline.base_time().nseconds().expect("Could not get pipeline base time") as i64;
+        let clock_time = pipeline.clock().expect("Could not get pipeline clock").time().unwrap().nseconds() as i64;
+        let base_time = pipeline.base_time().expect("Could not get pipeline base time").nseconds() as i64;
         -(clock_time - base_time)
     }
 
@@ -443,7 +443,7 @@ impl GstreamerBackend {
         match message.view() {
             MessageView::Tag(tag) => {
                 if let Some(t) = tag.tags().get::<gstreamer::tags::Title>() {
-                    let new_title = t.get().unwrap().to_string();
+                    let new_title = t.get().to_string();
 
                     // only send message if song title really have changed.
                     let mut current_title_locked = current_title.lock().unwrap();
@@ -514,7 +514,7 @@ impl GstreamerBackend {
                 // Catch the end-of-stream messages from the filesink
                 let structure = element.structure().unwrap();
                 if structure.name() == "GstBinForwarded" {
-                    let message: gstreamer::message::Message = structure.get("message").unwrap().unwrap();
+                    let message: gstreamer::message::Message = structure.get("message").unwrap();
                     if let MessageView::Eos(_) = &message.view() {
                         // Get recorderbin from message
                         let recorderbin = match message.src().and_then(|src| src.downcast::<Bin>().ok()) {

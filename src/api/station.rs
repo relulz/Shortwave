@@ -80,14 +80,14 @@ impl SwStation {
     }
 
     pub fn uuid(&self) -> String {
-        self.property("uuid").unwrap().get::<String>().unwrap().unwrap()
+        self.property("uuid").unwrap().get::<String>().unwrap()
     }
 
     pub fn is_local(&self) -> bool {
-        self.property("is-local").unwrap().get::<bool>().unwrap().unwrap()
+        self.property("is-local").unwrap().get::<bool>().unwrap()
     }
 
     pub fn metadata(&self) -> StationMetadata {
-        self.property("metadata").unwrap().get::<&StationMetadata>().unwrap().unwrap().clone()
+        self.property("metadata").unwrap().get::<&StationMetadata>().unwrap().clone()
     }
 }
