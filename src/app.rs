@@ -110,6 +110,8 @@ mod imp {
         fn startup(&self, app: &Self::Type) {
             self.parent_startup(app);
             app.set_resource_base_path(Some("/de/haeckerfelix/Shortwave/"));
+
+            adw::init();
         }
 
         fn activate(&self, app: &Self::Type) {
