@@ -199,8 +199,7 @@ impl SwApplicationWindow {
 
         // Add devel style class for development or beta builds
         if config::PROFILE == "development" || config::PROFILE == "beta" {
-            let ctx = self.style_context();
-            ctx.add_class("devel");
+            self.add_css_class("devel");
         }
 
         // Restore window geometry

@@ -111,8 +111,7 @@ impl SwSongRow {
             this.set_activatable_widget(Some(&imp.open_button.get()));
 
             // Dim row
-            let ctx = this.style_context();
-            ctx.add_class("dim-label");
+            this.add_css_class("dim-label");
         }));
 
         imp.open_button.connect_clicked(clone!(@strong self as this => move |_| {

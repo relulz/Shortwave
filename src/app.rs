@@ -109,7 +109,8 @@ mod imp {
     impl ApplicationImpl for SwApplication {
         fn startup(&self, app: &Self::Type) {
             self.parent_startup(app);
-            app.set_resource_base_path(Some("/de/haeckerfelix/Shortwave/"));
+
+            adw::init();
         }
 
         fn activate(&self, app: &Self::Type) {
@@ -169,7 +170,12 @@ impl SwApplication {
         info!("Isahc version: {}", isahc::version());
 
         // Create new GObject and downcast it into SwApplication
-        let app = glib::Object::new::<SwApplication>(&[("application-id", &Some(config::APP_ID)), ("flags", &gio::ApplicationFlags::empty())]).unwrap();
+        let app = glib::Object::new::<SwApplication>(&[
+            ("application-id", &Some(config::APP_ID)),
+            ("flags", &gio::ApplicationFlags::empty()),
+            ("resource-base-path", &Some("/de/haeckerfelix/Shortwave/")),
+        ])
+        .unwrap();
 
         // Start running gtk::Application
         app.run();

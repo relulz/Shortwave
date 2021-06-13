@@ -37,8 +37,8 @@ sanitize-filename = "0.3.0"
 
 gstreamer-audio = { git = "https://gitlab.freedesktop.org/gstreamer/gstreamer-rs", features = ["v1_10"] }
 gstreamer = { git = "https://gitlab.freedesktop.org/gstreamer/gstreamer-rs" }
-gettext-rs = { version = "0.5.0", features = ["gettext-system"] }
-adw = { git = "https://gitlab.gnome.org/bilelmoussaoui/libadwaita-rs", package = "libadwaita" }
+gettext-rs = { version = "0.7.0", features = ["gettext-system"] }
+adw = { git = "https://gitlab.gnome.org/World/Rust/libadwaita-rs", package = "libadwaita" }
 gtk = { git = "https://github.com/gtk-rs/gtk4-rs", package = "gtk4" }
 gtk-macros = "0.3.0"
 
