@@ -81,8 +81,8 @@ impl FeaturedCarousel {
             .as_bytes(),
         );
 
+        page_box.add_css_class("banner");
         let style_ctx = page_box.style_context();
-        style_ctx.add_class("banner");
         style_ctx.add_provider(&css_provider, 600);
 
         self.carousel.insert(&page_box, self.carousel.n_pages().try_into().unwrap());
