@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-04-10 09:03+0000\n"
-"PO-Revision-Date: 2021-04-10 11:12+0200\n"
+"POT-Creation-Date: 2021-06-09 19:14+0000\n"
+"PO-Revision-Date: 2021-06-13 12:17+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -184,7 +184,7 @@ msgstr "Zapisane utwory znajdują się w katalogu Muzyka."
 msgid "_Open"
 msgstr "_Otwórz"
 
-#: data/gtk/song_row.ui:13
+#: data/gtk/song_row.ui:14
 msgid "Save recorded song"
 msgstr "Zapisuje nagrany utwór"
 
@@ -313,26 +313,21 @@ msgstr "_Skróty klawiszowe"
 msgid "_About Shortwave"
 msgstr "_O programie"
 
-#: src/audio/player.rs:167
+#: src/audio/player.rs:168
 msgid "This station cannot be played because the stream is offline."
 msgstr "Nie można odtwarzać tej stacji, ponieważ strumień jest rozłączony."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "Station cannot be streamed."
 msgstr "Nie można odtwarzać stacji."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "URL is not valid."
 msgstr "Adres URL jest nieprawidłowy."
 
-#: src/database/library.rs:211
-msgid "No longer existing station removed from library."
-msgstr "Usunięto już nieistniejącą stację z kolekcji."
-
-#: src/database/library.rs:215 src/ui/pages/discover_page.rs:140
-#: src/ui/pages/search_page.rs:145
-msgid "Station data could not be received."
-msgstr "Nie można odebrać danych stacji."
+#: src/database/library.rs:271
+msgid "An invalid station was removed from the library."
+msgstr "Nieprawidłowa stacja została usunięta z kolekcji."
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -368,6 +363,10 @@ msgstr "Otwórz witrynę"
 #: src/ui/pages/discover_page.rs:101
 msgid "Powered by radio-browser.info"
 msgstr "Korzystamy z witryny radio-browser.info"
+
+#: src/ui/pages/discover_page.rs:140 src/ui/pages/search_page.rs:151
+msgid "Station data could not be received."
+msgstr "Nie można odebrać danych stacji."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
 #: src/ui/pages/library_page.rs:117
