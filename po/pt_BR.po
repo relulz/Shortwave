@@ -1,23 +1,23 @@
 # Brazilian Portuguese translation for shortwave.
 # Copyright (C) 2021 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
-# Rafael Fontenelle <rafaelff@gnome.org>, 2020-2021.
 # Enrico Nicoletto <liverig@gmail.com>, 2021.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2020-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-04-10 09:03+0000\n"
-"PO-Revision-Date: 2021-04-13 20:55-0300\n"
-"Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
+"POT-Creation-Date: 2021-06-09 19:14+0000\n"
+"PO-Revision-Date: 2021-06-14 06:53-0300\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Gtranslator 40.0\n"
 
 #: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
@@ -183,7 +183,7 @@ msgstr "As músicas salvas ficarão disponíveis na sua pasta Música."
 msgid "_Open"
 msgstr "_Abrir"
 
-#: data/gtk/song_row.ui:13
+#: data/gtk/song_row.ui:14
 msgid "Save recorded song"
 msgstr "Salvar gravação"
 
@@ -312,27 +312,23 @@ msgstr "A_talhos de teclado"
 msgid "_About Shortwave"
 msgstr "_Sobre o Shortwave"
 
-#: src/audio/player.rs:167
+#: src/audio/player.rs:168
 msgid "This station cannot be played because the stream is offline."
 msgstr ""
 "Esta estação não pode ser reproduzida porque o stream está desconectado."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "Station cannot be streamed."
 msgstr "A estação não pode ser reproduzida."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "URL is not valid."
 msgstr "A URL não é válida."
 
-#: src/database/library.rs:211
-msgid "No longer existing station removed from library."
-msgstr "Estação inexistente removida da biblioteca."
-
-#: src/database/library.rs:215 src/ui/pages/discover_page.rs:140
-#: src/ui/pages/search_page.rs:145
-msgid "Station data could not be received."
-msgstr "Os dados da estação não puderam ser recebidos."
+#: src/database/library.rs:271
+#| msgid "No longer existing station removed from library."
+msgid "An invalid station was removed from the library."
+msgstr "Um estação inválida foi removida da biblioteca."
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -368,6 +364,10 @@ msgstr "Abrir site"
 #: src/ui/pages/discover_page.rs:101
 msgid "Powered by radio-browser.info"
 msgstr "Fornecido por radio-browser.info"
+
+#: src/ui/pages/discover_page.rs:140 src/ui/pages/search_page.rs:151
+msgid "Station data could not be received."
+msgstr "Os dados da estação não puderam ser recebidos."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
 #: src/ui/pages/library_page.rs:117
