@@ -55,7 +55,7 @@ impl FeaturedCarousel {
     }
 
     pub fn add_page(&self, title: &str, rgb: &str, action: Option<Action>) {
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/featured_carousel.ui");
+        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/featured_carousel_page.ui");
         get_widget!(builder, gtk::Box, page_box);
         get_widget!(builder, gtk::Label, title_label);
         get_widget!(builder, gtk::Label, action_label);
