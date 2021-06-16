@@ -142,6 +142,8 @@ impl SwFeaturedCarousel {
         if imp.pages.borrow().len() == 1 {
             self.update_style();
         }
+
+        self.update_buttons();
     }
 
     fn setup_signals(&self) {
@@ -154,7 +156,7 @@ impl SwFeaturedCarousel {
             if position > 0 {
                 imp.carousel.scroll_to(&imp.pages.borrow()[position - 1].page);
             }else{
-                imp.carousel.scroll_to(&imp.pages.borrow()[(imp.pages.borrow().len() - 1)].page);
+                imp.carousel.scroll_to(&imp.pages.borrow()[0].page);
             }
         }));
 
@@ -162,16 +164,30 @@ impl SwFeaturedCarousel {
             let imp = imp::SwFeaturedCarousel::from_instance(&this);
             let position = imp.carousel.position().round() as usize;
 
-            if position + 1 < imp.pages.borrow().len() {
+            if position < imp.pages.borrow().len() - 1 {
                 imp.carousel.scroll_to(&imp.pages.borrow()[position + 1].page);
             }else{
-                imp.carousel.scroll_to(&imp.pages.borrow()[0].page);
+                imp.carousel.scroll_to(&imp.pages.borrow()[(imp.pages.borrow().len() - 1)].page);
             }
         }));
 
         imp.carousel.connect_position_notify(clone!(@weak self as this => move |_|{
+            this.update_buttons();
             this.update_style();
         }));
+    }
+
+    fn update_buttons(&self) {
+        let imp = imp::SwFeaturedCarousel::from_instance(self);
+
+        let position = imp.carousel.position();
+        let length = (imp.pages.borrow().len() - 1) as f64;
+
+        imp.previous_button.set_can_target(position > 0.0);
+        imp.previous_button.set_opacity(position.min(1.0));
+
+        imp.next_button.set_can_target(position < length);
+        imp.next_button.set_opacity((length - position).min(1.0));
     }
 
     fn update_style(&self) {
