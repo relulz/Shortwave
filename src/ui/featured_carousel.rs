@@ -51,7 +51,6 @@ mod imp {
         #[template_child]
         pub next_button: TemplateChild<gtk::Button>,
         pub pages: Rc<RefCell<Vec<Page>>>,
-        pub visible_page: Rc<RefCell<usize>>,
         pub css_provider: gtk::CssProvider,
     }
 
@@ -63,7 +62,6 @@ mod imp {
 
         fn new() -> Self {
             let pages = Rc::new(RefCell::new(Vec::new()));
-            let visible_page = Rc::new(RefCell::new(0));
             let css_provider = gtk::CssProvider::new();
 
             Self {
@@ -72,7 +70,6 @@ mod imp {
                 previous_button: TemplateChild::default(),
                 next_button: TemplateChild::default(),
                 pages,
-                visible_page,
                 css_provider,
             }
         }
@@ -152,32 +149,24 @@ impl SwFeaturedCarousel {
 
         imp.previous_button.connect_clicked(clone!(@weak self as this => move |_|{
             let imp = imp::SwFeaturedCarousel::from_instance(&this);
+            let position = imp.carousel.position().round() as usize;
 
-            if *imp.visible_page.borrow() != 0 {
-                imp.carousel.scroll_to(&imp.pages.borrow()[*imp.visible_page.borrow() -1].page);
-                *imp.visible_page.borrow_mut() -= 1;
+            if position > 0 {
+                imp.carousel.scroll_to(&imp.pages.borrow()[position - 1].page);
             }else{
-                imp.carousel.scroll_to(&imp.pages.borrow()[(imp.pages.borrow().len()-1)].page);
-                *imp.visible_page.borrow_mut() = imp.pages.borrow().len()-1;
+                imp.carousel.scroll_to(&imp.pages.borrow()[(imp.pages.borrow().len() - 1)].page);
             }
         }));
 
         imp.next_button.connect_clicked(clone!(@weak self as this => move |_|{
             let imp = imp::SwFeaturedCarousel::from_instance(&this);
+            let position = imp.carousel.position().round() as usize;
 
-            if (*imp.visible_page.borrow()+1) != imp.pages.borrow().len() {
-                imp.carousel.scroll_to(&imp.pages.borrow()[*imp.visible_page.borrow() +1].page);
-                *imp.visible_page.borrow_mut() += 1;
+            if position + 1 < imp.pages.borrow().len() {
+                imp.carousel.scroll_to(&imp.pages.borrow()[position + 1].page);
             }else{
                 imp.carousel.scroll_to(&imp.pages.borrow()[0].page);
-                *imp.visible_page.borrow_mut() = 0;
             }
-        }));
-
-        imp.carousel.connect_page_changed(clone!(@weak self as this => move |_, a|{
-            let imp = imp::SwFeaturedCarousel::from_instance(&this);
-
-            *imp.visible_page.borrow_mut() = a.try_into().unwrap();
         }));
 
         imp.carousel.connect_position_notify(clone!(@weak self as this => move |_|{
