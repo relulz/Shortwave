@@ -1,51 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <object class="GtkBox" id="featured_carousel">
-    <property name="orientation">vertical</property>
-    <property name="spacing">12</property>
-    <property name="hexpand">True</property>
-    <child>
-      <object class="GtkOverlay" id="overlay">
+  <template class="SwFeaturedCarousel" parent="AdwBin">
+    <property name="child">
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">12</property>
+        <property name="hexpand">True</property>
         <child>
-          <object class="AdwCarousel" id="carousel">
-            <property name="height_request">150</property>
-            <property name="animation_duration">400</property>
-            <property name="allow_mouse_drag">True</property>
-            <style>
-              <class name="featured-carousel"/>
-            </style>
+          <object class="GtkOverlay" id="overlay">
+            <child>
+              <object class="AdwCarousel" id="carousel">
+                <property name="height_request">150</property>
+                <property name="animation_duration">400</property>
+                <property name="allow_mouse_drag">True</property>
+                <style>
+                  <class name="featured-carousel"/>
+                </style>
+              </object>
+            </child>
+            <child type="overlay">
+              <object class="GtkButton" id="previous_button">
+                <property name="halign">start</property>
+                <property name="valign">center</property>
+                <property name="icon_name">go-previous-symbolic</property>
+                <style>
+                  <class name="osd"/>
+                  <class name="carousel-button"/>
+                  <class name="circular"/>
+                </style>
+              </object>
+            </child>
+            <child type="overlay">
+              <object class="GtkButton" id="next_button">
+                <property name="halign">end</property>
+                <property name="valign">center</property>
+                <property name="icon_name">go-next-symbolic</property>
+                <style>
+                  <class name="osd"/>
+                  <class name="carousel-button"/>
+                  <class name="circular"/>
+                </style>
+              </object>
+            </child>
           </object>
         </child>
-        <child type="overlay">
-          <object class="GtkButton" id="previous_button">
-            <property name="halign">start</property>
-            <property name="valign">center</property>
-            <property name="icon_name">go-previous-symbolic</property>
-            <style>
-              <class name="osd"/>
-              <class name="carousel-button"/>
-              <class name="circular"/>
-            </style>
-          </object>
-        </child>
-        <child type="overlay">
-          <object class="GtkButton" id="next_button">
-            <property name="halign">end</property>
-            <property name="valign">center</property>
-            <property name="icon_name">go-next-symbolic</property>
-            <style>
-              <class name="osd"/>
-              <class name="carousel-button"/>
-              <class name="circular"/>
-            </style>
+        <child>
+          <object class="AdwCarouselIndicatorLines">
+            <property name="carousel">carousel</property>
           </object>
         </child>
       </object>
-    </child>
-    <child>
-      <object class="AdwCarouselIndicatorLines">
-        <property name="carousel">carousel</property>
-      </object>
-    </child>
-  </object>
+    </property>
+  </template>
 </interface>

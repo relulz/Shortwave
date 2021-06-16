@@ -28,7 +28,7 @@ use crate::app;
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
 use crate::ui::featured_carousel::Action;
-use crate::ui::{FeaturedCarousel, Notification, SwStationFlowBox};
+use crate::ui::{Notification, SwFeaturedCarousel, SwStationFlowBox};
 
 mod imp {
     use super::*;
@@ -38,7 +38,7 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/discover_page.ui")]
     pub struct SwDiscoverPage {
         #[template_child]
-        pub carousel_box: TemplateChild<gtk::Box>,
+        pub carousel: TemplateChild<SwFeaturedCarousel>,
         #[template_child]
         pub votes_flowbox: TemplateChild<SwStationFlowBox>,
         #[template_child]
@@ -87,18 +87,14 @@ impl SwDiscoverPage {
     fn setup_widgets(&self) {
         let imp = imp::SwDiscoverPage::from_instance(self);
 
-        // Featured Carousel
-        let carousel = FeaturedCarousel::new();
-        imp.carousel_box.append(&carousel.widget);
-
-        let _action = Action::new("win.show-server-stats", &i18n("Show statistics"));
-        carousel.add_page(&i18n("Browse over 25,500 stations"), "26,95,180", None);
+        let action = Action::new("win.show-server-stats", &i18n("Show statistics"));
+        imp.carousel.add_page(&i18n("Browse over 25,500 stations"), "26,95,180", None);
 
         let action = Action::new("win.create-new-station", &i18n("Add new station"));
-        carousel.add_page(&i18n("Your favorite station is missing?"), "229,165,10", Some(action));
+        imp.carousel.add_page(&i18n("Your favorite station is missing?"), "229,165,10", Some(action));
 
         let action = Action::new("win.open-radio-browser-info", &i18n("Open website"));
-        carousel.add_page(&i18n("Powered by radio-browser.info"), "38,162,105", Some(action));
+        imp.carousel.add_page(&i18n("Powered by radio-browser.info"), "38,162,105", Some(action));
 
         // Most voted stations (stations with the most votes)
         let votes_request = StationRequest {

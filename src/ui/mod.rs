@@ -28,7 +28,7 @@ mod station_row;
 mod streaming_dialog;
 mod window;
 
-pub use featured_carousel::FeaturedCarousel;
+pub use featured_carousel::SwFeaturedCarousel;
 pub use notification::Notification;
 pub use song_listbox::SongListBox;
 pub use song_row::SwSongRow;

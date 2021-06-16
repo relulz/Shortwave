@@ -14,47 +14,89 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use adw::subclass::prelude::*;
 use adw::Carousel;
 use glib::clone;
 use gtk::glib;
 use gtk::prelude::*;
+use gtk::subclass::prelude::*;
+use gtk::CompositeTemplate;
 
 use std::cell::RefCell;
 use std::convert::TryInto;
 use std::rc::Rc;
 
-pub struct FeaturedCarousel {
-    pub widget: gtk::Box,
-    carousel: Carousel,
+mod imp {
+    use super::*;
+    use glib::subclass;
 
-    pages: Rc<RefCell<Vec<gtk::Box>>>,
-    visible_page: Rc<RefCell<usize>>,
+    #[derive(Debug, CompositeTemplate)]
+    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/featured_carousel.ui")]
+    pub struct SwFeaturedCarousel {
+        #[template_child]
+        pub carousel: TemplateChild<Carousel>,
+        #[template_child]
+        pub previous_button: TemplateChild<gtk::Button>,
+        #[template_child]
+        pub next_button: TemplateChild<gtk::Button>,
+        pub pages: Rc<RefCell<Vec<gtk::Box>>>,
+        pub visible_page: Rc<RefCell<usize>>,
+    }
 
-    builder: gtk::Builder,
+    #[glib::object_subclass]
+    impl ObjectSubclass for SwFeaturedCarousel {
+        const NAME: &'static str = "SwFeaturedCarousel";
+        type ParentType = adw::Bin;
+        type Type = super::SwFeaturedCarousel;
+
+        fn new() -> Self {
+            let pages = Rc::new(RefCell::new(Vec::new()));
+            let visible_page = Rc::new(RefCell::new(0));
+
+            Self {
+                carousel: TemplateChild::default(),
+                previous_button: TemplateChild::default(),
+                next_button: TemplateChild::default(),
+                pages,
+                visible_page,
+            }
+        }
+
+        fn class_init(klass: &mut Self::Class) {
+            Self::bind_template(klass);
+        }
+
+        fn instance_init(obj: &subclass::InitializingObject<Self>) {
+            obj.init_template();
+        }
+    }
+
+    impl ObjectImpl for SwFeaturedCarousel {
+        fn constructed(&self, obj: &Self::Type) {
+            self.parent_constructed(obj);
+
+            obj.init();
+        }
+    }
+
+    impl WidgetImpl for SwFeaturedCarousel {}
+
+    impl BinImpl for SwFeaturedCarousel {}
 }
 
-impl FeaturedCarousel {
-    pub fn new() -> Self {
-        let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/featured_carousel.ui");
-        get_widget!(builder, gtk::Box, featured_carousel);
-        get_widget!(builder, Carousel, carousel);
+glib::wrapper! {
+    pub struct SwFeaturedCarousel(ObjectSubclass<imp::SwFeaturedCarousel>)
+        @extends gtk::Widget, adw::Bin;
+}
 
-        let pages = Rc::new(RefCell::new(Vec::new()));
-        let visible_page = Rc::new(RefCell::new(0));
-
-        let carousel = Self {
-            widget: featured_carousel,
-            carousel,
-            pages,
-            visible_page,
-            builder,
-        };
-
-        carousel.setup_signals();
-        carousel
+impl SwFeaturedCarousel {
+    pub fn init(&self) {
+        self.setup_signals();
     }
 
     pub fn add_page(&self, title: &str, rgb: &str, action: Option<Action>) {
+        let imp = imp::SwFeaturedCarousel::from_instance(self);
+
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/featured_carousel_page.ui");
         get_widget!(builder, gtk::Box, page_box);
         get_widget!(builder, gtk::Label, title_label);
@@ -85,37 +127,41 @@ impl FeaturedCarousel {
         let style_ctx = page_box.style_context();
         style_ctx.add_provider(&css_provider, 600);
 
-        self.carousel.insert(&page_box, self.carousel.n_pages().try_into().unwrap());
-        self.pages.borrow_mut().append(&mut vec![page_box]);
+        imp.carousel.insert(&page_box, imp.carousel.n_pages().try_into().unwrap());
+        imp.pages.borrow_mut().append(&mut vec![page_box]);
     }
 
     fn setup_signals(&self) {
-        get_widget!(self.builder, gtk::Button, previous_button);
-        previous_button.connect_clicked(clone!(@weak self.carousel as carousel, @weak self.pages as pages, @weak self.visible_page as visible_page => move |_|{
-            if *visible_page.borrow() != 0 {
-                carousel.scroll_to(&pages.borrow()[*visible_page.borrow() -1]);
-                *visible_page.borrow_mut() -= 1;
+        let imp = imp::SwFeaturedCarousel::from_instance(self);
+
+        imp.previous_button.connect_clicked(clone!(@weak self as this => move |_|{
+            let imp = imp::SwFeaturedCarousel::from_instance(&this);
+
+            if *imp.visible_page.borrow() != 0 {
+                imp.carousel.scroll_to(&imp.pages.borrow()[*imp.visible_page.borrow() -1]);
+                *imp.visible_page.borrow_mut() -= 1;
             }else{
-                carousel.scroll_to(&pages.borrow()[(pages.borrow().len()-1)]);
-                *visible_page.borrow_mut() = pages.borrow().len()-1;
+                imp.carousel.scroll_to(&imp.pages.borrow()[(imp.pages.borrow().len()-1)]);
+                *imp.visible_page.borrow_mut() = imp.pages.borrow().len()-1;
             }
         }));
 
-        get_widget!(self.builder, gtk::Button, next_button);
-        next_button.connect_clicked(
-            clone!(@weak self.carousel as carousel, @strong self.pages as pages, @weak self.visible_page as visible_page => move |_|{
-                if (*visible_page.borrow()+1) != pages.borrow().len() {
-                    carousel.scroll_to(&pages.borrow()[*visible_page.borrow() +1]);
-                    *visible_page.borrow_mut() += 1;
-                }else{
-                    carousel.scroll_to(&pages.borrow()[0]);
-                    *visible_page.borrow_mut() = 0;
-                }
-            }),
-        );
+        imp.next_button.connect_clicked(clone!(@weak self as this => move |_|{
+            let imp = imp::SwFeaturedCarousel::from_instance(&this);
 
-        self.carousel.connect_page_changed(clone!(@strong self.visible_page as visible_page => move |_, a|{
-            *visible_page.borrow_mut() = a.try_into().unwrap();
+            if (*imp.visible_page.borrow()+1) != imp.pages.borrow().len() {
+                imp.carousel.scroll_to(&imp.pages.borrow()[*imp.visible_page.borrow() +1]);
+                *imp.visible_page.borrow_mut() += 1;
+            }else{
+                imp.carousel.scroll_to(&imp.pages.borrow()[0]);
+                *imp.visible_page.borrow_mut() = 0;
+            }
+        }));
+
+        imp.carousel.connect_page_changed(clone!(@weak self as this => move |_, a|{
+            let imp = imp::SwFeaturedCarousel::from_instance(&this);
+
+            *imp.visible_page.borrow_mut() = a.try_into().unwrap();
         }));
     }
 }
