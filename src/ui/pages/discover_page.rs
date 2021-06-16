@@ -88,13 +88,13 @@ impl SwDiscoverPage {
         let imp = imp::SwDiscoverPage::from_instance(self);
 
         let action = Action::new("win.show-server-stats", &i18n("Show statistics"));
-        imp.carousel.add_page(&i18n("Browse over 25,500 stations"), "26,95,180", None);
+        imp.carousel.add_page(&i18n("Browse over 25,500 stations"), "#1a5fb4", false, None);
 
         let action = Action::new("win.create-new-station", &i18n("Add new station"));
-        imp.carousel.add_page(&i18n("Your favorite station is missing?"), "229,165,10", Some(action));
+        imp.carousel.add_page(&i18n("Your favorite station is missing?"), "#e5a50a", true, Some(action));
 
         let action = Action::new("win.open-radio-browser-info", &i18n("Open website"));
-        imp.carousel.add_page(&i18n("Powered by radio-browser.info"), "38,162,105", Some(action));
+        imp.carousel.add_page(&i18n("Powered by radio-browser.info"), "#26a269", false, Some(action));
 
         // Most voted stations (stations with the most votes)
         let votes_request = StationRequest {

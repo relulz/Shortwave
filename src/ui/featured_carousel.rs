@@ -17,6 +17,7 @@
 use adw::subclass::prelude::*;
 use adw::Carousel;
 use glib::clone;
+use gtk::gdk;
 use gtk::glib;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
@@ -25,6 +26,14 @@ use gtk::CompositeTemplate;
 use std::cell::RefCell;
 use std::convert::TryInto;
 use std::rc::Rc;
+use std::str::FromStr;
+
+#[derive(Debug)]
+pub struct Page {
+    page: gtk::Box,
+    color: gdk::RGBA,
+    is_dark: bool,
+}
 
 mod imp {
     use super::*;
@@ -34,13 +43,16 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/featured_carousel.ui")]
     pub struct SwFeaturedCarousel {
         #[template_child]
+        pub overlay: TemplateChild<gtk::Overlay>,
+        #[template_child]
         pub carousel: TemplateChild<Carousel>,
         #[template_child]
         pub previous_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub next_button: TemplateChild<gtk::Button>,
-        pub pages: Rc<RefCell<Vec<gtk::Box>>>,
+        pub pages: Rc<RefCell<Vec<Page>>>,
         pub visible_page: Rc<RefCell<usize>>,
+        pub css_provider: gtk::CssProvider,
     }
 
     #[glib::object_subclass]
@@ -52,13 +64,16 @@ mod imp {
         fn new() -> Self {
             let pages = Rc::new(RefCell::new(Vec::new()));
             let visible_page = Rc::new(RefCell::new(0));
+            let css_provider = gtk::CssProvider::new();
 
             Self {
+                overlay: TemplateChild::default(),
                 carousel: TemplateChild::default(),
                 previous_button: TemplateChild::default(),
                 next_button: TemplateChild::default(),
                 pages,
                 visible_page,
+                css_provider,
             }
         }
 
@@ -91,10 +106,15 @@ glib::wrapper! {
 
 impl SwFeaturedCarousel {
     pub fn init(&self) {
+        let imp = imp::SwFeaturedCarousel::from_instance(self);
+
+        let style_ctx = imp.carousel.style_context();
+        style_ctx.add_provider(&imp.css_provider, 600);
+
         self.setup_signals();
     }
 
-    pub fn add_page(&self, title: &str, rgb: &str, action: Option<Action>) {
+    pub fn add_page(&self, title: &str, color: &str, is_dark: bool, action: Option<Action>) {
         let imp = imp::SwFeaturedCarousel::from_instance(self);
 
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/featured_carousel_page.ui");
@@ -111,24 +131,20 @@ impl SwFeaturedCarousel {
             action_label.set_text(&a.label);
         }
 
-        // CSS styling
-        let css_provider = gtk::CssProvider::new();
-        css_provider.load_from_data(
-            format!(
-                ".banner{{
-                        background-color: rgb({});
-                    }}",
-                rgb
-            )
-            .as_bytes(),
-        );
+        imp.carousel.append(&page_box);
 
-        page_box.add_css_class("banner");
-        let style_ctx = page_box.style_context();
-        style_ctx.add_provider(&css_provider, 600);
+        let rgba = gdk::RGBA::from_str(color).unwrap();
+        let page = Page {
+            page: page_box,
+            color: rgba,
+            is_dark: is_dark,
+        };
 
-        imp.carousel.insert(&page_box, imp.carousel.n_pages().try_into().unwrap());
-        imp.pages.borrow_mut().append(&mut vec![page_box]);
+        imp.pages.borrow_mut().append(&mut vec![page]);
+
+        if imp.pages.borrow().len() == 1 {
+            self.update_style();
+        }
     }
 
     fn setup_signals(&self) {
@@ -138,10 +154,10 @@ impl SwFeaturedCarousel {
             let imp = imp::SwFeaturedCarousel::from_instance(&this);
 
             if *imp.visible_page.borrow() != 0 {
-                imp.carousel.scroll_to(&imp.pages.borrow()[*imp.visible_page.borrow() -1]);
+                imp.carousel.scroll_to(&imp.pages.borrow()[*imp.visible_page.borrow() -1].page);
                 *imp.visible_page.borrow_mut() -= 1;
             }else{
-                imp.carousel.scroll_to(&imp.pages.borrow()[(imp.pages.borrow().len()-1)]);
+                imp.carousel.scroll_to(&imp.pages.borrow()[(imp.pages.borrow().len()-1)].page);
                 *imp.visible_page.borrow_mut() = imp.pages.borrow().len()-1;
             }
         }));
@@ -150,10 +166,10 @@ impl SwFeaturedCarousel {
             let imp = imp::SwFeaturedCarousel::from_instance(&this);
 
             if (*imp.visible_page.borrow()+1) != imp.pages.borrow().len() {
-                imp.carousel.scroll_to(&imp.pages.borrow()[*imp.visible_page.borrow() +1]);
+                imp.carousel.scroll_to(&imp.pages.borrow()[*imp.visible_page.borrow() +1].page);
                 *imp.visible_page.borrow_mut() += 1;
             }else{
-                imp.carousel.scroll_to(&imp.pages.borrow()[0]);
+                imp.carousel.scroll_to(&imp.pages.borrow()[0].page);
                 *imp.visible_page.borrow_mut() = 0;
             }
         }));
@@ -163,6 +179,65 @@ impl SwFeaturedCarousel {
 
             *imp.visible_page.borrow_mut() = a.try_into().unwrap();
         }));
+
+        imp.carousel.connect_position_notify(clone!(@weak self as this => move |_|{
+            this.update_style();
+        }));
+    }
+
+    fn update_style(&self) {
+        let imp = imp::SwFeaturedCarousel::from_instance(self);
+
+        if imp.pages.borrow().len() == 0 {
+            return;
+        }
+
+        let position = imp.carousel.position();
+
+        let round = position.round() as usize;
+
+        if imp.pages.borrow()[round].is_dark {
+            imp.overlay.add_css_class("dark-foreground");
+        } else {
+            imp.overlay.remove_css_class("dark-foreground");
+        }
+
+        let lower = position.floor() as usize;
+        let upper = position.ceil() as usize;
+
+        if lower == upper {
+            let color = imp.pages.borrow()[round].color;
+
+            self.set_background(&color);
+            return;
+        }
+
+        let color1 = imp.pages.borrow()[lower].color;
+        let color2 = imp.pages.borrow()[upper].color;
+        let progress = (position - lower as f64) as f32;
+
+        let color = gdk::RGBA {
+            red: color1.red * (1.0 - progress) + color2.red * progress,
+            green: color1.green * (1.0 - progress) + color2.green * progress,
+            blue: color1.blue * (1.0 - progress) + color2.blue * progress,
+            alpha: 1.0,
+        };
+
+        self.set_background(&color);
+    }
+
+    fn set_background(&self, color: &gdk::RGBA) {
+        let imp = imp::SwFeaturedCarousel::from_instance(self);
+
+        imp.css_provider.load_from_data(
+            format!(
+                "carousel {{
+                  background-color: {};
+                }}",
+                &color.to_string(),
+            )
+            .as_bytes(),
+        );
     }
 }
 

@@ -8,14 +8,15 @@
         <property name="hexpand">True</property>
         <child>
           <object class="GtkOverlay" id="overlay">
+            <property name="overflow">hidden</property>
+            <style>
+              <class name="featured-carousel"/>
+            </style>
             <child>
               <object class="AdwCarousel" id="carousel">
                 <property name="height_request">150</property>
                 <property name="animation_duration">400</property>
                 <property name="allow_mouse_drag">True</property>
-                <style>
-                  <class name="featured-carousel"/>
-                </style>
               </object>
             </child>
             <child type="overlay">
@@ -24,7 +25,7 @@
                 <property name="valign">center</property>
                 <property name="icon_name">go-previous-symbolic</property>
                 <style>
-                  <class name="osd"/>
+                  <class name="flat"/>
                   <class name="carousel-button"/>
                   <class name="circular"/>
                 </style>
@@ -36,7 +37,7 @@
                 <property name="valign">center</property>
                 <property name="icon_name">go-next-symbolic</property>
                 <style>
-                  <class name="osd"/>
+                  <class name="flat"/>
                   <class name="carousel-button"/>
                   <class name="circular"/>
                 </style>
