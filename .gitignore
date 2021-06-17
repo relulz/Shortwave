@@ -39,3 +39,5 @@ src/static_resource.rs
 .flatpak-builder
 shortwave.db
 shortwave.pot
+.flatpak
+.vscode
