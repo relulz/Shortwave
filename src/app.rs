@@ -60,12 +60,14 @@ pub enum Action {
 
 mod imp {
     use super::*;
+    use gtk::glib::WeakRef;
+    use once_cell::sync::OnceCell;
 
     pub struct SwApplication {
         pub sender: Sender<Action>,
         pub receiver: RefCell<Option<Receiver<Action>>>,
 
-        pub window: RefCell<Option<SwApplicationWindow>>,
+        pub window: OnceCell<WeakRef<SwApplicationWindow>>,
         pub player: Rc<Player>,
         pub library: SwLibrary,
 
@@ -82,7 +84,7 @@ mod imp {
             let (sender, r) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
             let receiver = RefCell::new(Some(r));
 
-            let window = RefCell::new(None);
+            let window = OnceCell::new();
             let player = Player::new(sender.clone());
             let library = SwLibrary::new(sender.clone());
 
@@ -119,7 +121,8 @@ mod imp {
 
             // If the window already exists,
             // present it instead creating a new one again.
-            if let Some(ref window) = *self.window.borrow() {
+            if let Some(weak_window) = self.window.get() {
+                let window = weak_window.upgrade().unwrap();
                 window.present();
                 info!("Application window presented.");
                 return;
@@ -127,7 +130,7 @@ mod imp {
 
             // No window available -> we have to create one
             let window = app.create_window();
-            self.window.replace(Some(window));
+            let _ = self.window.set(window.downgrade());
             info!("Created application window.");
 
             // Setup app level GActions
@@ -240,16 +243,16 @@ impl SwApplication {
         let imp = imp::SwApplication::from_instance(self);
 
         match action {
-            Action::ViewGoBack => imp.window.borrow().as_ref().unwrap().go_back(),
-            Action::ViewSet(view) => imp.window.borrow().as_ref().unwrap().set_view(view),
-            Action::ViewRaise => imp.window.borrow().as_ref().unwrap().present_with_time((glib::monotonic_time() / 1000) as u32),
-            Action::ViewSetMiniPlayer(enable) => imp.window.borrow().as_ref().unwrap().enable_mini_player(enable),
-            Action::ViewShowNotification(notification) => imp.window.borrow().as_ref().unwrap().show_notification(notification),
+            Action::ViewGoBack => imp.window.get().unwrap().upgrade().unwrap().go_back(),
+            Action::ViewSet(view) => imp.window.get().unwrap().upgrade().unwrap().set_view(view),
+            Action::ViewRaise => imp.window.get().unwrap().upgrade().unwrap().present_with_time((glib::monotonic_time() / 1000) as u32),
+            Action::ViewSetMiniPlayer(enable) => imp.window.get().unwrap().upgrade().unwrap().enable_mini_player(enable),
+            Action::ViewShowNotification(notification) => imp.window.get().unwrap().upgrade().unwrap().show_notification(notification),
             Action::PlaybackConnectGCastDevice(device) => imp.player.connect_to_gcast_device(device),
             Action::PlaybackDisconnectGCastDevice => imp.player.disconnect_from_gcast_device(),
             Action::PlaybackSetStation(station) => {
                 imp.player.set_station(*station);
-                imp.window.borrow().as_ref().unwrap().show_player_widget();
+                imp.window.get().unwrap().upgrade().unwrap().show_player_widget();
             }
             Action::PlaybackSet(true) => imp.player.set_playback(PlaybackState::Playing),
             Action::PlaybackSet(false) => imp.player.set_playback(PlaybackState::Stopped),
@@ -272,7 +275,7 @@ impl SwApplication {
                 let sorting: SwSorting = SwSorting::from_str(&settings_manager::string(Key::ViewSorting)).unwrap();
                 let order = settings_manager::string(Key::ViewOrder);
                 let descending = order == "Descending";
-                imp.window.borrow().as_ref().unwrap().set_sorting(sorting, descending);
+                imp.window.get().unwrap().upgrade().unwrap().set_sorting(sorting, descending);
             }
             _ => (),
         }
