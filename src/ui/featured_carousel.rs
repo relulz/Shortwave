@@ -32,7 +32,6 @@ use std::str::FromStr;
 pub struct Page {
     page: gtk::Box,
     color: gdk::RGBA,
-    is_dark: bool,
 }
 
 mod imp {
@@ -111,7 +110,7 @@ impl SwFeaturedCarousel {
         self.setup_signals();
     }
 
-    pub fn add_page(&self, title: &str, color: &str, is_dark: bool, action: Option<Action>) {
+    pub fn add_page(&self, title: &str, color: &str, action: Option<Action>) {
         let imp = imp::SwFeaturedCarousel::from_instance(self);
 
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/featured_carousel_page.ui");
@@ -131,11 +130,7 @@ impl SwFeaturedCarousel {
         imp.carousel.append(&page_box);
 
         let rgba = gdk::RGBA::from_str(color).unwrap();
-        let page = Page {
-            page: page_box,
-            color: rgba,
-            is_dark: is_dark,
-        };
+        let page = Page { page: page_box, color: rgba };
 
         imp.pages.borrow_mut().append(&mut vec![page]);
 
@@ -198,22 +193,14 @@ impl SwFeaturedCarousel {
         }
 
         let position = imp.carousel.position();
-
-        let round = position.round() as usize;
-
-        if imp.pages.borrow()[round].is_dark {
-            imp.overlay.add_css_class("dark-foreground");
-        } else {
-            imp.overlay.remove_css_class("dark-foreground");
-        }
-
         let lower = position.floor() as usize;
         let upper = position.ceil() as usize;
 
         if lower == upper {
+            let round = position.round() as usize;
             let color = imp.pages.borrow()[round].color;
 
-            self.set_background(&color);
+            self.set_color(&color);
             return;
         }
 
@@ -228,10 +215,10 @@ impl SwFeaturedCarousel {
             alpha: 1.0,
         };
 
-        self.set_background(&color);
+        self.set_color(&color);
     }
 
-    fn set_background(&self, color: &gdk::RGBA) {
+    fn set_color(&self, color: &gdk::RGBA) {
         let imp = imp::SwFeaturedCarousel::from_instance(self);
 
         imp.css_provider.load_from_data(
@@ -243,6 +230,14 @@ impl SwFeaturedCarousel {
             )
             .as_bytes(),
         );
+
+        // Copied from gtk/gtkcolorswatch.c, INTENSITY() macro
+        let intensity = color.red * 0.30 + color.green * 0.59 + color.blue * 0.11;
+        if intensity > 0.5 {
+            imp.overlay.add_css_class("dark-foreground");
+        } else {
+            imp.overlay.remove_css_class("dark-foreground");
+        }
     }
 }
 
