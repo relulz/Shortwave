@@ -19,6 +19,7 @@
       <file compressed="true" preprocess="xml-stripblanks">gtk/discover_page.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/streaming_dialog.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/featured_carousel.ui</file>
+      <file compressed="true" preprocess="xml-stripblanks">gtk/featured_carousel_page.ui</file>
       <file compressed="true" preprocess="xml-stripblanks">gtk/help_overlay.ui</file>
 
       <file compressed="true">gtk/style.css</file>
