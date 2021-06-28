@@ -35,11 +35,11 @@ once_cell = "1.5.2"
 rand = "0.8.3"
 sanitize-filename = "0.3.0"
 
-gstreamer-audio = { git = "https://gitlab.freedesktop.org/gstreamer/gstreamer-rs", features = ["v1_10"] }
-gstreamer = { git = "https://gitlab.freedesktop.org/gstreamer/gstreamer-rs" }
+gstreamer-audio = { version = "0.17.0", features = ["v1_10"] }
+gstreamer = "0.17.0"
 gettext-rs = { version = "0.7.0", features = ["gettext-system"] }
-adw = { git = "https://gitlab.gnome.org/World/Rust/libadwaita-rs", package = "libadwaita" }
-gtk = { git = "https://github.com/gtk-rs/gtk4-rs", package = "gtk4" }
+adw = { version = "0.1.0-alpha", package = "libadwaita" }
+gtk = { version = "0.1.0", package = "gtk4" }
 gtk-macros = "0.3.0"
 
 [target.'cfg(unix)'.dependencies]
