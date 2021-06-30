@@ -1,0 +1,450 @@
+# Russian translation for shortwave.
+# Copyright (C) 2021 shortwave's COPYRIGHT HOLDER
+# This file is distributed under the same license as the shortwave package.
+# Alexey Rubtsov <rushills@gmail.com>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: shortwave master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
+"POT-Creation-Date: 2021-06-18 18:43+0000\n"
+"PO-Revision-Date: 2021-06-30 11:18+0300\n"
+"Language-Team: Russian <gnome-cyr@gnome.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Last-Translator: Alexey Rubtsov <rushills@gmail.com>\n"
+"X-Generator: Poedit 3.0\n"
+
+#: data/gtk/discover_page.ui:28
+msgid "Most voted stations"
+msgstr "Самые популярные станции"
+
+#: data/gtk/discover_page.ui:43
+msgid "Trending"
+msgstr "В тренде"
+
+#: data/gtk/discover_page.ui:58
+msgid "Other users are listening to…"
+msgstr "Другие пользователи слушают…"
+
+#: data/gtk/library_page.ui:63
+msgid "Receiving station data…"
+msgstr "Получение данных о станции…"
+
+#: data/gtk/library_page.ui:90
+msgid "_Discover new stations"
+msgstr "Откройте для себя _новые станции"
+
+#: data/gtk/mini_controller.ui:87
+msgid "SHORTWAVE INTERNET RADIO"
+msgstr "КОРОТКОВОЛНОВОЕ ИНТЕРНЕТ-РАДИО"
+
+#: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:63
+#: data/gtk/toolbar_controller.ui:38
+msgid "No playback"
+msgstr "Нет воспроизведения"
+
+#: data/gtk/notification.ui:58
+msgid "Error details"
+msgstr "Детали ошибки"
+
+#: data/gtk/player.ui:44
+msgid "Connected with"
+msgstr "Подключено к"
+
+#: data/gtk/settings_window.ui:8 data/gtk/help_overlay.ui:11
+msgid "General"
+msgstr "Общие"
+
+#: data/gtk/settings_window.ui:11
+msgid "Appearance"
+msgstr "Вид"
+
+#: data/gtk/settings_window.ui:14
+msgid "_Dark Mode"
+msgstr "Темный режим"
+
+#: data/gtk/settings_window.ui:16
+msgid "Whether the application should use a dark theme"
+msgstr "Должно ли приложение использовать темную тему"
+
+#: data/gtk/settings_window.ui:29
+msgid "Features"
+msgstr "Возможности"
+
+#: data/gtk/settings_window.ui:32
+msgid "_Notifications"
+msgstr "Включить _уведомления"
+
+#: data/gtk/settings_window.ui:34
+msgid "Show desktop notifications when a new song gets played"
+msgstr ""
+"Показывать уведомления на рабочем столе при воспроизведении новой песни"
+
+#: data/gtk/help_overlay.ui:15
+msgctxt "shortcut window"
+msgid "Open shortcut window"
+msgstr "Открыть окно быстрого доступа"
+
+#: data/gtk/help_overlay.ui:21
+msgctxt "shortcut window"
+msgid "Open application menu"
+msgstr "Открыть меню приложения"
+
+#: data/gtk/help_overlay.ui:27
+msgctxt "shortcut window"
+msgid "Open preferences"
+msgstr "Открыть настройки"
+
+#: data/gtk/help_overlay.ui:33
+msgctxt "shortcut window"
+msgid "Quit the application"
+msgstr "Закрыть приложение"
+
+#: data/gtk/help_overlay.ui:40
+msgid "Window"
+msgstr "Окно"
+
+#: data/gtk/help_overlay.ui:44
+msgctxt "shortcut window"
+msgid "Open library view"
+msgstr "Открыть библиотеку"
+
+#: data/gtk/help_overlay.ui:50
+msgctxt "shortcut window"
+msgid "Open discover view"
+msgstr "Открыть режим исследования"
+
+#: data/gtk/help_overlay.ui:56
+msgctxt "shortcut window"
+msgid "Open search view"
+msgstr "Открыть поиск"
+
+#: data/gtk/help_overlay.ui:62
+msgctxt "shortcut window"
+msgid "Go back"
+msgstr "Назад"
+
+#: data/gtk/help_overlay.ui:69
+msgid "Playback"
+msgstr "Воспроизведение"
+
+#: data/gtk/help_overlay.ui:73
+msgctxt "shortcut window"
+msgid "Toggle playback"
+msgstr "Переключение воспроизведения"
+
+#: data/gtk/sidebar_controller.ui:22
+msgid "An error occurred"
+msgstr "Произошла ошибка"
+
+#: data/gtk/sidebar_controller.ui:178
+msgid "_Show station details"
+msgstr "_Показать информацию о станции"
+
+#: data/gtk/sidebar_controller.ui:182
+msgid "Stream to a _device"
+msgstr "Вывести на _устройство"
+
+#: data/gtk/sidebar_controller.ui:188
+msgid "_Enable mini player"
+msgstr "_Включить мини-плеер"
+
+#: data/gtk/song_listbox.ui:23
+msgid ""
+"Songs are automatically recognized using the stream metadata.\n"
+"\n"
+"If the station does not send any metadata, no songs can be recognized."
+msgstr ""
+"Песни автоматически распознаются с помощью метаданных потока.\n"
+"\n"
+"Если станция не отправляет метаданные, песни не распознаются."
+
+#: data/gtk/song_listbox.ui:63
+msgid "No songs detected"
+msgstr "Песни не обнаружены"
+
+#: data/gtk/song_listbox.ui:73
+msgid "Detected songs will appear here."
+msgstr "Обнаруженные композиции появятся здесь."
+
+#: data/gtk/song_listbox.ui:82
+msgid "_How does this work?"
+msgstr "_Как это работает?"
+
+#: data/gtk/song_listbox.ui:124
+msgid "Saved songs are located in your Music folder."
+msgstr "Сохраненные композиции находятся в папке Музыка."
+
+#: data/gtk/song_listbox.ui:137
+msgid "_Open"
+msgstr "_Открыть"
+
+#: data/gtk/song_row.ui:14
+msgid "Save recorded song"
+msgstr "Сохранить записанную песню"
+
+#: data/gtk/station_dialog.ui:8
+msgid "Station details"
+msgstr "Информация о станции"
+
+#: data/gtk/station_dialog.ui:71
+msgid "Actions"
+msgstr "Действия"
+
+#: data/gtk/station_dialog.ui:74
+msgid "_Play this station"
+msgstr "_Воспроизвести эту станцию"
+
+#: data/gtk/station_dialog.ui:82
+msgid "_Add to library"
+msgstr "Добавить в _библиотеку"
+
+#: data/gtk/station_dialog.ui:91
+msgid "_Remove from Library"
+msgstr "_Удалить из библиотеки"
+
+#: data/gtk/station_dialog.ui:102
+msgid "Information"
+msgstr "Информация"
+
+#: data/gtk/station_dialog.ui:105
+msgid "Language"
+msgstr "Язык"
+
+#: data/gtk/station_dialog.ui:119
+msgid "Tags"
+msgstr "Теги"
+
+#: data/gtk/station_dialog.ui:133
+msgid "Codec"
+msgstr "Кодек"
+
+#: data/gtk/station_dialog.ui:147
+msgid "Homepage"
+msgstr "Главная страница"
+
+#. This is a noun/label for the station stream url
+#: data/gtk/station_dialog.ui:172
+msgid "Stream"
+msgstr "Поток"
+
+#: data/gtk/streaming_dialog.ui:47
+msgid "Stream to a device"
+msgstr "Потоковая передача на устройство"
+
+#: data/gtk/streaming_dialog.ui:52
+msgid "_Cancel"
+msgstr "_Отмена"
+
+#: data/gtk/streaming_dialog.ui:58
+msgid "_Connect"
+msgstr "_Подключиться"
+
+#: data/gtk/streaming_dialog.ui:90
+msgid "Devices which implement the Google Cast protocol are supported."
+msgstr "Поддерживаются устройства, поддерживающие протокол Google Cast."
+
+#: data/gtk/streaming_dialog.ui:122
+msgid "No devices found"
+msgstr "Устройства не найдены"
+
+#: data/gtk/streaming_dialog.ui:132
+msgid "_Retry search"
+msgstr "По_вторить поиск"
+
+#: data/gtk/streaming_dialog.ui:180 data/gtk/streaming_dialog.ui:211
+msgid "Searching for devices…"
+msgstr "Поиск устройств…"
+
+#: data/gtk/window.ui:103 data/gtk/window.ui:173
+msgid "_Sorting"
+msgstr "_Сортировка"
+
+#: data/gtk/window.ui:106
+msgid "_Name"
+msgstr "_Название"
+
+#: data/gtk/window.ui:111
+msgid "_Language"
+msgstr "_Язык:"
+
+#: data/gtk/window.ui:116
+msgid "_Country"
+msgstr "С_трана:"
+
+#: data/gtk/window.ui:121
+msgid "S_tate"
+msgstr "_Штат"
+
+#: data/gtk/window.ui:126
+msgid "_Votes"
+msgstr "_Голоса"
+
+#: data/gtk/window.ui:133
+msgid "_Ascending"
+msgstr "_По возрастанию"
+
+#: data/gtk/window.ui:138
+msgid "_Descending"
+msgstr "По _убыванию"
+
+#: data/gtk/window.ui:147 data/gtk/window.ui:179
+msgid "_Open radio-browser.info <sup>↗</sup>"
+msgstr "_Открыть radio-browser.info <sup>↗</sup>"
+
+#: data/gtk/window.ui:151 data/gtk/window.ui:183
+msgid "_Create new station <sup>↗</sup>"
+msgstr "Создать _новую станцию <sup>↗</sup>"
+
+#: data/gtk/window.ui:157 data/gtk/window.ui:189
+msgid "_Preferences"
+msgstr "_Параметры"
+
+#: data/gtk/window.ui:161 data/gtk/window.ui:193
+msgid "_Keyboard Shortcuts"
+msgstr "_Горячие клавиши"
+
+#: data/gtk/window.ui:165 data/gtk/window.ui:197
+msgid "_About Shortwave"
+msgstr "О Коротковолновом Интернет-Радио"
+
+#: src/audio/player.rs:168
+msgid "This station cannot be played because the stream is offline."
+msgstr ""
+"Эта станция не может быть воспроизведена, поскольку поток находится в "
+"автономном режиме."
+
+#: src/audio/player.rs:186
+msgid "Station cannot be streamed."
+msgstr "Станция не может быть передана в потоковом режиме."
+
+#: src/audio/player.rs:186
+msgid "URL is not valid."
+msgstr "URL не действителен."
+
+#: src/database/library.rs:271
+msgid "An invalid station was removed from the library."
+msgstr "Из библиотеки была удалена недействительная станция."
+
+#: src/ui/about_dialog.rs:32
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
+msgid "Listen to internet radio"
+msgstr "Слушайте интернет-радио"
+
+#: src/ui/about_dialog.rs:35
+msgid "translator-credits"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Aleksey Kabanov https://launchpad.net/~ak099"
+
+#: src/ui/pages/discover_page.rs:90
+msgid "Show statistics"
+msgstr "Показать статистику"
+
+#: src/ui/pages/discover_page.rs:91
+msgid "Browse over 25,500 stations"
+msgstr "Просмотр более 25 500 станций"
+
+#: src/ui/pages/discover_page.rs:93
+msgid "Add new station"
+msgstr "Добавить новую станцию"
+
+#: src/ui/pages/discover_page.rs:94
+msgid "Your favorite station is missing?"
+msgstr "Ваша любимая станция пропала?"
+
+#: src/ui/pages/discover_page.rs:96
+msgid "Open website"
+msgstr "Открыть веб-сайт"
+
+#: src/ui/pages/discover_page.rs:97
+msgid "Powered by radio-browser.info"
+msgstr "Работает на сайте radio-browser.info"
+
+#: src/ui/pages/discover_page.rs:136 src/ui/pages/search_page.rs:151
+msgid "Station data could not be received."
+msgstr "Данные станции не могут быть получены."
+
+#. Welcome text which gets displayed when the library is empty. "{}" is the application name.
+#: src/ui/pages/library_page.rs:117
+msgid "Welcome to {}"
+msgstr "Добро пожаловать на {}"
+
+#: src/utils.rs:28
+msgid "{} Vote"
+msgid_plural "{} Votes"
+msgstr[0] "{} Голос"
+msgstr[1] "{} Голоса"
+msgstr[2] "{} Голосов"
+
+#: src/utils.rs:30
+msgid "{} · {} Vote"
+msgid_plural "{} · {} Votes"
+msgstr[0] "{} - {} Голос"
+msgstr[1] "{} - {} Голоса"
+msgstr[2] "{} - {} Голосов"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Shortwave"
+msgstr "Коротковолновое Интернет-Радио"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
+msgid "Felix Häcker"
+msgstr "Феликс Хеккер (Felix Häcker)"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
+msgid ""
+"Shortwave is an internet radio player that provides access to a station "
+"database with over 25,000 stations."
+msgstr ""
+"Коротковолновое Интернет-Радио - это интернет-радиоплеер, который "
+"предоставляет доступ к базе данных станций, насчитывающей более 25 000 "
+"станций."
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+msgid "Features:"
+msgstr "Возможности:"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+msgid "Create your own library where you can add your favorite stations"
+msgstr ""
+"Создайте собственную библиотеку, в которую можно добавлять любимые станции"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+msgid "Easily search and discover new radio stations"
+msgstr "Легкий поиск и открытие новых радиостанций"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+msgid ""
+"Automatic recognition of songs, with the possibility to save them "
+"individually"
+msgstr ""
+"Автоматическое распознавание песен с возможностью их индивидуального "
+"сохранения"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
+msgid "Responsive application layout, compatible for small and large screens"
+msgstr ""
+"Отзывчивый интерфейс приложения, совместимый с маленькими и большими "
+"экранами"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
+msgstr ""
+"Воспроизведение аудио на поддерживаемых сетевых устройствах (например, "
+"Google Chromecasts)"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
+msgid "Seamless integration into the GNOME desktop environment"
+msgstr "Бесшовная интеграция в среду рабочего стола GNOME"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Радио;Стриминг;Волна;"
