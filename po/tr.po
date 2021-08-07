@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-04-10 09:03+0000\n"
-"PO-Revision-Date: 2021-05-02 17:48+0300\n"
+"POT-Creation-Date: 2021-06-09 19:14+0000\n"
+"PO-Revision-Date: 2021-08-07 12:15+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <gnometurk@gnome.org>\n"
 "Language: tr\n"
@@ -185,7 +185,7 @@ msgstr "Kaydedilen şarkılar Müzik klasörünüzde konumlanır."
 msgid "_Open"
 msgstr "_Aç"
 
-#: data/gtk/song_row.ui:13
+#: data/gtk/song_row.ui:14
 msgid "Save recorded song"
 msgstr "Kaydedilen şarkıyı sakla"
 
@@ -314,26 +314,21 @@ msgstr "_Klavye Kısayolları"
 msgid "_About Shortwave"
 msgstr "Kısa Dalga _Hakkında"
 
-#: src/audio/player.rs:167
+#: src/audio/player.rs:168
 msgid "This station cannot be played because the stream is offline."
 msgstr "Yayın çevrim dışı olduğundan bu istasyon çalınamıyor."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "Station cannot be streamed."
 msgstr "İstasyon yayını bulunamadı."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "URL is not valid."
 msgstr "URL geçersiz."
 
-#: src/database/library.rs:211
-msgid "No longer existing station removed from library."
-msgstr "Var olan istasyon kitaplıktan kaldırılmadı."
-
-#: src/database/library.rs:215 src/ui/pages/discover_page.rs:140
-#: src/ui/pages/search_page.rs:145
-msgid "Station data could not be received."
-msgstr "İstasyon bilgisi alınamadı."
+#: src/database/library.rs:271
+msgid "An invalid station was removed from the library."
+msgstr "Geçersiz istasyon kitaplıktan kaldırıldı."
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -367,6 +362,10 @@ msgstr "Web sitesini aç"
 #: src/ui/pages/discover_page.rs:101
 msgid "Powered by radio-browser.info"
 msgstr "radio-browser.info ile güçlendirildi"
+
+#: src/ui/pages/discover_page.rs:140 src/ui/pages/search_page.rs:151
+msgid "Station data could not be received."
+msgstr "İstasyon bilgisi alınamadı."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
 #: src/ui/pages/library_page.rs:117
