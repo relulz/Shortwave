@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-04-10 09:03+0000\n"
-"PO-Revision-Date: 2021-05-31 13:51+0700\n"
-"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"POT-Creation-Date: 2021-06-09 19:14+0000\n"
+"PO-Revision-Date: 2021-08-09 15:25+0700\n"
+"Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 
 #: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
@@ -147,7 +147,7 @@ msgstr "Tampilkan detail _stasiun"
 
 #: data/gtk/sidebar_controller.ui:182
 msgid "Stream to a _device"
-msgstr "Streaming ke pe_rangkat"
+msgstr "Alirkan ke pe_rangkat"
 
 #: data/gtk/sidebar_controller.ui:188
 msgid "_Enable mini player"
@@ -159,7 +159,7 @@ msgid ""
 "\n"
 "If the station does not send any metadata, no songs can be recognized."
 msgstr ""
-"Lagu secara otomatis dikenali menggunakan metadata stream.\n"
+"Lagu secara otomatis dikenali menggunakan metadata aliran.\n"
 "\n"
 "Jika stasiun tidak mengirim metadata, tidak ada lagu yang dapat dikenali."
 
@@ -183,7 +183,7 @@ msgstr "Lagu tersimpan berada di folder Musik Anda."
 msgid "_Open"
 msgstr "Bu_ka"
 
-#: data/gtk/song_row.ui:13
+#: data/gtk/song_row.ui:14
 msgid "Save recorded song"
 msgstr "Menyimpan lagu yang direkam"
 
@@ -217,7 +217,7 @@ msgstr "Bahasa"
 
 #: data/gtk/station_dialog.ui:119
 msgid "Tags"
-msgstr "Tag"
+msgstr "Tanda"
 
 #: data/gtk/station_dialog.ui:133
 msgid "Codec"
@@ -230,11 +230,11 @@ msgstr "Beranda"
 #. This is a noun/label for the station stream url
 #: data/gtk/station_dialog.ui:172
 msgid "Stream"
-msgstr "Stream"
+msgstr "Aliran"
 
 #: data/gtk/streaming_dialog.ui:47
 msgid "Stream to a device"
-msgstr "Streaming ke perangkat"
+msgstr "Alirkan ke perangkat"
 
 #: data/gtk/streaming_dialog.ui:52
 msgid "_Cancel"
@@ -312,26 +312,21 @@ msgstr "Pintasan Papan Ti_k"
 msgid "_About Shortwave"
 msgstr "Tent_ang Shortwave"
 
-#: src/audio/player.rs:167
+#: src/audio/player.rs:168
 msgid "This station cannot be played because the stream is offline."
-msgstr "Stasiun ini tidak dapat diputar karena stream sedang luring."
+msgstr "Stasiun ini tidak dapat diputar karena aliran sedang luring."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "Station cannot be streamed."
-msgstr "Stasiun tidak dapat di-stream."
+msgstr "Stasiun tidak dapat dialirkan."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "URL is not valid."
 msgstr "URL tidak valid."
 
-#: src/database/library.rs:211
-msgid "No longer existing station removed from library."
-msgstr "Stasiun yang tidak ada lagi dihapus dari pustaka."
-
-#: src/database/library.rs:215 src/ui/pages/discover_page.rs:140
-#: src/ui/pages/search_page.rs:145
-msgid "Station data could not be received."
-msgstr "Data stasiun tidak dapat diterima."
+#: src/database/library.rs:271
+msgid "An invalid station was removed from the library."
+msgstr "Stasiun yang tidak valid telah dihapus dari pustaka."
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -367,6 +362,10 @@ msgstr "Buka situs web"
 #: src/ui/pages/discover_page.rs:101
 msgid "Powered by radio-browser.info"
 msgstr "Didukung oleh radio-browser.info"
+
+#: src/ui/pages/discover_page.rs:140 src/ui/pages/search_page.rs:151
+msgid "Station data could not be received."
+msgstr "Data stasiun tidak dapat diterima."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
 #: src/ui/pages/library_page.rs:117
@@ -440,7 +439,7 @@ msgstr "Integrasi mulus ke dalam lingkungan destop GNOME"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;Radio;Stream;Gelombang;"
+msgstr "Gradio;Radio;Aliran;Gelombang;"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Search for stations"
