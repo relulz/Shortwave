@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-04-14 00:04+0000\n"
-"PO-Revision-Date: 2021-04-15 18:07+0200\n"
+"POT-Creation-Date: 2021-08-09 08:27+0000\n"
+"PO-Revision-Date: 2021-08-11 18:23+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
@@ -185,7 +185,7 @@ msgstr "Shranjene skladbe so v mapi Glasba."
 msgid "_Open"
 msgstr "_Odpri "
 
-#: data/gtk/song_row.ui:13
+#: data/gtk/song_row.ui:14
 msgid "Save recorded song"
 msgstr "Shrani posneto skladbo"
 
@@ -314,26 +314,21 @@ msgstr "_Tipkovne bližnjice"
 msgid "_About Shortwave"
 msgstr "_O programu"
 
-#: src/audio/player.rs:167
+#: src/audio/player.rs:168
 msgid "This station cannot be played because the stream is offline."
 msgstr "Postaje ni mogoče predvajati, ker je pretok ni na voljo."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "Station cannot be streamed."
 msgstr "Postaje ni mogoče pretakati."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "URL is not valid."
 msgstr "Podan naslov URL ni veljaven."
 
-#: src/database/library.rs:211
-msgid "No longer existing station removed from library."
-msgstr "Neobstoječa postaja je odstranjena iz zbirke."
-
-#: src/database/library.rs:215 src/ui/pages/discover_page.rs:140
-#: src/ui/pages/search_page.rs:150
-msgid "Station data could not be received."
-msgstr "Podatkov postaje ni mogoče prejeti."
+#: src/database/library.rs:271
+msgid "An invalid station was removed from the library."
+msgstr "Neveljavna postaja je odstranjena iz zbirke."
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -344,29 +339,33 @@ msgstr "Poslušanje spletnih radijskih postaj"
 msgid "translator-credits"
 msgstr "Matej Urbančič <mateju@svn.gnome.org>"
 
-#: src/ui/pages/discover_page.rs:94
+#: src/ui/pages/discover_page.rs:90
 msgid "Show statistics"
 msgstr "Pokaži statistiko"
 
-#: src/ui/pages/discover_page.rs:95
+#: src/ui/pages/discover_page.rs:91
 msgid "Browse over 25,500 stations"
 msgstr "Brskanje med 25.500 postajami"
 
-#: src/ui/pages/discover_page.rs:97
+#: src/ui/pages/discover_page.rs:93
 msgid "Add new station"
 msgstr "Dodaj novo radijsko postajo"
 
-#: src/ui/pages/discover_page.rs:98
+#: src/ui/pages/discover_page.rs:94
 msgid "Your favorite station is missing?"
 msgstr "Ali vaše priljubljene postaje ni na seznamu?"
 
-#: src/ui/pages/discover_page.rs:100
+#: src/ui/pages/discover_page.rs:96
 msgid "Open website"
 msgstr "Odpri spletišče"
 
-#: src/ui/pages/discover_page.rs:101
+#: src/ui/pages/discover_page.rs:97
 msgid "Powered by radio-browser.info"
 msgstr "Storitev omogoča radio-browser.info"
+
+#: src/ui/pages/discover_page.rs:136 src/ui/pages/search_page.rs:151
+msgid "Station data could not be received."
+msgstr "Podatkov postaje ni mogoče prejeti."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
 #: src/ui/pages/library_page.rs:117
