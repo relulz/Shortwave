@@ -17,6 +17,7 @@
 use async_std_resolver::resolver_from_system_conf;
 use isahc::config::RedirectPolicy;
 use isahc::prelude::*;
+use once_cell::sync::Lazy;
 use once_cell::unsync::OnceCell;
 use rand::prelude::SliceRandom;
 use rand::thread_rng;
@@ -30,9 +31,10 @@ use crate::api::*;
 use crate::config;
 use crate::model::SwStationModel;
 
-lazy_static! {
-    pub static ref USER_AGENT: String = format!("{}/{}-{}", config::PKGNAME, config::VERSION, config::PROFILE);
-    pub static ref HTTP_CLIENT: isahc::HttpClient = isahc::HttpClientBuilder::new()
+pub static USER_AGENT: Lazy<String> = Lazy::new(|| format!("{}/{}-{}", config::PKGNAME, config::VERSION, config::PROFILE));
+
+pub static HTTP_CLIENT: Lazy<isahc::HttpClient> = Lazy::new(|| {
+    isahc::HttpClientBuilder::new()
         // Limit to reduce ram usage. We don't need 250 concurrent connections
         .max_connections(8)
         // Icons are fetched from different urls.
@@ -42,8 +44,8 @@ lazy_static! {
         .redirect_policy(RedirectPolicy::Follow)
         .default_header("User-Agent", USER_AGENT.as_str())
         .build()
-        .unwrap();
-}
+        .unwrap()
+});
 
 #[derive(Clone, Debug)]
 pub struct Client {
