@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-04-10 09:03+0000\n"
-"PO-Revision-Date: 2021-05-12 11:28+0200\n"
+"POT-Creation-Date: 2021-06-09 19:14+0000\n"
+"PO-Revision-Date: 2021-08-29 15:30+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 40.0\n"
+"X-Generator: Poedit 3.0\n"
 
 #: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
@@ -178,13 +178,13 @@ msgstr "¿_Cómo funciona?"
 
 #: data/gtk/song_listbox.ui:124
 msgid "Saved songs are located in your Music folder."
-msgstr "Las canciones guardadas están en su carpeta Música"
+msgstr "Las canciones guardadas están en su carpeta Música."
 
 #: data/gtk/song_listbox.ui:137
 msgid "_Open"
 msgstr "_Abrir"
 
-#: data/gtk/song_row.ui:13
+#: data/gtk/song_row.ui:14
 msgid "Save recorded song"
 msgstr "Guardar canción grabada"
 
@@ -193,7 +193,6 @@ msgid "Station details"
 msgstr "Detalles de la emisora"
 
 #: data/gtk/station_dialog.ui:71
-#| msgid "Locations"
 msgid "Actions"
 msgstr "Acciones"
 
@@ -210,7 +209,6 @@ msgid "_Remove from Library"
 msgstr "_Quitar de la biblioteca"
 
 #: data/gtk/station_dialog.ui:102
-#| msgid "Locations"
 msgid "Information"
 msgstr "Información"
 
@@ -316,26 +314,21 @@ msgstr "Ata_jos de teclado"
 msgid "_About Shortwave"
 msgstr "_Acerca de Shortwave"
 
-#: src/audio/player.rs:167
+#: src/audio/player.rs:168
 msgid "This station cannot be played because the stream is offline."
 msgstr "No se puede reproducir esta emisora porque el flujo está desconectado."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "Station cannot be streamed."
 msgstr "No se puede reproducir la emisora."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "URL is not valid."
 msgstr "El URL no es válido."
 
-#: src/database/library.rs:211
-msgid "No longer existing station removed from library."
-msgstr "Emisora que ya no existe eliminada de la biblioteca"
-
-#: src/database/library.rs:215 src/ui/pages/discover_page.rs:140
-#: src/ui/pages/search_page.rs:145
-msgid "Station data could not be received."
-msgstr "No se han podido recibir los datos de la emisora."
+#: src/database/library.rs:271
+msgid "An invalid station was removed from the library."
+msgstr "Una emisora no válida se eliminó de la biblioteca."
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -369,6 +362,10 @@ msgstr "Abrir página web"
 #: src/ui/pages/discover_page.rs:101
 msgid "Powered by radio-browser.info"
 msgstr "Ofrecido por radio-browser.info"
+
+#: src/ui/pages/discover_page.rs:140 src/ui/pages/search_page.rs:151
+msgid "Station data could not be received."
+msgstr "No se han podido recibir los datos de la emisora."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
 #: src/ui/pages/library_page.rs:117
