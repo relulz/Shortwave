@@ -49,6 +49,16 @@
     <kudo>Notifications</kudo>
   </kudos>
 
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </recommends>
+
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+
   <releases>
     <release version="2.0.1" date="2021-04-23">
       <description>
