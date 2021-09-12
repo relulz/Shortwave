@@ -2,21 +2,22 @@
 # Copyright (C) 2020 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
 # Juliano de Souza Camargo <julianosc@protonmail.com>, 2020-2021.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-05-10 13:10+0000\n"
-"PO-Revision-Date: 2021-05-10 19:56-0300\n"
-"Last-Translator: Juliano de Souza Camargo <julianosc@protonmail.com>\n"
-"Language-Team: Portuguese < >\n"
+"POT-Creation-Date: 2021-06-09 19:14+0000\n"
+"PO-Revision-Date: 2021-09-12 17:51+0100\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"Language-Team: Portuguese (https://l10n.gnome.org/teams/pt/)\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 40.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0\n"
 "X-DL-Team: pt\n"
 "X-DL-Module: shortwave\n"
 "X-DL-Branch: master\n"
@@ -29,15 +30,15 @@ msgstr "Estações mais votadas"
 
 #: data/gtk/discover_page.ui:43
 msgid "Trending"
-msgstr "Em alta"
+msgstr "Tendência"
 
 #: data/gtk/discover_page.ui:58
 msgid "Other users are listening to…"
-msgstr "Outros utilizadores estão a ouvir..."
+msgstr "Outros utilizadores estão a ouvir…"
 
 #: data/gtk/library_page.ui:63
 msgid "Receiving station data…"
-msgstr "A receber dados da estação..."
+msgstr "A receber dados da estação…"
 
 #: data/gtk/library_page.ui:90
 msgid "_Discover new stations"
@@ -70,7 +71,7 @@ msgstr "Aparência"
 
 #: data/gtk/settings_window.ui:14
 msgid "_Dark Mode"
-msgstr "_Modo noturno"
+msgstr "_Modo escuro"
 
 #: data/gtk/settings_window.ui:16
 msgid "Whether the application should use a dark theme"
@@ -263,7 +264,7 @@ msgstr "_Voltar a procurar"
 
 #: data/gtk/streaming_dialog.ui:180 data/gtk/streaming_dialog.ui:211
 msgid "Searching for devices…"
-msgstr "A procurar por dispositivos..."
+msgstr "A procurar por dispositivos…"
 
 #: data/gtk/window.ui:103 data/gtk/window.ui:173
 msgid "_Sorting"
@@ -311,7 +312,7 @@ msgstr "_Preferências"
 
 #: data/gtk/window.ui:161 data/gtk/window.ui:193
 msgid "_Keyboard Shortcuts"
-msgstr "Atalhos de t_eclado"
+msgstr "_Teclas de atalho"
 
 #: data/gtk/window.ui:165 data/gtk/window.ui:197
 msgid "_About Shortwave"
@@ -329,14 +330,9 @@ msgstr "A estação não pode ser transmitida."
 msgid "URL is not valid."
 msgstr "URL inválido."
 
-#: src/database/library.rs:211
-msgid "No longer existing station removed from library."
-msgstr "Estação não mais existente removida da coleção."
-
-#: src/database/library.rs:215 src/ui/pages/discover_page.rs:140
-#: src/ui/pages/search_page.rs:151
-msgid "Station data could not be received."
-msgstr "Dados da estação não se puderam receber."
+#: src/database/library.rs:271
+msgid "An invalid station was removed from the library."
+msgstr "Uma estação inválida foi removida da coleção."
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -345,7 +341,9 @@ msgstr "Ouça rádio na Internet"
 
 #: src/ui/about_dialog.rs:35
 msgid "translator-credits"
-msgstr "Juliano de Souza Camargo <julianosc@pm.me>"
+msgstr ""
+"Juliano de Souza Camargo <julianosc@pm.me>\n"
+"Hugo Carvalho <hugokarvalho@hotmail.com>"
 
 #: src/ui/pages/discover_page.rs:94
 msgid "Show statistics"
@@ -361,7 +359,7 @@ msgstr "Adicionar uma nova estação"
 
 #: src/ui/pages/discover_page.rs:98
 msgid "Your favorite station is missing?"
-msgstr "Sua estação favorita está em falta?"
+msgstr "A sua estação favorita está em falta?"
 
 #: src/ui/pages/discover_page.rs:100
 msgid "Open website"
@@ -370,6 +368,10 @@ msgstr "Abrir sítio web"
 #: src/ui/pages/discover_page.rs:101
 msgid "Powered by radio-browser.info"
 msgstr "Baseado no radio-browser.info"
+
+#: src/ui/pages/discover_page.rs:140 src/ui/pages/search_page.rs:151
+msgid "Station data could not be received."
+msgstr "Os dados da estação não puderam ser recebidos."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
 #: src/ui/pages/library_page.rs:117
@@ -402,7 +404,7 @@ msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 25,000 stations."
 msgstr ""
-"Shortwave é um reprodutor de rádio por Internet que fornece acesso a uma "
+"O Shortwave é um reprodutor de rádio por Internet que fornece acesso a uma "
 "base de dados de mais de 25 000 estações."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
