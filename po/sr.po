@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-02-20 14:26+0000\n"
-"PO-Revision-Date: 2021-02-23 06:47+0200\n"
+"POT-Creation-Date: 2021-06-09 19:14+0000\n"
+"PO-Revision-Date: 2021-09-18 09:13+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: српски <gnome-sr@googlegroups.org>\n"
 "Language: sr\n"
@@ -31,35 +31,19 @@ msgstr "Популарне"
 msgid "Other users are listening to…"
 msgstr "Други корисници слушају…"
 
-#: data/gtk/library.ui:37
+#: data/gtk/library_page.ui:63
 msgid "Receiving station data…"
 msgstr "Преузимам податке о станици…"
 
-#: data/gtk/library.ui:64
-#| msgid "Discover new stations"
+#: data/gtk/library_page.ui:90
 msgid "_Discover new stations"
 msgstr "_Откриј нове станице"
 
-#: data/gtk/menu/player_menu.ui:6
-#| msgid "Show station details"
-msgid "_Show station details"
-msgstr "_Прикажи детаље о станици"
-
-#: data/gtk/menu/player_menu.ui:10
-#| msgid "Stream to a device"
-msgid "Stream to a _device"
-msgstr "_Стримуј на уређај"
-
-#: data/gtk/menu/player_menu.ui:16
-#| msgid "Enable mini player"
-msgid "_Enable mini player"
-msgstr "_Укључи мини пуштача"
-
-#: data/gtk/mini_controller.ui:69
+#: data/gtk/mini_controller.ui:87
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "КРАТКИ ТАЛАС ИНТЕРНЕТ РАДИО"
 
-#: data/gtk/mini_controller.ui:91 data/gtk/sidebar_controller.ui:63
+#: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:63
 #: data/gtk/toolbar_controller.ui:38
 msgid "No playback"
 msgstr "Мирујем"
@@ -72,49 +56,108 @@ msgstr "Појединости грешке"
 msgid "Connected with"
 msgstr "Повезан са"
 
-#: data/gtk/settings_window.ui:10 data/gtk/shortcuts.ui:11
+#: data/gtk/settings_window.ui:8 data/gtk/help_overlay.ui:11
 msgid "General"
 msgstr "Опште"
 
-#: data/gtk/settings_window.ui:13
+#: data/gtk/settings_window.ui:11
 msgid "Appearance"
 msgstr "Изглед"
 
-#: data/gtk/settings_window.ui:16
-#| msgid "Dark Mode"
+#: data/gtk/settings_window.ui:14
 msgid "_Dark Mode"
 msgstr "_Таман режим"
 
-#: data/gtk/settings_window.ui:18
+#: data/gtk/settings_window.ui:16
 msgid "Whether the application should use a dark theme"
 msgstr "Да ли програм треба да користи тамну тему"
 
-#: data/gtk/settings_window.ui:31
+#: data/gtk/settings_window.ui:29
 msgid "Features"
 msgstr "Могућности"
 
-#: data/gtk/settings_window.ui:34
-#| msgid "Notifications"
+#: data/gtk/settings_window.ui:32
 msgid "_Notifications"
 msgstr "_Обавештења"
 
-#: data/gtk/settings_window.ui:36
+#: data/gtk/settings_window.ui:34
 msgid "Show desktop notifications when a new song gets played"
 msgstr "Прикажи обавештење радне површи када нова песма почне да се пушта"
 
-#: data/gtk/shortcuts.ui:15
+#: data/gtk/help_overlay.ui:15
+msgctxt "shortcut window"
+msgid "Open shortcut window"
+msgstr "Отвори прозор пречица"
+
+#: data/gtk/help_overlay.ui:21
+#| msgctxt "shortcut window"
+#| msgid "Quit the application"
+msgctxt "shortcut window"
+msgid "Open application menu"
+msgstr "Отвори изборник програма"
+
+#: data/gtk/help_overlay.ui:27
+#| msgid "_Preferences"
+msgctxt "shortcut window"
+msgid "Open preferences"
+msgstr "Отвори поставке"
+
+#: data/gtk/help_overlay.ui:33
 msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Изађи из програма"
 
-#: data/gtk/shortcuts.ui:21
+#: data/gtk/help_overlay.ui:40
+msgid "Window"
+msgstr "Прозор"
+
+#: data/gtk/help_overlay.ui:44
 msgctxt "shortcut window"
-msgid "Search for stations"
-msgstr "Потражи станице"
+msgid "Open library view"
+msgstr "Отвори преглед библиотеке"
+
+#: data/gtk/help_overlay.ui:50
+msgctxt "shortcut window"
+msgid "Open discover view"
+msgstr "Отвори преглед откривања"
+
+#: data/gtk/help_overlay.ui:56
+msgctxt "shortcut window"
+msgid "Open search view"
+msgstr "Отвори прозор претраге"
+
+#: data/gtk/help_overlay.ui:62
+#| msgid "No playback"
+msgctxt "shortcut window"
+msgid "Go back"
+msgstr "Иди назад"
+
+#: data/gtk/help_overlay.ui:69
+#| msgid "No playback"
+msgid "Playback"
+msgstr "Репродукција"
+
+#: data/gtk/help_overlay.ui:73
+#| msgid "No playback"
+msgctxt "shortcut window"
+msgid "Toggle playback"
+msgstr "Започиње/паузира пуштање"
 
 #: data/gtk/sidebar_controller.ui:22
 msgid "An error occurred"
 msgstr "Дошло је до грешке"
+
+#: data/gtk/sidebar_controller.ui:178
+msgid "_Show station details"
+msgstr "_Прикажи детаље о станици"
+
+#: data/gtk/sidebar_controller.ui:182
+msgid "Stream to a _device"
+msgstr "_Стримуј на уређај"
+
+#: data/gtk/sidebar_controller.ui:188
+msgid "_Enable mini player"
+msgstr "_Укључи мини пуштача"
 
 #: data/gtk/song_listbox.ui:23
 msgid ""
@@ -126,29 +169,27 @@ msgstr ""
 "\n"
 "Уколико станица не шаље мета-податке, песме не могу бити препознате."
 
-#: data/gtk/song_listbox.ui:64
+#: data/gtk/song_listbox.ui:63
 msgid "No songs detected"
 msgstr "Нема откривених песама"
 
-#: data/gtk/song_listbox.ui:74
+#: data/gtk/song_listbox.ui:73
 msgid "Detected songs will appear here."
 msgstr "Откривене песме појавиће се овде."
 
-#: data/gtk/song_listbox.ui:83
-#| msgid "How does this work?"
+#: data/gtk/song_listbox.ui:82
 msgid "_How does this work?"
 msgstr "_Како ово ради?"
 
-#: data/gtk/song_listbox.ui:125
+#: data/gtk/song_listbox.ui:124
 msgid "Saved songs are located in your Music folder."
 msgstr "Сачуване песме се налазе у вашој фасцикли са музиком."
 
-#: data/gtk/song_listbox.ui:138
-#| msgid "Open"
+#: data/gtk/song_listbox.ui:137
 msgid "_Open"
 msgstr "_Отвори"
 
-#: data/gtk/song_row.ui:12
+#: data/gtk/song_row.ui:14
 msgid "Save recorded song"
 msgstr "Сачувај снимљену песму"
 
@@ -156,159 +197,153 @@ msgstr "Сачувај снимљену песму"
 msgid "Station details"
 msgstr "Детаљи о станици"
 
-#: data/gtk/station_dialog.ui:62
-msgid "Language"
-msgstr "Језик"
+#: data/gtk/station_dialog.ui:71
+#| msgid "Locations"
+msgid "Actions"
+msgstr "Радње"
 
-#: data/gtk/station_dialog.ui:91
-msgid "Tags"
-msgstr "Ознаке"
+#: data/gtk/station_dialog.ui:74
+msgid "_Play this station"
+msgstr "_Пусти ову станицу"
 
-#: data/gtk/station_dialog.ui:117
-msgid "Codec"
-msgstr "Кодек"
-
-#: data/gtk/station_dialog.ui:144
-msgid "Homepage"
-msgstr "Матична страна"
-
-#: data/gtk/station_dialog.ui:182
-msgid "_Remove from Library"
-msgstr "_Уклони из библиотеке"
-
-#: data/gtk/station_dialog.ui:196
-#| msgid "Could not import library."
+#: data/gtk/station_dialog.ui:82
 msgid "_Add to library"
 msgstr "_Додај у библиотеку"
 
-#: data/gtk/streaming_dialog.ui:46
+#: data/gtk/station_dialog.ui:91
+msgid "_Remove from Library"
+msgstr "_Уклони из библиотеке"
+
+#: data/gtk/station_dialog.ui:102
+#| msgid "Locations"
+msgid "Information"
+msgstr "Информације"
+
+#: data/gtk/station_dialog.ui:105
+msgid "Language"
+msgstr "Језик"
+
+#: data/gtk/station_dialog.ui:119
+msgid "Tags"
+msgstr "Ознаке"
+
+#: data/gtk/station_dialog.ui:133
+msgid "Codec"
+msgstr "Кодек"
+
+#: data/gtk/station_dialog.ui:147
+msgid "Homepage"
+msgstr "Матична страна"
+
+#. This is a noun/label for the station stream url
+#: data/gtk/station_dialog.ui:172
+msgid "Stream"
+msgstr "Ток"
+
+#: data/gtk/streaming_dialog.ui:47
 msgid "Stream to a device"
 msgstr "Стримуј на уређај"
 
-#: data/gtk/streaming_dialog.ui:51
-#| msgid "Cancel"
+#: data/gtk/streaming_dialog.ui:52
 msgid "_Cancel"
 msgstr "_Откажи"
 
-#: data/gtk/streaming_dialog.ui:57
-#| msgid "Connected with"
+#: data/gtk/streaming_dialog.ui:58
 msgid "_Connect"
 msgstr "_Повежи се"
 
-#: data/gtk/streaming_dialog.ui:89
+#: data/gtk/streaming_dialog.ui:90
 msgid "Devices which implement the Google Cast protocol are supported."
 msgstr "Уређаји који примењују Гуглов Каст протокол су подржани."
 
-#: data/gtk/streaming_dialog.ui:121
+#: data/gtk/streaming_dialog.ui:122
 msgid "No devices found"
 msgstr "Нисам нашао уређаје"
 
-#: data/gtk/streaming_dialog.ui:131
-#| msgid "Retry search"
+#: data/gtk/streaming_dialog.ui:132
 msgid "_Retry search"
 msgstr "_Понови претрагу"
 
-#: data/gtk/streaming_dialog.ui:179 data/gtk/streaming_dialog.ui:210
+#: data/gtk/streaming_dialog.ui:180 data/gtk/streaming_dialog.ui:211
 msgid "Searching for devices…"
 msgstr "Тражим уређаје…"
 
-#: data/gtk/window.ui:108
-#| msgid "Sorting"
+#: data/gtk/window.ui:103 data/gtk/window.ui:173
 msgid "_Sorting"
 msgstr "_Ређање"
 
-#: data/gtk/window.ui:111
-#| msgid "Name"
+#: data/gtk/window.ui:106
 msgid "_Name"
 msgstr "_Назив"
 
-#: data/gtk/window.ui:116
-#| msgid "Language"
+#: data/gtk/window.ui:111
 msgid "_Language"
 msgstr "_Језик"
 
-#: data/gtk/window.ui:121
-#| msgid "Country"
+#: data/gtk/window.ui:116
 msgid "_Country"
 msgstr "_Држава"
 
-#: data/gtk/window.ui:126
-#| msgid "State"
+#: data/gtk/window.ui:121
 msgid "S_tate"
 msgstr "_Покрајина"
 
-#: data/gtk/window.ui:131
-#| msgid "Votes"
+#: data/gtk/window.ui:126
 msgid "_Votes"
 msgstr "_Гласова"
 
-#: data/gtk/window.ui:138
-#| msgid "Ascending"
+#: data/gtk/window.ui:133
 msgid "_Ascending"
 msgstr "_Растуће"
 
-#: data/gtk/window.ui:143
-#| msgid "Descending"
+#: data/gtk/window.ui:138
 msgid "_Descending"
 msgstr "_Опадајуће"
 
-#: data/gtk/window.ui:152
-#| msgid "Open radio-browser.info <sup>↗</sup>"
+#: data/gtk/window.ui:147 data/gtk/window.ui:179
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_Отвори radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/window.ui:156
-#| msgid "Create new station"
-msgid "_Create new station"
-msgstr "_Направи нову станицу"
+#: data/gtk/window.ui:151 data/gtk/window.ui:183
+#| msgid "_Create new station"
+msgid "_Create new station <sup>↗</sup>"
+msgstr "_Направи нову станицу <sup>↗</sup>"
 
-#: data/gtk/window.ui:162
-#| msgid "Preferences"
+#: data/gtk/window.ui:157 data/gtk/window.ui:189
 msgid "_Preferences"
 msgstr "_Поставке"
 
-#: data/gtk/window.ui:166
-#| msgid "Keyboard Shortcuts"
+#: data/gtk/window.ui:161 data/gtk/window.ui:193
 msgid "_Keyboard Shortcuts"
 msgstr "Пречице _тастатуре"
 
-#: data/gtk/window.ui:170
-#| msgid "About Shortwave"
+#: data/gtk/window.ui:165 data/gtk/window.ui:197
 msgid "_About Shortwave"
 msgstr "О _Кратком таласу"
 
-#: src/audio/player.rs:163
+#: src/audio/player.rs:168
 msgid "This station cannot be played because the stream is offline."
 msgstr "Станица се не може слушати јер је ток ван мреже."
 
-#: src/audio/player.rs:181
+#: src/audio/player.rs:186
 msgid "Station cannot be streamed."
 msgstr "Станица се не може слушати."
 
-#: src/audio/player.rs:181
+#: src/audio/player.rs:186
 msgid "URL is not valid."
 msgstr "Адреса је неисправна."
 
-#. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:56
-msgid "Welcome to {}"
-msgstr "Добро дошли у {}"
-
-#: src/database/library.rs:146
-msgid "No longer existing station removed from library."
-msgstr "Угашене станице су уклоњене из библиотеке."
-
-#: src/database/library.rs:150 src/ui/pages/discover_page.rs:167
-#: src/ui/pages/search_page.rs:158
-msgid "Station data could not be received."
-msgstr "Подаци о станици се не могу преузети."
+#: src/database/library.rs:271
+#| msgid "No longer existing station removed from library."
+msgid "An invalid station was removed from the library."
+msgstr "Неисправна станица је уклоњена из библиотеке."
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
 msgid "Listen to internet radio"
 msgstr "Слушајте радио преко Интернета"
 
-#: src/ui/about_dialog.rs:34
+#: src/ui/about_dialog.rs:35
 msgid "translator-credits"
 msgstr ""
 "  Марко М. Костић <marko.m.kostic@gmail.com>\n"
@@ -316,31 +351,40 @@ msgstr ""
 "\n"
 "http://prevod.org — превод на српски језик"
 
-#: src/ui/pages/discover_page.rs:116
+#: src/ui/pages/discover_page.rs:94
 msgid "Show statistics"
 msgstr "Прикажи статистику"
 
-#: src/ui/pages/discover_page.rs:117
+#: src/ui/pages/discover_page.rs:95
 msgid "Browse over 25,500 stations"
 msgstr "Разглдајте више од 25.500 станица"
 
-#: src/ui/pages/discover_page.rs:119
+#: src/ui/pages/discover_page.rs:97
 msgid "Add new station"
 msgstr "Додај нову станицу"
 
-#: src/ui/pages/discover_page.rs:120
+#: src/ui/pages/discover_page.rs:98
 msgid "Your favorite station is missing?"
 msgstr "Ваша омиљена станица недостаје?"
 
-#: src/ui/pages/discover_page.rs:122
+#: src/ui/pages/discover_page.rs:100
 msgid "Open website"
 msgstr "Отвори веб страницу"
 
-#: src/ui/pages/discover_page.rs:123
+#: src/ui/pages/discover_page.rs:101
 msgid "Powered by radio-browser.info"
 msgstr "Покреће га „radio-browser.info“"
 
-#: src/utils.rs:109
+#: src/ui/pages/discover_page.rs:140 src/ui/pages/search_page.rs:151
+msgid "Station data could not be received."
+msgstr "Подаци о станици се не могу преузети."
+
+#. Welcome text which gets displayed when the library is empty. "{}" is the application name.
+#: src/ui/pages/library_page.rs:117
+msgid "Welcome to {}"
+msgstr "Добро дошли у {}"
+
+#: src/utils.rs:28
 msgid "{} Vote"
 msgid_plural "{} Votes"
 msgstr[0] "{} глас"
@@ -348,7 +392,7 @@ msgstr[1] "{} гласа"
 msgstr[2] "{} гласова"
 msgstr[3] "Један глас"
 
-#: src/utils.rs:111
+#: src/utils.rs:30
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
 msgstr[0] "{} · {} глас"
@@ -414,14 +458,15 @@ msgstr ""
 "г-радио;градио;радио;стрим;ток;вејв;вал;талас;кратак;Gradio;Radio;Stream;"
 "Wave;G-radio;strim;tok;vejv;val;talas;kratak;"
 
+#~ msgctxt "shortcut window"
+#~ msgid "Search for stations"
+#~ msgstr "Потражи станице"
+
 #~ msgid "Discover"
 #~ msgstr "Откриј"
 
 #~ msgid "Search"
 #~ msgstr "Претрага"
-
-#~ msgid "Locations"
-#~ msgstr "Места"
 
 #~ msgid "Languages"
 #~ msgstr "Језици"
