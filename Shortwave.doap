@@ -21,6 +21,12 @@
       <foaf:name>Felix Häcker</foaf:name>
       <foaf:mbox rdf:resource="mailto:haeckerfelix@gnome.org" />
       <gnome:userid>haeckerfelix</gnome:userid>
+      <foaf:account>
+        <foaf:OnlineAccount>
+          <foaf:accountServiceHomepage rdf:resource="https://gitlab.gnome.org" />
+          <foaf:accountName>haecker-felix</foaf:accountName>
+        </foaf:OnlineAccount>
+      </foaf:account>
     </foaf:Person>
   </maintainer>
 </Project>
