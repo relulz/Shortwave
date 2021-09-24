@@ -38,7 +38,7 @@ gstreamer-audio = { git = "https://gitlab.freedesktop.org/gstreamer/gstreamer-rs
 gstreamer = { git = "https://gitlab.freedesktop.org/gstreamer/gstreamer-rs", branch = "0.17"}
 gettext-rs = { version = "0.7.0", features = ["gettext-system"] }
 adw = { version = "0.1.0-alpha", package = "libadwaita" }
-gtk = { version = "0.1.0", package = "gtk4" }
+gtk = { version = "0.3.0", package = "gtk4" }
 gtk-macros = "0.3.0"
 
 [target.'cfg(unix)'.dependencies]
