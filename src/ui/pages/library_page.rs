@@ -114,7 +114,7 @@ impl SwLibraryPage {
         imp.status_page.set_icon_name(Some(&config::APP_ID));
 
         // Welcome text which gets displayed when the library is empty. "{}" is the application name.
-        imp.status_page.set_title(Some(&i18n_f("Welcome to {}", &[config::NAME]).as_str()));
+        imp.status_page.set_title(&i18n_f("Welcome to {}", &[config::NAME]));
 
         // Station flowbox
         imp.flowbox.init(imp.library.model(), imp.sender.get().unwrap().clone());
