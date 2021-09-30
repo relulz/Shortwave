@@ -211,11 +211,6 @@ impl SwApplicationWindow {
     fn setup_signals(&self, _sender: Sender<Action>) {
         let imp = imp::SwApplicationWindow::from_instance(self);
 
-        // dark mode
-        let s = settings_manager::settings();
-        let gtk_s = gtk::Settings::default().unwrap();
-        s.bind("dark-mode", &gtk_s, "gtk-application-prefer-dark-theme").flags(gio::SettingsBindFlags::GET).build();
-
         // flap
         imp.window_flap.get().connect_folded_notify(clone!(@strong self as this => move |_| {
             this.update_visible_view();

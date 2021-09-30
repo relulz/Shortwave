@@ -149,6 +149,9 @@ mod imp {
                 }),
             );
 
+            // Needs to be called after settings.connect_changed for it to trigger.
+            app.update_color_scheme();
+
             // List all setting keys
             settings_manager::list_keys();
 
@@ -277,7 +280,20 @@ impl SwApplication {
                 let descending = order == "Descending";
                 imp.window.get().unwrap().upgrade().unwrap().set_sorting(sorting, descending);
             }
+            Key::DarkMode => self.update_color_scheme(),
             _ => (),
+        }
+    }
+
+    fn update_color_scheme(&self) {
+        let manager = adw::StyleManager::default().unwrap();
+        if !manager.system_supports_color_schemes() {
+            let color_scheme = if settings_manager::boolean(Key::DarkMode) {
+                adw::ColorScheme::PreferDark
+            } else {
+                adw::ColorScheme::PreferLight
+            };
+            manager.set_color_scheme(color_scheme);
         }
     }
 }

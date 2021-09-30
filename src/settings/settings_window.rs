@@ -34,12 +34,19 @@ impl SettingsWindow {
 
         let window = Self { widget: settings_window, builder };
 
+        window.setup_widgets();
         window.setup_signals();
         window
     }
 
     pub fn show(&self) {
         self.widget.set_visible(true);
+    }
+
+    fn setup_widgets(&self) {
+        let manager = adw::StyleManager::default().unwrap();
+        get_widget!(self.builder, gtk::Widget, appearance_group);
+        appearance_group.set_visible(!manager.system_supports_color_schemes())
     }
 
     fn setup_signals(&self) {
