@@ -83,9 +83,9 @@ impl SwSongRow {
 
         // Set information
         let duration = Self::format_duration(song.duration.as_secs());
-        row.set_title(Some(&song.title));
+        row.set_title(&song.title);
         row.set_tooltip_text(Some(&song.title));
-        row.set_subtitle(Some(&duration));
+        row.set_subtitle(&duration);
 
         let imp = imp::SwSongRow::from_instance(&row);
         imp.sender.set(sender).unwrap();
