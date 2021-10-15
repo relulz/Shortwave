@@ -23,6 +23,8 @@
       <file compressed="true" preprocess="xml-stripblanks">gtk/help_overlay.ui</file>
 
       <file compressed="true" alias="style.css">gtk/style.css</file>
+      <file compressed="true" alias="style-dark.css">gtk/style-dark.css</file>
+      <file compressed="true" alias="style-hc.css">gtk/style-hc.css</file>
 
       <file compressed="true">images/wood.png</file>
       <file compressed="true">images/metal.png</file>
