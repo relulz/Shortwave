@@ -91,6 +91,7 @@
                         <property name="use_underline">True</property>
                         <style>
                           <class name="suggested-action"/>
+                          <class name="pill"/>
                         </style>
                       </object>
                     </child>
