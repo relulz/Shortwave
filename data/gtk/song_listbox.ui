@@ -56,6 +56,9 @@ If the station does not send any metadata, no songs can be recognized.</property
                     <property name="margin_bottom">6</property>
                     <property name="pixel_size">64</property>
                     <property name="icon_name">dialog-information-symbolic</property>
+                    <style>
+                      <class name="dim-label"/>
+                    </style>
                   </object>
                 </child>
                 <child>
@@ -83,9 +86,6 @@ If the station does not send any metadata, no songs can be recognized.</property
                     <property name="use_underline">True</property>
                   </object>
                 </child>
-                <style>
-                  <class name="dim-label"/>
-                </style>
               </object>
             </property>
           </object>
