@@ -29,9 +29,6 @@
                     </child>
                   </object>
                 </child>
-                <style>
-                  <class name="content-background"/>
-                </style>
               </object>
             </property>
           </object>

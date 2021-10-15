@@ -2,10 +2,6 @@
   background-color: transparent;
 }
 
-.content-background {
-  background-color: @theme_bg_color;
-}
-
 .tile {
   padding: 0px;
   border-radius: 8px;
