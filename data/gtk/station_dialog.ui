@@ -23,6 +23,9 @@
         <child>
           <object class="GtkScrolledWindow">
             <property name="vexpand">True</property>
+            <style>
+              <class name="flat-headerbar"/>
+            </style>
             <child>
               <object class="AdwClamp">
                 <child>
