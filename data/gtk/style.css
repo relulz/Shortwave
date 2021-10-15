@@ -22,14 +22,15 @@
 .favicon-big {
   border-radius: 8px;
   border: none;
-  box-shadow: 0 4px 5px 1px alpha(black, .2), 0 0 0 1px alpha(black, .15);
+  box-shadow: 0 4px 5px 1px alpha(black, .2),
+              0 0 0 1px alpha(black, .15);
 }
 
 .smallcover {
   background-color: @theme_base_color;
 }
 
-.toolbarcontroller{
+.toolbarcontroller {
   border-top: 1px solid @borders;
 }
 
@@ -81,15 +82,14 @@
 /* Based on the styling from Pebbles by Subhadeep Jasu */
 /* https://github.com/SubhadeepJasu/pebbles/blob/e8159b8e73f2ceb3597c8fe37fe338ba1fb6f50c/data/Application.css */
 .mini-controller-display {
-	background-image: linear-gradient(#b6bfb6, #dae6da);
-	border-radius: 12px;
-	border: 1px solid alpha(black, 1);
-	padding-top: 3px;
-	box-shadow:
-	inset 0px 1px 8px 0px alpha(black, 0.5),
-	inset 0px 0px 2px 1px alpha(black, 0.5),
-	0px 1px 0px 0px alpha(white, 0.3),
-	0px -1px 0px 0px alpha(black, 0.15);
+  background-image: linear-gradient(#b6bfb6, #dae6da);
+  border-radius: 12px;
+  border: 1px solid alpha(black, 1);
+  padding-top: 3px;
+  box-shadow: inset 0px 1px 8px 0px alpha(black, 0.5),
+              inset 0px 0px 2px 1px alpha(black, 0.5),
+              0px 1px 0px 0px alpha(white, 0.3),
+              0px -1px 0px 0px alpha(black, 0.15);
 }
 
 .mini-controller-button,
