@@ -62,6 +62,10 @@ mod imp {
         #[template_child]
         pub codec_label: TemplateChild<gtk::Label>,
         #[template_child]
+        pub bitrate_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub bitrate_label: TemplateChild<gtk::Label>,
+        #[template_child]
         pub homepage_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub homepage_label: TemplateChild<gtk::Label>,
@@ -169,6 +173,12 @@ impl SwStationDialog {
         if !metadata.codec.is_empty() {
             imp.codec_row.set_visible(true);
             imp.codec_label.set_text(&metadata.codec);
+        }
+
+        if metadata.bitrate != 0 {
+            imp.bitrate_row.set_visible(true);
+            let bitrate = format!("{} kbit/s", metadata.bitrate);
+            imp.bitrate_label.set_text(&bitrate);
         }
 
         if let Some(homepage) = metadata.homepage {
