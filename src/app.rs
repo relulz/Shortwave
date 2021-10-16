@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use adw::subclass::prelude::*;
 use gio::subclass::prelude::ApplicationImpl;
 use glib::clone;
 use glib::{Receiver, Sender};
@@ -77,7 +78,7 @@ mod imp {
     #[glib::object_subclass]
     impl ObjectSubclass for SwApplication {
         const NAME: &'static str = "SwApplication";
-        type ParentType = gtk::Application;
+        type ParentType = adw::Application;
         type Type = super::SwApplication;
 
         fn new() -> Self {
@@ -107,14 +108,11 @@ mod imp {
     // Implement Gtk.Application for SwApplication
     impl GtkApplicationImpl for SwApplication {}
 
+    // Implement Adw.Application for SwApplication
+    impl AdwApplicationImpl for SwApplication {}
+
     // Implement Gio.Application for SwApplication
     impl ApplicationImpl for SwApplication {
-        fn startup(&self, app: &Self::Type) {
-            self.parent_startup(app);
-
-            adw::init();
-        }
-
         fn activate(&self, app: &Self::Type) {
             debug!("gio::Application -> activate()");
             let app = app.downcast_ref::<super::SwApplication>().unwrap();
@@ -164,7 +162,7 @@ mod imp {
 // Wrap SwApplication into a usable gtk-rs object
 glib::wrapper! {
     pub struct SwApplication(ObjectSubclass<imp::SwApplication>)
-        @extends gio::Application, gtk::Application,
+        @extends gio::Application, gtk::Application, adw::Application,
         @implements gio::ActionMap, gio::ActionGroup;
 }
 
@@ -190,11 +188,6 @@ impl SwApplication {
     fn create_window(&self) -> SwApplicationWindow {
         let imp = imp::SwApplication::from_instance(self);
         let window = SwApplicationWindow::new(imp.sender.clone(), self.clone(), imp.player.clone());
-
-        // Load custom styling
-        let p = gtk::CssProvider::new();
-        gtk::CssProvider::load_from_resource(&p, "/de/haeckerfelix/Shortwave/gtk/style.css");
-        gtk::StyleContext::add_provider_for_display(&gdk::Display::default().unwrap(), &p, gtk::STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         // Set initial view
         window.set_view(SwView::Library);

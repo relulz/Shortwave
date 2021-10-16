@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <object class="AdwPreferencesWindow" id="settings_window">
-    <property name="width_request">300</property>
     <child>
       <object class="AdwPreferencesPage">
         <property name="icon_name">preferences-system-symbolic</property>

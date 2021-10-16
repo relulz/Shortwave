@@ -29,9 +29,6 @@
                     </child>
                   </object>
                 </child>
-                <style>
-                  <class name="content-background"/>
-                </style>
               </object>
             </property>
           </object>
@@ -91,6 +88,7 @@
                         <property name="use_underline">True</property>
                         <style>
                           <class name="suggested-action"/>
+                          <class name="pill"/>
                         </style>
                       </object>
                     </child>
