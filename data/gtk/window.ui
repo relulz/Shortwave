@@ -171,12 +171,6 @@
   </menu>
   <menu id="default_menu">
     <section>
-      <submenu>
-        <attribute name="label" translatable="yes">_Sorting</attribute>
-        <attribute name="action"/>
-      </submenu>
-    </section>
-    <section>
       <item>
         <attribute name="label" translatable="yes">_Open radio-browser.info &lt;sup&gt;↗&lt;/sup&gt;</attribute>
         <attribute name="action">win.open-radio-browser-info</attribute>
