@@ -20,7 +20,6 @@ use chrono::NaiveTime;
 use glib::clone;
 use glib::Sender;
 use gtk::glib;
-use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
 use once_cell::unsync::OnceCell;

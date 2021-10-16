@@ -19,7 +19,6 @@ use adw::subclass::prelude::*;
 use futures_util::future::FutureExt;
 use glib::clone;
 use glib::Sender;
-use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
 use gtk::{gdk, gio, glib};

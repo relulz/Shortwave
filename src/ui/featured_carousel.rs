@@ -24,7 +24,6 @@ use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
 
 use std::cell::RefCell;
-use std::convert::TryInto;
 use std::rc::Rc;
 use std::str::FromStr;
 

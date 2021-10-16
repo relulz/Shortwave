@@ -20,7 +20,7 @@ use glib::clone;
 use glib::{Receiver, Sender};
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
-use gtk::{gdk, gio, glib};
+use gtk::{gio, glib};
 
 use std::cell::RefCell;
 use std::rc::Rc;

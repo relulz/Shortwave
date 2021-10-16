@@ -71,8 +71,8 @@ fn main() {
 
     // Setup translations
     setlocale(LocaleCategory::LcAll, "");
-    bindtextdomain(config::PKGNAME, config::LOCALEDIR);
-    textdomain(config::PKGNAME);
+    bindtextdomain(config::PKGNAME, config::LOCALEDIR).unwrap();
+    textdomain(config::PKGNAME).unwrap();
 
     // Load app resources
     let res = gio::Resource::load(config::PKGDATADIR.to_owned() + &format!("/{}.gresource", config::APP_ID)).expect("Could not load resources");
