@@ -139,7 +139,12 @@ mod imp {
             match pspec.name() {
                 "view" => {
                     *self.view.borrow_mut() = value.get().unwrap();
-                    obj.update_view();
+
+                    // Delay updating the view, otherwise it could invalidate widgets if it gets
+                    // called during an allocation and cause glitches (eg. short flickering)
+                    glib::idle_add_local(clone!(@weak obj => @default-return glib::Continue(false), move||{
+                        obj.update_view(); glib::Continue(false)
+                    }));
                 }
                 _ => unimplemented!(),
             }
