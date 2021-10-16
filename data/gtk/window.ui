@@ -127,6 +127,11 @@
             <attribute name="action">win.view-sorting</attribute>
             <attribute name="target">Votes</attribute>
           </item>
+          <item>
+            <attribute name="label" translatable="yes">_Bitrate</attribute>
+            <attribute name="action">win.view-sorting</attribute>
+            <attribute name="target">Bitrate</attribute>
+          </item>
         </section>
         <section>
           <item>
