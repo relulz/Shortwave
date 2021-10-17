@@ -48,6 +48,10 @@ mod imp {
         pub search_entry: TemplateChild<gtk::SearchEntry>,
         #[template_child]
         pub sorting_button_content: TemplateChild<adw::ButtonContent>,
+        #[template_child]
+        pub results_limit_box: TemplateChild<gtk::Box>,
+        #[template_child]
+        pub results_limit_label: TemplateChild<gtk::Label>,
 
         pub search_action_group: gio::SimpleActionGroup,
 
@@ -74,6 +78,8 @@ mod imp {
                 flowbox: TemplateChild::default(),
                 search_entry: TemplateChild::default(),
                 sorting_button_content: TemplateChild::default(),
+                results_limit_box: TemplateChild::default(),
+                results_limit_label: TemplateChild::default(),
                 search_action_group,
                 station_request,
                 client,
@@ -94,6 +100,10 @@ mod imp {
     impl ObjectImpl for SwSearchPage {
         fn constructed(&self, obj: &Self::Type) {
             obj.insert_action_group("search", Some(&self.search_action_group));
+
+            let max = self.station_request.borrow().limit.unwrap().to_string();
+            let text = i18n_f("The number of results is limited to {} items. Try using a more specific search term.", &[&max]);
+            self.results_limit_label.set_text(&text);
         }
     }
 
@@ -239,6 +249,11 @@ impl SwSearchPage {
 
                 let fut = imp.client.clone().send_station_request(request).map(clone!(@weak this => move |result| {
                     let imp = imp::SwSearchPage::from_instance(&this);
+
+                    let max_results = imp.station_request.borrow().limit.unwrap();
+                    let over_max_results = imp.client.model.n_items() >= max_results;
+                    imp.results_limit_box.set_visible(over_max_results);
+
                     if imp.client.model.n_items() == 0{
                         imp.stack.set_visible_child_name("no-results");
                     }else{

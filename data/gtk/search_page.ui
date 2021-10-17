@@ -84,7 +84,35 @@
                             <property name="margin_start">12</property>
                             <property name="margin_end">12</property>
                             <child>
-                              <object class="SwStationFlowBox" id="flowbox"/>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="SwStationFlowBox" id="flowbox"/>
+                                </child>
+                                <child>
+                                  <object class="GtkBox" id="results_limit_box">
+                                    <property name="halign">center</property>
+                                    <property name="margin_top">24</property>
+                                    <property name="margin_bottom">12</property>
+                                    <property name="spacing">6</property>
+                                    <property name="visible">False</property>
+                                    <child>
+                                      <object class="GtkImage">
+                                        <property name="icon-name">dialog-information-symbolic</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="results_limit_label">
+                                        <property name="wrap">True</property>
+                                        <property name="wrap-mode">word-char</property>
+                                      </object>
+                                    </child>
+                                    <style>
+                                      <class name="dim-label"/>
+                                    </style>
+                                  </object>
+                                </child>
+                              </object>
                             </child>
                           </object>
                         </child>
