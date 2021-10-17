@@ -212,13 +212,20 @@ impl SwSearchPage {
 
     pub fn update_search(&self) {
         let imp = imp::SwSearchPage::from_instance(self);
-        imp.stack.set_visible_child_name("spinner");
 
         // Reset previous timeout
         let id: Option<glib::source::SourceId> = imp.timeout_id.borrow_mut().take();
         if let Some(id) = id {
             glib::source::source_remove(id)
         }
+
+        // Don't search if search entry is empty
+        if imp.station_request.borrow().name.is_none() {
+            imp.stack.set_visible_child_name("empty");
+            return;
+        }
+
+        imp.stack.set_visible_child_name("spinner");
 
         // Start new timeout
         let id = glib::source::timeout_add_seconds_local(
@@ -232,11 +239,14 @@ impl SwSearchPage {
 
                 let fut = imp.client.clone().send_station_request(request).map(clone!(@weak this => move |result| {
                     let imp = imp::SwSearchPage::from_instance(&this);
-                    imp.stack.set_visible_child_name("results");
+                    if imp.client.model.n_items() == 0{
+                        imp.stack.set_visible_child_name("no-results");
+                    }else{
+                        imp.stack.set_visible_child_name("results");
+                    }
 
                     if let Err(err) = result {
                         let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
-                        imp.stack.set_visible_child_name("results");
                         send!(imp.sender.get().unwrap(), Action::ViewShowNotification(notification));
                     }
                 }));
