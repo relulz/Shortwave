@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-10-16 20:43+0000\n"
-"PO-Revision-Date: 2021-10-17 12:23+0300\n"
+"POT-Creation-Date: 2021-10-17 13:54+0000\n"
+"PO-Revision-Date: 2021-10-17 18:19+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -137,6 +137,48 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Перемкнути відтворення"
 
+#: data/gtk/search_page.ui:31 src/ui/pages/search_page.rs:168
+#| msgid "_Votes"
+msgid "Votes"
+msgstr "Голоси"
+
+#: data/gtk/search_page.ui:36
+msgid "Change the sorting of the search results"
+msgstr ""
+"Змінити упорядкування результатів пошуку"
+
+#: data/gtk/search_page.ui:101 data/gtk/window.ui:106
+msgid "_Name"
+msgstr "_Назва"
+
+#: data/gtk/search_page.ui:106 data/gtk/window.ui:111
+msgid "_Language"
+msgstr "_Мова"
+
+#: data/gtk/search_page.ui:111 data/gtk/window.ui:116
+msgid "_Country"
+msgstr "К_раїна"
+
+#: data/gtk/search_page.ui:116 data/gtk/window.ui:121
+msgid "S_tate"
+msgstr "_Штат"
+
+#: data/gtk/search_page.ui:121 data/gtk/window.ui:126
+msgid "_Votes"
+msgstr "_Голоси"
+
+#: data/gtk/search_page.ui:126 data/gtk/window.ui:131
+msgid "_Bitrate"
+msgstr "_Бітова швидкість"
+
+#: data/gtk/search_page.ui:133 data/gtk/window.ui:138
+msgid "_Ascending"
+msgstr "За з_ростанням"
+
+#: data/gtk/search_page.ui:138 data/gtk/window.ui:143
+msgid "_Descending"
+msgstr "За с_паданням"
+
 #: data/gtk/sidebar_controller.ui:22
 msgid "An error occurred"
 msgstr "Сталася помилка"
@@ -211,7 +253,7 @@ msgstr "Ви_лучити з бібліотеки"
 msgid "Information"
 msgstr "Відомості"
 
-#: data/gtk/station_dialog.ui:108
+#: data/gtk/station_dialog.ui:108 src/ui/pages/search_page.rs:165
 msgid "Language"
 msgstr "Мова"
 
@@ -223,10 +265,9 @@ msgstr "Мітки"
 msgid "Codec"
 msgstr "Кодек"
 
-#: data/gtk/station_dialog.ui:150
+#: data/gtk/station_dialog.ui:150 src/ui/pages/search_page.rs:169
 msgid "Bitrate"
-msgstr ""
-"Бітова швидкість"
+msgstr "Бітова швидкість"
 
 #: data/gtk/station_dialog.ui:164
 msgid "Homepage"
@@ -269,39 +310,6 @@ msgstr "Пошук пристроїв…"
 #: data/gtk/window.ui:103
 msgid "_Sorting"
 msgstr "Вп_орядкування"
-
-#: data/gtk/window.ui:106
-msgid "_Name"
-msgstr "_Назва"
-
-#: data/gtk/window.ui:111
-msgid "_Language"
-msgstr "_Мова"
-
-#: data/gtk/window.ui:116
-msgid "_Country"
-msgstr "К_раїна"
-
-#: data/gtk/window.ui:121
-msgid "S_tate"
-msgstr "_Штат"
-
-#: data/gtk/window.ui:126
-msgid "_Votes"
-msgstr "_Голоси"
-
-#: data/gtk/window.ui:131
-msgid "_Bitrate"
-msgstr ""
-"_Бітова швидкість"
-
-#: data/gtk/window.ui:138
-msgid "_Ascending"
-msgstr "За з_ростанням"
-
-#: data/gtk/window.ui:143
-msgid "_Descending"
-msgstr "За с_паданням"
 
 #: data/gtk/window.ui:152 data/gtk/window.ui:180
 msgid "_Open radio-browser.info <sup>↗</sup>"
@@ -375,7 +383,7 @@ msgstr "Відкрити сайт"
 msgid "Powered by radio-browser.info"
 msgstr "На основі radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:151
+#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:238
 msgid "Station data could not be received."
 msgstr "Не вдалося отримати дані станції."
 
@@ -383,6 +391,21 @@ msgstr "Не вдалося отримати дані станції."
 #: src/ui/pages/library_page.rs:117
 msgid "Welcome to {}"
 msgstr "Вітаємо у {}"
+
+#: src/ui/pages/search_page.rs:164
+#| msgid "_Name"
+msgid "Name"
+msgstr "Назва"
+
+#: src/ui/pages/search_page.rs:166
+#| msgid "_Country"
+msgid "Country"
+msgstr "Країна"
+
+#: src/ui/pages/search_page.rs:167
+#| msgid "S_tate"
+msgid "State"
+msgstr "Штат"
 
 #: src/utils.rs:28
 msgid "{} Vote"
