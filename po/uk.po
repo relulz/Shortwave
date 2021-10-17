@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-06-09 19:14+0000\n"
-"PO-Revision-Date: 2021-06-10 07:11+0300\n"
+"POT-Creation-Date: 2021-10-16 20:43+0000\n"
+"PO-Revision-Date: 2021-10-17 12:23+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -30,11 +30,11 @@ msgstr "Тренди"
 msgid "Other users are listening to…"
 msgstr "Інші користувачі слухають…"
 
-#: data/gtk/library_page.ui:63
+#: data/gtk/library_page.ui:60
 msgid "Receiving station data…"
 msgstr "Отримання даних щодо станції…"
 
-#: data/gtk/library_page.ui:90
+#: data/gtk/library_page.ui:87
 msgid "_Discover new stations"
 msgstr "Ви_явити нові станції"
 
@@ -55,11 +55,11 @@ msgstr "Подробиці щодо помилки"
 msgid "Connected with"
 msgstr "З'єднано з"
 
-#: data/gtk/settings_window.ui:8 data/gtk/help_overlay.ui:11
+#: data/gtk/settings_window.ui:7 data/gtk/help_overlay.ui:11
 msgid "General"
 msgstr "Загальні"
 
-#: data/gtk/settings_window.ui:11
+#: data/gtk/settings_window.ui:10
 msgid "Appearance"
 msgstr "Вигляд"
 
@@ -163,15 +163,15 @@ msgstr ""
 "\n"
 "Якщо станція не надсилає метаданих, пісні розпізнано не буде."
 
-#: data/gtk/song_listbox.ui:63
+#: data/gtk/song_listbox.ui:66
 msgid "No songs detected"
 msgstr "Не виявлено жодної пісні"
 
-#: data/gtk/song_listbox.ui:73
+#: data/gtk/song_listbox.ui:76
 msgid "Detected songs will appear here."
 msgstr "Виявлені пісні буде показано тут."
 
-#: data/gtk/song_listbox.ui:82
+#: data/gtk/song_listbox.ui:85
 msgid "_How does this work?"
 msgstr "_Як це працює?"
 
@@ -191,44 +191,49 @@ msgstr "Зберегти записану пісню"
 msgid "Station details"
 msgstr "Параметри станції"
 
-#: data/gtk/station_dialog.ui:71
+#: data/gtk/station_dialog.ui:74
 msgid "Actions"
 msgstr "Дії"
 
-#: data/gtk/station_dialog.ui:74
+#: data/gtk/station_dialog.ui:77
 msgid "_Play this station"
 msgstr "_Відтворити цю станцію"
 
-#: data/gtk/station_dialog.ui:82
+#: data/gtk/station_dialog.ui:85
 msgid "_Add to library"
 msgstr "Д_одати до бібліотеки"
 
-#: data/gtk/station_dialog.ui:91
+#: data/gtk/station_dialog.ui:94
 msgid "_Remove from Library"
 msgstr "Ви_лучити з бібліотеки"
 
-#: data/gtk/station_dialog.ui:102
+#: data/gtk/station_dialog.ui:105
 msgid "Information"
 msgstr "Відомості"
 
-#: data/gtk/station_dialog.ui:105
+#: data/gtk/station_dialog.ui:108
 msgid "Language"
 msgstr "Мова"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:122
 msgid "Tags"
 msgstr "Мітки"
 
-#: data/gtk/station_dialog.ui:133
+#: data/gtk/station_dialog.ui:136
 msgid "Codec"
 msgstr "Кодек"
 
-#: data/gtk/station_dialog.ui:147
+#: data/gtk/station_dialog.ui:150
+msgid "Bitrate"
+msgstr ""
+"Бітова швидкість"
+
+#: data/gtk/station_dialog.ui:164
 msgid "Homepage"
 msgstr "Домашня сторінка"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:172
+#: data/gtk/station_dialog.ui:186
 msgid "Stream"
 msgstr "Трансляція"
 
@@ -261,7 +266,7 @@ msgstr "Пов_торити пошук"
 msgid "Searching for devices…"
 msgstr "Пошук пристроїв…"
 
-#: data/gtk/window.ui:103 data/gtk/window.ui:173
+#: data/gtk/window.ui:103
 msgid "_Sorting"
 msgstr "Вп_орядкування"
 
@@ -285,31 +290,36 @@ msgstr "_Штат"
 msgid "_Votes"
 msgstr "_Голоси"
 
-#: data/gtk/window.ui:133
+#: data/gtk/window.ui:131
+msgid "_Bitrate"
+msgstr ""
+"_Бітова швидкість"
+
+#: data/gtk/window.ui:138
 msgid "_Ascending"
 msgstr "За з_ростанням"
 
-#: data/gtk/window.ui:138
+#: data/gtk/window.ui:143
 msgid "_Descending"
 msgstr "За с_паданням"
 
-#: data/gtk/window.ui:147 data/gtk/window.ui:179
+#: data/gtk/window.ui:152 data/gtk/window.ui:180
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "В_ідкрити radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/window.ui:151 data/gtk/window.ui:183
+#: data/gtk/window.ui:157 data/gtk/window.ui:185
 msgid "_Create new station <sup>↗</sup>"
 msgstr "С_творити станцію <sup>↗</sup>"
 
-#: data/gtk/window.ui:157 data/gtk/window.ui:189
+#: data/gtk/window.ui:164 data/gtk/window.ui:192
 msgid "_Preferences"
 msgstr "_Налаштування"
 
-#: data/gtk/window.ui:161 data/gtk/window.ui:193
+#: data/gtk/window.ui:168 data/gtk/window.ui:196
 msgid "_Keyboard Shortcuts"
 msgstr "_Клавіатурні скорочення"
 
-#: data/gtk/window.ui:165 data/gtk/window.ui:197
+#: data/gtk/window.ui:172 data/gtk/window.ui:200
 msgid "_About Shortwave"
 msgstr "П_ро «Shortwave»"
 
@@ -328,7 +338,6 @@ msgid "URL is not valid."
 msgstr "Некоректна адреса."
 
 #: src/database/library.rs:271
-#| msgid "No longer existing station removed from library."
 msgid "An invalid station was removed from the library."
 msgstr "З бібліотеки вилучено некоректний запис станції."
 
@@ -341,31 +350,32 @@ msgstr "Прослуховування інтернет-радіо"
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
 
-#: src/ui/pages/discover_page.rs:94
+#. TODO: Implement show-server-stats action
+#: src/ui/pages/discover_page.rs:91
 msgid "Show statistics"
 msgstr "Показати статистику"
 
-#: src/ui/pages/discover_page.rs:95
+#: src/ui/pages/discover_page.rs:92
 msgid "Browse over 25,500 stations"
 msgstr "Навігація списком із понад 25500 станцій"
 
-#: src/ui/pages/discover_page.rs:97
+#: src/ui/pages/discover_page.rs:94
 msgid "Add new station"
 msgstr "Додати нову станцію"
 
-#: src/ui/pages/discover_page.rs:98
+#: src/ui/pages/discover_page.rs:95
 msgid "Your favorite station is missing?"
 msgstr "Немає вашої улюбленої радіостанції?"
 
-#: src/ui/pages/discover_page.rs:100
+#: src/ui/pages/discover_page.rs:97
 msgid "Open website"
 msgstr "Відкрити сайт"
 
-#: src/ui/pages/discover_page.rs:101
+#: src/ui/pages/discover_page.rs:98
 msgid "Powered by radio-browser.info"
 msgstr "На основі radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:140 src/ui/pages/search_page.rs:151
+#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:151
 msgid "Station data could not be received."
 msgstr "Не вдалося отримати дані станції."
 
