@@ -70,32 +70,51 @@
                       </object>
                     </child>
                     <child>
-                      <object class="AdwPreferencesGroup">
-                        <property name="title" translatable="yes">Actions</property>
+                      <object class="GtkFlowBox">
+                        <property name="halign">center</property>
+                        <property name="homogeneous">True</property>
+                        <property name="selection-mode">none</property>
+                        <property name="row-spacing">6</property>
+                        <property name="column-spacing">6</property>
                         <child>
-                          <object class="AdwActionRow" id="start_playback_row">
-                            <property name="title" translatable="yes">_Play this station</property>
-                            <property name="icon-name">media-playback-start-symbolic</property>
-                            <property name="use_underline">True</property>
-                            <property name="activatable">True</property>
+                          <object class="GtkFlowBoxChild" id="start_playback_button_child">
+                            <child>
+                              <object class="GtkButton" id="start_playback_button">
+                                <property name="label" translatable="yes">_Play this station</property>
+                                <property name="use_underline">True</property>
+                                <style>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
                           </object>
                         </child>
                         <child>
-                          <object class="AdwActionRow" id="library_add_row">
-                            <property name="title" translatable="yes">_Add to library</property>
-                            <property name="icon-name">list-add-symbolic</property>
-                            <property name="use_underline">True</property>
+                          <object class="GtkFlowBoxChild" id="library_add_child">
+                            <child>
+                              <object class="GtkButton" id="library_add_button">
+                                <property name="label" translatable="yes">_Add to library</property>
+                                <property name="use_underline">True</property>
+                                <style>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
                             <property name="visible">False</property>
-                            <property name="activatable">True</property>
                           </object>
                         </child>
                         <child>
-                          <object class="AdwActionRow" id="library_remove_row">
-                            <property name="title" translatable="yes">_Remove from Library</property>
-                            <property name="icon-name">list-remove-symbolic</property>
-                            <property name="use_underline">True</property>
+                          <object class="GtkFlowBoxChild" id="library_remove_child">
+                            <child>
+                              <object class="GtkButton" id="library_remove_button">
+                                <property name="label" translatable="yes">_Remove from library</property>
+                                <property name="use_underline">True</property>
+                                <style>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
                             <property name="visible">False</property>
-                            <property name="activatable">True</property>
                           </object>
                         </child>
                       </object>
@@ -171,11 +190,7 @@
                                     <property name="ellipsize">end</property>
                                   </object>
                                 </child>
-                                <child>
-                                  <object class="GtkButton" id="copy_homepage_button">
-                                    <property name="icon_name">edit-copy-symbolic</property>
-                                    <property name="valign">center</property>
-                                  </object>">
+                                <child><object class="GtkButton" id="copy_homepage_button"><property name="icon_name">edit-copy-symbolic</property><property name="valign">center</property></object>"&gt;
                                 </child>
                               </object>
                             </child>
@@ -193,11 +208,7 @@
                                     <property name="ellipsize">end</property>
                                   </object>
                                 </child>
-                                <child>
-                                  <object class="GtkButton" id="copy_stream_button">
-                                    <property name="icon_name">edit-copy-symbolic</property>
-                                    <property name="valign">center</property>
-                                  </object>">
+                                <child><object class="GtkButton" id="copy_stream_button"><property name="icon_name">edit-copy-symbolic</property><property name="valign">center</property></object>"&gt;
                                 </child>
                               </object>
                             </child>
@@ -214,15 +225,16 @@
       </object>
     </child>
     <child>
-      <object class='GtkShortcutController'>
-        <property name='scope'>local</property>
+      <object class="GtkShortcutController">
+        <property name="scope">local</property>
         <child>
-          <object class='GtkShortcut'>
-            <property name='trigger'>Escape</property>
-            <property name='action'>action(dialog.close)</property>
+          <object class="GtkShortcut">
+            <property name="trigger">Escape</property>
+            <property name="action">action(dialog.close)</property>
           </object>
         </child>
       </object>
     </child>
   </template>
 </interface>
+

@@ -44,11 +44,15 @@ mod imp {
         #[template_child]
         pub subtitle_label: TemplateChild<gtk::Label>,
         #[template_child]
-        pub library_add_row: TemplateChild<adw::ActionRow>,
+        pub library_add_button: TemplateChild<gtk::Button>,
         #[template_child]
-        pub library_remove_row: TemplateChild<adw::ActionRow>,
+        pub library_add_child: TemplateChild<gtk::FlowBoxChild>,
         #[template_child]
-        pub start_playback_row: TemplateChild<adw::ActionRow>,
+        pub library_remove_button: TemplateChild<gtk::Button>,
+        #[template_child]
+        pub library_remove_child: TemplateChild<gtk::FlowBoxChild>,
+        #[template_child]
+        pub start_playback_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub language_row: TemplateChild<adw::ActionRow>,
         #[template_child]
@@ -153,11 +157,11 @@ impl SwStationDialog {
         imp.title_label.set_text(&metadata.name);
         imp.subtitle_label.set_text(&subtitle);
 
-        // Action rows
+        // Action pill buttons
         if SwLibrary::contains_station(&imp.station.get().unwrap()) {
-            imp.library_remove_row.set_visible(true);
+            imp.library_remove_child.set_visible(true);
         } else {
-            imp.library_add_row.set_visible(true);
+            imp.library_add_child.set_visible(true);
         }
 
         if !metadata.language.is_empty() {
@@ -197,7 +201,7 @@ impl SwStationDialog {
     fn setup_signals(&self) {
         let imp = imp::SwStationDialog::from_instance(self);
 
-        imp.library_add_row.connect_activated(clone!(@weak self as this => move|_|
+        imp.library_add_button.connect_clicked(clone!(@weak self as this => move|_|
             let imp = imp::SwStationDialog::from_instance(&this);
             let station = imp.station.get().unwrap().clone();
 
@@ -206,7 +210,7 @@ impl SwStationDialog {
             this.close();
         ));
 
-        imp.library_remove_row.connect_activated(clone!(@weak self as this => move|_|
+        imp.library_remove_button.connect_clicked(clone!(@weak self as this => move|_|
             let imp = imp::SwStationDialog::from_instance(&this);
             let station = imp.station.get().unwrap().clone();
 
@@ -215,7 +219,7 @@ impl SwStationDialog {
             this.close();
         ));
 
-        imp.start_playback_row.connect_activated(clone!(@weak self as this => move|_|
+        imp.start_playback_button.connect_clicked(clone!(@weak self as this => move|_|
             let imp = imp::SwStationDialog::from_instance(&this);
             let station = imp.station.get().unwrap().clone();
 
