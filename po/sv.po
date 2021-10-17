@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-10-16 20:43+0000\n"
-"PO-Revision-Date: 2021-10-17 12:31+0200\n"
+"POT-Creation-Date: 2021-10-17 18:03+0000\n"
+"PO-Revision-Date: 2021-10-17 21:32+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -136,19 +136,67 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Starta/stoppa uppspelning"
 
+#: data/gtk/search_page.ui:31 src/ui/pages/search_page.rs:178
+msgid "Votes"
+msgstr "Röster"
+
+#: data/gtk/search_page.ui:36
+msgid "Change the sorting of the search results"
+msgstr "Ändra sorteringen av sökresultaten"
+
+#: data/gtk/search_page.ui:63
+msgid "No results"
+msgstr "Inga resultat"
+
+#: data/gtk/search_page.ui:64
+msgid "Try using a different search term"
+msgstr "Försök använda en annan sökterm"
+
+#: data/gtk/search_page.ui:148 data/gtk/window.ui:106
+msgid "_Name"
+msgstr "_Namn"
+
+#: data/gtk/search_page.ui:153 data/gtk/window.ui:111
+msgid "_Language"
+msgstr "S_pråk"
+
+#: data/gtk/search_page.ui:158 data/gtk/window.ui:116
+msgid "_Country"
+msgstr "_Land"
+
+#: data/gtk/search_page.ui:163 data/gtk/window.ui:121
+msgid "S_tate"
+msgstr "Lä_n"
+
+#: data/gtk/search_page.ui:168 data/gtk/window.ui:126
+msgid "_Votes"
+msgstr "_Röster"
+
+#: data/gtk/search_page.ui:173 data/gtk/window.ui:131
+msgid "_Bitrate"
+msgstr "_Bithastighet"
+
+#: data/gtk/search_page.ui:180 data/gtk/window.ui:138
+msgid "_Ascending"
+msgstr "S_tigande"
+
+#: data/gtk/search_page.ui:185 data/gtk/window.ui:143
+msgid "_Descending"
+msgstr "_Fallande"
+
 #: data/gtk/sidebar_controller.ui:22
 msgid "An error occurred"
 msgstr "Ett fel uppstod"
 
-#: data/gtk/sidebar_controller.ui:178
+#: data/gtk/sidebar_controller.ui:188
 msgid "_Show station details"
 msgstr "_Visa stationsdetaljer"
 
-#: data/gtk/sidebar_controller.ui:182
+#: data/gtk/sidebar_controller.ui:192
 msgid "Stream to a _device"
 msgstr "Strömma till en _enhet"
 
-#: data/gtk/sidebar_controller.ui:188
+#: data/gtk/sidebar_controller.ui:198
 msgid "_Enable mini player"
 msgstr "_Aktivera minispelare"
 
@@ -190,48 +238,44 @@ msgstr "Spara inspelad låt"
 msgid "Station details"
 msgstr "Stationsdetaljer"
 
-#: data/gtk/station_dialog.ui:74
-msgid "Actions"
-msgstr "Åtgärder"
-
-#: data/gtk/station_dialog.ui:77
+#: data/gtk/station_dialog.ui:83
 msgid "_Play this station"
 msgstr "_Spela upp denna station"
 
-#: data/gtk/station_dialog.ui:85
+#: data/gtk/station_dialog.ui:96
 msgid "_Add to library"
 msgstr "_Lägg till i bibliotek"
 
-#: data/gtk/station_dialog.ui:94
-msgid "_Remove from Library"
+#: data/gtk/station_dialog.ui:110
+msgid "_Remove from library"
 msgstr "_Ta bort från bibliotek"
 
-#: data/gtk/station_dialog.ui:105
+#: data/gtk/station_dialog.ui:124
 msgid "Information"
 msgstr "Information"
 
-#: data/gtk/station_dialog.ui:108
+#: data/gtk/station_dialog.ui:127 src/ui/pages/search_page.rs:175
 msgid "Language"
 msgstr "Språk"
 
-#: data/gtk/station_dialog.ui:122
+#: data/gtk/station_dialog.ui:141
 msgid "Tags"
 msgstr "Taggar"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:155
 msgid "Codec"
 msgstr "Kodek"
 
-#: data/gtk/station_dialog.ui:150
+#: data/gtk/station_dialog.ui:169 src/ui/pages/search_page.rs:179
 msgid "Bitrate"
 msgstr "Bithastighet"
 
-#: data/gtk/station_dialog.ui:164
+#: data/gtk/station_dialog.ui:183
 msgid "Homepage"
 msgstr "Webbsida"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:186
+#: data/gtk/station_dialog.ui:201
 msgid "Stream"
 msgstr "Ström"
 
@@ -266,38 +310,6 @@ msgstr "Söker efter enheter…"
 #: data/gtk/window.ui:103
 msgid "_Sorting"
 msgstr "_Sortering"
-
-#: data/gtk/window.ui:106
-msgid "_Name"
-msgstr "_Namn"
-
-#: data/gtk/window.ui:111
-msgid "_Language"
-msgstr "S_pråk"
-
-#: data/gtk/window.ui:116
-msgid "_Country"
-msgstr "_Land"
-
-#: data/gtk/window.ui:121
-msgid "S_tate"
-msgstr "Lä_n"
-
-#: data/gtk/window.ui:126
-msgid "_Votes"
-msgstr "_Röster"
-
-#: data/gtk/window.ui:131
-msgid "_Bitrate"
-msgstr "_Bithastighet"
-
-#: data/gtk/window.ui:138
-msgid "_Ascending"
-msgstr "S_tigande"
-
-#: data/gtk/window.ui:143
-msgid "_Descending"
-msgstr "_Fallande"
 
 #: data/gtk/window.ui:152 data/gtk/window.ui:180
 msgid "_Open radio-browser.info <sup>↗</sup>"
@@ -373,7 +385,7 @@ msgstr "Öppna webbplats"
 msgid "Powered by radio-browser.info"
 msgstr "Driftas av radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:151
+#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:264
 msgid "Station data could not be received."
 msgstr "Kunde inte erhålla stationsdata."
 
@@ -381,6 +393,26 @@ msgstr "Kunde inte erhålla stationsdata."
 #: src/ui/pages/library_page.rs:117
 msgid "Welcome to {}"
 msgstr "Välkommen till {}"
+
+#: src/ui/pages/search_page.rs:105
+msgid ""
+"The number of results is limited to {} items. Try using a more specific "
+"search term."
+msgstr ""
+"Antalet resultat är begränsat till {} objekt. Försök använda en mer "
+"specifik sökterm."
+
+#: src/ui/pages/search_page.rs:174
+msgid "Name"
+msgstr "Namn"
+
+#: src/ui/pages/search_page.rs:176
+msgid "Country"
+msgstr "Land"
+
+#: src/ui/pages/search_page.rs:177
+msgid "State"
+msgstr "Län"
 
 #: src/utils.rs:28
 msgid "{} Vote"
@@ -446,3 +478,6 @@ msgstr "Sömlös integration med skrivbordsmiljön GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Ström;Stream;Wave;"
+
+#~ msgid "Actions"
+#~ msgstr "Åtgärder"
