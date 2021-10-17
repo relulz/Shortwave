@@ -18,10 +18,10 @@ use adw::subclass::prelude::*;
 use futures_util::FutureExt;
 use glib::clone;
 use glib::Sender;
-use gtk::glib;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
+use gtk::{gio, glib};
 use once_cell::unsync::OnceCell;
 
 use std::cell::RefCell;
@@ -46,7 +46,12 @@ mod imp {
         pub flowbox: TemplateChild<SwStationFlowBox>,
         #[template_child]
         pub search_entry: TemplateChild<gtk::SearchEntry>,
+        #[template_child]
+        pub sorting_button_content: TemplateChild<adw::ButtonContent>,
 
+        pub search_action_group: gio::SimpleActionGroup,
+
+        pub station_request: Rc<RefCell<StationRequest>>,
         pub client: Client,
         pub timeout_id: Rc<RefCell<Option<glib::source::SourceId>>>,
         pub sender: OnceCell<Sender<Action>>,
@@ -59,6 +64,8 @@ mod imp {
         type Type = super::SwSearchPage;
 
         fn new() -> Self {
+            let search_action_group = gio::SimpleActionGroup::new();
+            let station_request = Rc::new(RefCell::new(StationRequest::search_for_name(None, 250)));
             let client = Client::new(settings_manager::string(Key::ApiLookupDomain));
             let timeout_id = Rc::new(RefCell::new(None));
 
@@ -66,6 +73,9 @@ mod imp {
                 stack: TemplateChild::default(),
                 flowbox: TemplateChild::default(),
                 search_entry: TemplateChild::default(),
+                sorting_button_content: TemplateChild::default(),
+                search_action_group,
+                station_request,
                 client,
                 timeout_id,
                 sender: OnceCell::default(),
@@ -81,7 +91,11 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for SwSearchPage {}
+    impl ObjectImpl for SwSearchPage {
+        fn constructed(&self, obj: &Self::Type) {
+            obj.insert_action_group("search", Some(&self.search_action_group));
+        }
+    }
 
     impl WidgetImpl for SwSearchPage {}
 
@@ -102,14 +116,29 @@ impl SwSearchPage {
         imp.sender.set(sender).unwrap();
 
         self.setup_signals();
+        self.setup_gactions();
     }
 
     fn setup_signals(&self) {
         let imp = imp::SwSearchPage::from_instance(self);
 
         imp.search_entry.connect_search_changed(clone!(@weak self as this => move |entry| {
-            let request = StationRequest::search_for_name(&entry.text().to_string(), 250);
-            this.show_station_request(request);
+            let imp = imp::SwSearchPage::from_instance(&this);
+            let text = entry.text().to_string();
+
+            let text = if text.is_empty() {
+                None
+            }else{
+                Some(text)
+            };
+
+            // Update station request and redo search
+            let station_request = StationRequest{
+                name: text,
+                ..imp.station_request.borrow().clone()
+            };
+            *imp.station_request.borrow_mut() = station_request;
+            this.update_search();
         }));
 
         self.connect_map(|this| {
@@ -119,9 +148,70 @@ impl SwSearchPage {
         });
     }
 
-    pub fn show_station_request(&self, request: StationRequest) {
+    fn setup_gactions(&self) {
         let imp = imp::SwSearchPage::from_instance(self);
+        let variant_ty = Some(glib::VariantTy::new("s").unwrap());
 
+        let sorting_action = gio::SimpleAction::new_stateful("sorting", variant_ty, &"Votes".to_variant());
+        imp.search_action_group.add_action(&sorting_action);
+        sorting_action.connect_change_state(clone!(@weak self as this => move |action, state|{
+            let imp = imp::SwSearchPage::from_instance(&this);
+            if let Some(state) = state{
+                action.set_state(&state);
+                let order = state.str().unwrap();
+
+                let label = match order{
+                    "Name" => i18n("Name"),
+                    "Language" => i18n("Language"),
+                    "Country" => i18n("Country"),
+                    "State" => i18n("State"),
+                    "Votes" => i18n("Votes"),
+                    "Bitrate" => i18n("Bitrate"),
+                    _ => panic!("unknown sorting state change"),
+                };
+
+                imp.sorting_button_content.set_label(&label);
+
+                // Update station request and redo search
+                let station_request = StationRequest{
+                    order: Some(order.to_lowercase()),
+                    ..imp.station_request.borrow().clone()
+                };
+                *imp.station_request.borrow_mut() = station_request;
+
+                this.update_search();
+            }
+        }));
+
+        let order_action = gio::SimpleAction::new_stateful("order", variant_ty, &"Descending".to_variant());
+        imp.search_action_group.add_action(&order_action);
+        order_action.connect_change_state(clone!(@weak self as this => move |action, state|{
+            let imp = imp::SwSearchPage::from_instance(&this);
+            if let Some(state) = state{
+                action.set_state(&state);
+
+                let reverse = if state.str().unwrap() == "Ascending" {
+                    imp.sorting_button_content.set_icon_name("view-sort-ascending-symbolic");
+                    false
+                }else{
+                    imp.sorting_button_content.set_icon_name("view-sort-descending-symbolic");
+                    true
+                };
+
+                // Update station request and redo search
+                let station_request = StationRequest{
+                    reverse: Some(reverse),
+                    ..imp.station_request.borrow().clone()
+                };
+                *imp.station_request.borrow_mut() = station_request;
+
+                this.update_search();
+            }
+        }));
+    }
+
+    pub fn update_search(&self) {
+        let imp = imp::SwSearchPage::from_instance(self);
         imp.stack.set_visible_child_name("spinner");
 
         // Reset previous timeout
@@ -131,32 +221,30 @@ impl SwSearchPage {
         }
 
         // Start new timeout
-        let id = imp.timeout_id.clone();
-        let client = imp.client.clone();
-        //let flowbox = imp.flowbox.clone();
-        let stack = imp.stack.clone();
-        let sender = imp.sender.get().unwrap().clone();
-        let id = glib::source::timeout_add_seconds_local(1, move || {
-            *id.borrow_mut() = None;
+        let id = glib::source::timeout_add_seconds_local(
+            1,
+            clone!(@weak self as this => @default-return glib::Continue(false), move || {
+                let imp = imp::SwSearchPage::from_instance(&this);
+                *imp.timeout_id.borrow_mut() = None;
 
-            debug!("Search for: {:?}", request);
+                let request = imp.station_request.borrow().clone();
+                debug!("Search for: {:?}", request);
 
-            let client = client.clone();
-            let stack = stack.clone();
-            let request = request.clone();
-            let sender = sender.clone();
-            let fut = client.send_station_request(request).map(move |result| {
-                stack.set_visible_child_name("results");
-                if let Err(err) = result {
-                    let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
-                    stack.set_visible_child_name("results");
-                    send!(sender, Action::ViewShowNotification(notification));
-                }
-            });
+                let fut = imp.client.clone().send_station_request(request).map(clone!(@weak this => move |result| {
+                    let imp = imp::SwSearchPage::from_instance(&this);
+                    imp.stack.set_visible_child_name("results");
 
-            spawn!(fut);
-            glib::Continue(false)
-        });
+                    if let Err(err) = result {
+                        let notification = Notification::new_error(&i18n("Station data could not be received."), &err.to_string());
+                        imp.stack.set_visible_child_name("results");
+                        send!(imp.sender.get().unwrap(), Action::ViewShowNotification(notification));
+                    }
+                }));
+
+                spawn!(fut);
+                glib::Continue(false)
+            }),
+        );
         *imp.timeout_id.borrow_mut() = Some(id);
     }
 }

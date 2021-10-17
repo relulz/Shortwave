@@ -17,9 +17,9 @@
     	"--socket=wayland",
     	"--device=dri",
     	"--socket=pulseaudio",
-        "--filesystem=xdg-music",
-	"--env=RUST_LOG=shortwave=debug",
-        "--env=RUST_BACKTRACE=1"
+    	"--filesystem=xdg-music",
+    	"--env=RUST_LOG=shortwave=debug",
+    	"--env=RUST_BACKTRACE=1"
     ],
     "build-options" : {
         "append-path" : "/usr/lib/sdk/rust-stable/bin",

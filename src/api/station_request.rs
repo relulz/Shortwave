@@ -36,9 +36,9 @@ pub struct StationRequest {
 }
 
 impl StationRequest {
-    pub fn search_for_name(name: &str, limit: u32) -> Self {
+    pub fn search_for_name(name: Option<String>, limit: u32) -> Self {
         Self {
-            name: Some(name.to_string()),
+            name,
             limit: Some(limit),
             hidebroken: Some(true),
             order: Some(String::from("votes")),

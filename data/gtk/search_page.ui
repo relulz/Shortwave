@@ -16,8 +16,25 @@
                 <property name="maximum_size">1600</property>
                 <property name="hexpand">True</property>
                 <child>
-                  <object class="GtkSearchEntry" id="search_entry">
-                    <property name="hexpand">True</property>
+                  <object class="GtkBox">
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkSearchEntry" id="search_entry">
+                        <property name="hexpand">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuButton" id="sorting_button">
+                        <property name="child">
+                          <object class="AdwButtonContent" id="sorting_button_content">
+                            <property name="icon-name">view-sort-descending-symbolic</property>
+                            <property name="label" translatable="yes">Votes</property>
+                          </object>
+                        </property>
+                        <property name="menu_model">sorting_menu</property>
+                        <property name="always-show-arrow">True</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
@@ -77,4 +94,51 @@
       </object>
     </child>
   </template>
+  <menu id="sorting_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Name</attribute>
+        <attribute name="action">search.sorting</attribute>
+        <attribute name="target">Name</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Language</attribute>
+        <attribute name="action">search.sorting</attribute>
+        <attribute name="target">Language</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Country</attribute>
+        <attribute name="action">search.sorting</attribute>
+        <attribute name="target">Country</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">S_tate</attribute>
+        <attribute name="action">search.sorting</attribute>
+        <attribute name="target">State</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Votes</attribute>
+        <attribute name="action">search.sorting</attribute>
+        <attribute name="target">Votes</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Bitrate</attribute>
+        <attribute name="action">search.sorting</attribute>
+        <attribute name="target">Bitrate</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Ascending</attribute>
+        <attribute name="action">search.order</attribute>
+        <attribute name="target">Ascending</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Descending</attribute>
+        <attribute name="action">search.order</attribute>
+        <attribute name="target">Descending</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>
+
