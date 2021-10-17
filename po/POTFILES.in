@@ -8,6 +8,7 @@ data/gtk/notification.ui
 data/gtk/player.ui
 data/gtk/settings_window.ui
 data/gtk/help_overlay.ui
+data/gtk/search_page.ui
 data/gtk/sidebar_controller.ui
 data/gtk/song_listbox.ui
 data/gtk/song_row.ui
