@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-06-09 19:14+0000\n"
-"PO-Revision-Date: 2021-08-09 15:25+0700\n"
+"POT-Creation-Date: 2021-10-17 18:03+0000\n"
+"PO-Revision-Date: 2021-10-18 15:24+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -31,11 +31,11 @@ msgstr "Tren"
 msgid "Other users are listening to…"
 msgstr "Pengguna lain sedang mendengarkan…"
 
-#: data/gtk/library_page.ui:63
+#: data/gtk/library_page.ui:60
 msgid "Receiving station data…"
 msgstr "Menerima data stasiun…"
 
-#: data/gtk/library_page.ui:90
+#: data/gtk/library_page.ui:87
 msgid "_Discover new stations"
 msgstr "Temukan stasiun _baru"
 
@@ -56,11 +56,11 @@ msgstr "Rincian kesalahan"
 msgid "Connected with"
 msgstr "Terhubung dengan"
 
-#: data/gtk/settings_window.ui:8 data/gtk/help_overlay.ui:11
+#: data/gtk/settings_window.ui:7 data/gtk/help_overlay.ui:11
 msgid "General"
 msgstr "Umum"
 
-#: data/gtk/settings_window.ui:11
+#: data/gtk/settings_window.ui:10
 msgid "Appearance"
 msgstr "Penampilan"
 
@@ -137,19 +137,67 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Pemutaran beralih"
 
+#: data/gtk/search_page.ui:31 src/ui/pages/search_page.rs:178
+msgid "Votes"
+msgstr "Suara"
+
+#: data/gtk/search_page.ui:36
+msgid "Change the sorting of the search results"
+msgstr "Ubah pemilahan hasil pencarian"
+
+#: data/gtk/search_page.ui:63
+msgid "No results"
+msgstr "Tidak ada hasil"
+
+#: data/gtk/search_page.ui:64
+msgid "Try using a different search term"
+msgstr "Coba gunakan istilah pencarian yang berbeda"
+
+#: data/gtk/search_page.ui:148 data/gtk/window.ui:106
+msgid "_Name"
+msgstr "_Nama"
+
+#: data/gtk/search_page.ui:153 data/gtk/window.ui:111
+msgid "_Language"
+msgstr "_Bahasa"
+
+#: data/gtk/search_page.ui:158 data/gtk/window.ui:116
+msgid "_Country"
+msgstr "Ne_gara"
+
+#: data/gtk/search_page.ui:163 data/gtk/window.ui:121
+msgid "S_tate"
+msgstr "Negara Ba_gian"
+
+#: data/gtk/search_page.ui:168 data/gtk/window.ui:126
+msgid "_Votes"
+msgstr "Sua_ra"
+
+#: data/gtk/search_page.ui:173 data/gtk/window.ui:131
+msgid "_Bitrate"
+msgstr "Laju _Bit"
+
+#: data/gtk/search_page.ui:180 data/gtk/window.ui:138
+msgid "_Ascending"
+msgstr "N_aik"
+
+#: data/gtk/search_page.ui:185 data/gtk/window.ui:143
+msgid "_Descending"
+msgstr "T_urun"
+
 #: data/gtk/sidebar_controller.ui:22
 msgid "An error occurred"
 msgstr "Terjadi kesalahan"
 
-#: data/gtk/sidebar_controller.ui:178
+#: data/gtk/sidebar_controller.ui:188
 msgid "_Show station details"
 msgstr "Tampilkan detail _stasiun"
 
-#: data/gtk/sidebar_controller.ui:182
+#: data/gtk/sidebar_controller.ui:192
 msgid "Stream to a _device"
 msgstr "Alirkan ke pe_rangkat"
 
-#: data/gtk/sidebar_controller.ui:188
+#: data/gtk/sidebar_controller.ui:198
 msgid "_Enable mini player"
 msgstr "Aktifkan p_emutar mini"
 
@@ -163,15 +211,15 @@ msgstr ""
 "\n"
 "Jika stasiun tidak mengirim metadata, tidak ada lagu yang dapat dikenali."
 
-#: data/gtk/song_listbox.ui:63
+#: data/gtk/song_listbox.ui:66
 msgid "No songs detected"
 msgstr "Tidak ada lagu yang terdeteksi"
 
-#: data/gtk/song_listbox.ui:73
+#: data/gtk/song_listbox.ui:76
 msgid "Detected songs will appear here."
 msgstr "Lagu yang terdeteksi akan muncul di sini."
 
-#: data/gtk/song_listbox.ui:82
+#: data/gtk/song_listbox.ui:85
 msgid "_How does this work?"
 msgstr "Bagaimana cara ker_janya?"
 
@@ -191,44 +239,44 @@ msgstr "Menyimpan lagu yang direkam"
 msgid "Station details"
 msgstr "Rincian stasiun"
 
-#: data/gtk/station_dialog.ui:71
-msgid "Actions"
-msgstr "Aksi"
-
-#: data/gtk/station_dialog.ui:74
+#: data/gtk/station_dialog.ui:83
 msgid "_Play this station"
 msgstr "_Putar stasiun ini"
 
-#: data/gtk/station_dialog.ui:82
+#: data/gtk/station_dialog.ui:96
 msgid "_Add to library"
 msgstr "T_ambah ke pustaka"
 
-#: data/gtk/station_dialog.ui:91
-msgid "_Remove from Library"
-msgstr "Hapus Da_ri Pustaka"
+#: data/gtk/station_dialog.ui:110
+msgid "_Remove from library"
+msgstr "Hapus da_ri pustaka"
 
-#: data/gtk/station_dialog.ui:102
+#: data/gtk/station_dialog.ui:124
 msgid "Information"
 msgstr "Informasi"
 
-#: data/gtk/station_dialog.ui:105
+#: data/gtk/station_dialog.ui:127 src/ui/pages/search_page.rs:175
 msgid "Language"
 msgstr "Bahasa"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:141
 msgid "Tags"
 msgstr "Tanda"
 
-#: data/gtk/station_dialog.ui:133
+#: data/gtk/station_dialog.ui:155
 msgid "Codec"
 msgstr "Kodek"
 
-#: data/gtk/station_dialog.ui:147
+#: data/gtk/station_dialog.ui:169 src/ui/pages/search_page.rs:179
+msgid "Bitrate"
+msgstr "Laju Bit"
+
+#: data/gtk/station_dialog.ui:183
 msgid "Homepage"
 msgstr "Beranda"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:172
+#: data/gtk/station_dialog.ui:201
 msgid "Stream"
 msgstr "Aliran"
 
@@ -260,55 +308,27 @@ msgstr "Coba ca_ri lagi"
 msgid "Searching for devices…"
 msgstr "Mencari perangkat…"
 
-#: data/gtk/window.ui:103 data/gtk/window.ui:173
+#: data/gtk/window.ui:103
 msgid "_Sorting"
 msgstr "Meng_urutkan"
 
-#: data/gtk/window.ui:106
-msgid "_Name"
-msgstr "_Nama"
-
-#: data/gtk/window.ui:111
-msgid "_Language"
-msgstr "_Bahasa"
-
-#: data/gtk/window.ui:116
-msgid "_Country"
-msgstr "Ne_gara"
-
-#: data/gtk/window.ui:121
-msgid "S_tate"
-msgstr "Negara Ba_gian"
-
-#: data/gtk/window.ui:126
-msgid "_Votes"
-msgstr "Sua_ra"
-
-#: data/gtk/window.ui:133
-msgid "_Ascending"
-msgstr "N_aik"
-
-#: data/gtk/window.ui:138
-msgid "_Descending"
-msgstr "T_urun"
-
-#: data/gtk/window.ui:147 data/gtk/window.ui:179
+#: data/gtk/window.ui:152 data/gtk/window.ui:180
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "Buka radi_o-browser.info <sup>↗</sup>"
 
-#: data/gtk/window.ui:151 data/gtk/window.ui:183
+#: data/gtk/window.ui:157 data/gtk/window.ui:185
 msgid "_Create new station <sup>↗</sup>"
 msgstr "_Buat stasiun baru <sup>↗</sup>"
 
-#: data/gtk/window.ui:157 data/gtk/window.ui:189
+#: data/gtk/window.ui:164 data/gtk/window.ui:192
 msgid "_Preferences"
 msgstr "_Preferensi"
 
-#: data/gtk/window.ui:161 data/gtk/window.ui:193
+#: data/gtk/window.ui:168 data/gtk/window.ui:196
 msgid "_Keyboard Shortcuts"
 msgstr "Pintasan Papan Ti_k"
 
-#: data/gtk/window.ui:165 data/gtk/window.ui:197
+#: data/gtk/window.ui:172 data/gtk/window.ui:200
 msgid "_About Shortwave"
 msgstr "Tent_ang Shortwave"
 
@@ -339,31 +359,32 @@ msgstr ""
 "Andika Triwidada <andika@gmail.com>, 2020, 2021.\n"
 "Kukuh Syafat <kukuhsyafaat@gnome.org>, 2020-2021."
 
-#: src/ui/pages/discover_page.rs:94
+#. TODO: Implement show-server-stats action
+#: src/ui/pages/discover_page.rs:91
 msgid "Show statistics"
 msgstr "Tampilkan statistik"
 
-#: src/ui/pages/discover_page.rs:95
+#: src/ui/pages/discover_page.rs:92
 msgid "Browse over 25,500 stations"
 msgstr "Jelajahi lebih dari 25.500 stasiun"
 
-#: src/ui/pages/discover_page.rs:97
+#: src/ui/pages/discover_page.rs:94
 msgid "Add new station"
 msgstr "Tambah stasiun baru"
 
-#: src/ui/pages/discover_page.rs:98
+#: src/ui/pages/discover_page.rs:95
 msgid "Your favorite station is missing?"
 msgstr "Stasiun favorit Anda hilang?"
 
-#: src/ui/pages/discover_page.rs:100
+#: src/ui/pages/discover_page.rs:97
 msgid "Open website"
 msgstr "Buka situs web"
 
-#: src/ui/pages/discover_page.rs:101
+#: src/ui/pages/discover_page.rs:98
 msgid "Powered by radio-browser.info"
 msgstr "Didukung oleh radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:140 src/ui/pages/search_page.rs:151
+#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:264
 msgid "Station data could not be received."
 msgstr "Data stasiun tidak dapat diterima."
 
@@ -371,6 +392,26 @@ msgstr "Data stasiun tidak dapat diterima."
 #: src/ui/pages/library_page.rs:117
 msgid "Welcome to {}"
 msgstr "Selamat datang di {}"
+
+#: src/ui/pages/search_page.rs:105
+msgid ""
+"The number of results is limited to {} items. Try using a more specific "
+"search term."
+msgstr ""
+"Jumlah hasil terbatas pada butir {}. Coba gunakan istilah pencarian yang "
+"lebih spesifik."
+
+#: src/ui/pages/search_page.rs:174
+msgid "Name"
+msgstr "Nama"
+
+#: src/ui/pages/search_page.rs:176
+msgid "Country"
+msgstr "Negara"
+
+#: src/ui/pages/search_page.rs:177
+msgid "State"
+msgstr "Negara Bagian"
 
 #: src/utils.rs:28
 msgid "{} Vote"
@@ -440,6 +481,9 @@ msgstr "Integrasi mulus ke dalam lingkungan destop GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Aliran;Gelombang;"
+
+#~ msgid "Actions"
+#~ msgstr "Aksi"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Search for stations"
