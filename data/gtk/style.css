@@ -1,6 +1,6 @@
-@define-color card_bg_color #ffffff;
-@define-color card_fg_color @theme_fg_color;
-@define-color card_border_color alpha(currentColor, .18);
+@define-color station_card_bg_color #ffffff;
+@define-color station_card_fg_color @theme_fg_color;
+@define-color station_card_border_color alpha(currentColor, .18);
 
 .transparent {
   background-color: transparent;
@@ -17,9 +17,9 @@ scrolledwindow.flat-headerbar scrollbar.vertical:not(.overlay-indicator) {
 .tile {
   padding: 0px;
   border-radius: 12px;
-  border: 1px solid @card_border_color;
-  color: @card_fg_color;
-  background-color: @card_bg_color;
+  border: 1px solid @station_card_border_color;
+  color: @station_card_fg_color;
+  background-color: @station_card_bg_color;
   background-clip: padding-box;
   transition: background 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -33,6 +33,7 @@ scrolledwindow.flat-headerbar scrollbar.vertical:not(.overlay-indicator) {
 }
 
 .favicon-big {
+  background-color: @theme_base_color;
   border-radius: 8px;
   border: none;
   box-shadow: 0 4px 5px 1px alpha(black, .2),
