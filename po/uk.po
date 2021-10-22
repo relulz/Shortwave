@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-10-17 18:03+0000\n"
-"PO-Revision-Date: 2021-10-17 22:17+0300\n"
+"POT-Creation-Date: 2021-10-22 18:15+0000\n"
+"PO-Revision-Date: 2021-10-22 22:44+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -137,7 +137,8 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Перемкнути відтворення"
 
-#: data/gtk/search_page.ui:31 src/ui/pages/search_page.rs:178
+#: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:159
+#: src/ui/pages/search_page.rs:178
 msgid "Votes"
 msgstr "Голоси"
 
@@ -147,13 +148,11 @@ msgstr "Змінити упорядкування результатів пош�
 
 #: data/gtk/search_page.ui:63
 msgid "No results"
-msgstr ""
-"Нічого не знайдено"
+msgstr "Нічого не знайдено"
 
 #: data/gtk/search_page.ui:64
 msgid "Try using a different search term"
-msgstr ""
-"Спробуйте інший критерій пошуку"
+msgstr "Спробуйте інший критерій пошуку"
 
 #: data/gtk/search_page.ui:148 data/gtk/window.ui:106
 msgid "_Name"
@@ -241,45 +240,58 @@ msgstr "Зберегти записану пісню"
 msgid "Station details"
 msgstr "Параметри станції"
 
-#: data/gtk/station_dialog.ui:83
+#: data/gtk/station_dialog.ui:87
 msgid "_Play this station"
 msgstr "_Відтворити цю станцію"
 
-#: data/gtk/station_dialog.ui:96
+#: data/gtk/station_dialog.ui:100
 msgid "_Add to library"
 msgstr "Д_одати до бібліотеки"
 
-#: data/gtk/station_dialog.ui:110
-#| msgid "_Remove from Library"
+#: data/gtk/station_dialog.ui:114
 msgid "_Remove from library"
 msgstr "Ви_лучити з бібліотеки"
 
-#: data/gtk/station_dialog.ui:124
+#: data/gtk/station_dialog.ui:128
 msgid "Information"
 msgstr "Відомості"
 
-#: data/gtk/station_dialog.ui:127 src/ui/pages/search_page.rs:175
+#: data/gtk/station_dialog.ui:131 src/ui/pages/search_page.rs:175
 msgid "Language"
 msgstr "Мова"
 
-#: data/gtk/station_dialog.ui:141
+#: data/gtk/station_dialog.ui:145
 msgid "Tags"
 msgstr "Мітки"
 
-#: data/gtk/station_dialog.ui:155
-msgid "Codec"
-msgstr "Кодек"
+#: data/gtk/station_dialog.ui:174
+#| msgid "Actions"
+msgid "Location"
+msgstr "Місце"
 
-#: data/gtk/station_dialog.ui:169 src/ui/pages/search_page.rs:179
+#: data/gtk/station_dialog.ui:178 src/ui/pages/search_page.rs:176
+msgid "Country"
+msgstr "Країна"
+
+#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:177
+msgid "State"
+msgstr "Штат"
+
+#: data/gtk/station_dialog.ui:229
+msgid "Audio"
+msgstr ""
+"Звук"
+
+#: data/gtk/station_dialog.ui:233 src/ui/pages/search_page.rs:179
 msgid "Bitrate"
 msgstr "Бітова швидкість"
 
-#: data/gtk/station_dialog.ui:183
-msgid "Homepage"
-msgstr "Домашня сторінка"
+#: data/gtk/station_dialog.ui:247
+msgid "Codec"
+msgstr "Кодек"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:201
+#: data/gtk/station_dialog.ui:261
 msgid "Stream"
 msgstr "Трансляція"
 
@@ -402,19 +414,12 @@ msgid ""
 "The number of results is limited to {} items. Try using a more specific "
 "search term."
 msgstr ""
-"Кількість результатів обмежено {} записами. Спробуйте точніше визначити критерії пошуку."
+"Кількість результатів обмежено {} записами. Спробуйте точніше визначити "
+"критерії пошуку."
 
 #: src/ui/pages/search_page.rs:174
 msgid "Name"
 msgstr "Назва"
-
-#: src/ui/pages/search_page.rs:176
-msgid "Country"
-msgstr "Країна"
-
-#: src/ui/pages/search_page.rs:177
-msgid "State"
-msgstr "Штат"
 
 #: src/utils.rs:28
 msgid "{} Vote"
@@ -488,8 +493,8 @@ msgstr "Безшовна інтеграція до стільничного се
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;градіо;жрадіо;радіо;потік;трансляція;хвиля;"
 
-#~ msgid "Actions"
-#~ msgstr "Дії"
+#~ msgid "Homepage"
+#~ msgstr "Домашня сторінка"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Search for stations"
