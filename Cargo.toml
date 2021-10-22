@@ -36,6 +36,7 @@ sanitize-filename = "0.3.0"
 
 gstreamer-audio = { git = "https://gitlab.freedesktop.org/gstreamer/gstreamer-rs", features = ["v1_10"], branch = "0.17" }
 gstreamer = { git = "https://gitlab.freedesktop.org/gstreamer/gstreamer-rs", branch = "0.17"}
+shumate = { git = "https://gitlab.gnome.org/World/Rust/libshumate-rs", package = "libshumate" }
 gettext-rs = { version = "0.7.0", features = ["gettext-system"] }
 adw = { version = "0.1.0-alpha", package = "libadwaita" }
 gtk = { version = "0.3.0", package = "gtk4" }

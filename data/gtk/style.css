@@ -120,3 +120,22 @@ scrolledwindow.flat-headerbar scrollbar.vertical:not(.overlay-indicator) {
   min-width: 34px;
   min-height: 34px;
 }
+
+.station-dialog headerbar {
+  transition: 200ms ease-out;
+  transition-property: box-shadow, background-color;
+}
+
+.station-dialog headerbar.hidden {
+  background-color: transparent;
+  box-shadow: inset 0 -1px transparent;
+}
+
+.station-dialog-map{
+  border-radius: 12px;
+  border: 1px solid @station_card_border_color;
+}
+
+.map-pin{
+  color: black;
+}

@@ -22,13 +22,13 @@ use glib::Sender;
 use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
 use gtk::{gdk, gio, glib};
+use shumate::prelude::*;
 use once_cell::unsync::OnceCell;
 
 use crate::api::{FaviconDownloader, SwStation};
 use crate::app::{Action, SwApplication};
 use crate::database::SwLibrary;
 use crate::ui::{FaviconSize, StationFavicon};
-use crate::utils;
 
 mod imp {
     use super::*;
@@ -38,11 +38,17 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_dialog.ui")]
     pub struct SwStationDialog {
         #[template_child]
+        pub headerbar: TemplateChild<gtk::HeaderBar>,
+        #[template_child]
+        pub dialog_title: TemplateChild<adw::WindowTitle>,
+        #[template_child]
+        pub scrolled_window: TemplateChild<gtk::ScrolledWindow>,
+        #[template_child]
         pub favicon_box: TemplateChild<gtk::Box>,
         #[template_child]
         pub title_label: TemplateChild<gtk::Label>,
         #[template_child]
-        pub subtitle_label: TemplateChild<gtk::Label>,
+        pub homepage_label: TemplateChild<gtk::Label>,
         #[template_child]
         pub library_add_button: TemplateChild<gtk::Button>,
         #[template_child]
@@ -70,17 +76,32 @@ mod imp {
         #[template_child]
         pub bitrate_label: TemplateChild<gtk::Label>,
         #[template_child]
-        pub homepage_row: TemplateChild<adw::ActionRow>,
+        pub votes_row: TemplateChild<adw::ActionRow>,
         #[template_child]
-        pub homepage_label: TemplateChild<gtk::Label>,
-        #[template_child]
-        pub copy_homepage_button: TemplateChild<gtk::Button>,
+        pub votes_label: TemplateChild<gtk::Label>,
         #[template_child]
         pub stream_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub stream_label: TemplateChild<gtk::Label>,
         #[template_child]
         pub copy_stream_button: TemplateChild<gtk::Button>,
+        #[template_child]
+        pub location_group: TemplateChild<adw::PreferencesGroup>,
+        #[template_child]
+        pub country_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub country_label: TemplateChild<gtk::Label>,
+        #[template_child]
+        pub state_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub state_label: TemplateChild<gtk::Label>,
+        #[template_child]
+        pub map_box: TemplateChild<gtk::Box>,
+        #[template_child]
+        pub map: TemplateChild<shumate::Map>,
+        #[template_child]
+        pub map_license: TemplateChild<shumate::License>,
+        pub marker: shumate::Marker,
 
         pub station: OnceCell<SwStation>,
         pub sender: OnceCell<Sender<Action>>,
@@ -106,7 +127,36 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for SwStationDialog {}
+    impl ObjectImpl for SwStationDialog {
+        fn constructed(&self, obj: &Self::Type) {
+            // Setup the libshumate map widget
+            // Based on ashpd-demo
+            // https://github.com/bilelmoussaoui/ashpd/blob/66d4dc0020181a7174451150ecc711344082b5ce/ashpd-demo/src/portals/desktop/location.rs
+            let registry = shumate::MapSourceRegistry::with_defaults();
+
+            let source = registry.by_id(&shumate::MAP_SOURCE_OSM_MAPNIK).unwrap();
+            self.map.set_map_source(&source);
+
+            let viewport = self.map.viewport().unwrap();
+            viewport.set_reference_map_source(Some(&source));
+            viewport.set_zoom_level(6.0);
+
+            let layer = shumate::MapLayer::new(&source, &viewport);
+            self.map.add_layer(&layer);
+
+            let marker_layer = shumate::MarkerLayer::new(&viewport);
+            marker_layer.add_marker(&self.marker);
+            self.map.add_layer(&marker_layer);
+
+            let marker_img = gtk::Image::from_icon_name(Some("mark-location-symbolic"));
+            marker_img.add_css_class("map-pin");
+            marker_img.set_icon_size(gtk::IconSize::Large);
+            self.marker.set_child(Some(&marker_img));
+
+            self.map_license.append_map_source(&source);
+            self.parent_constructed(obj);
+        }
+    }
 
     impl WidgetImpl for SwStationDialog {}
 
@@ -152,10 +202,18 @@ impl SwStationDialog {
             spawn!(fut);
         }
 
-        // Title / Subtitle
-        let subtitle = utils::station_subtitle(metadata.clone());
+        // Title + Homepage
         imp.title_label.set_text(&metadata.name);
-        imp.subtitle_label.set_text(&subtitle);
+        imp.dialog_title.set_title(&metadata.name);
+
+        if let Some(homepage) = metadata.homepage {
+            let url = homepage.to_string().replace("&", "&amp;");
+            let domain = homepage.domain().unwrap();
+
+            imp.homepage_label.set_visible(true);
+            imp.homepage_label.set_markup(&format!("<a href=\"{}\">{}</a>", &url, &domain));
+            imp.homepage_label.set_tooltip_text(Some(&url));
+        }
 
         // Action pill buttons
         if SwLibrary::contains_station(&imp.station.get().unwrap()) {
@@ -164,16 +222,20 @@ impl SwStationDialog {
             imp.library_add_child.set_visible(true);
         }
 
-        if !metadata.language.is_empty() {
+        // General information group
+        if !metadata.tags.is_empty() {
             imp.tags_row.set_visible(true);
             imp.tags_label.set_text(&metadata.tags);
         }
 
-        if !metadata.tags.is_empty() {
+        if !metadata.language.is_empty() {
             imp.language_row.set_visible(true);
             imp.language_label.set_text(&metadata.language);
         }
 
+        imp.votes_label.set_text(&metadata.votes.to_string());
+
+        // Audio group
         if !metadata.codec.is_empty() {
             imp.codec_row.set_visible(true);
             imp.codec_label.set_text(&metadata.codec);
@@ -185,21 +247,49 @@ impl SwStationDialog {
             imp.bitrate_label.set_text(&bitrate);
         }
 
-        if let Some(homepage) = metadata.homepage {
-            imp.homepage_row.set_visible(true);
-            let homepage = homepage.to_string().replace("&", "&amp;");
-            imp.homepage_label.set_markup(&format!("<a href=\"{}\">{}</a>", &homepage, &homepage));
-        }
-
         if let Some(url_resolved) = metadata.url_resolved {
             imp.stream_row.set_visible(true);
             let url_resolved = url_resolved.to_string().replace("&", "&amp;");
             imp.stream_label.set_markup(&format!("<a href=\"{}\">{}</a>", &url_resolved, &url_resolved));
+            imp.stream_label.set_tooltip_text(Some(&url_resolved));
+        }
+
+        // Location & Map
+        if !metadata.country.is_empty() {
+            imp.location_group.set_visible(true);
+            imp.country_row.set_visible(true);
+            imp.country_label.set_text(&metadata.country);
+        }
+
+        if !metadata.state.is_empty() {
+            imp.location_group.set_visible(true);
+            imp.state_row.set_visible(true);
+            imp.state_label.set_text(&metadata.state);
+        }
+
+        let long: f64 = metadata.geo_long.unwrap_or(0.0).into();
+        let lat: f64 = metadata.geo_lat.unwrap_or(0.0).into();
+
+        if long != 0.0 || lat != 0.0 {
+            imp.map_box.set_visible(true);
+            imp.marker.set_location(lat, long);
+            imp.map.center_on(lat, long);
         }
     }
 
     fn setup_signals(&self) {
         let imp = imp::SwStationDialog::from_instance(self);
+
+        imp.scrolled_window.vadjustment().unwrap().connect_value_notify(clone!(@weak self as this => move |adj|{
+            let imp = imp::SwStationDialog::from_instance(&this);
+            if adj.value() < 210.0 {
+                imp.headerbar.add_css_class("hidden");
+                imp.dialog_title.set_visible(false);
+            }else {
+                imp.headerbar.remove_css_class("hidden");
+                imp.dialog_title.set_visible(true);
+            }
+        }));
 
         imp.library_add_button.connect_clicked(clone!(@weak self as this => move|_|
             let imp = imp::SwStationDialog::from_instance(&this);
@@ -226,17 +316,6 @@ impl SwStationDialog {
             send!(imp.sender.get().unwrap(), Action::PlaybackSetStation(Box::new(station)));
             this.hide();
             this.close();
-        ));
-
-        imp.copy_homepage_button.connect_clicked(clone!(@weak self as this => move|_|
-            let imp = imp::SwStationDialog::from_instance(&this);
-            let metadata = imp.station.get().unwrap().clone().metadata();
-
-            if let Some(homepage) = metadata.homepage {
-                let display = gdk::Display::default().unwrap();
-                let clipboard = display.clipboard();
-                clipboard.set_text(&homepage.to_string());
-            }
         ));
 
         imp.copy_stream_button.connect_clicked(clone!(@weak self as this => move|_|

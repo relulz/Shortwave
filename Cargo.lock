@@ -1432,6 +1432,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "libshumate"
+version = "0.1.0"
+source = "git+https://gitlab.gnome.org/World/Rust/libshumate-rs#973216fd9136f9459bb06ee9783cf2e159d1297f"
+dependencies = [
+ "gdk4",
+ "gio",
+ "glib 0.14.5",
+ "gtk4",
+ "libc",
+ "libshumate-sys",
+ "once_cell",
+]
+
+[[package]]
+name = "libshumate-sys"
+version = "0.1.0"
+source = "git+https://gitlab.gnome.org/World/Rust/libshumate-rs#973216fd9136f9459bb06ee9783cf2e159d1297f"
+dependencies = [
+ "gdk4-sys",
+ "gio-sys",
+ "glib-sys 0.14.0",
+ "gobject-sys 0.14.0",
+ "gtk4-sys",
+ "libc",
+ "system-deps 4.0.0",
+]
+
+[[package]]
 name = "libsqlite3-sys"
 version = "0.22.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2289,6 +2317,7 @@ dependencies = [
  "indexmap",
  "isahc",
  "libadwaita",
+ "libshumate",
  "log",
  "mdns",
  "mpris-player",
