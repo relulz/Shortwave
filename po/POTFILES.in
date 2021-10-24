@@ -23,6 +23,7 @@ src/ui/about_dialog.rs
 src/ui/pages/discover_page.rs
 src/ui/pages/library_page.rs
 src/ui/pages/search_page.rs
+src/ui/station_dialog.rs
 src/ui/station_row.rs
 src/ui/window.rs
 src/utils.rs
