@@ -21,7 +21,7 @@ use crate::diesel::prelude::*;
 
 macro_rules! connect_db {
     () => {
-        database::connection::connection().get().unwrap();
+        database::connection::connection().get().unwrap()
     };
 }
 

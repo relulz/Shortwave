@@ -22,12 +22,13 @@ use glib::Sender;
 use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
 use gtk::{gdk, gio, glib};
-use shumate::prelude::*;
 use once_cell::unsync::OnceCell;
+use shumate::prelude::*;
 
 use crate::api::{FaviconDownloader, SwStation};
 use crate::app::{Action, SwApplication};
 use crate::database::SwLibrary;
+use crate::i18n;
 use crate::ui::{FaviconSize, StationFavicon};
 
 mod imp {
@@ -243,7 +244,7 @@ impl SwStationDialog {
 
         if metadata.bitrate != 0 {
             imp.bitrate_row.set_visible(true);
-            let bitrate = format!("{} kbit/s", metadata.bitrate);
+            let bitrate = i18n::i18n_f("{} kbit/s", &[&metadata.bitrate.to_string()]);
             imp.bitrate_label.set_text(&bitrate);
         }
 
