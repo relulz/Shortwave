@@ -107,7 +107,7 @@ impl SwStationRow {
 
         // Set subtitle
         let metadata = station.metadata();
-        let mut subtitle = metadata.language.to_title_case();
+        let mut subtitle = metadata.country.to_title_case();
 
         if subtitle.is_empty() {
             subtitle = metadata.tags;
