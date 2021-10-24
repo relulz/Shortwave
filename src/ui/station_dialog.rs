@@ -22,6 +22,7 @@ use glib::Sender;
 use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
 use gtk::{gdk, gio, glib};
+use inflector::Inflector;
 use once_cell::unsync::OnceCell;
 use shumate::prelude::*;
 
@@ -231,7 +232,7 @@ impl SwStationDialog {
 
         if !metadata.language.is_empty() {
             imp.language_row.set_visible(true);
-            imp.language_label.set_text(&metadata.language);
+            imp.language_label.set_text(&metadata.language.to_title_case());
         }
 
         imp.votes_label.set_text(&metadata.votes.to_string());

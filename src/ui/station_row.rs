@@ -21,12 +21,12 @@ use gtk::glib;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::CompositeTemplate;
+use inflector::Inflector;
 use once_cell::unsync::OnceCell;
 
 use crate::api::{FaviconDownloader, SwStation};
 use crate::app::Action;
 use crate::ui::{FaviconSize, StationFavicon};
-use crate::utils;
 
 mod imp {
     use super::*;
@@ -105,8 +105,18 @@ impl SwStationRow {
         let station = imp.station.get().unwrap();
         imp.station_label.set_text(&station.metadata().name);
 
-        let subtitle = utils::station_subtitle(station.metadata());
+        // Set subtitle
+        let metadata = station.metadata();
+        let mut subtitle = metadata.language.to_title_case();
+
+        if subtitle.is_empty() {
+            subtitle = metadata.tags;
+        } else if !metadata.tags.is_empty() {
+            subtitle = format!("{} · {}", subtitle, metadata.tags);
+        }
+
         imp.subtitle_label.set_text(&subtitle);
+        imp.subtitle_label.set_visible(!subtitle.is_empty());
 
         // Download & set station favicon
         let station_favicon = StationFavicon::new(FaviconSize::Small);

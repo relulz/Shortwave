@@ -31,9 +31,6 @@ extern crate gtk_macros;
 use gettextrs::*;
 use std::env;
 
-#[macro_use]
-mod utils;
-
 mod api;
 mod audio;
 mod database;

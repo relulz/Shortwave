@@ -86,8 +86,7 @@ sources = files(
   'app.rs',
   'config.rs',
   'main.rs',
-  'path.rs',
-  'utils.rs'
+  'path.rs'
 )
 
 outputname = meson.project_name()
