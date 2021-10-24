@@ -179,6 +179,7 @@
                       <object class="AdwPreferencesGroup" id="location_group">
                         <property name="title" translatable="yes">Location</property>
                         <property name="margin_top">6</property>
+                        <property name="visible">False</property>
                         <child>
                           <object class="AdwActionRow" id="country_row">
                             <property name="title" translatable="yes">Country</property>
@@ -265,7 +266,6 @@
                         <child>
                           <object class="AdwActionRow" id="stream_row">
                             <property name="title" translatable="yes" comments="This is a noun/label for the station stream url">Stream</property>
-                            <property name="visible">False</property>
                             <child>
                               <object class="GtkBox">
                                 <property name="spacing">6</property>

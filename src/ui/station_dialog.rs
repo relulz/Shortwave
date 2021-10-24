@@ -237,25 +237,6 @@ impl SwStationDialog {
 
         imp.votes_label.set_text(&metadata.votes.to_string());
 
-        // Audio group
-        if !metadata.codec.is_empty() {
-            imp.codec_row.set_visible(true);
-            imp.codec_label.set_text(&metadata.codec);
-        }
-
-        if metadata.bitrate != 0 {
-            imp.bitrate_row.set_visible(true);
-            let bitrate = i18n::i18n_f("{} kbit/s", &[&metadata.bitrate.to_string()]);
-            imp.bitrate_label.set_text(&bitrate);
-        }
-
-        if let Some(url_resolved) = metadata.url_resolved {
-            imp.stream_row.set_visible(true);
-            let url_resolved = url_resolved.to_string().replace("&", "&amp;");
-            imp.stream_label.set_markup(&format!("<a href=\"{}\">{}</a>", &url_resolved, &url_resolved));
-            imp.stream_label.set_tooltip_text(Some(&url_resolved));
-        }
-
         // Location & Map
         if !metadata.country.is_empty() {
             imp.location_group.set_visible(true);
@@ -277,6 +258,27 @@ impl SwStationDialog {
             imp.marker.set_location(lat, long);
             imp.map.center_on(lat, long);
         }
+
+        // Audio group
+        if !metadata.codec.is_empty() {
+            imp.codec_row.set_visible(true);
+            imp.codec_label.set_text(&metadata.codec);
+        }
+
+        if metadata.bitrate != 0 {
+            imp.bitrate_row.set_visible(true);
+            let bitrate = i18n::i18n_f("{} kbit/s", &[&metadata.bitrate.to_string()]);
+            imp.bitrate_label.set_text(&bitrate);
+        }
+
+        let url = if let Some(url_resolved) = metadata.url_resolved {
+            url_resolved.to_string()
+        } else {
+            metadata.url.map(|x| x.to_string()).unwrap_or(String::new())
+        };
+        let url = url.to_string().replace("&", "&amp;");
+        imp.stream_label.set_markup(&format!("<a href=\"{}\">{}</a>", &url, &url));
+        imp.stream_label.set_tooltip_text(Some(&url));
     }
 
     fn setup_signals(&self) {
