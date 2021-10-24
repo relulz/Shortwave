@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-10-22 18:15+0000\n"
-"PO-Revision-Date: 2021-10-22 22:09+0200\n"
+"POT-Creation-Date: 2021-10-24 11:02+0000\n"
+"PO-Revision-Date: 2021-10-24 17:40+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -418,6 +418,10 @@ msgstr ""
 #: src/ui/pages/search_page.rs:174
 msgid "Name"
 msgstr "Namn"
+
+#: src/ui/station_dialog.rs:247
+msgid "{} kbit/s"
+msgstr "{} kbit/s"
 
 #: src/utils.rs:28
 msgid "{} Vote"
