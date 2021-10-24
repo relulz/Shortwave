@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use gtk::glib;
+use inflector::Inflector;
 use serde::{Deserialize, Deserializer, Serializer};
 use std::str::FromStr;
 use url::Url;
@@ -63,6 +64,17 @@ pub struct StationMetadata {
     pub geo_lat: Option<f32>,
     pub geo_long: Option<f32>,
     pub has_extended_info: bool,
+}
+
+impl StationMetadata {
+    pub fn formatted_tags(&self) -> String {
+        let tags = self.tags.split(",");
+        let mut formatted = String::new();
+        for tag in tags {
+            formatted += &format!(", {}", tag.to_title_case());
+        }
+        formatted.split_at(2).1.to_string()
+    }
 }
 
 fn url_to_str<S>(url: &Option<Url>, serializer: S) -> Result<S::Ok, S::Error>

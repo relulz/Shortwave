@@ -112,7 +112,7 @@ impl SwStationRow {
         if subtitle.is_empty() {
             subtitle = metadata.tags;
         } else if !metadata.tags.is_empty() {
-            subtitle = format!("{} · {}", subtitle, metadata.tags);
+            subtitle = format!("{} · {}", subtitle, metadata.formatted_tags());
         }
 
         imp.subtitle_label.set_text(&subtitle);

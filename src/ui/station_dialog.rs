@@ -208,7 +208,7 @@ impl SwStationDialog {
         imp.title_label.set_text(&metadata.name);
         imp.dialog_title.set_title(&metadata.name);
 
-        if let Some(homepage) = metadata.homepage {
+        if let Some(ref homepage) = metadata.homepage {
             let url = homepage.to_string().replace("&", "&amp;");
             let domain = homepage.domain().unwrap();
 
@@ -227,7 +227,7 @@ impl SwStationDialog {
         // General information group
         if !metadata.tags.is_empty() {
             imp.tags_row.set_visible(true);
-            imp.tags_label.set_text(&metadata.tags);
+            imp.tags_label.set_text(&metadata.formatted_tags());
         }
 
         if !metadata.language.is_empty() {
