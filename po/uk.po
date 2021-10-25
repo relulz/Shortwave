@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-10-22 18:15+0000\n"
-"PO-Revision-Date: 2021-10-22 22:44+0300\n"
+"POT-Creation-Date: 2021-10-24 11:02+0000\n"
+"PO-Revision-Date: 2021-10-25 18:38+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -265,7 +265,6 @@ msgid "Tags"
 msgstr "Мітки"
 
 #: data/gtk/station_dialog.ui:174
-#| msgid "Actions"
 msgid "Location"
 msgstr "Місце"
 
@@ -279,8 +278,7 @@ msgstr "Штат"
 
 #: data/gtk/station_dialog.ui:229
 msgid "Audio"
-msgstr ""
-"Звук"
+msgstr "Звук"
 
 #: data/gtk/station_dialog.ui:233 src/ui/pages/search_page.rs:179
 msgid "Bitrate"
@@ -420,6 +418,11 @@ msgstr ""
 #: src/ui/pages/search_page.rs:174
 msgid "Name"
 msgstr "Назва"
+
+#: src/ui/station_dialog.rs:247
+msgid "{} kbit/s"
+msgstr ""
+"{} кбіт/с"
 
 #: src/utils.rs:28
 msgid "{} Vote"
