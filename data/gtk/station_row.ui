@@ -59,6 +59,8 @@
     </child>
     <style>
       <class name="tile"/>
+      <class name="card"/>
+      <class name="activatable"/>
     </style>
   </template>
 </interface>
