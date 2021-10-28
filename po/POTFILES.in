@@ -26,7 +26,6 @@ src/ui/pages/search_page.rs
 src/ui/station_dialog.rs
 src/ui/station_row.rs
 src/ui/window.rs
-src/utils.rs
 
 data/de.haeckerfelix.Shortwave.metainfo.xml.in.in
 data/de.haeckerfelix.Shortwave.desktop.in.in
