@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-06-09 19:14+0000\n"
-"PO-Revision-Date: 2021-06-14 06:53-0300\n"
-"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"POT-Creation-Date: 2021-10-24 11:02+0000\n"
+"PO-Revision-Date: 2021-10-28 15:31-0300\n"
+"Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Generator: Gtranslator 40.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.0\n"
 
 #: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
@@ -31,11 +31,11 @@ msgstr "Em alta"
 msgid "Other users are listening to…"
 msgstr "Outros usuários estão ouvindo…"
 
-#: data/gtk/library_page.ui:63
+#: data/gtk/library_page.ui:60
 msgid "Receiving station data…"
 msgstr "Recebendo dados da estação…"
 
-#: data/gtk/library_page.ui:90
+#: data/gtk/library_page.ui:87
 msgid "_Discover new stations"
 msgstr "_Descobrir novas estações"
 
@@ -56,11 +56,11 @@ msgstr "Detalhes do erro"
 msgid "Connected with"
 msgstr "Conectado com"
 
-#: data/gtk/settings_window.ui:8 data/gtk/help_overlay.ui:11
+#: data/gtk/settings_window.ui:7 data/gtk/help_overlay.ui:11
 msgid "General"
 msgstr "Geral"
 
-#: data/gtk/settings_window.ui:11
+#: data/gtk/settings_window.ui:10
 msgid "Appearance"
 msgstr "Aparência"
 
@@ -137,19 +137,68 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Alterna a reprodução"
 
+#: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:159
+#: src/ui/pages/search_page.rs:178
+msgid "Votes"
+msgstr "Votos"
+
+#: data/gtk/search_page.ui:36
+msgid "Change the sorting of the search results"
+msgstr "Altera a ordenação dos resultados da pesquisa"
+
+#: data/gtk/search_page.ui:63
+msgid "No results"
+msgstr "Sem resultados"
+
+#: data/gtk/search_page.ui:64
+msgid "Try using a different search term"
+msgstr "Tente usar um termo de pesquisa diferente"
+
+#: data/gtk/search_page.ui:148 data/gtk/window.ui:106
+msgid "_Name"
+msgstr "_Nome"
+
+#: data/gtk/search_page.ui:153 data/gtk/window.ui:111
+msgid "_Language"
+msgstr "_Idioma"
+
+#: data/gtk/search_page.ui:158 data/gtk/window.ui:116
+msgid "_Country"
+msgstr "_País"
+
+#: data/gtk/search_page.ui:163 data/gtk/window.ui:121
+msgid "S_tate"
+msgstr "Es_tado"
+
+#: data/gtk/search_page.ui:168 data/gtk/window.ui:126
+msgid "_Votes"
+msgstr "_Votos"
+
+#: data/gtk/search_page.ui:173 data/gtk/window.ui:131
+msgid "_Bitrate"
+msgstr "Taxa de _bits"
+
+#: data/gtk/search_page.ui:180 data/gtk/window.ui:138
+msgid "_Ascending"
+msgstr "_Crescente"
+
+#: data/gtk/search_page.ui:185 data/gtk/window.ui:143
+msgid "_Descending"
+msgstr "_Decrescente"
+
 #: data/gtk/sidebar_controller.ui:22
 msgid "An error occurred"
 msgstr "Ocorreu um erro"
 
-#: data/gtk/sidebar_controller.ui:178
+#: data/gtk/sidebar_controller.ui:188
 msgid "_Show station details"
 msgstr "_Mostrar detalhes da estação"
 
-#: data/gtk/sidebar_controller.ui:182
+#: data/gtk/sidebar_controller.ui:192
 msgid "Stream to a _device"
 msgstr "Fazer stream para um _dispositivo"
 
-#: data/gtk/sidebar_controller.ui:188
+#: data/gtk/sidebar_controller.ui:198
 msgid "_Enable mini player"
 msgstr "_Habilitar reprodutor compacto"
 
@@ -163,15 +212,15 @@ msgstr ""
 "\n"
 "Se a estação não enviar nenhum metadado, as músicas não serão reconhecidas."
 
-#: data/gtk/song_listbox.ui:63
+#: data/gtk/song_listbox.ui:66
 msgid "No songs detected"
 msgstr "Nenhuma música detectada"
 
-#: data/gtk/song_listbox.ui:73
+#: data/gtk/song_listbox.ui:76
 msgid "Detected songs will appear here."
 msgstr "Músicas detectadas vão aparecer aqui."
 
-#: data/gtk/song_listbox.ui:82
+#: data/gtk/song_listbox.ui:85
 msgid "_How does this work?"
 msgstr "C_omo isso funciona?"
 
@@ -191,44 +240,56 @@ msgstr "Salvar gravação"
 msgid "Station details"
 msgstr "Detalhes da estação"
 
-#: data/gtk/station_dialog.ui:71
-msgid "Actions"
-msgstr "Ações"
-
-#: data/gtk/station_dialog.ui:74
+#: data/gtk/station_dialog.ui:87
 msgid "_Play this station"
 msgstr "Re_produzir esta estação"
 
-#: data/gtk/station_dialog.ui:82
+#: data/gtk/station_dialog.ui:100
 msgid "_Add to library"
 msgstr "_Adicionar a biblioteca"
 
-#: data/gtk/station_dialog.ui:91
-msgid "_Remove from Library"
-msgstr "_Remover da biblioteca"
+#: data/gtk/station_dialog.ui:114
+msgid "_Remove from library"
+msgstr "Remover da biblioteca"
 
-#: data/gtk/station_dialog.ui:102
+#: data/gtk/station_dialog.ui:128
 msgid "Information"
 msgstr "Informação"
 
-#: data/gtk/station_dialog.ui:105
+#: data/gtk/station_dialog.ui:131 src/ui/pages/search_page.rs:175
 msgid "Language"
 msgstr "Idioma"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:145
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: data/gtk/station_dialog.ui:133
+#: data/gtk/station_dialog.ui:174
+msgid "Location"
+msgstr "Local"
+
+#: data/gtk/station_dialog.ui:178 src/ui/pages/search_page.rs:176
+msgid "Country"
+msgstr "País"
+
+#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:177
+msgid "State"
+msgstr "Estado"
+
+#: data/gtk/station_dialog.ui:229
+msgid "Audio"
+msgstr "Áudio"
+
+#: data/gtk/station_dialog.ui:233 src/ui/pages/search_page.rs:179
+msgid "Bitrate"
+msgstr "Taxa de bits"
+
+#: data/gtk/station_dialog.ui:247
 msgid "Codec"
 msgstr "Codec"
 
-#: data/gtk/station_dialog.ui:147
-msgid "Homepage"
-msgstr "Site"
-
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:172
+#: data/gtk/station_dialog.ui:261
 msgid "Stream"
 msgstr "Fluxo"
 
@@ -260,55 +321,27 @@ msgstr "_Repetir pesquisar"
 msgid "Searching for devices…"
 msgstr "Pesquisando dispositivos…"
 
-#: data/gtk/window.ui:103 data/gtk/window.ui:173
+#: data/gtk/window.ui:103
 msgid "_Sorting"
 msgstr "_Classificação"
 
-#: data/gtk/window.ui:106
-msgid "_Name"
-msgstr "_Nome"
-
-#: data/gtk/window.ui:111
-msgid "_Language"
-msgstr "_Idioma"
-
-#: data/gtk/window.ui:116
-msgid "_Country"
-msgstr "_País"
-
-#: data/gtk/window.ui:121
-msgid "S_tate"
-msgstr "Es_tado"
-
-#: data/gtk/window.ui:126
-msgid "_Votes"
-msgstr "_Votos"
-
-#: data/gtk/window.ui:133
-msgid "_Ascending"
-msgstr "_Crescente"
-
-#: data/gtk/window.ui:138
-msgid "_Descending"
-msgstr "_Decrescente"
-
-#: data/gtk/window.ui:147 data/gtk/window.ui:179
+#: data/gtk/window.ui:152 data/gtk/window.ui:180
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "A_brir radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/window.ui:151 data/gtk/window.ui:183
+#: data/gtk/window.ui:157 data/gtk/window.ui:185
 msgid "_Create new station <sup>↗</sup>"
 msgstr "_Criar nova estação <sup>↗</sup>"
 
-#: data/gtk/window.ui:157 data/gtk/window.ui:189
+#: data/gtk/window.ui:164 data/gtk/window.ui:192
 msgid "_Preferences"
 msgstr "_Preferências"
 
-#: data/gtk/window.ui:161 data/gtk/window.ui:193
+#: data/gtk/window.ui:168 data/gtk/window.ui:196
 msgid "_Keyboard Shortcuts"
 msgstr "A_talhos de teclado"
 
-#: data/gtk/window.ui:165 data/gtk/window.ui:197
+#: data/gtk/window.ui:172 data/gtk/window.ui:200
 msgid "_About Shortwave"
 msgstr "_Sobre o Shortwave"
 
@@ -326,7 +359,6 @@ msgid "URL is not valid."
 msgstr "A URL não é válida."
 
 #: src/database/library.rs:271
-#| msgid "No longer existing station removed from library."
 msgid "An invalid station was removed from the library."
 msgstr "Um estação inválida foi removida da biblioteca."
 
@@ -341,31 +373,32 @@ msgstr ""
 "Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Enrico Nicoletto <liverig@gmail.com>"
 
-#: src/ui/pages/discover_page.rs:94
+#. TODO: Implement show-server-stats action
+#: src/ui/pages/discover_page.rs:91
 msgid "Show statistics"
 msgstr "Mostrar estatísticas"
 
-#: src/ui/pages/discover_page.rs:95
+#: src/ui/pages/discover_page.rs:92
 msgid "Browse over 25,500 stations"
 msgstr "Navegue por mais de 25.500 estações"
 
-#: src/ui/pages/discover_page.rs:97
+#: src/ui/pages/discover_page.rs:94
 msgid "Add new station"
 msgstr "Adicionar nova estação"
 
-#: src/ui/pages/discover_page.rs:98
+#: src/ui/pages/discover_page.rs:95
 msgid "Your favorite station is missing?"
 msgstr "Sua estação favorita não está aqui?"
 
-#: src/ui/pages/discover_page.rs:100
+#: src/ui/pages/discover_page.rs:97
 msgid "Open website"
 msgstr "Abrir site"
 
-#: src/ui/pages/discover_page.rs:101
+#: src/ui/pages/discover_page.rs:98
 msgid "Powered by radio-browser.info"
 msgstr "Fornecido por radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:140 src/ui/pages/search_page.rs:151
+#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:264
 msgid "Station data could not be received."
 msgstr "Os dados da estação não puderam ser recebidos."
 
@@ -373,6 +406,22 @@ msgstr "Os dados da estação não puderam ser recebidos."
 #: src/ui/pages/library_page.rs:117
 msgid "Welcome to {}"
 msgstr "Bem-vindo(a) ao {}"
+
+#: src/ui/pages/search_page.rs:105
+msgid ""
+"The number of results is limited to {} items. Try using a more specific "
+"search term."
+msgstr ""
+"O número de resultados está limitado a {} items. Tente usar um termo de "
+"pesquisa mais específico."
+
+#: src/ui/pages/search_page.rs:174
+msgid "Name"
+msgstr "Nome"
+
+#: src/ui/station_dialog.rs:247
+msgid "{} kbit/s"
+msgstr "{} kbit/s"
 
 #: src/utils.rs:28
 msgid "{} Vote"
@@ -444,47 +493,3 @@ msgstr "Integração perfeita no ambiente GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Rádio;Radio;Stream;Fluxo;Wave;Onda;Sintonia;"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Search for stations"
-#~ msgstr "Pesquisa por estações"
-
-#~ msgid "Discover"
-#~ msgstr "Descobrir"
-
-#~ msgid "Search"
-#~ msgstr "Pesquisar"
-
-#~ msgid "Languages"
-#~ msgstr "Idiomas"
-
-#~ msgid "Enable dark mode"
-#~ msgstr "Habilitar modo escuro"
-
-#~ msgid "Library"
-#~ msgstr "Biblioteca"
-
-#~ msgid "Import from Gradio"
-#~ msgstr "Importar do Gradio"
-
-#~ msgid "Import stations from Gradio"
-#~ msgstr "Importar estações do Gradio"
-
-#~ msgid "Select database to import"
-#~ msgstr "Selecionar banco de dados para importar"
-
-#~ msgid "Import"
-#~ msgstr "Importar"
-
-#~ msgid "Converting data…"
-#~ msgstr "Convertendo dados…"
-
-#~ msgid "Importing {} station…"
-#~ msgid_plural "Importing {} stations…"
-#~ msgstr[0] "Importando {} estação…"
-#~ msgstr[1] "Importando {} estações…"
-
-#~ msgid "Imported {} station!"
-#~ msgid_plural "Imported {} stations!"
-#~ msgstr[0] "Importada {} estação!"
-#~ msgstr[1] "Importadas {} estações!"
