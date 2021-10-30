@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-10-24 11:02+0000\n"
-"PO-Revision-Date: 2021-10-25 18:38+0300\n"
+"POT-Creation-Date: 2021-10-28 19:10+0000\n"
+"PO-Revision-Date: 2021-10-30 11:41+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -137,7 +137,7 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Перемкнути відтворення"
 
-#: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:159
+#: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:172
 #: src/ui/pages/search_page.rs:178
 msgid "Votes"
 msgstr "Голоси"
@@ -256,40 +256,52 @@ msgstr "Ви_лучити з бібліотеки"
 msgid "Information"
 msgstr "Відомості"
 
-#: data/gtk/station_dialog.ui:131 src/ui/pages/search_page.rs:175
+#: data/gtk/station_dialog.ui:131
+msgid "This is a local private station."
+msgstr ""
+"Це місцева приватна станція."
+
+#: data/gtk/station_dialog.ui:132
+msgid ""
+"This station is visible only to you. If you remove this station from your "
+"library, you have to create it again."
+msgstr ""
+"Ця станція є видимою лише для вас. Якщо ви вилучите запис цієї станції з вашої бібліотеки, вам доведеться створювати його знову."
+
+#: data/gtk/station_dialog.ui:138 src/ui/pages/search_page.rs:175
 msgid "Language"
 msgstr "Мова"
 
-#: data/gtk/station_dialog.ui:145
+#: data/gtk/station_dialog.ui:152
 msgid "Tags"
 msgstr "Мітки"
 
-#: data/gtk/station_dialog.ui:174
+#: data/gtk/station_dialog.ui:187
 msgid "Location"
 msgstr "Місце"
 
-#: data/gtk/station_dialog.ui:178 src/ui/pages/search_page.rs:176
+#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:176
 msgid "Country"
 msgstr "Країна"
 
-#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:177
+#: data/gtk/station_dialog.ui:206 src/ui/pages/search_page.rs:177
 msgid "State"
 msgstr "Штат"
 
-#: data/gtk/station_dialog.ui:229
+#: data/gtk/station_dialog.ui:244
 msgid "Audio"
 msgstr "Звук"
 
-#: data/gtk/station_dialog.ui:233 src/ui/pages/search_page.rs:179
+#: data/gtk/station_dialog.ui:248 src/ui/pages/search_page.rs:179
 msgid "Bitrate"
 msgstr "Бітова швидкість"
 
-#: data/gtk/station_dialog.ui:247
+#: data/gtk/station_dialog.ui:262
 msgid "Codec"
 msgstr "Кодек"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:261
+#: data/gtk/station_dialog.ui:276
 msgid "Stream"
 msgstr "Трансляція"
 
@@ -419,26 +431,9 @@ msgstr ""
 msgid "Name"
 msgstr "Назва"
 
-#: src/ui/station_dialog.rs:247
+#: src/ui/station_dialog.rs:276
 msgid "{} kbit/s"
-msgstr ""
-"{} кбіт/с"
-
-#: src/utils.rs:28
-msgid "{} Vote"
-msgid_plural "{} Votes"
-msgstr[0] "{} голос"
-msgstr[1] "{} голоси"
-msgstr[2] "{} голосів"
-msgstr[3] "{} голос"
-
-#: src/utils.rs:30
-msgid "{} · {} Vote"
-msgid_plural "{} · {} Votes"
-msgstr[0] "{} · {} голос"
-msgstr[1] "{} · {} голоси"
-msgstr[2] "{} · {} голосів"
-msgstr[3] "{} · {} голос"
+msgstr "{} кбіт/с"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
@@ -495,6 +490,20 @@ msgstr "Безшовна інтеграція до стільничного се
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;градіо;жрадіо;радіо;потік;трансляція;хвиля;"
+
+#~ msgid "{} Vote"
+#~ msgid_plural "{} Votes"
+#~ msgstr[0] "{} голос"
+#~ msgstr[1] "{} голоси"
+#~ msgstr[2] "{} голосів"
+#~ msgstr[3] "{} голос"
+
+#~ msgid "{} · {} Vote"
+#~ msgid_plural "{} · {} Votes"
+#~ msgstr[0] "{} · {} голос"
+#~ msgstr[1] "{} · {} голоси"
+#~ msgstr[2] "{} · {} голосів"
+#~ msgstr[3] "{} · {} голос"
 
 #~ msgid "Homepage"
 #~ msgstr "Домашня сторінка"
