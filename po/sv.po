@@ -2,14 +2,15 @@
 # Copyright © 2020-2021 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
 # Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021.
+# Luna Jernberg <droidbittin@gmail.com>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-10-24 11:02+0000\n"
-"PO-Revision-Date: 2021-10-24 17:40+0200\n"
-"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
+"POT-Creation-Date: 2021-10-28 19:10+0000\n"
+"PO-Revision-Date: 2021-10-29 08:12+0200\n"
+"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
@@ -136,7 +137,7 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Starta/stoppa uppspelning"
 
-#: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:159
+#: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:172
 #: src/ui/pages/search_page.rs:178
 msgid "Votes"
 msgstr "Röster"
@@ -255,40 +256,52 @@ msgstr "_Ta bort från bibliotek"
 msgid "Information"
 msgstr "Information"
 
-#: data/gtk/station_dialog.ui:131 src/ui/pages/search_page.rs:175
+#: data/gtk/station_dialog.ui:131
+msgid "This is a local private station."
+msgstr "Detta är en lokal privat station."
+
+#: data/gtk/station_dialog.ui:132
+msgid ""
+"This station is visible only to you. If you remove this station from your "
+"library, you have to create it again."
+msgstr ""
+"Denna station är endast synlig för dig. Om du tar bort den här stationen "
+"från ditt bibliotek måste du skapa den igen."
+
+#: data/gtk/station_dialog.ui:138 src/ui/pages/search_page.rs:175
 msgid "Language"
 msgstr "Språk"
 
-#: data/gtk/station_dialog.ui:145
+#: data/gtk/station_dialog.ui:152
 msgid "Tags"
 msgstr "Taggar"
 
-#: data/gtk/station_dialog.ui:174
+#: data/gtk/station_dialog.ui:187
 msgid "Location"
 msgstr "Plats"
 
-#: data/gtk/station_dialog.ui:178 src/ui/pages/search_page.rs:176
+#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:176
 msgid "Country"
 msgstr "Land"
 
-#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:177
+#: data/gtk/station_dialog.ui:206 src/ui/pages/search_page.rs:177
 msgid "State"
 msgstr "Län"
 
-#: data/gtk/station_dialog.ui:229
+#: data/gtk/station_dialog.ui:244
 msgid "Audio"
 msgstr "Ljud"
 
-#: data/gtk/station_dialog.ui:233 src/ui/pages/search_page.rs:179
+#: data/gtk/station_dialog.ui:248 src/ui/pages/search_page.rs:179
 msgid "Bitrate"
 msgstr "Bithastighet"
 
-#: data/gtk/station_dialog.ui:247
+#: data/gtk/station_dialog.ui:262
 msgid "Codec"
 msgstr "Kodek"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:261
+#: data/gtk/station_dialog.ui:276
 msgid "Stream"
 msgstr "Ström"
 
@@ -369,6 +382,7 @@ msgstr "Lyssna på internetradio"
 msgid "translator-credits"
 msgstr ""
 "Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
+"Luna Jernberg <droidbittin@gmail.com>\n"
 "\n"
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>"
@@ -419,21 +433,9 @@ msgstr ""
 msgid "Name"
 msgstr "Namn"
 
-#: src/ui/station_dialog.rs:247
+#: src/ui/station_dialog.rs:276
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
-
-#: src/utils.rs:28
-msgid "{} Vote"
-msgid_plural "{} Votes"
-msgstr[0] "{} röst"
-msgstr[1] "{} röster"
-
-#: src/utils.rs:30
-msgid "{} · {} Vote"
-msgid_plural "{} · {} Votes"
-msgstr[0] "{} · {} röst"
-msgstr[1] "{} · {} röster"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
@@ -487,6 +489,16 @@ msgstr "Sömlös integration med skrivbordsmiljön GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Ström;Stream;Wave;"
+
+#~ msgid "{} Vote"
+#~ msgid_plural "{} Votes"
+#~ msgstr[0] "{} röst"
+#~ msgstr[1] "{} röster"
+
+#~ msgid "{} · {} Vote"
+#~ msgid_plural "{} · {} Votes"
+#~ msgstr[0] "{} · {} röst"
+#~ msgstr[1] "{} · {} röster"
 
 #~ msgid "Homepage"
 #~ msgstr "Webbsida"
