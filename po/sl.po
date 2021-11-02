@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-08-09 08:27+0000\n"
-"PO-Revision-Date: 2021-08-11 18:23+0200\n"
+"POT-Creation-Date: 2021-10-31 11:43+0000\n"
+"PO-Revision-Date: 2021-11-02 20:54+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 
 #: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
@@ -33,11 +33,11 @@ msgstr "Priljubljene"
 msgid "Other users are listening to…"
 msgstr "Drugi uporabniki poslušajo …"
 
-#: data/gtk/library_page.ui:63
+#: data/gtk/library_page.ui:60
 msgid "Receiving station data…"
 msgstr "Poteka prejemanje podatkov postaje …"
 
-#: data/gtk/library_page.ui:90
+#: data/gtk/library_page.ui:87
 msgid "_Discover new stations"
 msgstr "_Odkrij nove postaje"
 
@@ -58,11 +58,11 @@ msgstr "Podrobnosti napake"
 msgid "Connected with"
 msgstr "Povezano z"
 
-#: data/gtk/settings_window.ui:8 data/gtk/help_overlay.ui:11
+#: data/gtk/settings_window.ui:7 data/gtk/help_overlay.ui:11
 msgid "General"
 msgstr "Splošno"
 
-#: data/gtk/settings_window.ui:11
+#: data/gtk/settings_window.ui:10
 msgid "Appearance"
 msgstr "Videz"
 
@@ -139,19 +139,68 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Preklopi predvajanje"
 
+#: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:172
+#: src/ui/pages/search_page.rs:178
+msgid "Votes"
+msgstr "Glasovi"
+
+#: data/gtk/search_page.ui:36
+msgid "Change the sorting of the search results"
+msgstr "Spremeni način razvrščanja zadetkov iskanja"
+
+#: data/gtk/search_page.ui:63
+msgid "No results"
+msgstr "Ni najdenih zadetkov"
+
+#: data/gtk/search_page.ui:64
+msgid "Try using a different search term"
+msgstr "Poskusite z drugačnim iskalnim nizom"
+
+#: data/gtk/search_page.ui:148 data/gtk/window.ui:106
+msgid "_Name"
+msgstr "_Ime"
+
+#: data/gtk/search_page.ui:153 data/gtk/window.ui:111
+msgid "_Language"
+msgstr "_Jezik"
+
+#: data/gtk/search_page.ui:158 data/gtk/window.ui:116
+msgid "_Country"
+msgstr "_Država"
+
+#: data/gtk/search_page.ui:163 data/gtk/window.ui:121
+msgid "S_tate"
+msgstr "_Stanje"
+
+#: data/gtk/search_page.ui:168 data/gtk/window.ui:126
+msgid "_Votes"
+msgstr "_Glasovi"
+
+#: data/gtk/search_page.ui:173 data/gtk/window.ui:131
+msgid "_Bitrate"
+msgstr "_Bitna hitrost"
+
+#: data/gtk/search_page.ui:180 data/gtk/window.ui:138
+msgid "_Ascending"
+msgstr "_Naraščajoče"
+
+#: data/gtk/search_page.ui:185 data/gtk/window.ui:143
+msgid "_Descending"
+msgstr "_Padajoče"
+
 #: data/gtk/sidebar_controller.ui:22
 msgid "An error occurred"
 msgstr "Prišlo je do napake"
 
-#: data/gtk/sidebar_controller.ui:178
+#: data/gtk/sidebar_controller.ui:188
 msgid "_Show station details"
 msgstr "_Pokaži podrobnosti postaje"
 
-#: data/gtk/sidebar_controller.ui:182
+#: data/gtk/sidebar_controller.ui:192
 msgid "Stream to a _device"
 msgstr "Pošlji pretok na _napravo"
 
-#: data/gtk/sidebar_controller.ui:188
+#: data/gtk/sidebar_controller.ui:198
 msgid "_Enable mini player"
 msgstr "_Omogoči minipredvajalnik"
 
@@ -165,15 +214,15 @@ msgstr ""
 "\n"
 "Če postaja ne pošilja metapodatkov, skladb ni mogoče prepoznati."
 
-#: data/gtk/song_listbox.ui:63
+#: data/gtk/song_listbox.ui:66
 msgid "No songs detected"
 msgstr "Ni zaznanih skladb"
 
-#: data/gtk/song_listbox.ui:73
+#: data/gtk/song_listbox.ui:76
 msgid "Detected songs will appear here."
 msgstr "Zaznane pesmi se bodo pojavile na tem mestu."
 
-#: data/gtk/song_listbox.ui:82
+#: data/gtk/song_listbox.ui:85
 msgid "_How does this work?"
 msgstr "Kako to deluje?"
 
@@ -193,44 +242,68 @@ msgstr "Shrani posneto skladbo"
 msgid "Station details"
 msgstr "Podrobnosti postaje"
 
-#: data/gtk/station_dialog.ui:71
-msgid "Actions"
-msgstr "Dejanja"
-
-#: data/gtk/station_dialog.ui:74
+#: data/gtk/station_dialog.ui:87
 msgid "_Play this station"
 msgstr "_Predvajaj postajo"
 
-#: data/gtk/station_dialog.ui:82
+#: data/gtk/station_dialog.ui:100
 msgid "_Add to library"
 msgstr "_Dodaj v zbirko"
 
-#: data/gtk/station_dialog.ui:91
-msgid "_Remove from Library"
+#: data/gtk/station_dialog.ui:114
+msgid "_Remove from library"
 msgstr "_Odstrani iz zbirke"
 
-#: data/gtk/station_dialog.ui:102
+#: data/gtk/station_dialog.ui:128
 msgid "Information"
 msgstr "Podrobnosti"
 
-#: data/gtk/station_dialog.ui:105
+#: data/gtk/station_dialog.ui:131
+msgid "This is a local private station."
+msgstr "TO je zasebna krajevna postaja."
+
+#: data/gtk/station_dialog.ui:132
+msgid ""
+"This station is visible only to you. If you remove this station from your "
+"library, you have to create it again."
+msgstr ""
+"Ta postaja je vidna le vam in če jo odstranite iz zbirke, jo bo treba "
+"ponovno ustvariti."
+
+#: data/gtk/station_dialog.ui:138 src/ui/pages/search_page.rs:175
 msgid "Language"
 msgstr "Jezik"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:152
 msgid "Tags"
 msgstr "Oznake"
 
-#: data/gtk/station_dialog.ui:133
+#: data/gtk/station_dialog.ui:187
+msgid "Location"
+msgstr "Mesto"
+
+#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:176
+msgid "Country"
+msgstr "Država"
+
+#: data/gtk/station_dialog.ui:206 src/ui/pages/search_page.rs:177
+msgid "State"
+msgstr "Okraj"
+
+#: data/gtk/station_dialog.ui:244
+msgid "Audio"
+msgstr "Zvok"
+
+#: data/gtk/station_dialog.ui:248 src/ui/pages/search_page.rs:179
+msgid "Bitrate"
+msgstr "Bitna hitrost"
+
+#: data/gtk/station_dialog.ui:262
 msgid "Codec"
 msgstr "Kodek"
 
-#: data/gtk/station_dialog.ui:147
-msgid "Homepage"
-msgstr "Spletna stran"
-
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:172
+#: data/gtk/station_dialog.ui:276
 msgid "Stream"
 msgstr "Pretakanje"
 
@@ -262,55 +335,27 @@ msgstr "_Ponovi iskanje"
 msgid "Searching for devices…"
 msgstr "Poteka iskanje naprav …"
 
-#: data/gtk/window.ui:103 data/gtk/window.ui:173
+#: data/gtk/window.ui:103
 msgid "_Sorting"
 msgstr "_Razvrščanje"
 
-#: data/gtk/window.ui:106
-msgid "_Name"
-msgstr "_Ime"
-
-#: data/gtk/window.ui:111
-msgid "_Language"
-msgstr "_Jezik"
-
-#: data/gtk/window.ui:116
-msgid "_Country"
-msgstr "_Država"
-
-#: data/gtk/window.ui:121
-msgid "S_tate"
-msgstr "_Stanje"
-
-#: data/gtk/window.ui:126
-msgid "_Votes"
-msgstr "_Glasovi"
-
-#: data/gtk/window.ui:133
-msgid "_Ascending"
-msgstr "_Naraščajoče"
-
-#: data/gtk/window.ui:138
-msgid "_Descending"
-msgstr "_Padajoče"
-
-#: data/gtk/window.ui:147 data/gtk/window.ui:179
+#: data/gtk/window.ui:152 data/gtk/window.ui:180
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_Odpri spletišče radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/window.ui:151 data/gtk/window.ui:183
+#: data/gtk/window.ui:157 data/gtk/window.ui:185
 msgid "_Create new station <sup>↗</sup>"
 msgstr "_Ustvari novo postajo <sup>↗</sup>"
 
-#: data/gtk/window.ui:157 data/gtk/window.ui:189
+#: data/gtk/window.ui:164 data/gtk/window.ui:192
 msgid "_Preferences"
 msgstr "_Možnosti"
 
-#: data/gtk/window.ui:161 data/gtk/window.ui:193
+#: data/gtk/window.ui:168 data/gtk/window.ui:196
 msgid "_Keyboard Shortcuts"
 msgstr "_Tipkovne bližnjice"
 
-#: data/gtk/window.ui:165 data/gtk/window.ui:197
+#: data/gtk/window.ui:172 data/gtk/window.ui:200
 msgid "_About Shortwave"
 msgstr "_O programu"
 
@@ -337,33 +382,34 @@ msgstr "Poslušanje spletnih radijskih postaj"
 
 #: src/ui/about_dialog.rs:35
 msgid "translator-credits"
-msgstr "Matej Urbančič <mateju@svn.gnome.org>"
+msgstr "Matej Urbančič <mateju@src.gnome.org>"
 
-#: src/ui/pages/discover_page.rs:90
+#. TODO: Implement show-server-stats action
+#: src/ui/pages/discover_page.rs:91
 msgid "Show statistics"
 msgstr "Pokaži statistiko"
 
-#: src/ui/pages/discover_page.rs:91
+#: src/ui/pages/discover_page.rs:92
 msgid "Browse over 25,500 stations"
 msgstr "Brskanje med 25.500 postajami"
 
-#: src/ui/pages/discover_page.rs:93
+#: src/ui/pages/discover_page.rs:94
 msgid "Add new station"
 msgstr "Dodaj novo radijsko postajo"
 
-#: src/ui/pages/discover_page.rs:94
+#: src/ui/pages/discover_page.rs:95
 msgid "Your favorite station is missing?"
 msgstr "Ali vaše priljubljene postaje ni na seznamu?"
 
-#: src/ui/pages/discover_page.rs:96
+#: src/ui/pages/discover_page.rs:97
 msgid "Open website"
 msgstr "Odpri spletišče"
 
-#: src/ui/pages/discover_page.rs:97
+#: src/ui/pages/discover_page.rs:98
 msgid "Powered by radio-browser.info"
 msgstr "Storitev omogoča radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:136 src/ui/pages/search_page.rs:151
+#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:264
 msgid "Station data could not be received."
 msgstr "Podatkov postaje ni mogoče prejeti."
 
@@ -372,21 +418,21 @@ msgstr "Podatkov postaje ni mogoče prejeti."
 msgid "Welcome to {}"
 msgstr "Dobrodošli v {}"
 
-#: src/utils.rs:28
-msgid "{} Vote"
-msgid_plural "{} Votes"
-msgstr[0] "{} glasov"
-msgstr[1] "{} glas"
-msgstr[2] "{} glasova"
-msgstr[3] "{} glasovi"
+#: src/ui/pages/search_page.rs:105
+msgid ""
+"The number of results is limited to {} items. Try using a more specific "
+"search term."
+msgstr ""
+"Število zadetkov iskanja je omejeno na {}. Poskusite uporabiti bolj odpirni "
+"iskalni niz."
 
-#: src/utils.rs:30
-msgid "{} · {} Vote"
-msgid_plural "{} · {} Votes"
-msgstr[0] "{} · {} glasov"
-msgstr[1] "{} · {} glas"
-msgstr[2] "{} · {} glasova"
-msgstr[3] "{} · {} glasovi"
+#: src/ui/pages/search_page.rs:174
+msgid "Name"
+msgstr "Naziv"
+
+#: src/ui/station_dialog.rs:276
+msgid "{} kbit/s"
+msgstr "{} kbit/s"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
@@ -411,7 +457,7 @@ msgstr "Zmožnosti:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
 msgid "Create your own library where you can add your favorite stations"
-msgstr "Ustvarite svojo zbirko, kamor lahko dodate vse priljubljene postaje"
+msgstr "Ustvarite svojo zbirko, v katero lahko dodate vse priljubljene postaje"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Easily search and discover new radio stations"
@@ -440,6 +486,23 @@ msgstr "Popolna povezava programa z namiznim okoljem GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;Pretok;glasba;"
+
+#~ msgid "Homepage"
+#~ msgstr "Spletna stran"
+
+#~ msgid "{} Vote"
+#~ msgid_plural "{} Votes"
+#~ msgstr[0] "{} glasov"
+#~ msgstr[1] "{} glas"
+#~ msgstr[2] "{} glasova"
+#~ msgstr[3] "{} glasovi"
+
+#~ msgid "{} · {} Vote"
+#~ msgid_plural "{} · {} Votes"
+#~ msgstr[0] "{} · {} glasov"
+#~ msgstr[1] "{} · {} glas"
+#~ msgstr[2] "{} · {} glasova"
+#~ msgstr[3] "{} · {} glasovi"
 
 #~ msgid "Enable dark mode"
 #~ msgstr "Omogoči temno temo"
