@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-10-28 19:10+0000\n"
-"PO-Revision-Date: 2021-10-30 11:41+0300\n"
+"POT-Creation-Date: 2021-11-04 09:51+0000\n"
+"PO-Revision-Date: 2021-11-04 13:38+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -138,7 +138,7 @@ msgid "Toggle playback"
 msgstr "Перемкнути відтворення"
 
 #: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:172
-#: src/ui/pages/search_page.rs:178
+#: src/ui/pages/search_page.rs:183
 msgid "Votes"
 msgstr "Голоси"
 
@@ -258,17 +258,17 @@ msgstr "Відомості"
 
 #: data/gtk/station_dialog.ui:131
 msgid "This is a local private station."
-msgstr ""
-"Це місцева приватна станція."
+msgstr "Це місцева приватна станція."
 
 #: data/gtk/station_dialog.ui:132
 msgid ""
 "This station is visible only to you. If you remove this station from your "
 "library, you have to create it again."
 msgstr ""
-"Ця станція є видимою лише для вас. Якщо ви вилучите запис цієї станції з вашої бібліотеки, вам доведеться створювати його знову."
+"Ця станція є видимою лише для вас. Якщо ви вилучите запис цієї станції з "
+"вашої бібліотеки, вам доведеться створювати його знову."
 
-#: data/gtk/station_dialog.ui:138 src/ui/pages/search_page.rs:175
+#: data/gtk/station_dialog.ui:138 src/ui/pages/search_page.rs:180
 msgid "Language"
 msgstr "Мова"
 
@@ -280,11 +280,11 @@ msgstr "Мітки"
 msgid "Location"
 msgstr "Місце"
 
-#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:176
+#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:181
 msgid "Country"
 msgstr "Країна"
 
-#: data/gtk/station_dialog.ui:206 src/ui/pages/search_page.rs:177
+#: data/gtk/station_dialog.ui:206 src/ui/pages/search_page.rs:182
 msgid "State"
 msgstr "Штат"
 
@@ -292,7 +292,7 @@ msgstr "Штат"
 msgid "Audio"
 msgstr "Звук"
 
-#: data/gtk/station_dialog.ui:248 src/ui/pages/search_page.rs:179
+#: data/gtk/station_dialog.ui:248 src/ui/pages/search_page.rs:184
 msgid "Bitrate"
 msgstr "Бітова швидкість"
 
@@ -410,7 +410,7 @@ msgstr "Відкрити сайт"
 msgid "Powered by radio-browser.info"
 msgstr "На основі radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:264
+#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:269
 msgid "Station data could not be received."
 msgstr "Не вдалося отримати дані станції."
 
@@ -419,15 +419,30 @@ msgstr "Не вдалося отримати дані станції."
 msgid "Welcome to {}"
 msgstr "Вітаємо у {}"
 
-#: src/ui/pages/search_page.rs:105
+#: src/ui/pages/search_page.rs:106
+#| msgid ""
+#| "The number of results is limited to {} items. Try using a more specific "
+#| "search term."
 msgid ""
+"The number of results is limited to {} item. Try using a more specific "
+"search term."
+msgid_plural ""
 "The number of results is limited to {} items. Try using a more specific "
 "search term."
-msgstr ""
+msgstr[0] ""
+"Кількість результатів обмежено {} записом. Спробуйте точніше визначити "
+"критерії пошуку."
+msgstr[1] ""
 "Кількість результатів обмежено {} записами. Спробуйте точніше визначити "
 "критерії пошуку."
+msgstr[2] ""
+"Кількість результатів обмежено {} записами. Спробуйте точніше визначити "
+"критерії пошуку."
+msgstr[3] ""
+"Кількість результатів обмежено {} записом. Спробуйте точніше визначити "
+"критерії пошуку."
 
-#: src/ui/pages/search_page.rs:174
+#: src/ui/pages/search_page.rs:179
 msgid "Name"
 msgstr "Назва"
 
