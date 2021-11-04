@@ -101,8 +101,13 @@ mod imp {
         fn constructed(&self, obj: &Self::Type) {
             obj.insert_action_group("search", Some(&self.search_action_group));
 
-            let max = self.station_request.borrow().limit.unwrap().to_string();
-            let text = i18n_f("The number of results is limited to {} items. Try using a more specific search term.", &[&max]);
+            let max = self.station_request.borrow().limit.unwrap();
+            let text = ni18n_f(
+                "The number of results is limited to {} item. Try using a more specific search term.",
+                "The number of results is limited to {} items. Try using a more specific search term.",
+                max,
+                &[&max.to_string()],
+            );
             self.results_limit_label.set_text(&text);
         }
     }
