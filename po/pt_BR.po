@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-10-28 19:10+0000\n"
-"PO-Revision-Date: 2021-11-02 22:10-0300\n"
+"POT-Creation-Date: 2021-11-04 09:51+0000\n"
+"PO-Revision-Date: 2021-11-05 19:24-0300\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -138,7 +138,7 @@ msgid "Toggle playback"
 msgstr "Alterna a reprodução"
 
 #: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:172
-#: src/ui/pages/search_page.rs:178
+#: src/ui/pages/search_page.rs:183
 msgid "Votes"
 msgstr "Votos"
 
@@ -268,7 +268,7 @@ msgstr ""
 "Esta estação está visível apenas para você. Se você remover esta estação de "
 "sua biblioteca, você terá que cria-la novamente."
 
-#: data/gtk/station_dialog.ui:138 src/ui/pages/search_page.rs:175
+#: data/gtk/station_dialog.ui:138 src/ui/pages/search_page.rs:180
 msgid "Language"
 msgstr "Idioma"
 
@@ -280,11 +280,11 @@ msgstr "Etiquetas"
 msgid "Location"
 msgstr "Local"
 
-#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:176
+#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:181
 msgid "Country"
 msgstr "País"
 
-#: data/gtk/station_dialog.ui:206 src/ui/pages/search_page.rs:177
+#: data/gtk/station_dialog.ui:206 src/ui/pages/search_page.rs:182
 msgid "State"
 msgstr "Estado"
 
@@ -292,7 +292,7 @@ msgstr "Estado"
 msgid "Audio"
 msgstr "Áudio"
 
-#: data/gtk/station_dialog.ui:248 src/ui/pages/search_page.rs:179
+#: data/gtk/station_dialog.ui:248 src/ui/pages/search_page.rs:184
 msgid "Bitrate"
 msgstr "Taxa de bits"
 
@@ -410,7 +410,7 @@ msgstr "Abrir site"
 msgid "Powered by radio-browser.info"
 msgstr "Fornecido por radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:264
+#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:269
 msgid "Station data could not be received."
 msgstr "Os dados da estação não puderam ser recebidos."
 
@@ -419,15 +419,21 @@ msgstr "Os dados da estação não puderam ser recebidos."
 msgid "Welcome to {}"
 msgstr "Bem-vindo(a) ao {}"
 
-#: src/ui/pages/search_page.rs:105
+#: src/ui/pages/search_page.rs:106
 msgid ""
+"The number of results is limited to {} item. Try using a more specific "
+"search term."
+msgid_plural ""
 "The number of results is limited to {} items. Try using a more specific "
 "search term."
-msgstr ""
+msgstr[0] ""
+"O número de resultados está limitado a {} item. Tente usar um termo de "
+"pesquisa mais específico."
+msgstr[1] ""
 "O número de resultados está limitado a {} items. Tente usar um termo de "
 "pesquisa mais específico."
 
-#: src/ui/pages/search_page.rs:174
+#: src/ui/pages/search_page.rs:179
 msgid "Name"
 msgstr "Nome"
 
