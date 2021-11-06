@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-10-28 19:10+0000\n"
-"PO-Revision-Date: 2021-10-29 08:12+0200\n"
-"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"POT-Creation-Date: 2021-11-04 09:51+0000\n"
+"PO-Revision-Date: 2021-11-06 01:08+0100\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
@@ -138,7 +138,7 @@ msgid "Toggle playback"
 msgstr "Starta/stoppa uppspelning"
 
 #: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:172
-#: src/ui/pages/search_page.rs:178
+#: src/ui/pages/search_page.rs:183
 msgid "Votes"
 msgstr "Röster"
 
@@ -268,7 +268,7 @@ msgstr ""
 "Denna station är endast synlig för dig. Om du tar bort den här stationen "
 "från ditt bibliotek måste du skapa den igen."
 
-#: data/gtk/station_dialog.ui:138 src/ui/pages/search_page.rs:175
+#: data/gtk/station_dialog.ui:138 src/ui/pages/search_page.rs:180
 msgid "Language"
 msgstr "Språk"
 
@@ -280,11 +280,11 @@ msgstr "Taggar"
 msgid "Location"
 msgstr "Plats"
 
-#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:176
+#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:181
 msgid "Country"
 msgstr "Land"
 
-#: data/gtk/station_dialog.ui:206 src/ui/pages/search_page.rs:177
+#: data/gtk/station_dialog.ui:206 src/ui/pages/search_page.rs:182
 msgid "State"
 msgstr "Län"
 
@@ -292,7 +292,7 @@ msgstr "Län"
 msgid "Audio"
 msgstr "Ljud"
 
-#: data/gtk/station_dialog.ui:248 src/ui/pages/search_page.rs:179
+#: data/gtk/station_dialog.ui:248 src/ui/pages/search_page.rs:184
 msgid "Bitrate"
 msgstr "Bithastighet"
 
@@ -412,7 +412,7 @@ msgstr "Öppna webbplats"
 msgid "Powered by radio-browser.info"
 msgstr "Driftas av radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:264
+#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:269
 msgid "Station data could not be received."
 msgstr "Kunde inte erhålla stationsdata."
 
@@ -421,15 +421,21 @@ msgstr "Kunde inte erhålla stationsdata."
 msgid "Welcome to {}"
 msgstr "Välkommen till {}"
 
-#: src/ui/pages/search_page.rs:105
+#: src/ui/pages/search_page.rs:106
 msgid ""
+"The number of results is limited to {} item. Try using a more specific "
+"search term."
+msgid_plural ""
 "The number of results is limited to {} items. Try using a more specific "
 "search term."
-msgstr ""
+msgstr[0] ""
+"Antalet resultat är begränsat till {} objekt. Försök använda en mer specifik "
+"sökterm."
+msgstr[1] ""
 "Antalet resultat är begränsat till {} objekt. Försök använda en mer specifik "
 "sökterm."
 
-#: src/ui/pages/search_page.rs:174
+#: src/ui/pages/search_page.rs:179
 msgid "Name"
 msgstr "Namn"
 
