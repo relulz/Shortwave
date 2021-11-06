@@ -142,7 +142,7 @@ msgstr "S'ha produït un error"
 
 #: data/gtk/sidebar_controller.ui:178
 msgid "_Show station details"
-msgstr "_Mostra els detalls de la emissora"
+msgstr "_Mostra els detalls de l'emissora"
 
 #: data/gtk/sidebar_controller.ui:182
 msgid "Stream to a _device"
@@ -161,7 +161,7 @@ msgstr ""
 "Les cançons es reconeixen automàticament utilitzant les metadades del "
 "flux.\n"
 "\n"
-"Si la emissora no envia cap metadada, no es pot reconèixer cap cançó."
+"Si l'emissora no envia cap metadada, no es pot reconèixer cap cançó."
 
 #: data/gtk/song_listbox.ui:63
 msgid "No songs detected"
@@ -320,20 +320,20 @@ msgstr ""
 
 #: src/audio/player.rs:185
 msgid "Station cannot be streamed."
-msgstr "No es pot transmetre la emissora."
+msgstr "No es pot transmetre l'emissora."
 
 #: src/audio/player.rs:185
 msgid "URL is not valid."
-msgstr "La URL no és vàlida."
+msgstr "L'URL no és vàlida."
 
 #: src/database/library.rs:211
 msgid "No longer existing station removed from library."
-msgstr "La emissora que ja no existeix ha sigut eliminada de la biblioteca."
+msgstr "L'emissora que ja no existeix ha sigut eliminada de la biblioteca."
 
 #: src/database/library.rs:215 src/ui/pages/discover_page.rs:140
 #: src/ui/pages/search_page.rs:151
 msgid "Station data could not be received."
-msgstr "Les dades de la emissora no han pogut ser rebudes."
+msgstr "Les dades de l'emissora no han pogut ser rebudes."
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -376,14 +376,14 @@ msgstr "Benvingut/da a {}"
 #: src/utils.rs:28
 msgid "{} Vote"
 msgid_plural "{} Votes"
-msgstr[0] "{} Vot"
-msgstr[1] "{} Vots"
+msgstr[0] "{} vot"
+msgstr[1] "{} vots"
 
 #: src/utils.rs:30
 msgid "{} · {} Vote"
 msgid_plural "{} · {} Votes"
-msgstr[0] "{} · {} Vot"
-msgstr[1] "{} · {} Vots"
+msgstr[0] "{} · {} vot"
+msgstr[1] "{} · {} vots"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
