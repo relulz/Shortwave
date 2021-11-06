@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-04-23 19:14+0000\n"
+"POT-Creation-Date: 2021-11-06 12:28+0000\n"
 "PO-Revision-Date: 2021-04-29 13:57+0200\n"
+"Last-Translator: Ícar N. S. <icar.nin@protonmail.com>\n"
 "Language-Team: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
-"Last-Translator: Ícar N. S. <icar.nin@protonmail.com>\n"
-"Language: ca\n"
 
 #: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
@@ -30,11 +30,11 @@ msgstr "Tendència"
 msgid "Other users are listening to…"
 msgstr "Altres usuaris estan escoltant…"
 
-#: data/gtk/library_page.ui:63
+#: data/gtk/library_page.ui:60
 msgid "Receiving station data…"
 msgstr "Rebent les dades de les emissores…"
 
-#: data/gtk/library_page.ui:90
+#: data/gtk/library_page.ui:87
 msgid "_Discover new stations"
 msgstr "_Descobreix emissores noves"
 
@@ -55,11 +55,11 @@ msgstr "Detalls d'error"
 msgid "Connected with"
 msgstr "Connectat amb"
 
-#: data/gtk/settings_window.ui:8 data/gtk/help_overlay.ui:11
+#: data/gtk/settings_window.ui:7 data/gtk/help_overlay.ui:11
 msgid "General"
 msgstr "General"
 
-#: data/gtk/settings_window.ui:11
+#: data/gtk/settings_window.ui:10
 msgid "Appearance"
 msgstr "Aparença"
 
@@ -136,19 +136,70 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Commuta la reproducció"
 
+#: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:172
+#: src/ui/pages/search_page.rs:183
+#, fuzzy
+#| msgid "_Votes"
+msgid "Votes"
+msgstr "_Vots"
+
+#: data/gtk/search_page.ui:36
+msgid "Change the sorting of the search results"
+msgstr ""
+
+#: data/gtk/search_page.ui:63
+msgid "No results"
+msgstr ""
+
+#: data/gtk/search_page.ui:64
+msgid "Try using a different search term"
+msgstr ""
+
+#: data/gtk/search_page.ui:148 data/gtk/window.ui:106
+msgid "_Name"
+msgstr "_Nom"
+
+#: data/gtk/search_page.ui:153 data/gtk/window.ui:111
+msgid "_Language"
+msgstr "_Idioma"
+
+#: data/gtk/search_page.ui:158 data/gtk/window.ui:116
+msgid "_Country"
+msgstr "_País"
+
+#: data/gtk/search_page.ui:163 data/gtk/window.ui:121
+msgid "S_tate"
+msgstr "E_stat"
+
+#: data/gtk/search_page.ui:168 data/gtk/window.ui:126
+msgid "_Votes"
+msgstr "_Vots"
+
+#: data/gtk/search_page.ui:173 data/gtk/window.ui:131
+msgid "_Bitrate"
+msgstr ""
+
+#: data/gtk/search_page.ui:180 data/gtk/window.ui:138
+msgid "_Ascending"
+msgstr "_Ascendent"
+
+#: data/gtk/search_page.ui:185 data/gtk/window.ui:143
+msgid "_Descending"
+msgstr "_Descendent"
+
 #: data/gtk/sidebar_controller.ui:22
 msgid "An error occurred"
 msgstr "S'ha produït un error"
 
-#: data/gtk/sidebar_controller.ui:178
+#: data/gtk/sidebar_controller.ui:188
 msgid "_Show station details"
 msgstr "_Mostra els detalls de l'emissora"
 
-#: data/gtk/sidebar_controller.ui:182
+#: data/gtk/sidebar_controller.ui:192
 msgid "Stream to a _device"
 msgstr "Envia a un _dispositiu"
 
-#: data/gtk/sidebar_controller.ui:188
+#: data/gtk/sidebar_controller.ui:198
 msgid "_Enable mini player"
 msgstr "_Habilita el reproductor mini"
 
@@ -158,20 +209,19 @@ msgid ""
 "\n"
 "If the station does not send any metadata, no songs can be recognized."
 msgstr ""
-"Les cançons es reconeixen automàticament utilitzant les metadades del "
-"flux.\n"
+"Les cançons es reconeixen automàticament utilitzant les metadades del flux.\n"
 "\n"
 "Si l'emissora no envia cap metadada, no es pot reconèixer cap cançó."
 
-#: data/gtk/song_listbox.ui:63
+#: data/gtk/song_listbox.ui:66
 msgid "No songs detected"
 msgstr "Cap cançó detectada"
 
-#: data/gtk/song_listbox.ui:73
+#: data/gtk/song_listbox.ui:76
 msgid "Detected songs will appear here."
 msgstr "Cançons detectades apareixeran aquí."
 
-#: data/gtk/song_listbox.ui:82
+#: data/gtk/song_listbox.ui:85
 msgid "_How does this work?"
 msgstr "_Com funciona això?"
 
@@ -191,44 +241,74 @@ msgstr "Desa la cançó gravada"
 msgid "Station details"
 msgstr "Detalls de l'emissora"
 
-#: data/gtk/station_dialog.ui:71
-msgid "Actions"
-msgstr "Accions"
-
-#: data/gtk/station_dialog.ui:74
+#: data/gtk/station_dialog.ui:87
 msgid "_Play this station"
 msgstr "_Reprodueix aquesta emissora"
 
-#: data/gtk/station_dialog.ui:82
+#: data/gtk/station_dialog.ui:100
 msgid "_Add to library"
 msgstr "_Afegeix a la biblioteca"
 
-#: data/gtk/station_dialog.ui:91
-msgid "_Remove from Library"
+#: data/gtk/station_dialog.ui:114
+#, fuzzy
+#| msgid "_Remove from Library"
+msgid "_Remove from library"
 msgstr "_Suprimeix de la biblioteca"
 
-#: data/gtk/station_dialog.ui:102
+#: data/gtk/station_dialog.ui:128
 msgid "Information"
 msgstr "Informació"
 
-#: data/gtk/station_dialog.ui:105
+#: data/gtk/station_dialog.ui:131
+msgid "This is a local private station."
+msgstr ""
+
+#: data/gtk/station_dialog.ui:132
+msgid ""
+"This station is visible only to you. If you remove this station from your "
+"library, you have to create it again."
+msgstr ""
+
+#: data/gtk/station_dialog.ui:138 src/ui/pages/search_page.rs:180
 msgid "Language"
 msgstr "Idioma"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:152
 msgid "Tags"
 msgstr "Etiquetes"
 
-#: data/gtk/station_dialog.ui:133
+#: data/gtk/station_dialog.ui:187
+#, fuzzy
+#| msgid "Actions"
+msgid "Location"
+msgstr "Accions"
+
+#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:181
+#, fuzzy
+#| msgid "_Country"
+msgid "Country"
+msgstr "_País"
+
+#: data/gtk/station_dialog.ui:206 src/ui/pages/search_page.rs:182
+#, fuzzy
+#| msgid "S_tate"
+msgid "State"
+msgstr "E_stat"
+
+#: data/gtk/station_dialog.ui:244
+msgid "Audio"
+msgstr ""
+
+#: data/gtk/station_dialog.ui:248 src/ui/pages/search_page.rs:184
+msgid "Bitrate"
+msgstr ""
+
+#: data/gtk/station_dialog.ui:262
 msgid "Codec"
 msgstr "Còdec"
 
-#: data/gtk/station_dialog.ui:147
-msgid "Homepage"
-msgstr "Pàgina d'inici"
-
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:172
+#: data/gtk/station_dialog.ui:276
 msgid "Stream"
 msgstr "Flux"
 
@@ -246,8 +326,7 @@ msgstr "_Connecta"
 
 #: data/gtk/streaming_dialog.ui:90
 msgid "Devices which implement the Google Cast protocol are supported."
-msgstr ""
-"S'admeten els dispositius que implementen el protocol de Google Cast."
+msgstr "S'admeten els dispositius que implementen el protocol de Google Cast."
 
 #: data/gtk/streaming_dialog.ui:122
 msgid "No devices found"
@@ -261,79 +340,48 @@ msgstr "_Torna a intentar la cerca"
 msgid "Searching for devices…"
 msgstr "Buscant dispositius…"
 
-#: data/gtk/window.ui:103 data/gtk/window.ui:173
+#: data/gtk/window.ui:103
 msgid "_Sorting"
 msgstr "_Ordenació"
 
-#: data/gtk/window.ui:106
-msgid "_Name"
-msgstr "_Nom"
-
-#: data/gtk/window.ui:111
-msgid "_Language"
-msgstr "_Idioma"
-
-#: data/gtk/window.ui:116
-msgid "_Country"
-msgstr "_País"
-
-#: data/gtk/window.ui:121
-msgid "S_tate"
-msgstr "E_stat"
-
-#: data/gtk/window.ui:126
-msgid "_Votes"
-msgstr "_Vots"
-
-#: data/gtk/window.ui:133
-msgid "_Ascending"
-msgstr "_Ascendent"
-
-#: data/gtk/window.ui:138
-msgid "_Descending"
-msgstr "_Descendent"
-
-#: data/gtk/window.ui:147 data/gtk/window.ui:179
+#: data/gtk/window.ui:152 data/gtk/window.ui:180
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_Obre radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/window.ui:151 data/gtk/window.ui:183
+#: data/gtk/window.ui:157 data/gtk/window.ui:185
 msgid "_Create new station <sup>↗</sup>"
 msgstr "_Crea una emissora nova <sup>↗</sup>"
 
-#: data/gtk/window.ui:157 data/gtk/window.ui:189
+#: data/gtk/window.ui:164 data/gtk/window.ui:192
 msgid "_Preferences"
 msgstr "_Preferències"
 
-#: data/gtk/window.ui:161 data/gtk/window.ui:193
+#: data/gtk/window.ui:168 data/gtk/window.ui:196
 msgid "_Keyboard Shortcuts"
 msgstr "_Dreceres de teclat"
 
-#: data/gtk/window.ui:165 data/gtk/window.ui:197
+#: data/gtk/window.ui:172 data/gtk/window.ui:200
 msgid "_About Shortwave"
 msgstr "_Quant al Shortwave"
 
-#: src/audio/player.rs:167
+#: src/audio/player.rs:168
 msgid "This station cannot be played because the stream is offline."
 msgstr ""
 "Aquesta emissora no pot ser reproduïda perquè el flux està fora de línia."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "Station cannot be streamed."
 msgstr "No es pot transmetre l'emissora."
 
-#: src/audio/player.rs:185
+#: src/audio/player.rs:186
 msgid "URL is not valid."
-msgstr "L'URL no és vàlida."
+msgstr "L'URL no és vàlid."
 
-#: src/database/library.rs:211
-msgid "No longer existing station removed from library."
+#: src/database/library.rs:271
+#, fuzzy
+#| msgid "No longer existing station removed from library."
+msgid "An invalid station was removed from the library."
 msgstr "L'emissora que ja no existeix ha sigut eliminada de la biblioteca."
-
-#: src/database/library.rs:215 src/ui/pages/discover_page.rs:140
-#: src/ui/pages/search_page.rs:151
-msgid "Station data could not be received."
-msgstr "Les dades de l'emissora no han pogut ser rebudes."
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -344,46 +392,59 @@ msgstr "Escolta la ràdio per internet"
 msgid "translator-credits"
 msgstr "Ícar Nin Solana <icar.nin@pm.me>"
 
-#: src/ui/pages/discover_page.rs:94
+#. TODO: Implement show-server-stats action
+#: src/ui/pages/discover_page.rs:91
 msgid "Show statistics"
 msgstr "Mostra estadístiques"
 
-#: src/ui/pages/discover_page.rs:95
+#: src/ui/pages/discover_page.rs:92
 msgid "Browse over 25,500 stations"
 msgstr "Navegueu per més de 25,500 emissores"
 
-#: src/ui/pages/discover_page.rs:97
+#: src/ui/pages/discover_page.rs:94
 msgid "Add new station"
 msgstr "Afegeix una emissora nova"
 
-#: src/ui/pages/discover_page.rs:98
+#: src/ui/pages/discover_page.rs:95
 msgid "Your favorite station is missing?"
 msgstr "Falta la teva emissora preferida?"
 
-#: src/ui/pages/discover_page.rs:100
+#: src/ui/pages/discover_page.rs:97
 msgid "Open website"
 msgstr "Obre la pàgina web"
 
-#: src/ui/pages/discover_page.rs:101
+#: src/ui/pages/discover_page.rs:98
 msgid "Powered by radio-browser.info"
 msgstr "Funciona amb radio-browser.info"
+
+#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:269
+msgid "Station data could not be received."
+msgstr "Les dades de l'emissora no han pogut ser rebudes."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
 #: src/ui/pages/library_page.rs:117
 msgid "Welcome to {}"
 msgstr "Benvingut/da a {}"
 
-#: src/utils.rs:28
-msgid "{} Vote"
-msgid_plural "{} Votes"
-msgstr[0] "{} vot"
-msgstr[1] "{} vots"
+#: src/ui/pages/search_page.rs:106
+msgid ""
+"The number of results is limited to {} item. Try using a more specific "
+"search term."
+msgid_plural ""
+"The number of results is limited to {} items. Try using a more specific "
+"search term."
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/utils.rs:30
-msgid "{} · {} Vote"
-msgid_plural "{} · {} Votes"
-msgstr[0] "{} · {} vot"
-msgstr[1] "{} · {} vots"
+#: src/ui/pages/search_page.rs:179
+#, fuzzy
+#| msgid "_Name"
+msgid "Name"
+msgstr "_Nom"
+
+#: src/ui/station_dialog.rs:276
+msgid "{} kbit/s"
+msgstr ""
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
@@ -409,8 +470,7 @@ msgstr "Característiques:"
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
 msgid "Create your own library where you can add your favorite stations"
 msgstr ""
-"Crea la teva pròpia biblioteca on pots afegir les teves emissores "
-"preferides"
+"Crea la teva pròpia biblioteca on pots afegir les teves emissores preferides"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Easily search and discover new radio stations"
@@ -443,3 +503,16 @@ msgstr "Integració a l'entorn d'escriptori GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Ràdio;Flux;Ona;"
+
+#~ msgid "Homepage"
+#~ msgstr "Pàgina d'inici"
+
+#~ msgid "{} Vote"
+#~ msgid_plural "{} Votes"
+#~ msgstr[0] "{} vot"
+#~ msgstr[1] "{} vots"
+
+#~ msgid "{} · {} Vote"
+#~ msgid_plural "{} · {} Votes"
+#~ msgstr[0] "{} · {} vot"
+#~ msgstr[1] "{} · {} vots"
