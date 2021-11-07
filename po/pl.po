@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-10-16 20:43+0000\n"
-"PO-Revision-Date: 2021-10-17 13:42+0200\n"
+"POT-Creation-Date: 2021-11-06 19:05+0000\n"
+"PO-Revision-Date: 2021-11-07 13:37+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -137,19 +137,68 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Przełączenie odtwarzania"
 
+#: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:172
+#: src/ui/pages/search_page.rs:183
+msgid "Votes"
+msgstr "Głosy"
+
+#: data/gtk/search_page.ui:36
+msgid "Change the sorting of the search results"
+msgstr "Zmienia kolejność wyników wyszukiwania"
+
+#: data/gtk/search_page.ui:63
+msgid "No results"
+msgstr "Brak wyników"
+
+#: data/gtk/search_page.ui:64
+msgid "Try using a different search term"
+msgstr "Proszę spróbować innych słów"
+
+#: data/gtk/search_page.ui:148 data/gtk/window.ui:106
+msgid "_Name"
+msgstr "_Nazwa"
+
+#: data/gtk/search_page.ui:153 data/gtk/window.ui:111
+msgid "_Language"
+msgstr "_Język"
+
+#: data/gtk/search_page.ui:158 data/gtk/window.ui:116
+msgid "_Country"
+msgstr "_Kraj"
+
+#: data/gtk/search_page.ui:163 data/gtk/window.ui:121
+msgid "S_tate"
+msgstr "St_an"
+
+#: data/gtk/search_page.ui:168 data/gtk/window.ui:126
+msgid "_Votes"
+msgstr "_Głosy"
+
+#: data/gtk/search_page.ui:173 data/gtk/window.ui:131
+msgid "_Bitrate"
+msgstr "Gęstość _bitowa"
+
+#: data/gtk/search_page.ui:180 data/gtk/window.ui:138
+msgid "_Ascending"
+msgstr "_Rosnąco"
+
+#: data/gtk/search_page.ui:185 data/gtk/window.ui:143
+msgid "_Descending"
+msgstr "_Malejąco"
+
 #: data/gtk/sidebar_controller.ui:22
 msgid "An error occurred"
 msgstr "Wystąpił błąd"
 
-#: data/gtk/sidebar_controller.ui:178
+#: data/gtk/sidebar_controller.ui:188
 msgid "_Show station details"
 msgstr "_Informacje o stacji"
 
-#: data/gtk/sidebar_controller.ui:182
+#: data/gtk/sidebar_controller.ui:192
 msgid "Stream to a _device"
 msgstr "_Wyślij na urządzenie"
 
-#: data/gtk/sidebar_controller.ui:188
+#: data/gtk/sidebar_controller.ui:198
 msgid "_Enable mini player"
 msgstr "_Miniodtwarzacz"
 
@@ -192,48 +241,68 @@ msgstr "Zapisuje nagrany utwór"
 msgid "Station details"
 msgstr "Informacje o stacji"
 
-#: data/gtk/station_dialog.ui:74
-msgid "Actions"
-msgstr "Działania"
-
-#: data/gtk/station_dialog.ui:77
+#: data/gtk/station_dialog.ui:87
 msgid "_Play this station"
 msgstr "_Odtwórz tę stację"
 
-#: data/gtk/station_dialog.ui:85
+#: data/gtk/station_dialog.ui:100
 msgid "_Add to library"
 msgstr "_Dodaj do kolekcji"
 
-#: data/gtk/station_dialog.ui:94
-msgid "_Remove from Library"
+#: data/gtk/station_dialog.ui:114
+msgid "_Remove from library"
 msgstr "_Usuń z kolekcji"
 
-#: data/gtk/station_dialog.ui:105
+#: data/gtk/station_dialog.ui:128
 msgid "Information"
 msgstr "Informacje"
 
-#: data/gtk/station_dialog.ui:108
+#: data/gtk/station_dialog.ui:131
+msgid "This is a local private station."
+msgstr "To lokalna, prywatna stacja."
+
+#: data/gtk/station_dialog.ui:132
+msgid ""
+"This station is visible only to you. If you remove this station from your "
+"library, you have to create it again."
+msgstr ""
+"Ta stacja jest widoczna tylko tutaj. Usunięcie jej z kolekcji usunie ją na "
+"stałe."
+
+#: data/gtk/station_dialog.ui:138 src/ui/pages/search_page.rs:180
 msgid "Language"
 msgstr "Język"
 
-#: data/gtk/station_dialog.ui:122
+#: data/gtk/station_dialog.ui:152
 msgid "Tags"
 msgstr "Etykiety"
 
-#: data/gtk/station_dialog.ui:136
-msgid "Codec"
-msgstr "Kodek"
+#: data/gtk/station_dialog.ui:187
+msgid "Location"
+msgstr "Położenie"
 
-#: data/gtk/station_dialog.ui:150
+#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:181
+msgid "Country"
+msgstr "Kraj"
+
+#: data/gtk/station_dialog.ui:206 src/ui/pages/search_page.rs:182
+msgid "State"
+msgstr "Stan"
+
+#: data/gtk/station_dialog.ui:244
+msgid "Audio"
+msgstr "Dźwięk"
+
+#: data/gtk/station_dialog.ui:248 src/ui/pages/search_page.rs:184
 msgid "Bitrate"
 msgstr "Gęstość bitowa"
 
-#: data/gtk/station_dialog.ui:164
-msgid "Homepage"
-msgstr "Strona domowa"
+#: data/gtk/station_dialog.ui:262
+msgid "Codec"
+msgstr "Kodek"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:186
+#: data/gtk/station_dialog.ui:276
 msgid "Stream"
 msgstr "Strumień"
 
@@ -268,38 +337,6 @@ msgstr "Wyszukiwanie urządzeń…"
 #: data/gtk/window.ui:103
 msgid "_Sorting"
 msgstr "Porzą_dkowanie"
-
-#: data/gtk/window.ui:106
-msgid "_Name"
-msgstr "_Nazwa"
-
-#: data/gtk/window.ui:111
-msgid "_Language"
-msgstr "_Język"
-
-#: data/gtk/window.ui:116
-msgid "_Country"
-msgstr "_Kraj"
-
-#: data/gtk/window.ui:121
-msgid "S_tate"
-msgstr "St_an"
-
-#: data/gtk/window.ui:126
-msgid "_Votes"
-msgstr "_Głosy"
-
-#: data/gtk/window.ui:131
-msgid "_Bitrate"
-msgstr "Gęstość _bitowa"
-
-#: data/gtk/window.ui:138
-msgid "_Ascending"
-msgstr "_Rosnąco"
-
-#: data/gtk/window.ui:143
-msgid "_Descending"
-msgstr "_Malejąco"
 
 #: data/gtk/window.ui:152 data/gtk/window.ui:180
 msgid "_Open radio-browser.info <sup>↗</sup>"
@@ -373,7 +410,7 @@ msgstr "Otwórz witrynę"
 msgid "Powered by radio-browser.info"
 msgstr "Korzystamy z witryny radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:151
+#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:269
 msgid "Station data could not be received."
 msgstr "Nie można odebrać danych stacji."
 
@@ -382,19 +419,30 @@ msgstr "Nie można odebrać danych stacji."
 msgid "Welcome to {}"
 msgstr "Witamy w programie {}"
 
-#: src/utils.rs:28
-msgid "{} Vote"
-msgid_plural "{} Votes"
-msgstr[0] "{} głos"
-msgstr[1] "{} głosy"
-msgstr[2] "{} głosów"
+#: src/ui/pages/search_page.rs:106
+msgid ""
+"The number of results is limited to {} item. Try using a more specific "
+"search term."
+msgid_plural ""
+"The number of results is limited to {} items. Try using a more specific "
+"search term."
+msgstr[0] ""
+"Wyniki są ograniczone do {} elementu. Proszę spróbować bardziej konkretnych "
+"słów."
+msgstr[1] ""
+"Wyniki są ograniczone do {} elementów. Proszę spróbować bardziej konkretnych "
+"słów."
+msgstr[2] ""
+"Wyniki są ograniczone do {} elementów. Proszę spróbować bardziej konkretnych "
+"słów."
 
-#: src/utils.rs:30
-msgid "{} · {} Vote"
-msgid_plural "{} · {} Votes"
-msgstr[0] "{} · {} głos"
-msgstr[1] "{} · {} głosy"
-msgstr[2] "{} · {} głosów"
+#: src/ui/pages/search_page.rs:179
+msgid "Name"
+msgstr "Nazwa"
+
+#: src/ui/station_dialog.rs:276
+msgid "{} kbit/s"
+msgstr "{} kb/s"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
