@@ -117,3 +117,9 @@ scrolledwindow.flat-headerbar scrollbar.vertical:not(.overlay-indicator) {
 .map-pin {
   color: black;
 }
+
+.local-notice list {
+  background: alpha(@accent_bg_color, .3);
+  font-weight: bold;
+  box-shadow: none;
+}

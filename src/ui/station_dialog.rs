@@ -48,7 +48,7 @@ mod imp {
         #[template_child]
         pub favicon_box: TemplateChild<gtk::Box>,
         #[template_child]
-        pub local_station_row: TemplateChild<adw::ActionRow>,
+        pub local_station_group: TemplateChild<adw::PreferencesGroup>,
         #[template_child]
         pub title_label: TemplateChild<gtk::Label>,
         #[template_child]
@@ -63,6 +63,8 @@ mod imp {
         pub library_remove_child: TemplateChild<gtk::FlowBoxChild>,
         #[template_child]
         pub start_playback_button: TemplateChild<gtk::Button>,
+        #[template_child]
+        pub information_group: TemplateChild<adw::PreferencesGroup>,
         #[template_child]
         pub language_row: TemplateChild<adw::ActionRow>,
         #[template_child]
@@ -239,8 +241,8 @@ impl SwStationDialog {
 
         imp.votes_label.set_text(&metadata.votes.to_string());
         if imp.station.get().unwrap().is_local() {
-            imp.local_station_row.set_visible(true);
-            imp.votes_row.set_visible(false);
+            imp.local_station_group.set_visible(true);
+            imp.information_group.set_visible(false);
         }
 
         // Location & Map
