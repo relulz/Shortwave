@@ -125,10 +125,12 @@
                     </child>
                     <child>
                       <object class="AdwPreferencesGroup" id="local_station_group">
+                        <property name="visible">False</property>
                         <child>
                           <object class="AdwActionRow">
                             <property name="title" translatable="yes">This is a local private station.</property>
                             <property name="subtitle" translatable="yes">This station is visible only to you. If you remove this station from your library, you have to create it again.</property>
+                            <property name="icon_name">dialog-information-symbolic</property>
                           </object>
                         </child>
                         <style>
