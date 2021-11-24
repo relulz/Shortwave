@@ -12,16 +12,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2021-04-07 20:30+0000\n"
-"PO-Revision-Date: 2021-04-08 13:29+0200\n"
-"Last-Translator: Philipp Kiemle <philipp.kiemle@gmail.com>\n"
+"POT-Creation-Date: 2021-11-04 09:51+0000\n"
+"PO-Revision-Date: 2021-11-11 21:50+0100\n"
+"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 3.0\n"
 
 #: data/gtk/discover_page.ui:28
 msgid "Most voted stations"
@@ -35,11 +35,11 @@ msgstr "Im Trend"
 msgid "Other users are listening to…"
 msgstr "Andere Nutzer hören gerade …"
 
-#: data/gtk/library_page.ui:63
+#: data/gtk/library_page.ui:60
 msgid "Receiving station data…"
 msgstr "Empfangen der Senderdaten …"
 
-#: data/gtk/library_page.ui:90
+#: data/gtk/library_page.ui:87
 msgid "_Discover new stations"
 msgstr "N_eue Sender entdecken"
 
@@ -60,11 +60,11 @@ msgstr "Fehlerdetails"
 msgid "Connected with"
 msgstr "Verbunden mit"
 
-#: data/gtk/settings_window.ui:8 data/gtk/help_overlay.ui:11
+#: data/gtk/settings_window.ui:7 data/gtk/help_overlay.ui:11
 msgid "General"
 msgstr "Allgemein"
 
-#: data/gtk/settings_window.ui:11
+#: data/gtk/settings_window.ui:10
 msgid "Appearance"
 msgstr "Erscheinungsbild"
 
@@ -141,19 +141,68 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Wiedergabe umschalten"
 
+#: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:172
+#: src/ui/pages/search_page.rs:183
+msgid "Votes"
+msgstr "Stimmen"
+
+#: data/gtk/search_page.ui:36
+msgid "Change the sorting of the search results"
+msgstr "Die Sortierung der Suchergebnisse ändern"
+
+#: data/gtk/search_page.ui:63
+msgid "No results"
+msgstr "Keine Ergebnisse"
+
+#: data/gtk/search_page.ui:64
+msgid "Try using a different search term"
+msgstr "Versuchen Sie es mit einem neuen Suchbegriff"
+
+#: data/gtk/search_page.ui:148 data/gtk/window.ui:106
+msgid "_Name"
+msgstr "_Name"
+
+#: data/gtk/search_page.ui:153 data/gtk/window.ui:111
+msgid "_Language"
+msgstr "_Sprache"
+
+#: data/gtk/search_page.ui:158 data/gtk/window.ui:116
+msgid "_Country"
+msgstr "_Land"
+
+#: data/gtk/search_page.ui:163 data/gtk/window.ui:121
+msgid "S_tate"
+msgstr "_Bundesstaat"
+
+#: data/gtk/search_page.ui:168 data/gtk/window.ui:126
+msgid "_Votes"
+msgstr "St_immen"
+
+#: data/gtk/search_page.ui:173 data/gtk/window.ui:131
+msgid "_Bitrate"
+msgstr "_Bitrate"
+
+#: data/gtk/search_page.ui:180 data/gtk/window.ui:138
+msgid "_Ascending"
+msgstr "A_ufsteigend"
+
+#: data/gtk/search_page.ui:185 data/gtk/window.ui:143
+msgid "_Descending"
+msgstr "A_bsteigend"
+
 #: data/gtk/sidebar_controller.ui:22
 msgid "An error occurred"
 msgstr "Es ist ein Fehler aufgetreten"
 
-#: data/gtk/sidebar_controller.ui:178
+#: data/gtk/sidebar_controller.ui:188
 msgid "_Show station details"
 msgstr "Details zum Sender an_zeigen"
 
-#: data/gtk/sidebar_controller.ui:182
+#: data/gtk/sidebar_controller.ui:192
 msgid "Stream to a _device"
 msgstr "Auf ein _Gerät leiten"
 
-#: data/gtk/sidebar_controller.ui:188
+#: data/gtk/sidebar_controller.ui:198
 msgid "_Enable mini player"
 msgstr "_Mini-Player aktivieren"
 
@@ -167,15 +216,15 @@ msgstr ""
 "\n"
 "Wenn der Sender keine Metadaten sendet, können keine Titel erkannt werden."
 
-#: data/gtk/song_listbox.ui:63
+#: data/gtk/song_listbox.ui:66
 msgid "No songs detected"
 msgstr "Keine Titel erkannt"
 
-#: data/gtk/song_listbox.ui:73
+#: data/gtk/song_listbox.ui:76
 msgid "Detected songs will appear here."
 msgstr "Erkannte Titel erscheinen hier."
 
-#: data/gtk/song_listbox.ui:82
+#: data/gtk/song_listbox.ui:85
 msgid "_How does this work?"
 msgstr "_Wie funktioniert das?"
 
@@ -187,7 +236,7 @@ msgstr "Gespeicherte Titel befinden sich in Ihrem Musik-Ordner."
 msgid "_Open"
 msgstr "_Öffnen"
 
-#: data/gtk/song_row.ui:12
+#: data/gtk/song_row.ui:14
 msgid "Save recorded song"
 msgstr "Aufgenommenen Titel speichern"
 
@@ -195,44 +244,68 @@ msgstr "Aufgenommenen Titel speichern"
 msgid "Station details"
 msgstr "Senderdetails"
 
-#: data/gtk/station_dialog.ui:71
-msgid "Actions"
-msgstr "Aktionen"
-
-#: data/gtk/station_dialog.ui:74
+#: data/gtk/station_dialog.ui:87
 msgid "_Play this station"
 msgstr "Diesen Sender abspielen"
 
-#: data/gtk/station_dialog.ui:82
+#: data/gtk/station_dialog.ui:100
 msgid "_Add to library"
 msgstr "Zur Bibliothek _hinzufügen"
 
-#: data/gtk/station_dialog.ui:91
-msgid "_Remove from Library"
+#: data/gtk/station_dialog.ui:114
+msgid "_Remove from library"
 msgstr "Aus der Bibliothek _entfernen"
 
-#: data/gtk/station_dialog.ui:102
+#: data/gtk/station_dialog.ui:128
 msgid "Information"
 msgstr "Information"
 
-#: data/gtk/station_dialog.ui:105
+#: data/gtk/station_dialog.ui:131
+msgid "This is a local private station."
+msgstr "Dies ist ein lokaler Privatsender."
+
+#: data/gtk/station_dialog.ui:132
+msgid ""
+"This station is visible only to you. If you remove this station from your "
+"library, you have to create it again."
+msgstr ""
+"Dieser Sender ist nur für Sie sichtbar. Wenn Sie den Sender aus Ihrer "
+"Bibliothek entfernen, so müssen Sie diesen erneut anlegen."
+
+#: data/gtk/station_dialog.ui:138 src/ui/pages/search_page.rs:180
 msgid "Language"
 msgstr "Sprache"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:152
 msgid "Tags"
 msgstr "Stichworte"
 
-#: data/gtk/station_dialog.ui:133
+#: data/gtk/station_dialog.ui:187
+msgid "Location"
+msgstr "Ort"
+
+#: data/gtk/station_dialog.ui:192 src/ui/pages/search_page.rs:181
+msgid "Country"
+msgstr "Land"
+
+#: data/gtk/station_dialog.ui:206 src/ui/pages/search_page.rs:182
+msgid "State"
+msgstr "Bundesstaat"
+
+#: data/gtk/station_dialog.ui:244
+msgid "Audio"
+msgstr "Ton"
+
+#: data/gtk/station_dialog.ui:248 src/ui/pages/search_page.rs:184
+msgid "Bitrate"
+msgstr "Bitrate"
+
+#: data/gtk/station_dialog.ui:262
 msgid "Codec"
 msgstr "Codec"
 
-#: data/gtk/station_dialog.ui:147
-msgid "Homepage"
-msgstr "Internetseite"
-
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:172
+#: data/gtk/station_dialog.ui:276
 msgid "Stream"
 msgstr "Stream-Adresse"
 
@@ -265,80 +338,47 @@ msgstr "Suche _wiederholen"
 msgid "Searching for devices…"
 msgstr "Geräte suchen …"
 
-#: data/gtk/window.ui:103 data/gtk/window.ui:173
+#: data/gtk/window.ui:103
 msgid "_Sorting"
 msgstr "_Sortierung"
 
-#: data/gtk/window.ui:106
-msgid "_Name"
-msgstr "_Name"
-
-#: data/gtk/window.ui:111
-msgid "_Language"
-msgstr "_Sprache"
-
-#: data/gtk/window.ui:116
-msgid "_Country"
-msgstr "_Land"
-
-#: data/gtk/window.ui:121
-msgid "S_tate"
-msgstr "_Bundesstaat"
-
-#: data/gtk/window.ui:126
-msgid "_Votes"
-msgstr "St_immen"
-
-#: data/gtk/window.ui:133
-msgid "_Ascending"
-msgstr "A_ufsteigend"
-
-#: data/gtk/window.ui:138
-msgid "_Descending"
-msgstr "A_bsteigend"
-
-#: data/gtk/window.ui:147 data/gtk/window.ui:179
+#: data/gtk/window.ui:152 data/gtk/window.ui:180
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "»radio-browser.info« ö_ffnen <sup>↗</sup>"
 
-#: data/gtk/window.ui:151 data/gtk/window.ui:183
+#: data/gtk/window.ui:157 data/gtk/window.ui:185
 msgid "_Create new station <sup>↗</sup>"
 msgstr "_Neuen Sender anlegen <sup>↗</sup>"
 
-#: data/gtk/window.ui:157 data/gtk/window.ui:189
+#: data/gtk/window.ui:164 data/gtk/window.ui:192
 msgid "_Preferences"
 msgstr "_Einstellungen"
 
-#: data/gtk/window.ui:161 data/gtk/window.ui:193
+#: data/gtk/window.ui:168 data/gtk/window.ui:196
 msgid "_Keyboard Shortcuts"
 msgstr "Tasten_kombinationen"
 
-#: data/gtk/window.ui:165 data/gtk/window.ui:197
+#: data/gtk/window.ui:172 data/gtk/window.ui:200
 msgid "_About Shortwave"
 msgstr "_Info zu Shortwave"
 
-#: src/audio/player.rs:163
+#: src/audio/player.rs:168
 msgid "This station cannot be played because the stream is offline."
 msgstr ""
 "Dieser Sender kann nicht abgespielt werden, weil die Quelle außer Betrieb "
 "ist."
 
-#: src/audio/player.rs:181
+#: src/audio/player.rs:186
 msgid "Station cannot be streamed."
 msgstr "Sender kann nicht abgespielt werden."
 
-#: src/audio/player.rs:181
+#: src/audio/player.rs:186
 msgid "URL is not valid."
 msgstr "Die Adresse ist ungültig."
 
-#: src/database/library.rs:211
-msgid "No longer existing station removed from library."
-msgstr "Nicht mehr existierender Sender wurde aus der Bibliothek entfernt."
-
-#: src/database/library.rs:215 src/ui/pages/discover_page.rs:140
-#: src/ui/pages/search_page.rs:145
-msgid "Station data could not be received."
-msgstr "Senderdaten konnten nicht empfangen werden."
+#: src/database/library.rs:271
+msgid "An invalid station was removed from the library."
+msgstr "Ein ungültiger Sender wurde aus der Bibliothek entfernt."
 
 #: src/ui/about_dialog.rs:32
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
@@ -353,46 +393,61 @@ msgstr ""
 "Wolfgang Stoeggl <c72578@yahoo.de>\n"
 "Philipp Kiemle <philipp.kiemle@gmail.com>"
 
-#: src/ui/pages/discover_page.rs:94
+#. TODO: Implement show-server-stats action
+#: src/ui/pages/discover_page.rs:91
 msgid "Show statistics"
 msgstr "Senderdetails anzeigen"
 
-#: src/ui/pages/discover_page.rs:95
+#: src/ui/pages/discover_page.rs:92
 msgid "Browse over 25,500 stations"
 msgstr "Über 25000 Sender durchsuchen"
 
-#: src/ui/pages/discover_page.rs:97
+#: src/ui/pages/discover_page.rs:94
 msgid "Add new station"
 msgstr "Neuen Sender hinzufügen"
 
-#: src/ui/pages/discover_page.rs:98
+#: src/ui/pages/discover_page.rs:95
 msgid "Your favorite station is missing?"
 msgstr "Ihr Lieblingssender fehlt?"
 
-#: src/ui/pages/discover_page.rs:100
+#: src/ui/pages/discover_page.rs:97
 msgid "Open website"
 msgstr "Internet-Seite"
 
-#: src/ui/pages/discover_page.rs:101
+#: src/ui/pages/discover_page.rs:98
 msgid "Powered by radio-browser.info"
 msgstr "Unterstützt von radio-browser.info"
+
+#: src/ui/pages/discover_page.rs:137 src/ui/pages/search_page.rs:269
+msgid "Station data could not be received."
+msgstr "Senderdaten konnten nicht empfangen werden."
 
 #. Welcome text which gets displayed when the library is empty. "{}" is the application name.
 #: src/ui/pages/library_page.rs:117
 msgid "Welcome to {}"
 msgstr "Willkommen zu {}"
 
-#: src/utils.rs:28
-msgid "{} Vote"
-msgid_plural "{} Votes"
-msgstr[0] "{} Stimme"
-msgstr[1] "{} Stimmen"
+#: src/ui/pages/search_page.rs:106
+msgid ""
+"The number of results is limited to {} item. Try using a more specific "
+"search term."
+msgid_plural ""
+"The number of results is limited to {} items. Try using a more specific "
+"search term."
+msgstr[0] ""
+"Die Zahl der Ergebnisse ist beschränkt auf {} Objekt. Probieren Sie einen "
+"präziseren Suchbegriff."
+msgstr[1] ""
+"Die Zahl der Ergebnisse ist beschränkt auf {} Objekte. Probieren Sie einen "
+"präziseren Suchbegriff."
 
-#: src/utils.rs:30
-msgid "{} · {} Vote"
-msgid_plural "{} · {} Votes"
-msgstr[0] "{} · {} Stimme"
-msgstr[1] "{} · {} Stimmen"
+#: src/ui/pages/search_page.rs:179
+msgid "Name"
+msgstr "Name"
+
+#: src/ui/station_dialog.rs:276
+msgid "{} kbit/s"
+msgstr "{} KBit/s"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
@@ -451,6 +506,19 @@ msgstr "Nahtlose Integration in die GNOME-Arbeitsumgebung"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Welle;"
+
+#~ msgid "Homepage"
+#~ msgstr "Internetseite"
+
+#~ msgid "{} Vote"
+#~ msgid_plural "{} Votes"
+#~ msgstr[0] "{} Stimme"
+#~ msgstr[1] "{} Stimmen"
+
+#~ msgid "{} · {} Vote"
+#~ msgid_plural "{} · {} Votes"
+#~ msgstr[0] "{} · {} Stimme"
+#~ msgstr[1] "{} · {} Stimmen"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Search for stations"
