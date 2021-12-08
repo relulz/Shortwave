@@ -15,14 +15,6 @@ scrolledwindow.flat-headerbar scrollbar.vertical:not(.overlay-indicator) {
   border-radius: 12px;
 }
 
-.favicon-big {
-  background-color: @theme_base_color;
-  border-radius: 8px;
-  border: none;
-  box-shadow: 0 4px 5px 1px alpha(black, .2),
-              0 0 0 1px alpha(black, .15);
-}
-
 .smallcover {
   background-color: @theme_base_color;
 }
