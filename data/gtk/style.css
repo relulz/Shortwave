@@ -51,21 +51,6 @@ scrolledwindow.flat-headerbar scrollbar.vertical:not(.overlay-indicator) {
   background-image: url('resource://de/haeckerfelix/Shortwave/images/wood.png');
   background-size: cover;
   color: black;
-  /* Use dark variant shadow */
-  box-shadow: 0 1px 3px 3px transparent,
-              0 2px 8px 2px rgba(0, 0, 0, 0.13),
-              0 3px 20px 10px rgba(0, 0, 0, 0.09),
-              0 6px 32px 16px rgba(0, 0, 0, 0.04),
-              0 0 0 1px rgba(0, 0, 0, 0.75);
-  outline-color: rgba(255, 255, 255, 0.1);
-}
-
-.mini-controller:backdrop {
-  box-shadow: 0 1px 3px 3px rgba(0, 0, 0, 0.09),
-              0 2px 14px 5px rgba(0, 0, 0, 0.05),
-              0 4px 28px 12px rgba(0, 0, 0, 0.03),
-              0 6px 32px 16px transparent,
-              0 0 0 1px rgba(0, 0, 0, 0.75);
 }
 
 /* Based on the styling from Pebbles by Subhadeep Jasu */
