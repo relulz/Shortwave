@@ -19,7 +19,7 @@
               <class name="background"/>
             </style>
             <child>
-              <object class="AdwHeaderBar">
+              <object class="GtkHeaderBar">
                 <child>
                   <object class="GtkButton" id="add_button">
                     <property name="action_name">win.show-discover</property>
@@ -48,9 +48,6 @@
                     </child>
                   </object>
                 </child>
-                <style>
-                  <class name="titlebar"/>
-                </style>
               </object>
             </child>
             <child>
