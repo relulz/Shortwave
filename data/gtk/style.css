@@ -4,10 +4,8 @@
 
 scrolledwindow.flat-headerbar scrollbar.vertical {
   margin-top: 47px;
-}
-
-scrolledwindow.flat-headerbar scrollbar.vertical:not(.overlay-indicator) {
-  border-top: 1px solid @borders;
+  background: none;
+  box-shadow: none;
 }
 
 .tile {
