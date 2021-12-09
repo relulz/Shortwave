@@ -40,13 +40,9 @@
     <property name="destroy_with_parent">True</property>
     <property name="deletable">False</property>
     <property name="modal">True</property>
+    <property name="title" translatable="yes">Stream to a device</property>
     <child type="titlebar">
       <object class="GtkHeaderBar">
-        <property name="title-widget">
-          <object class="AdwWindowTitle">
-            <property name="title" translatable="yes">Stream to a device</property>
-          </object>
-        </property>
         <child>
           <object class="GtkButton" id="cancel_button">
             <property name="label" translatable="yes">_Cancel</property>

@@ -53,7 +53,7 @@
         <property name="orientation">vertical</property>
         <property name="overflow">hidden</property>
         <style>
-          <class name="favicon-big"/>
+          <class name="card"/>
         </style>
       </object>
     </child>
